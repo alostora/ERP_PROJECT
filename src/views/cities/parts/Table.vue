@@ -33,7 +33,7 @@
               :placeholder="$t('common.all') + ' ' + $t('countries.title')"
               :filter="true"
               :showClear="true"
-              filterPlaceholder="بحث..."
+              :filterPlaceholder="$t('common.search')"
               class="w-full"
               @change="onCountryChange"
             />
@@ -48,7 +48,7 @@
               :placeholder="$t('common.all') + ' ' + $t('governorates.title')"
               :filter="true"
               :showClear="true"
-              filterPlaceholder="بحث..."
+              :filterPlaceholder="$t('common.search')"
               class="w-full"
               @change="fetchData"
             />

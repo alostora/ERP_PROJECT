@@ -18,7 +18,7 @@
             :placeholder="$t('common.all') + ' ' + $t('companies.currency')"
             :filter="true"
             :showClear="true"
-            filterPlaceholder="بحث..."
+            :filterPlaceholder="$t('common.search')"
             class="w-full"
           />
           <small v-if="errors.currency_id" class="error-message">{{
@@ -38,7 +38,7 @@
             :placeholder="$t('common.all') + ' ' + $t('countries.title')"
             :filter="true"
             :showClear="true"
-            filterPlaceholder="بحث..."
+            :filterPlaceholder="$t('common.search')"
             class="w-full"
             @change="onCountryChange"
           />
@@ -59,7 +59,7 @@
             :placeholder="$t('common.all') + ' ' + $t('governorates.title')"
             :filter="true"
             :showClear="true"
-            filterPlaceholder="بحث..."
+            :filterPlaceholder="$t('common.search')"
             class="w-full"
             @change="onGovernorateChange"
           />
@@ -80,7 +80,7 @@
             :placeholder="$t('common.all') + ' ' + $t('cities.title')"
             :filter="true"
             :showClear="true"
-            filterPlaceholder="بحث..."
+            :filterPlaceholder="$t('common.search')"
             class="w-full"
           />
           <small v-if="errors.city_id" class="error-message">{{ errors.city_id }}</small>
@@ -153,7 +153,7 @@
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
-        <button type="button" class="btn btn-outline" @click="closeFormModal">
+        <button type="button" class="btn btn-outline ml-2 mr-2" @click="closeFormModal">
           {{ $t("common.cancel") }}
         </button>
         <button type="submit" class="btn btn-primary" :disabled="formLoading">

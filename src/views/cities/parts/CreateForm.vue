@@ -17,7 +17,7 @@
           optionValue="id"
           :placeholder="$t('common.all') + ' ' + $t('countries.title')"
           :filter="true"
-          filterPlaceholder="بحث..."
+          :filterPlaceholder="$t('common.search')"
           class="w-full"
           @change="onCountryChange"
         />
@@ -33,7 +33,7 @@
           optionValue="id"
           :placeholder="$t('common.all') + ' ' + $t('governorates.title')"
           :filter="true"
-          filterPlaceholder="بحث..."
+          :filterPlaceholder="$t('common.search')"
           class="w-full"
         />
       </div>
@@ -61,7 +61,7 @@
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
-        <button type="button" class="btn btn-outline" @click="closeFormModal">
+        <button type="button" class="btn btn-outline ml-2 mr-2" @click="closeFormModal">
           {{ $t('common.cancel') }}
         </button>
         <button type="submit" class="btn btn-primary" :disabled="formLoading">
