@@ -31,6 +31,10 @@ const routes = [
       {
         path: 'cities', name: 'cities',
         component: () => import('@/views/cities/parts/Table.vue')
+      },
+      {
+        path: 'companies', name: 'companies',
+        component: () => import('@/views/companies/parts/Table.vue')
       }
     ]
   }

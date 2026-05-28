@@ -1,5 +1,6 @@
 export default {
      title: 'Cities',
+     id: '#',
      name: 'City Name',
      name_ar: 'City Name (Arabic)',
      prefix: 'Prefix',

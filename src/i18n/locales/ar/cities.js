@@ -1,5 +1,6 @@
 export default {
      title: 'المدن',
+     id: '#',
      name: 'اسم المدينة',
      name_ar: 'اسم المدينة (عربي)',
      prefix: 'البادئة',

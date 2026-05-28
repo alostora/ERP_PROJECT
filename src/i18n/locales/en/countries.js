@@ -1,5 +1,6 @@
 export default {
      title: 'Countries',
+     id: '#',
      name: 'Country Name',
      name_ar: 'Country Name (Arabic)',
      phone_code: 'Phone Code',

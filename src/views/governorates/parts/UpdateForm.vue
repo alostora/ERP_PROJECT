@@ -8,7 +8,7 @@
   >
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
-        <label class="form-label required">{{ $t('governorates.name') }}</label>
+        <label class="form-label required">{{ $t("governorates.name") }}</label>
         <input
           v-model="formData.name"
           type="text"
@@ -19,7 +19,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('governorates.name_ar') }}</label>
+        <label class="form-label required">{{ $t("governorates.name_ar") }}</label>
         <input
           v-model="formData.name_ar"
           type="text"
@@ -31,10 +31,10 @@
 
       <div class="flex justify-end gap-2 mt-4">
         <button type="button" class="btn btn-outline" @click="closeFormModal">
-          {{ $t('common.cancel') }}
+          {{ $t("common.cancel") }}
         </button>
         <button type="submit" class="btn btn-primary" :disabled="formLoading">
-          {{ formLoading ? $t('common.loading') : $t('common.update') }}
+          {{ formLoading ? $t("common.loading") : $t("common.update") }}
         </button>
       </div>
     </form>
@@ -42,14 +42,14 @@
 </template>
 
 <script>
-import Dialog from 'primevue/dialog'
-import formMixin from '@/mixins/form'
-import { API_ROUTES } from '@/constants/apiRoutes'
-import validationRequest from '../validation/validationRequest'
-import customFunctions from '../custom_functions/customFunctions'
+import Dialog from "primevue/dialog";
+import formMixin from "@/mixins/form";
+import { API_ROUTES } from "@/constants/apiRoutes";
+import validationRequest from "../validation/validationRequest";
+import customFunctions from "../custom_functions/customFunctions";
 
 export default {
-  name: 'UpdateForm',
+  name: "UpdateForm",
   mixins: [formMixin, customFunctions, validationRequest],
   components: { Dialog },
 
@@ -66,7 +66,7 @@ export default {
       deep: true,
       handler(selectedItem) {
         if (selectedItem && selectedItem.id) {
-          this.populateForm(selectedItem)
+          this.populateForm(selectedItem);
         }
       },
     },
@@ -76,43 +76,42 @@ export default {
     return {
       apiUrl: API_ROUTES.GOVERNORATE.BASE,
       formData: {
-        id: '',
-        name: '',
-        name_ar: '',
+        id: "",
+        name: "",
+        name_ar: "",
       },
       errors: {},
-    }
+    };
   },
 
   methods: {
-    openModal() {
-      this.formVisible = true
-    },
-
     populateForm(selectedItem) {
       this.formData = {
-        id: selectedItem.id || '',
-        name: selectedItem.name || '',
-        name_ar: selectedItem.name_ar || '',
-      }
-      this.errors = {}
+        id: selectedItem.id || "",
+        name: selectedItem.name || "",
+        name_ar: selectedItem.name_ar || "",
+      };
+    },
+
+    openModal() {
+      this.formVisible = true;
     },
 
     async handleSubmit() {
       if (!this.validateUpdateForm(this.formData)) {
-        return
+        return;
       }
 
-      const data = { ...this.formData }
-      delete data.id
+      const data = { ...this.formData };
+      delete data.id;
 
       await this.submitUpdateForm(
         this.apiUrl,
         this.formData.id,
         data,
-        this.$t('common.updatedSuccessfully'),
-      )
+        this.$t("common.updatedSuccessfully")
+      );
     },
   },
-}
+};
 </script>

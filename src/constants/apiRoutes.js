@@ -7,10 +7,15 @@ export const API_ROUTES = {
      },
      LOOKUP: {
           ACCOUNT_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.USER_ACCOUNT_TYPE}`,
+          CURRENCIES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.CURRENCY}`,
      },
      USER: {
           SEARCH: `${BASE_URL}/admin/users/search`,
           BASE: `${BASE_URL}/admin/user`,
+     },
+     CLIENT: {
+          SEARCH: `${BASE_URL}/admin/clients/search`,
+          BASE: `${BASE_URL}/admin/client`,
      },
      COUNTRY: {
           SEARCH: `${BASE_URL}/admin/countries/search`,
@@ -23,5 +28,9 @@ export const API_ROUTES = {
      CITY: {
           SEARCH: `${BASE_URL}/admin/cities-search-all`,
           BASE: `${BASE_URL}/admin/city`,
+     },
+     COMPANY: {
+          SEARCH: `${BASE_URL}/admin/companies/search`,
+          BASE: `${BASE_URL}/admin/company`,
      }
 }

@@ -1,0 +1,27 @@
+export default {
+     title: 'الشركات',
+     id: '#',
+     name: 'اسم الشركة',
+     name_ar: 'اسم الشركة (عربي)',
+     phone: 'الهاتف',
+     email: 'البريد',
+     address: 'العنوان',
+     currency: 'العملة',
+     logo: 'اللوجو',
+     cover: 'الكوفر',
+     country: 'الدولة',
+     governorate: 'المحافظة',
+     city: 'المدينة',
+     validation: {
+          nameRequired: 'الاسم مطلوب',
+          nameArRequired: 'الاسم بالعربية مطلوب',
+          phoneRequired: 'الهاتف مطلوب',
+          emailRequired: 'البريد مطلوب',
+          addressRequired: 'العنوان مطلوب',
+          clientIdRequired: 'العميل مطلوب',
+          currencyIdRequired: 'العملة مطلوبة',
+          countryIdRequired: 'الدولة مطلوبة',
+          governorateIdRequired: 'المحافظة مطلوبة',
+          cityIdRequired: 'المدينة مطلوبة',
+     }
+}

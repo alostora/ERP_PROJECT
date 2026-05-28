@@ -1,5 +1,6 @@
 export default {
      title: 'المستخدمين',
+     id: '#',
      name: 'الاسم',
      email: 'البريد الإلكتروني',
      phone: 'الهاتف',

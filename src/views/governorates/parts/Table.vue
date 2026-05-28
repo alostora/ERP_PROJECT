@@ -32,6 +32,7 @@
               optionValue="id"
               :placeholder="$t('common.all') + ' ' + $t('countries.title')"
               :filter="true"
+              :showClear="true"
               filterPlaceholder="بحث..."
               class="w-full"
               @change="fetchData"
@@ -64,6 +65,12 @@
         resizableColumns
         showGridlines
       >
+        <Column field="id" :header="$t('governorates.id')" class="col-1">
+          <template #body="slotProps">
+            <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
+          </template>
+        </Column>
+
         <Column field="name" :header="$t('governorates.name')" sortable />
 
         <Column field="name_ar" :header="$t('governorates.name_ar')" sortable />

@@ -25,12 +25,18 @@
           </div>
 
           <div class="col-12 col-md-6 col-lg-3">
-            <select v-model="filters.user_account_type_id" @change="fetchData" class="select">
-              <option value="">{{ $t('common.all') }} {{ $t('users.accountType') }}</option>
-              <option v-for="type in accountTypes" :key="type.id" :value="type.id">
-                {{ currentLanguage === 'ar' ? type.name_ar : type.name }}
-              </option>
-            </select>
+            <Select
+              v-model="filters.user_account_type_id"
+              :options="accountTypes"
+              :optionLabel="accountTypeLabel"
+              optionValue="id"
+              :placeholder="$t('common.all') + ' ' + $t('users.accountType')"
+              :filter="true"
+              :showClear="true"
+              filterPlaceholder="بحث..."
+              class="w-full"
+              @change="fetchData"
+            />
           </div>
 
           <div class="col-6 col-md-3 col-lg-2 mt-2 mt-md-0">
@@ -59,6 +65,12 @@
         resizableColumns
         showGridlines
       >
+        <Column field="id" :header="$t('users.id')" class="col-1">
+          <template #body="slotProps">
+            <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
+          </template>
+        </Column>
+
         <Column field="name" :header="$t('users.name')" sortable />
         <Column field="email" :header="$t('users.email')" sortable />
         <Column field="phone" :header="$t('users.phone')" />
@@ -101,11 +113,12 @@ import UpdateForm from './UpdateForm.vue'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
+import Select from 'primevue/select'
 
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm },
+  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm, Select },
 
   data() {
     return {
@@ -119,6 +132,10 @@ export default {
   computed: {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
+    },
+
+    accountTypeLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
   },
 

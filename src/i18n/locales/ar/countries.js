@@ -1,5 +1,6 @@
 export default {
      title: 'الدول',
+     id: '#',
      name: 'اسم الدولة',
      name_ar: 'اسم الدولة (عربي)',
      phone_code: 'كود الهاتف',

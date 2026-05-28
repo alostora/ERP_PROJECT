@@ -1,10 +1,10 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h1 class="page-title">{{ $t('cities.title') }}</h1>
+      <h1 class="page-title">{{ $t("companies.title") }}</h1>
       <button class="btn btn-primary" @click="openCreateModal">
         <i class="pi pi-plus"></i>
-        {{ $t('common.addNew') }}
+        {{ $t("common.addNew") }}
       </button>
     </div>
 
@@ -26,6 +26,21 @@
 
           <div class="col-12 col-md-6 col-lg-3">
             <Select
+              v-model="filters.client_id"
+              :options="clients"
+              optionLabel="name"
+              optionValue="id"
+              :placeholder="$t('common.all') + ' ' + $t('clients.title')"
+              :filter="true"
+              :showClear="true"
+              filterPlaceholder="بحث..."
+              class="w-full"
+              @change="fetchData"
+            />
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-3 mt-2 mt-md-0">
+            <Select
               v-model="filters.country_id"
               :options="countries"
               :optionLabel="countryLabel"
@@ -46,6 +61,21 @@
               :optionLabel="governorateLabel"
               optionValue="id"
               :placeholder="$t('common.all') + ' ' + $t('governorates.title')"
+              :filter="true"
+              :showClear="true"
+              filterPlaceholder="بحث..."
+              class="w-full"
+              @change="onGovernorateChange"
+            />
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-3 mt-2 mt-md-0" v-if="cities.length">
+            <Select
+              v-model="filters.city_id"
+              :options="cities"
+              :optionLabel="cityLabel"
+              optionValue="id"
+              :placeholder="$t('common.all') + ' ' + $t('cities.title')"
               :filter="true"
               :showClear="true"
               filterPlaceholder="بحث..."
@@ -80,20 +110,44 @@
         resizableColumns
         showGridlines
       >
-        <Column field="id" :header="$t('cities.id')" class="col-1">
+        <Column field="id" :header="$t('companies.id')" class="col-1">
           <template #body="slotProps">
             <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
           </template>
         </Column>
 
-        <Column field="name" :header="$t('cities.name')" sortable />
+        <Column field="logo" :header="$t('companies.logo')">
+          <template #body="slotProps">
+            <div class="flex-center">
+              <img
+                v-if="slotProps.data.logo"
+                :src="slotProps.data.logo.file_path"
+                :alt="slotProps.data.name"
+                class="table-image-sm"
+              />
+              <div v-else class="image-placeholder">
+                <i class="pi pi-image"></i>
+              </div>
+            </div>
+          </template>
+        </Column>
 
-        <Column field="name_ar" :header="$t('cities.name_ar')" sortable />
+        <Column field="name" :header="$t('companies.name')" sortable />
+
+        <Column field="name_ar" :header="$t('companies.name_ar')" sortable />
+
+        <Column field="phone" :header="$t('companies.phone')" sortable />
+
+        <Column field="email" :header="$t('companies.email')" sortable />
 
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
             <div class="actions-cell">
-              <button class="btn-icon" @click="openUpdateModal(data)" :title="$t('common.edit')">
+              <button
+                class="btn-icon"
+                @click="openUpdateModal(data)"
+                :title="$t('common.edit')"
+              >
                 <i class="pi pi-pencil"></i>
               </button>
               <button
@@ -118,19 +172,20 @@
 </template>
 
 <script>
-import DataTable from 'primevue/datatable'
-import Column from 'primevue/column'
-import Toast from 'primevue/toast'
-import ConfirmDialog from 'primevue/confirmdialog'
-import CreateForm from './CreateForm.vue'
-import UpdateForm from './UpdateForm.vue'
-import { customFunctions } from '../custom_functions/customFunctions'
-import tableMixin from '@/mixins/table'
-import { API_ROUTES } from '@/constants/apiRoutes'
-import Select from 'primevue/select'
+import DataTable from "primevue/datatable";
+import Column from "primevue/column";
+import Toast from "primevue/toast";
+import ConfirmDialog from "primevue/confirmdialog";
+import CreateForm from "./CreateForm.vue";
+import UpdateForm from "./UpdateForm.vue";
+import { customFunctions } from "../custom_functions/customFunctions";
+import tableMixin from "@/mixins/table";
+import { API_ROUTES } from "@/constants/apiRoutes";
+import Select from "primevue/select";
+import Image from "primevue/image";
 
 export default {
-  name: 'Table',
+  name: "Table",
   mixins: [tableMixin, customFunctions],
   components: {
     DataTable,
@@ -140,93 +195,93 @@ export default {
     CreateForm,
     UpdateForm,
     Select,
+    Image,
   },
 
   data() {
     return {
-      apiUrl: API_ROUTES.CITY.SEARCH,
-      deleteUrl: API_ROUTES.CITY.BASE,
-      filters: { query_string: '', country_id: '', governorate_id: '' },
+      apiUrl: API_ROUTES.COMPANY.SEARCH,
+      deleteUrl: API_ROUTES.COMPANY.BASE,
+      filters: {
+        query_string: "",
+        client_id: "",
+        country_id: "",
+        governorate_id: "",
+        city_id: "",
+      },
       selectedItem: {},
-    }
-  },
-
-  watch: {
-    '$route.query.country_id': {
-      handler(newVal) {
-        if (newVal) {
-          this.filters.country_id = newVal
-          this.fetchData()
-        }
-      },
-      immediate: true,
-    },
-    '$route.query.governorate_id': {
-      handler(newVal) {
-        if (newVal) {
-          this.filters.governorate_id = newVal
-          this.fetchData()
-        }
-      },
-      immediate: true,
-    },
+    };
   },
 
   computed: {
     currentLanguage() {
-      return localStorage.getItem('language') || 'en'
+      return localStorage.getItem("language") || "en";
     },
 
     countryLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+      return this.currentLanguage === "ar" ? "name_ar" : "name";
     },
 
     governorateLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+      return this.currentLanguage === "ar" ? "name_ar" : "name";
+    },
+
+    cityLabel() {
+      return this.currentLanguage === "ar" ? "name_ar" : "name";
     },
   },
 
   mounted() {
-    const countryId = this.$route.query.country_id
+    const countryId = this.$route.query.country_id;
 
     if (countryId) {
-      this.filters.country_id = countryId
-      this.loadGovernorates(countryId)
+      this.filters.country_id = countryId;
+      this.loadGovernorates(countryId);
     }
 
-    const governorateId = this.$route.query.governorate_id
+    const governorateId = this.$route.query.governorate_id;
 
     if (governorateId) {
-      this.filters.governorate_id = governorateId
+      this.filters.governorate_id = governorateId;
     }
 
-    this.fetchData()
-    this.loadCountries()
+    this.fetchData();
+    this.loadClients();
+    this.loadCountries();
   },
 
   methods: {
     async onCountryChange() {
-      await this.loadGovernorates(this.filters.country_id)
+      this.filters.governorate_id = "";
+      this.filters.city_id = "";
 
-      this.filters.governorate_id = ''
+      await this.loadGovernorates(this.filters.country_id);
 
-      this.fetchData()
+      this.fetchData();
+    },
+
+    async onGovernorateChange() {
+      this.filters.city_id = "";
+
+      await this.loadCities(this.filters.governorate_id);
+
+      this.fetchData();
     },
 
     openCreateModal() {
-      this.$refs.createModal.openModal()
+      this.$refs.createModal.openModal();
     },
 
     openUpdateModal(item) {
-      this.selectedItem = { ...item }
+      this.selectedItem = { ...item };
       this.$nextTick(() => {
-        this.$refs.updateModal.openModal()
-      })
+        this.$refs.updateModal.openModal();
+      });
     },
 
     deleteRow(user) {
-      this.deleteItem(this.deleteUrl, user.id, user.name)
+      this.deleteItem(this.deleteUrl, user.id, user.name);
     },
   },
-}
+};
 </script>

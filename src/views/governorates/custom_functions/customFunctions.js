@@ -5,7 +5,6 @@ export const customFunctions = {
      data() {
           return {
                countryUrl: API_ROUTES.COUNTRY.SEARCH,
-               params: { paginate: false },
                countries: [],
           }
      },
@@ -13,8 +12,7 @@ export const customFunctions = {
 
           async loadCountries() {
                try {
-                    const params = { paginate: false }
-                    const response = await API.get(`${this.countryUrl}`, params)
+                    const response = await API.get(`${this.countryUrl}`)
                     this.countries = response.data.data || []
                } catch (error) {
                     console.error('Error loading countries:', error)

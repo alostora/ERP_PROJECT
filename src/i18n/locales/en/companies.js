@@ -1,0 +1,27 @@
+export default {
+     title: 'Companies',
+     id: '#',
+     name: 'Company name',
+     name_ar: 'Company name (Arabic)',
+     phone: 'Phone',
+     email: 'Email',
+     address: 'Address',
+     currency: 'Currency',
+     logo: 'Logo',
+     cover: 'Cover',
+     country: 'Country',
+     governorate: 'Governorate',
+     city: 'City',
+     validation: {
+          nameRequired: 'Name is required',
+          nameArRequired: 'Arabic name is required',
+          phoneRequired: 'Phone is required',
+          emailRequired: 'Email is required',
+          addressRequired: 'Address is required',
+          clientIdRequired: 'Client is required',
+          currencyIdRequired: 'Currency is required',
+          countryIdRequired: 'Country is required',
+          governorateIdRequired: 'Governorate is required',
+          cityIdRequired: 'City is required',
+     }
+}

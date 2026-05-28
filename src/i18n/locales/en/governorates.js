@@ -1,5 +1,6 @@
 export default {
      title: 'Governorates',
+     id: '#',
      name: 'Governorate Name',
      name_ar: 'Governorate Name (Arabic)',
      prefix: 'Prefix',

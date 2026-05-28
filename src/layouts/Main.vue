@@ -60,6 +60,11 @@ export default {
           icon: 'pi pi-map',
           path: '/cities',
         },
+        {
+          label: 'common.menu.companies',
+          icon: 'pi pi-map',
+          path: '/companies',
+        },
       ]
     },
   },

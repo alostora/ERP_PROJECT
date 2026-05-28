@@ -1,5 +1,6 @@
 export default {
      title: 'Users',
+     id: '#',
      name: 'Name',
      email: 'Email',
      phone: 'Phone',

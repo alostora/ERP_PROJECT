@@ -50,6 +50,12 @@
         resizableColumns
         showGridlines
       >
+        <Column field="id" :header="$t('countries.id')" class="col-1">
+          <template #body="slotProps">
+            <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
+          </template>
+        </Column>
+
         <Column field="name" :header="$t('countries.name')" sortable />
         <Column field="name_ar" :header="$t('countries.name_ar')" sortable />
 

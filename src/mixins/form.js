@@ -13,12 +13,14 @@ export const formMixin = {
 
      methods: {
           openFormModal(data = null) {
+
                this.formData = data ? { ...data } : {}
                this.formErrors = {}
                this.formVisible = true
           },
 
           closeFormModal() {
+
                this.formVisible = false
                this.formLoading = false
                this.formErrors = {}
@@ -26,6 +28,7 @@ export const formMixin = {
           },
 
           async submitCreateForm(url, data, successMsg) {
+
                this.formLoading = true
 
                try {
@@ -57,6 +60,7 @@ export const formMixin = {
           },
 
           async submitUpdateForm(url, id, data, successMsg) {
+
                this.formLoading = true
 
                try {

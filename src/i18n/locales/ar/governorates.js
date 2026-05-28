@@ -1,5 +1,6 @@
 export default {
      title: 'المحافظات',
+     id: '#',
      name: 'اسم المحافظة',
      name_ar: 'اسم المحافظة (عربي)',
      prefix: 'البادئة',
