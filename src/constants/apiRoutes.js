@@ -19,5 +19,9 @@ export const API_ROUTES = {
      GOVERNORATE: {
           SEARCH: `${BASE_URL}/admin/governorates-search-all`,
           BASE: `${BASE_URL}/admin/governorate`,
+     },
+     CITY: {
+          SEARCH: `${BASE_URL}/admin/cities-search-all`,
+          BASE: `${BASE_URL}/admin/city`,
      }
 }

@@ -1,14 +1,14 @@
 <template>
   <Dialog
     v-model:visible="formVisible"
-    :header="$t('common.updateTitle', { module: $t('governorates.title') })"
+    :header="$t('common.updateTitle', { module: $t('cities.title') })"
     :modal="true"
     :style="{ width: '500px' }"
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
-        <label class="form-label required">{{ $t('governorates.name') }}</label>
+        <label class="form-label required">{{ $t('cities.name') }}</label>
         <input
           v-model="formData.name"
           type="text"
@@ -19,7 +19,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('governorates.name_ar') }}</label>
+        <label class="form-label required">{{ $t('cities.name_ar') }}</label>
         <input
           v-model="formData.name_ar"
           type="text"
@@ -74,7 +74,7 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.GOVERNORATE.BASE,
+      apiUrl: API_ROUTES.CITY.BASE,
       formData: {
         id: '',
         name: '',

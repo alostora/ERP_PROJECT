@@ -12,7 +12,9 @@ export const customFunctions = {
 
           async loadAccountTypes() {
                try {
-                    const response = await API.get(`${this.lookupUrl}`)
+
+                    const params = { paginate: false }
+                    const response = await API.get(`${this.lookupUrl}`, params)
                     this.accountTypes = response.data.data || []
                } catch (error) {
                     console.error('Error loading account types:', error)

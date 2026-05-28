@@ -27,6 +27,10 @@ const routes = [
       {
         path: 'governorates', name: 'governorates',
         component: () => import('@/views/governorates/parts/Table.vue')
+      },
+      {
+        path: 'cities', name: 'cities',
+        component: () => import('@/views/cities/parts/Table.vue')
       }
     ]
   }

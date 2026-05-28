@@ -55,6 +55,11 @@ export default {
           icon: 'pi pi-map',
           path: '/governorates',
         },
+        {
+          label: 'common.menu.cities',
+          icon: 'pi pi-map',
+          path: '/cities',
+        },
       ]
     },
   },
