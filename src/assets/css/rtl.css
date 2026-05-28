@@ -1,0 +1,21 @@
+[dir='rtl'] {
+  text-align: right;
+}
+
+[dir='rtl'] .search-icon {
+  left: auto;
+  right: var(--spacing-3);
+}
+
+[dir='rtl'] .search-wrapper .input {
+  padding-left: var(--spacing-3);
+  padding-right: var(--spacing-8);
+}
+
+[dir='rtl'] .page-header {
+  flex-direction: row-reverse;
+}
+
+[dir='rtl'] .btn-icon {
+  transform: scaleX(-1);
+}

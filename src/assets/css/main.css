@@ -1,0 +1,19 @@
+@import './variables.css';
+@import './reset.css';
+@import './grid.css';
+@import './utilities.css';
+@import './components.css';
+@import './themes/light.css';
+@import './themes/dark.css';
+@import './rtl.css';
+
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  background: var(--surface-ground);
+  color: var(--text-color);
+}
