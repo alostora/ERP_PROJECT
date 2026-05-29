@@ -1,6 +1,5 @@
 <template>
   <div class="page">
-    <!-- Loading Skeleton -->
     <div v-if="loading">
       <div class="skeleton-cover"></div>
       <div class="row mt-4">
@@ -22,7 +21,6 @@
       </div>
     </div>
 
-    <!-- Content -->
     <div v-else>
       <div class="page-header">
         <div>
@@ -35,7 +33,6 @@
         </button>
       </div>
 
-      <!-- Cover Image -->
       <div class="card p-0 overflow-hidden mb-4">
         <img
           v-if="itemData.cover"
@@ -81,10 +78,8 @@
           </div>
         </div>
 
-        <!-- Company Details Card -->
         <div class="col-12 col-md-8">
           <div class="card">
-            <!-- Basic Info Section -->
             <h3 class="text-lg font-semibold mb-3">{{ $t("companies.basicInfo") }}</h3>
 
             <div class="row">
@@ -130,7 +125,6 @@
 
             <div class="divider"></div>
 
-            <!-- Location Section -->
             <h3 class="text-lg font-semibold mb-3 mt-2">
               {{ $t("companies.location") }}
             </h3>
@@ -162,7 +156,6 @@
 
             <div class="divider"></div>
 
-            <!-- Currency Section -->
             <h3 class="text-lg font-semibold mb-3 mt-2">
               {{ $t("common.currency") }}
             </h3>
