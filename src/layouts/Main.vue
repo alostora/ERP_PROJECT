@@ -6,7 +6,11 @@
       @language-changed="onLanguageChanged"
     />
 
-    <LayoutSidebar :collapsed="sidebarCollapsed" :sidebar-items="sidebarItems" :is-rtl="isRtl" />
+    <LayoutSidebar
+      :collapsed="sidebarCollapsed"
+      :sidebar-items="sidebar_items"
+      :is-rtl="isRtl"
+    />
 
     <main class="main-content" :class="{ 'sidebar-collapsed': sidebarCollapsed }">
       <div class="content-wrapper">
@@ -17,11 +21,14 @@
 </template>
 
 <script>
-import LayoutHeader from './LayoutHeader.vue'
-import LayoutSidebar from './LayoutSidebar.vue'
+import LayoutHeader from "./LayoutHeader.vue";
+import LayoutSidebar from "./LayoutSidebar.vue";
+import { sidebarItems } from "@/constants/sidebarItems";
 
 export default {
-  name: 'MainLayout',
+  name: "MainLayout",
+
+  mixins: [sidebarItems],
   components: {
     LayoutHeader,
     LayoutSidebar,
@@ -29,69 +36,34 @@ export default {
   data() {
     return {
       sidebarCollapsed: false,
-      isRtl: localStorage.getItem('language') === 'ar',
-    }
+      isRtl: localStorage.getItem("language") === "ar",
+    };
   },
-  computed: {
-    sidebarItems() {
-      return [
-        {
-          label: 'common.menu.dashboard',
-          icon: 'pi pi-home',
-          path: '/',
-        },
-        {
-          label: 'common.menu.users',
-          icon: 'pi pi-users',
-          path: '/users',
-        },
-        {
-          label: 'common.menu.countries',
-          icon: 'pi pi-globe',
-          path: '/countries',
-        },
-        {
-          label: 'common.menu.governorates',
-          icon: 'pi pi-map',
-          path: '/governorates',
-        },
-        {
-          label: 'common.menu.cities',
-          icon: 'pi pi-map',
-          path: '/cities',
-        },
-        {
-          label: 'common.menu.companies',
-          icon: 'pi pi-map',
-          path: '/companies',
-        },
-      ]
-    },
-  },
+
   methods: {
     toggleSidebar() {
-      this.sidebarCollapsed = !this.sidebarCollapsed
+      this.sidebarCollapsed = !this.sidebarCollapsed;
     },
     onThemeChanged(theme) {
-      document.documentElement.classList.remove('light-mode', 'dark-mode')
-      document.documentElement.classList.add(`${theme}-mode`)
+      document.documentElement.classList.remove("light-mode", "dark-mode");
+      document.documentElement.classList.add(`${theme}-mode`);
     },
     onLanguageChanged(language) {
-      this.isRtl = language.dir === 'rtl'
-      document.documentElement.dir = language.dir
-      document.documentElement.lang = language.code
+      this.isRtl = language.dir === "rtl";
+      document.documentElement.dir = language.dir;
+      document.documentElement.lang = language.code;
     },
   },
   mounted() {
-    const savedTheme = localStorage.getItem('theme') || 'light'
-    document.documentElement.classList.add(`${savedTheme}-mode`)
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.classList.add(`${savedTheme}-mode`);
 
-    const savedLang = localStorage.getItem('language') || 'en'
-    this.isRtl = savedLang === 'ar'
-    document.documentElement.dir = this.isRtl ? 'rtl' : 'ltr'
-    document.documentElement.lang = savedLang
+    const savedLang = localStorage.getItem("language") || "en";
+    this.isRtl = savedLang === "ar";
+    document.documentElement.dir = this.isRtl ? "rtl" : "ltr";
+    document.documentElement.lang = savedLang;
   },
-}
+};
 </script>
 
 <style scoped>

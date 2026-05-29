@@ -71,31 +71,86 @@ export default {
      confirmDeleteYes: 'Yes, Delete',
      confirmDeleteNo: 'Cancel',
 
-
+     // Common
      select: 'Select',
-     loading: 'Loading...',
      currency: 'Currency',
      currencyCode: 'Currency Code',
+     code: 'Code',
+     view: 'View',
+     edit: 'Edit',
+     delete: 'Delete',
 
-
-
-
-
-
-
+     // Navigation Menu - Complete
      menu: {
+          // Main Groups
           dashboard: 'Dashboard',
+          userManagement: 'User Management',
+          locations: 'Locations',
+          companiesGroup: 'Companies',
+          salesGroup: 'Sales & Invoices',
+          reportsGroup: 'Reports',
+          settingsGroup: 'Settings',
+
+          // Company Management (Level 2)
+          companyManagement: 'Company Management',
+          productsInventory: 'Products & Inventory',
+          businessOperations: 'Business Operations',
+          financial: 'Financial',
+
+          // Branch Management (Level 2)
+          branchManagement: 'Branch Management',
+
+          // Users & Permissions (Level 3)
           users: 'Users',
+          allUsers: 'All Users',
+          roles: 'Roles',
+          permissions: 'Permissions',
+
+          // Locations (Level 3)
           countries: 'Countries',
           governorates: 'Governorates',
           cities: 'Cities',
+
+          // Companies (Level 3)
           companies: 'Companies',
+          allCompanies: 'All Companies',
+          companyDetails: 'Company Details',
+
+          // Products & Inventory (Level 3)
           categories: 'Categories',
+          measurementUnits: 'Measurement Units',
+          variants: 'Variants',
           products: 'Products',
+          finalProducts: 'Final Products',
+
+          // Business Operations (Level 3)
+          contacts: 'Contacts',
+          branches: 'Branches',
+          employees: 'Employees',
+
+          // Financial (Level 3)
+          invoiceStages: 'Invoice Stages',
+          taxes: 'Taxes',
+          discounts: 'Discounts',
+
+          // Branch Details (Level 3)
+          branchDetails: 'Branch Details',
+          warehouses: 'Warehouses',
+          branchEmployees: 'Branch Employees',
+          purchasesInvoices: 'Purchases Invoices',
+          backToList: 'Back to List',
+
+          // Sales (Level 3)
           orders: 'Orders',
           invoices: 'Invoices',
-          reports: 'Reports',
-          settings: 'Settings',
+
+          // Reports (Level 3)
+          salesReports: 'Sales Reports',
+          inventoryReports: 'Inventory Reports',
+          financialReports: 'Financial Reports',
+
+          // Settings (Level 3)
+          generalSettings: 'General Settings',
           profile: 'Profile',
           logout: 'Logout',
      },

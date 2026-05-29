@@ -6,9 +6,13 @@
 @import './themes/light.css';
 @import './themes/dark.css';
 @import './rtl.css';
+@import './sidebar.css';
+@import './header.css';
 
 * {
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 body {

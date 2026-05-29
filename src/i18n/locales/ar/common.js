@@ -71,31 +71,86 @@ export default {
      confirmDeleteYes: 'نعم، احذف',
      confirmDeleteNo: 'إلغاء',
 
-
+     // Common
      select: 'اختر',
-     loading: 'جاري التحميل...',
      currency: 'العملة',
      currencyCode: 'كود العملة',
+     code: 'الكود',
+     view: 'عرض',
+     edit: 'تعديل',
+     delete: 'حذف',
 
-
-
-
-
-
-
+     // Navigation Menu - Complete
      menu: {
+          // Main Groups
           dashboard: 'لوحة التحكم',
+          userManagement: 'إدارة المستخدمين',
+          locations: 'المواقع',
+          companiesGroup: 'الشركات',
+          salesGroup: 'المبيعات والفواتير',
+          reportsGroup: 'التقارير',
+          settingsGroup: 'الإعدادات',
+
+          // Company Management (Level 2)
+          companyManagement: 'إدارة الشركة',
+          productsInventory: 'المنتجات والمخزون',
+          businessOperations: 'العمليات التجارية',
+          financial: 'المالية',
+
+          // Branch Management (Level 2)
+          branchManagement: 'إدارة الفرع',
+
+          // Users & Permissions (Level 3)
           users: 'المستخدمين',
+          allUsers: 'جميع المستخدمين',
+          roles: 'الصلاحيات',
+          permissions: 'الأذونات',
+
+          // Locations (Level 3)
           countries: 'الدول',
           governorates: 'المحافظات',
           cities: 'المدن',
+
+          // Companies (Level 3)
           companies: 'الشركات',
+          allCompanies: 'جميع الشركات',
+          companyDetails: 'تفاصيل الشركة',
+
+          // Products & Inventory (Level 3)
           categories: 'التصنيفات',
+          measurementUnits: 'وحدات القياس',
+          variants: 'الخصائص',
           products: 'المنتجات',
+          finalProducts: 'المنتجات النهائية',
+
+          // Business Operations (Level 3)
+          contacts: 'جهات الاتصال',
+          branches: 'الفروع',
+          employees: 'الموظفين',
+
+          // Financial (Level 3)
+          invoiceStages: 'مراحل الفاتورة',
+          taxes: 'الضرائب',
+          discounts: 'الخصومات',
+
+          // Branch Details (Level 3)
+          branchDetails: 'تفاصيل الفرع',
+          warehouses: 'المستودعات',
+          branchEmployees: 'موظفي الفرع',
+          purchasesInvoices: 'فواتير المشتريات',
+          backToList: 'العودة للقائمة',
+
+          // Sales (Level 3)
           orders: 'الطلبات',
           invoices: 'الفواتير',
-          reports: 'التقارير',
-          settings: 'الإعدادات',
+
+          // Reports (Level 3)
+          salesReports: 'تقارير المبيعات',
+          inventoryReports: 'تقارير المخزون',
+          financialReports: 'التقارير المالية',
+
+          // Settings (Level 3)
+          generalSettings: 'الإعدادات العامة',
           profile: 'الملف الشخصي',
           logout: 'تسجيل الخروج',
      },
