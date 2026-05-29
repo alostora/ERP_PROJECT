@@ -14,7 +14,7 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login,
-    meta: { guest: true }
+    meta: { guest: true },
   },
   {
     path: '/',
@@ -28,8 +28,8 @@ const routes = [
       ...citiesRoutes,
       ...companiesRoutes,
       ...categoriesRoutes,
-    ]
-  }
+    ],
+  },
 ]
 
 const router = createRouter({ history: createWebHistory(), routes })

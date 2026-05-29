@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import SidebarItem from "./SidebarItem.vue";
+import SidebarItem from './SidebarItem.vue'
 
 export default {
-  name: "LayoutSidebar",
+  name: 'LayoutSidebar',
   components: { SidebarItem },
   props: {
     collapsed: {
@@ -33,8 +33,7 @@ export default {
       default: false,
     },
   },
-};
+}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

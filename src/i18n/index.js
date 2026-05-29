@@ -21,33 +21,33 @@ import arClients from './locales/ar/clients'
 import arCategories from './locales/ar/categories'
 
 const messages = {
-     en: {
-          common: enCommon,
-          users: enUsers,
-          countries: enCountries,
-          governorates: enGovernorates,
-          cities: enCities,
-          companies: enCompanies,
-          clients: enClients,
-          categories: enCategories,
-     },
-     ar: {
-          common: arCommon,
-          users: arUsers,
-          countries: arCountries,
-          governorates: arGovernorates,
-          cities: arCities,
-          companies: arCompanies,
-          clients: arClients,
-          categories: arCategories,
-     },
+  en: {
+    common: enCommon,
+    users: enUsers,
+    countries: enCountries,
+    governorates: enGovernorates,
+    cities: enCities,
+    companies: enCompanies,
+    clients: enClients,
+    categories: enCategories,
+  },
+  ar: {
+    common: arCommon,
+    users: arUsers,
+    countries: arCountries,
+    governorates: arGovernorates,
+    cities: arCities,
+    companies: arCompanies,
+    clients: arClients,
+    categories: arCategories,
+  },
 }
 
 const i18n = createI18n({
-     legacy: false,
-     locale: localStorage.getItem('language') || 'en',
-     fallbackLocale: 'en',
-     messages,
+  legacy: false,
+  locale: localStorage.getItem('language') || 'en',
+  fallbackLocale: 'en',
+  messages,
 })
 
 export default i18n

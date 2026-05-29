@@ -14,21 +14,44 @@
           <div class="col-12 col-md-6 col-lg-4">
             <div class="search-wrapper">
               <i class="pi pi-search search-icon"></i>
-              <input type="text" v-model="filters.query_string" @input="fetchData" class="input"
-                :placeholder="$t('common.search')" />
+              <input
+                type="text"
+                v-model="filters.query_string"
+                @input="fetchData"
+                class="input"
+                :placeholder="$t('common.search')"
+              />
             </div>
           </div>
 
           <div class="col-12 col-md-6 col-lg-3">
-            <Select v-model="filters.country_id" :options="countries" :optionLabel="countryLabel" optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('countries.title')" :filter="true" :showClear="true"
-              :filterPlaceholder="$t('common.search')" class="w-full" @change="onCountryChange" />
+            <Select
+              v-model="filters.country_id"
+              :options="countries"
+              :optionLabel="countryLabel"
+              optionValue="id"
+              :placeholder="$t('common.all') + ' ' + $t('countries.title')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="onCountryChange"
+            />
           </div>
 
           <div class="col-12 col-md-6 col-lg-3 mt-2 mt-md-0" v-if="governorates.length">
-            <Select v-model="filters.governorate_id" :options="governorates" :optionLabel="governorateLabel"
-              optionValue="id" :placeholder="$t('common.all') + ' ' + $t('governorates.title')" :filter="true"
-              :showClear="true" :filterPlaceholder="$t('common.search')" class="w-full" @change="fetchData" />
+            <Select
+              v-model="filters.governorate_id"
+              :options="governorates"
+              :optionLabel="governorateLabel"
+              optionValue="id"
+              :placeholder="$t('common.all') + ' ' + $t('governorates.title')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="fetchData"
+            />
           </div>
 
           <div class="col-6 col-md-3 col-lg-2 mt-2 mt-md-0">
@@ -42,10 +65,21 @@
         </div>
       </div>
 
-      <DataTable :value="items" :paginator="true" :rows="perPage" :totalRecords="meta.total"
-        :rowsPerPageOptions="[5, 10, 25, 50]" :loading="loading" lazy @page="onPageChange" @sort="onSort"
+      <DataTable
+        :value="items"
+        :paginator="true"
+        :rows="perPage"
+        :totalRecords="meta.total"
+        :rowsPerPageOptions="[5, 10, 25, 50]"
+        :loading="loading"
+        lazy
+        @page="onPageChange"
+        @sort="onSort"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        currentPageReportTemplate="{first} to {last} of {totalRecords}" resizableColumns showGridlines>
+        currentPageReportTemplate="{first} to {last} of {totalRecords}"
+        resizableColumns
+        showGridlines
+      >
         <Column field="id" :header="$t('cities.id')" class="col-1">
           <template #body="slotProps">
             <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
@@ -62,7 +96,11 @@
               <button class="btn-icon" @click="openUpdateModal(data)" :title="$t('common.edit')">
                 <i class="pi pi-pencil"></i>
               </button>
-              <button class="btn-icon text-danger" @click="deleteRow(data)" :title="$t('common.delete')">
+              <button
+                class="btn-icon text-danger"
+                @click="deleteRow(data)"
+                :title="$t('common.delete')"
+              >
                 <i class="pi pi-trash"></i>
               </button>
             </div>

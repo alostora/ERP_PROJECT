@@ -1,11 +1,8 @@
 export const customFunctions = {
-     data() {
-          return {
-          }
-     },
-     methods: {
-
-     }
+  data() {
+    return {}
+  },
+  methods: {},
 }
 
 export default customFunctions

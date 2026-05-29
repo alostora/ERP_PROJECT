@@ -1,40 +1,40 @@
 export default {
-     data() {
-          return {
-               errors: {}
-          }
-     },
-     methods: {
-          validateCreateForm(form) {
-               this.errors = {}
+  data() {
+    return {
+      errors: {},
+    }
+  },
+  methods: {
+    validateCreateForm(form) {
+      this.errors = {}
 
-               if (!form.company_id?.trim()) {
-                    this.errors.company_id = this.$t('categories.validation.companyIdRequired')
-               }
+      if (!form.company_id?.trim()) {
+        this.errors.company_id = this.$t('categories.validation.companyIdRequired')
+      }
 
-               if (!form.name?.trim()) {
-                    this.errors.name = this.$t('categories.validation.nameRequired')
-               }
+      if (!form.name?.trim()) {
+        this.errors.name = this.$t('categories.validation.nameRequired')
+      }
 
-               if (!form.name_ar?.trim()) {
-                    this.errors.name_ar = this.$t('categories.validation.nameArRequired')
-               }
+      if (!form.name_ar?.trim()) {
+        this.errors.name_ar = this.$t('categories.validation.nameArRequired')
+      }
 
-               return Object.keys(this.errors).length === 0
-          },
+      return Object.keys(this.errors).length === 0
+    },
 
-          validateUpdateForm(form) {
-               this.errors = {}
+    validateUpdateForm(form) {
+      this.errors = {}
 
-               if (!form.name?.trim()) {
-                    this.errors.name = this.$t('categories.validation.nameRequired')
-               }
+      if (!form.name?.trim()) {
+        this.errors.name = this.$t('categories.validation.nameRequired')
+      }
 
-               if (!form.name_ar?.trim()) {
-                    this.errors.name_ar = this.$t('categories.validation.nameArRequired')
-               }
+      if (!form.name_ar?.trim()) {
+        this.errors.name_ar = this.$t('categories.validation.nameArRequired')
+      }
 
-               return Object.keys(this.errors).length === 0
-          },
-     }
+      return Object.keys(this.errors).length === 0
+    },
+  },
 }

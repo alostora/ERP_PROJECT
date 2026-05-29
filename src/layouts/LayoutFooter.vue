@@ -8,8 +8,8 @@
 
 <script>
 export default {
-  name: "LayoutFooter",
-};
+  name: 'LayoutFooter',
+}
 </script>
 
 <style scoped>

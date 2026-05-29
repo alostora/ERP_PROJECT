@@ -18,12 +18,12 @@ app.use(createPinia())
 app.use(router)
 app.use(i18n)
 app.use(PrimeVue, {
-     theme: {
-          preset: Aura,
-          options: {
-               darkModeSelector: '.dark-mode'
-          }
-     }
+  theme: {
+    preset: Aura,
+    options: {
+      darkModeSelector: '.dark-mode',
+    },
+  },
 })
 app.use(ToastService)
 app.use(ConfirmationService)

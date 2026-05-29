@@ -29,7 +29,7 @@
         </div>
         <button class="btn btn-outline" @click="$router.back()">
           <i class="pi pi-arrow-left"></i>
-          {{ $t("common.back") }}
+          {{ $t('common.back') }}
         </button>
       </div>
 
@@ -68,11 +68,11 @@
             <div class="flex flex-column gap-2">
               <div class="flex align-center gap-2 text-secondary">
                 <i class="pi pi-envelope text-primary"></i>
-                <span>{{ itemData.email || "-" }}</span>
+                <span>{{ itemData.email || '-' }}</span>
               </div>
               <div class="flex align-center gap-2 text-secondary">
                 <i class="pi pi-phone text-primary"></i>
-                <span>{{ itemData.phone || "-" }}</span>
+                <span>{{ itemData.phone || '-' }}</span>
               </div>
             </div>
           </div>
@@ -80,45 +80,37 @@
 
         <div class="col-12 col-md-8">
           <div class="card">
-            <h3 class="text-lg font-semibold mb-3">{{ $t("companies.basicInfo") }}</h3>
+            <h3 class="text-lg font-semibold mb-3">{{ $t('companies.basicInfo') }}</h3>
 
             <div class="row">
               <div class="col-12 col-md-6">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{ $t("companies.name") }}</label>
+                  <label class="text-xs text-secondary">{{ $t('companies.name') }}</label>
                   <p class="text-sm font-medium">{{ itemData.name }}</p>
                 </div>
               </div>
               <div class="col-12 col-md-6">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{
-                    $t("companies.name_ar")
-                  }}</label>
+                  <label class="text-xs text-secondary">{{ $t('companies.name_ar') }}</label>
                   <p class="text-sm font-medium">{{ itemData.name_ar }}</p>
                 </div>
               </div>
               <div class="col-12 col-md-6">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{
-                    $t("companies.email")
-                  }}</label>
-                  <p class="text-sm font-medium">{{ itemData.email || "-" }}</p>
+                  <label class="text-xs text-secondary">{{ $t('companies.email') }}</label>
+                  <p class="text-sm font-medium">{{ itemData.email || '-' }}</p>
                 </div>
               </div>
               <div class="col-12 col-md-6">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{
-                    $t("companies.phone")
-                  }}</label>
-                  <p class="text-sm font-medium">{{ itemData.phone || "-" }}</p>
+                  <label class="text-xs text-secondary">{{ $t('companies.phone') }}</label>
+                  <p class="text-sm font-medium">{{ itemData.phone || '-' }}</p>
                 </div>
               </div>
               <div class="col-12">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{
-                    $t("companies.address")
-                  }}</label>
-                  <p class="text-sm font-medium">{{ itemData.address || "-" }}</p>
+                  <label class="text-xs text-secondary">{{ $t('companies.address') }}</label>
+                  <p class="text-sm font-medium">{{ itemData.address || '-' }}</p>
                 </div>
               </div>
             </div>
@@ -126,29 +118,25 @@
             <div class="divider"></div>
 
             <h3 class="text-lg font-semibold mb-3 mt-2">
-              {{ $t("companies.location") }}
+              {{ $t('companies.location') }}
             </h3>
 
             <div class="row">
               <div class="col-12 col-md-4">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{
-                    $t("countries.title")
-                  }}</label>
+                  <label class="text-xs text-secondary">{{ $t('countries.title') }}</label>
                   <p class="text-sm font-medium">{{ getCountryName() }}</p>
                 </div>
               </div>
               <div class="col-12 col-md-4">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{
-                    $t("governorates.title")
-                  }}</label>
+                  <label class="text-xs text-secondary">{{ $t('governorates.title') }}</label>
                   <p class="text-sm font-medium">{{ getGovernorateName() }}</p>
                 </div>
               </div>
               <div class="col-12 col-md-4">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{ $t("cities.title") }}</label>
+                  <label class="text-xs text-secondary">{{ $t('cities.title') }}</label>
                   <p class="text-sm font-medium">{{ getCityName() }}</p>
                 </div>
               </div>
@@ -157,25 +145,21 @@
             <div class="divider"></div>
 
             <h3 class="text-lg font-semibold mb-3 mt-2">
-              {{ $t("common.currency") }}
+              {{ $t('common.currency') }}
             </h3>
 
             <div class="row">
               <div class="col-12 col-md-6">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{
-                    $t("common.currency")
-                  }}</label>
+                  <label class="text-xs text-secondary">{{ $t('common.currency') }}</label>
                   <p class="text-sm font-medium">{{ getCurrencyName() }}</p>
                 </div>
               </div>
               <div class="col-12 col-md-6">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{
-                    $t("common.currencyCode")
-                  }}</label>
+                  <label class="text-xs text-secondary">{{ $t('common.currencyCode') }}</label>
                   <p class="text-sm font-medium">
-                    {{ itemData.currency?.prefix || "-" }}
+                    {{ itemData.currency?.prefix || '-' }}
                   </p>
                 </div>
               </div>
@@ -188,23 +172,23 @@
 </template>
 
 <script>
-import { API_ROUTES } from "@/constants/apiRoutes";
-import tableMixin from "@/mixins/table";
+import { API_ROUTES } from '@/constants/apiRoutes'
+import tableMixin from '@/mixins/table'
 
 export default {
-  name: "CompanyShow",
+  name: 'CompanyShow',
   mixins: [tableMixin],
   data() {
     return {
       apiUrl: API_ROUTES.COMPANY.BASE,
-    };
+    }
   },
 
   watch: {
-    "$route.params.company_id": {
+    '$route.params.company_id': {
       handler(newVal) {
-        if (newVal && newVal !== "undefined") {
-          this.showItem(this.apiUrl, newVal);
+        if (newVal && newVal !== 'undefined') {
+          this.showItem(this.apiUrl, newVal)
         }
       },
       immediate: true,
@@ -213,38 +197,36 @@ export default {
 
   computed: {
     currentLanguage() {
-      return localStorage.getItem("language") || "en";
+      return localStorage.getItem('language') || 'en'
     },
   },
 
   methods: {
     getCountryName() {
-      if (!this.itemData.country) return "-";
-      return this.currentLanguage === "ar"
+      if (!this.itemData.country) return '-'
+      return this.currentLanguage === 'ar'
         ? this.itemData.country.name_ar
-        : this.itemData.country.name;
+        : this.itemData.country.name
     },
 
     getGovernorateName() {
-      if (!this.itemData.governorate) return "-";
-      return this.currentLanguage === "ar"
+      if (!this.itemData.governorate) return '-'
+      return this.currentLanguage === 'ar'
         ? this.itemData.governorate.name_ar
-        : this.itemData.governorate.name;
+        : this.itemData.governorate.name
     },
 
     getCityName() {
-      if (!this.itemData.city) return "-";
-      return this.currentLanguage === "ar"
-        ? this.itemData.city.name_ar
-        : this.itemData.city.name;
+      if (!this.itemData.city) return '-'
+      return this.currentLanguage === 'ar' ? this.itemData.city.name_ar : this.itemData.city.name
     },
 
     getCurrencyName() {
-      if (!this.itemData.currency) return "-";
-      return this.currentLanguage === "ar"
+      if (!this.itemData.currency) return '-'
+      return this.currentLanguage === 'ar'
         ? this.itemData.currency.name_ar
-        : this.itemData.currency.name;
+        : this.itemData.currency.name
     },
   },
-};
+}
 </script>

@@ -9,7 +9,7 @@
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
         <div class="col-12">
-          <label class="form-label required">{{ $t("companies.currency") }}</label>
+          <label class="form-label required">{{ $t('companies.currency') }}</label>
           <Select
             v-model="formData.currency_id"
             :options="currencies"
@@ -21,15 +21,13 @@
             :filterPlaceholder="$t('common.search')"
             class="w-full"
           />
-          <small v-if="errors.currency_id" class="error-message">{{
-            errors.currency_id
-          }}</small>
+          <small v-if="errors.currency_id" class="error-message">{{ errors.currency_id }}</small>
         </div>
       </div>
 
       <div class="form-group">
         <div class="col-12">
-          <label class="form-label required">{{ $t("countries.title") }}</label>
+          <label class="form-label required">{{ $t('countries.title') }}</label>
           <Select
             v-model="formData.country_id"
             :options="countries"
@@ -42,15 +40,13 @@
             class="w-full"
             @change="onCountryChange"
           />
-          <small v-if="errors.country_id" class="error-message">{{
-            errors.country_id
-          }}</small>
+          <small v-if="errors.country_id" class="error-message">{{ errors.country_id }}</small>
         </div>
       </div>
 
       <div class="form-group" v-if="governorates.length">
         <div class="col-12">
-          <label class="form-label required">{{ $t("governorates.title") }}</label>
+          <label class="form-label required">{{ $t('governorates.title') }}</label>
           <Select
             v-model="formData.governorate_id"
             :options="governorates"
@@ -71,7 +67,7 @@
 
       <div class="form-group" v-if="cities.length">
         <div class="col-12">
-          <label class="form-label required">{{ $t("cities.title") }}</label>
+          <label class="form-label required">{{ $t('cities.title') }}</label>
           <Select
             v-model="formData.city_id"
             :options="cities"
@@ -89,7 +85,7 @@
 
       <div class="form-group">
         <div class="col-12">
-          <label class="form-label required">{{ $t("companies.name") }}</label>
+          <label class="form-label required">{{ $t('companies.name') }}</label>
           <input
             v-model="formData.name"
             type="text"
@@ -102,7 +98,7 @@
 
       <div class="form-group">
         <div class="col-12">
-          <label class="form-label required">{{ $t("companies.name_ar") }}</label>
+          <label class="form-label required">{{ $t('companies.name_ar') }}</label>
           <input
             v-model="formData.name_ar"
             type="text"
@@ -115,7 +111,7 @@
 
       <div class="form-group">
         <div class="col-12">
-          <label class="form-label required">{{ $t("companies.phone") }}</label>
+          <label class="form-label required">{{ $t('companies.phone') }}</label>
           <input
             v-model="formData.phone"
             type="text"
@@ -128,7 +124,7 @@
 
       <div class="form-group">
         <div class="col-12">
-          <label class="form-label required">{{ $t("companies.email") }}</label>
+          <label class="form-label required">{{ $t('companies.email') }}</label>
           <input
             v-model="formData.email"
             type="text"
@@ -141,7 +137,7 @@
 
       <div class="form-group">
         <div class="col-12">
-          <label class="form-label required">{{ $t("companies.address") }}</label>
+          <label class="form-label required">{{ $t('companies.address') }}</label>
           <input
             v-model="formData.address"
             type="text"
@@ -154,10 +150,10 @@
 
       <div class="flex justify-end gap-2 mt-4">
         <button type="button" class="btn btn-outline ml-2 mr-2" @click="closeFormModal">
-          {{ $t("common.cancel") }}
+          {{ $t('common.cancel') }}
         </button>
         <button type="submit" class="btn btn-primary" :disabled="formLoading">
-          {{ formLoading ? $t("common.loading") : $t("common.create") }}
+          {{ formLoading ? $t('common.loading') : $t('common.create') }}
         </button>
       </div>
     </form>
@@ -165,15 +161,15 @@
 </template>
 
 <script>
-import Dialog from "primevue/dialog";
-import formMixin from "@/mixins/form";
-import { API_ROUTES } from "@/constants/apiRoutes";
-import validationRequest from "../validation/validationRequest";
-import customFunctions from "../custom_functions/customFunctions";
-import Select from "primevue/select";
+import Dialog from 'primevue/dialog'
+import formMixin from '@/mixins/form'
+import { API_ROUTES } from '@/constants/apiRoutes'
+import validationRequest from '../validation/validationRequest'
+import customFunctions from '../custom_functions/customFunctions'
+import Select from 'primevue/select'
 
 export default {
-  name: "UpdateForm",
+  name: 'UpdateForm',
   mixins: [formMixin, customFunctions, validationRequest],
   components: { Dialog, Select },
 
@@ -190,7 +186,7 @@ export default {
       deep: true,
       handler(selectedItem) {
         if (selectedItem && selectedItem.id) {
-          this.populateForm(selectedItem);
+          this.populateForm(selectedItem)
         }
       },
     },
@@ -200,101 +196,101 @@ export default {
     return {
       apiUrl: API_ROUTES.COMPANY.BASE,
       formData: {
-        id: "",
-        currency_id: "",
-        country_id: "",
-        governorate_id: "",
-        city_id: "",
-        name: "",
-        name_ar: "",
-        phone: "",
-        email: "",
-        address: "",
+        id: '',
+        currency_id: '',
+        country_id: '',
+        governorate_id: '',
+        city_id: '',
+        name: '',
+        name_ar: '',
+        phone: '',
+        email: '',
+        address: '',
       },
-    };
+    }
   },
 
   mounted() {
-    this.loadCurrencies();
-    this.loadCountries();
+    this.loadCurrencies()
+    this.loadCountries()
   },
 
   computed: {
     currentLanguage() {
-      return localStorage.getItem("language") || "en";
+      return localStorage.getItem('language') || 'en'
     },
 
     currencyLabel() {
-      return this.currentLanguage === "ar" ? "name_ar" : "name";
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
 
     countryLabel() {
-      return this.currentLanguage === "ar" ? "name_ar" : "name";
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
 
     governorateLabel() {
-      return this.currentLanguage === "ar" ? "name_ar" : "name";
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
 
     cityLabel() {
-      return this.currentLanguage === "ar" ? "name_ar" : "name";
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
   },
 
   methods: {
     populateForm(selectedItem) {
       this.formData = {
-        id: selectedItem.id || "",
-        currency_id: selectedItem.currency?.id || "",
-        country_id: selectedItem.country?.id || "",
-        governorate_id: selectedItem.governorate?.id || "",
-        city_id: selectedItem.city?.id || "",
-        name: selectedItem.name || "",
-        name_ar: selectedItem.name_ar || "",
-        phone: selectedItem.phone || "",
-        email: selectedItem.email || "",
-        address: selectedItem.address || "",
-      };
+        id: selectedItem.id || '',
+        currency_id: selectedItem.currency?.id || '',
+        country_id: selectedItem.country?.id || '',
+        governorate_id: selectedItem.governorate?.id || '',
+        city_id: selectedItem.city?.id || '',
+        name: selectedItem.name || '',
+        name_ar: selectedItem.name_ar || '',
+        phone: selectedItem.phone || '',
+        email: selectedItem.email || '',
+        address: selectedItem.address || '',
+      }
 
       if (this.formData.country_id) {
-        this.loadGovernorates(this.formData.country_id);
+        this.loadGovernorates(this.formData.country_id)
       }
 
       if (this.formData.governorate_id) {
-        this.loadCities(this.formData.governorate_id);
+        this.loadCities(this.formData.governorate_id)
       }
     },
 
     async onCountryChange() {
-      await this.loadGovernorates(this.formData.country_id);
+      await this.loadGovernorates(this.formData.country_id)
 
-      this.formData.governorate_id = "";
+      this.formData.governorate_id = ''
     },
 
     async onGovernorateChange() {
-      await this.loadCities(this.formData.governorate_id);
+      await this.loadCities(this.formData.governorate_id)
 
-      this.formData.city_id = "";
+      this.formData.city_id = ''
     },
     openModal() {
-      this.formVisible = true;
+      this.formVisible = true
     },
 
     async handleSubmit() {
       if (!this.validateUpdateForm(this.formData)) {
-        return;
+        return
       }
 
-      const data = { ...this.formData };
-      delete data.id;
+      const data = { ...this.formData }
+      delete data.id
 
       await this.submitUpdateForm(
         this.apiUrl,
         this.formData.id,
         data,
-        this.$t("common.updatedSuccessfully")
-      );
+        this.$t('common.updatedSuccessfully')
+      )
     },
   },
-};
+}
 </script>

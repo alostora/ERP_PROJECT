@@ -14,8 +14,13 @@
           <div class="col-12 col-md-6 col-lg-4">
             <div class="search-wrapper">
               <i class="pi pi-search search-icon"></i>
-              <input type="text" v-model="filters.query_string" @input="fetchData" class="input"
-                :placeholder="$t('common.search')" />
+              <input
+                type="text"
+                v-model="filters.query_string"
+                @input="fetchData"
+                class="input"
+                :placeholder="$t('common.search')"
+              />
             </div>
           </div>
 
@@ -30,10 +35,21 @@
         </div>
       </div>
 
-      <DataTable :value="items" :paginator="true" :rows="perPage" :totalRecords="meta.total"
-        :rowsPerPageOptions="[5, 10, 25, 50]" :loading="loading" lazy @page="onPageChange" @sort="onSort"
+      <DataTable
+        :value="items"
+        :paginator="true"
+        :rows="perPage"
+        :totalRecords="meta.total"
+        :rowsPerPageOptions="[5, 10, 25, 50]"
+        :loading="loading"
+        lazy
+        @page="onPageChange"
+        @sort="onSort"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        currentPageReportTemplate="{first} to {last} of {totalRecords}" resizableColumns showGridlines>
+        currentPageReportTemplate="{first} to {last} of {totalRecords}"
+        resizableColumns
+        showGridlines
+      >
         <Column field="id" :header="$t('countries.id')" class="col-1">
           <template #body="slotProps">
             <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
@@ -45,8 +61,10 @@
 
         <Column :header="$t('governorates.title')">
           <template #body="{ data }">
-            <button class="btn-sm btn-outline"
-              @click="$router.push({ name: 'governorates', query: { country_id: data.id } })">
+            <button
+              class="btn-sm btn-outline"
+              @click="$router.push({ name: 'governorates', query: { country_id: data.id } })"
+            >
               <i class="pi pi-map-marker"></i>
               {{ $t('governorates.title') }}
             </button>
@@ -59,7 +77,11 @@
               <button class="btn-icon" @click="openUpdateModal(data)" :title="$t('common.edit')">
                 <i class="pi pi-pencil"></i>
               </button>
-              <button class="btn-icon text-danger" @click="deleteRow(data)" :title="$t('common.delete')">
+              <button
+                class="btn-icon text-danger"
+                @click="deleteRow(data)"
+                :title="$t('common.delete')"
+              >
                 <i class="pi pi-trash"></i>
               </button>
             </div>
