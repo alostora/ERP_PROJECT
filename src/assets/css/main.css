@@ -6,8 +6,8 @@
 @import './themes/light.css';
 @import './themes/dark.css';
 @import './rtl.css';
-@import './sidebar.css';
 @import './header.css';
+@import './sidebar.css';
 
 * {
   transition:
