@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sidebar-item-wrapper">
     <!-- Item with children (has nested items) -->
     <div v-if="item.items">
       <div :class="['nav-item', getLevelClass()]" @click="toggleOpen">
@@ -107,6 +107,10 @@ export default {
 </script>
 
 <style scoped>
+.sidebar-item-wrapper {
+  position: relative;
+}
+
 /* Base nav item */
 .nav-item {
   display: flex;
@@ -116,6 +120,7 @@ export default {
   border-radius: var(--radius-md);
   transition: all 0.2s ease;
   cursor: pointer;
+  position: relative;
 }
 
 .nav-item:hover {
@@ -293,18 +298,22 @@ export default {
   padding-left: 1rem !important;
   padding-right: 2rem !important;
 }
+
 .rtl-sidebar .nav-level-2 {
   padding-left: 1rem !important;
   padding-right: 3rem !important;
 }
+
 .rtl-sidebar .nav-level-3 {
   padding-left: 1rem !important;
   padding-right: 4rem !important;
 }
+
 .rtl-sidebar .nav-level-4 {
   padding-left: 1rem !important;
   padding-right: 5rem !important;
 }
+
 .rtl-sidebar .nav-level-5 {
   padding-left: 1rem !important;
   padding-right: 6rem !important;
