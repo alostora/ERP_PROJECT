@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h1 class="page-title">{{ $t('categories.title') }}</h1>
+      <h1 class="page-title">{{ $t('measurementUnitGroups.title') }}</h1>
       <button class="btn btn-primary" @click="openCreateModal">
         <i class="pi pi-plus"></i>
         {{ $t('common.addNew') }}
@@ -50,15 +50,17 @@
         resizableColumns
         showGridlines
       >
-        <Column field="id" :header="$t('categories.id')" class="col-1">
+        <Column field="id" :header="$t('measurementUnitGroups.id')" class="col-1">
           <template #body="slotProps">
             <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
           </template>
         </Column>
 
-        <Column field="name" :header="$t('categories.name')" sortable />
+        <Column field="name" :header="$t('measurementUnitGroups.name')" sortable />
 
-        <Column field="name_ar" :header="$t('categories.name_ar')" sortable />
+        <Column field="name_ar" :header="$t('measurementUnitGroups.name_ar')" sortable />
+
+        <Column field="symbol" :header="$t('measurementUnitGroups.symbol')" sortable />
 
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
@@ -108,7 +110,7 @@ export default {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
           this.company_id = newVal
-          this.apiUrl = `${API_ROUTES.CATEGORY.SEARCH}/${newVal}`
+          this.apiUrl = `${API_ROUTES.MEASUREMENT_UNIT_GROUP.SEARCH}/${newVal}`
         }
       },
       immediate: true,
@@ -117,8 +119,8 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.CATEGORY.SEARCH,
-      deleteUrl: API_ROUTES.CATEGORY.BASE,
+      apiUrl: API_ROUTES.MEASUREMENT_UNIT_GROUP.SEARCH,
+      deleteUrl: API_ROUTES.MEASUREMENT_UNIT_GROUP.BASE,
       company_id: '',
       filters: { query_string: '' },
       selectedItem: {},

@@ -9,6 +9,8 @@ import enCities from './locales/en/cities'
 import enCompanies from './locales/en/companies'
 import enClients from './locales/en/clients'
 import enCategories from './locales/en/categories'
+import enMeasurementUnitGroups from './locales/en/measurementUnitGroups'
+import enMeasurementUnits from './locales/en/measurementUnits'
 
 // Import Arabic translations
 import arCommon from './locales/ar/common'
@@ -19,6 +21,8 @@ import arCities from './locales/ar/cities'
 import arCompanies from './locales/ar/companies'
 import arClients from './locales/ar/clients'
 import arCategories from './locales/ar/categories'
+import arMeasurementUnitGroups from './locales/ar/measurementUnitGroups'
+import arMeasurementUnits from './locales/ar/measurementUnits'
 
 const messages = {
   en: {
@@ -30,6 +34,8 @@ const messages = {
     companies: enCompanies,
     clients: enClients,
     categories: enCategories,
+    measurementUnitGroups: enMeasurementUnitGroups,
+    measurementUnits: enMeasurementUnits,
   },
   ar: {
     common: arCommon,
@@ -40,6 +46,8 @@ const messages = {
     companies: arCompanies,
     clients: arClients,
     categories: arCategories,
+    measurementUnitGroups: arMeasurementUnitGroups,
+    measurementUnits: arMeasurementUnits,
   },
 }
 

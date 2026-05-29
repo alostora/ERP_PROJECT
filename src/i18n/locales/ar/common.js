@@ -118,6 +118,7 @@ export default {
 
     // Products & Inventory (Level 3)
     categories: 'التصنيفات',
+    measurementUnitGroups: 'مجموعات وحدات القياس',
     measurementUnits: 'وحدات القياس',
     variants: 'الخصائص',
     products: 'المنتجات',

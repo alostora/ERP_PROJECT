@@ -1,14 +1,14 @@
 <template>
   <Dialog
     v-model:visible="formVisible"
-    :header="$t('common.updateTitle', { module: $t('categories.title') })"
+    :header="$t('common.updateTitle', { module: $t('measurementUnitGroups.title') })"
     :modal="true"
     :style="{ width: '500px' }"
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
-        <label class="form-label required">{{ $t('categories.name') }}</label>
+        <label class="form-label required">{{ $t('measurementUnitGroups.name') }}</label>
         <input
           v-model="formData.name"
           type="text"
@@ -19,7 +19,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('categories.name_ar') }}</label>
+        <label class="form-label required">{{ $t('measurementUnitGroups.name_ar') }}</label>
         <input
           v-model="formData.name_ar"
           type="text"
@@ -27,6 +27,17 @@
           :class="{ 'input-error': errors.name_ar }"
         />
         <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label required">{{ $t('measurementUnitGroups.symbol') }}</label>
+        <input
+          v-model="formData.symbol"
+          type="text"
+          class="input"
+          :class="{ 'input-error': errors.symbol }"
+        />
+        <small v-if="errors.symbol" class="error-message">{{ errors.symbol }}</small>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -74,11 +85,12 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.CATEGORY.BASE,
+      apiUrl: API_ROUTES.MEASUREMENT_UNIT_GROUP.BASE,
       formData: {
         id: '',
         name: '',
         name_ar: '',
+        symbol: '',
       },
     }
   },
@@ -97,6 +109,7 @@ export default {
         id: selectedItem.id || '',
         name: selectedItem.name || '',
         name_ar: selectedItem.name_ar || '',
+        symbol: selectedItem.symbol || '',
       }
     },
 

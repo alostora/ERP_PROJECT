@@ -37,4 +37,12 @@ export const API_ROUTES = {
     SEARCH: `${BASE_URL}/admin/company/categories/search`,
     BASE: `${BASE_URL}/admin/company/category`,
   },
+  MEASUREMENT_UNIT_GROUP: {
+    SEARCH: `${BASE_URL}/admin/company/measurement-unit-groups/search`,
+    BASE: `${BASE_URL}/admin/company/measurement-unit-group`,
+  },
+  MEASUREMENT_UNIT: {
+    SEARCH: `${BASE_URL}/admin/company/measurement-units/search`,
+    BASE: `${BASE_URL}/admin/company/measurement-unit`,
+  },
 }

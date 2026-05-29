@@ -144,6 +144,11 @@ export const sidebarItems = {
                   path: `/company/categories/${this.company_id}`,
                 },
                 {
+                  label: 'common.menu.measurementUnitGroups',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/measurement-unit-groups/${this.company_id}`,
+                },
+                {
                   label: 'common.menu.measurementUnits',
                   icon: 'pi pi-circle-fill',
                   path: `/company/measurement-units/${this.company_id}`,

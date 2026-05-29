@@ -8,6 +8,7 @@ import governoratesRoutes from '@/views/governorates/routes/routes'
 import citiesRoutes from '@/views/cities/routes/routes'
 import companiesRoutes from '@/views/companies/routes/routes'
 import categoriesRoutes from '@/views/categories/routes/routes'
+import measurementUnitGroups from '@/views/measurement_unit_groups/routes/routes'
 
 const routes = [
   {
@@ -28,6 +29,7 @@ const routes = [
       ...citiesRoutes,
       ...companiesRoutes,
       ...categoriesRoutes,
+      ...measurementUnitGroups,
     ],
   },
 ]

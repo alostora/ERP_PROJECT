@@ -1,20 +1,47 @@
 <template>
-  <Dialog v-model:visible="formVisible" :header="$t('common.createTitle', { module: $t('categories.title') })"
-    :modal="true" :style="{ width: '500px' }" @hide="closeFormModal">
+  <Dialog
+    v-model:visible="formVisible"
+    :header="$t('common.createTitle', { module: $t('measurementUnitGroups.title') })"
+    :modal="true"
+    :style="{ width: '500px' }"
+    @hide="closeFormModal"
+  >
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
+        <input type="hidden" v-model="formData.company_id" />
         <small v-if="errors.company_id" class="error-message">{{ errors.company_id }}</small>
       </div>
       <div class="form-group">
-        <label class="form-label required">{{ $t('categories.name') }}</label>
-        <input v-model="formData.name" type="text" class="input" :class="{ 'input-error': errors.name }" />
+        <label class="form-label required">{{ $t('measurementUnitGroups.name') }}</label>
+        <input
+          v-model="formData.name"
+          type="text"
+          class="input"
+          :class="{ 'input-error': errors.name }"
+        />
         <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('categories.name_ar') }}</label>
-        <input v-model="formData.name_ar" type="text" class="input" :class="{ 'input-error': errors.name_ar }" />
+        <label class="form-label required">{{ $t('measurementUnitGroups.name_ar') }}</label>
+        <input
+          v-model="formData.name_ar"
+          type="text"
+          class="input"
+          :class="{ 'input-error': errors.name_ar }"
+        />
         <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label required">{{ $t('measurementUnitGroups.symbol') }}</label>
+        <input
+          v-model="formData.symbol"
+          type="text"
+          class="input"
+          :class="{ 'input-error': errors.symbol }"
+        />
+        <small v-if="errors.symbol" class="error-message">{{ errors.symbol }}</small>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -50,11 +77,12 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.CATEGORY.BASE,
+      apiUrl: API_ROUTES.MEASUREMENT_UNIT_GROUP.BASE,
       formData: {
         company_id: '',
         name: '',
         name_ar: '',
+        symbol: '',
       },
     }
   },

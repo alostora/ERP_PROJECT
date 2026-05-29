@@ -118,6 +118,7 @@ export default {
 
     // Products & Inventory (Level 3)
     categories: 'Categories',
+    measurementUnitGroups: 'Measurement Unit Groups',
     measurementUnits: 'Measurement Units',
     variants: 'Variants',
     products: 'Products',
