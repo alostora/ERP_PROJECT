@@ -74,6 +74,8 @@ export default {
 
      select: 'اختر',
      loading: 'جاري التحميل...',
+     currency: 'العملة',
+     currencyCode: 'كود العملة',
 
 
 

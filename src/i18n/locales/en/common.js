@@ -74,6 +74,8 @@ export default {
 
      select: 'Select',
      loading: 'Loading...',
+     currency: 'Currency',
+     currencyCode: 'Currency Code',
 
 
 

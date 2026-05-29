@@ -4,6 +4,7 @@ export const tableMixin = {
      data() {
           return {
                items: [],
+               itemData: [],
                loading: false,
                meta: { current_page: 1, total: 0, last_page: 1 },
                perPage: 10,
@@ -109,7 +110,26 @@ export const tableMixin = {
                          }
                     }
                })
-          }
+          },
+
+
+          async showItem(url, id) {
+               this.loading = true;
+               try {
+                    const response = await API.get(`${url}/${id}`);
+                    this.itemData = response.data.data || {};
+               } catch (error) {
+                    console.error(error);
+                    this.$toast.add({
+                         severity: "error",
+                         summary: "Error",
+                         detail: "Failed to load item data",
+                         life: 3000,
+                    });
+               } finally {
+                    this.loading = false;
+               }
+          },
      }
 }
 

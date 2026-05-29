@@ -340,3 +340,61 @@
 .overflow-x-hidden {
   overflow-x: hidden;
 }
+
+/* Height */
+.h-200 {
+  height: 200px;
+}
+
+/* Margin negative */
+.mt-n-50 {
+  margin-top: -50px;
+}
+
+/* Existing utilities... */
+
+/* Margin Top */
+.mt-1 {
+  margin-top: var(--spacing-1);
+}
+.mt-2 {
+  margin-top: var(--spacing-2);
+}
+.mt-3 {
+  margin-top: var(--spacing-3);
+}
+.mt-4 {
+  margin-top: var(--spacing-4);
+}
+/* ... other margin utilities */
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: var(--spacing-4) 0;
+}
+
+/* Height */
+.h-200 {
+  height: 200px;
+}
+
+/* Margin Negative */
+.mt-n-50 {
+  margin-top: -50px;
+}
+
+/* Text sizes */
+.text-2xl {
+  font-size: var(--font-size-2xl);
+}
+
+.text-3xl {
+  font-size: var(--font-size-3xl);
+}
+
+/* Background */
+.bg-hover {
+  background: var(--surface-hover);
+}

@@ -1,8 +1,8 @@
 export default {
      title: 'Companies',
      id: '#',
-     name: 'Company name',
-     name_ar: 'Company name (Arabic)',
+     name: 'Company Name',
+     name_ar: 'Company Name (Arabic)',
      phone: 'Phone',
      email: 'Email',
      address: 'Address',
@@ -12,6 +12,8 @@ export default {
      country: 'Country',
      governorate: 'Governorate',
      city: 'City',
+     basicInfo: 'Basic Information',
+     location: 'Location',
      validation: {
           nameRequired: 'Name is required',
           nameArRequired: 'Arabic name is required',

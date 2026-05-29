@@ -157,6 +157,13 @@
               >
                 <i class="pi pi-trash"></i>
               </button>
+              <button
+                class="btn-icon"
+                @click="$router.push(`/company/${data.id}`)"
+                :title="$t('common.view')"
+              >
+                <i class="pi pi-eye"></i>
+              </button>
             </div>
           </template>
         </Column>
