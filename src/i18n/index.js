@@ -8,6 +8,7 @@ import enGovernorates from './locales/en/governorates'
 import enCities from './locales/en/cities'
 import enCompanies from './locales/en/companies'
 import enClients from './locales/en/clients'
+import enCategories from './locales/en/categories'
 
 // Import Arabic translations
 import arCommon from './locales/ar/common'
@@ -17,6 +18,7 @@ import arGovernorates from './locales/ar/governorates'
 import arCities from './locales/ar/cities'
 import arCompanies from './locales/ar/companies'
 import arClients from './locales/ar/clients'
+import arCategories from './locales/ar/categories'
 
 const messages = {
      en: {
@@ -27,6 +29,7 @@ const messages = {
           cities: enCities,
           companies: enCompanies,
           clients: enClients,
+          categories: enCategories,
      },
      ar: {
           common: arCommon,
@@ -36,6 +39,7 @@ const messages = {
           cities: arCities,
           companies: arCompanies,
           clients: arClients,
+          categories: arCategories,
      },
 }
 

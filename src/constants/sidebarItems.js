@@ -45,36 +45,36 @@ export const sidebarItems = {
                     },
 
                     // Sales & Invoices Group
-                    {
-                         label: "common.menu.salesGroup",
-                         icon: "pi pi-chart-line",
-                         items: [
-                              { label: "common.menu.orders", icon: "pi pi-circle-fill", path: "/orders" },
-                              { label: "common.menu.invoices", icon: "pi pi-circle-fill", path: "/invoices" },
-                              { label: "common.menu.invoiceStages", icon: "pi pi-circle-fill", path: "/invoice-stages" },
-                         ]
-                    },
+                    // {
+                    //      label: "common.menu.salesGroup",
+                    //      icon: "pi pi-chart-line",
+                    //      items: [
+                    //           { label: "common.menu.orders", icon: "pi pi-circle-fill", path: "/orders" },
+                    //           { label: "common.menu.invoices", icon: "pi pi-circle-fill", path: "/invoices" },
+                    //           { label: "common.menu.invoiceStages", icon: "pi pi-circle-fill", path: "/invoice-stages" },
+                    //      ]
+                    // },
 
-                    // Reports Group
-                    {
-                         label: "common.menu.reportsGroup",
-                         icon: "pi pi-chart-bar",
-                         items: [
-                              { label: "common.menu.salesReports", icon: "pi pi-circle-fill", path: "/reports/sales" },
-                              { label: "common.menu.inventoryReports", icon: "pi pi-circle-fill", path: "/reports/inventory" },
-                              { label: "common.menu.financialReports", icon: "pi pi-circle-fill", path: "/reports/financial" },
-                         ]
-                    },
+                    // // Reports Group
+                    // {
+                    //      label: "common.menu.reportsGroup",
+                    //      icon: "pi pi-chart-bar",
+                    //      items: [
+                    //           { label: "common.menu.salesReports", icon: "pi pi-circle-fill", path: "/reports/sales" },
+                    //           { label: "common.menu.inventoryReports", icon: "pi pi-circle-fill", path: "/reports/inventory" },
+                    //           { label: "common.menu.financialReports", icon: "pi pi-circle-fill", path: "/reports/financial" },
+                    //      ]
+                    // },
 
-                    // Settings Group
-                    {
-                         label: "common.menu.settingsGroup",
-                         icon: "pi pi-cog",
-                         items: [
-                              { label: "common.menu.generalSettings", icon: "pi pi-circle-fill", path: "/settings" },
-                              { label: "common.menu.profile", icon: "pi pi-circle-fill", path: "/profile" },
-                         ]
-                    },
+                    // // Settings Group
+                    // {
+                    //      label: "common.menu.settingsGroup",
+                    //      icon: "pi pi-cog",
+                    //      items: [
+                    //           { label: "common.menu.generalSettings", icon: "pi pi-circle-fill", path: "/settings" },
+                    //           { label: "common.menu.profile", icon: "pi pi-circle-fill", path: "/profile" },
+                    //      ]
+                    // },
                ]
           },
      },
@@ -134,11 +134,11 @@ export const sidebarItems = {
                                    label: "common.menu.productsInventory",
                                    icon: "pi pi-box",
                                    items: [
-                                        { label: "common.menu.categories", icon: "pi pi-circle-fill", path: `/company/${this.company_id}/categories` },
-                                        { label: "common.menu.measurementUnits", icon: "pi pi-circle-fill", path: `/company/${this.company_id}/measurement-units` },
-                                        { label: "common.menu.variants", icon: "pi pi-circle-fill", path: `/company/${this.company_id}/variants` },
-                                        { label: "common.menu.products", icon: "pi pi-circle-fill", path: `/company/${this.company_id}/products` },
-                                        { label: "common.menu.finalProducts", icon: "pi pi-circle-fill", path: `/company/${this.company_id}/final-products` },
+                                        { label: "common.menu.categories", icon: "pi pi-circle-fill", path: `/company/categories/${this.company_id}` },
+                                        { label: "common.menu.measurementUnits", icon: "pi pi-circle-fill", path: `/company/measurement-units/${this.company_id}` },
+                                        { label: "common.menu.variants", icon: "pi pi-circle-fill", path: `/company/variants/${this.company_id}` },
+                                        { label: "common.menu.products", icon: "pi pi-circle-fill", path: `/company/products/${this.company_id}` },
+                                        { label: "common.menu.finalProducts", icon: "pi pi-circle-fill", path: `/company/final-products/${this.company_id}` },
                                    ]
                               },
 

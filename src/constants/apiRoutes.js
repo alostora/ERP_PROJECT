@@ -32,5 +32,9 @@ export const API_ROUTES = {
      COMPANY: {
           SEARCH: `${BASE_URL}/admin/companies/search`,
           BASE: `${BASE_URL}/admin/company`,
+     },
+     CATEGORY: {
+          SEARCH: `${BASE_URL}/admin/company/categories/search`,
+          BASE: `${BASE_URL}/admin/company/category`,
      }
 }

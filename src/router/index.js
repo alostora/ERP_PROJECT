@@ -7,6 +7,7 @@ import countriesRoutes from '@/views/countries/routes/routes'
 import governoratesRoutes from '@/views/governorates/routes/routes'
 import citiesRoutes from '@/views/cities/routes/routes'
 import companiesRoutes from '@/views/companies/routes/routes'
+import categoriesRoutes from '@/views/categories/routes/routes'
 
 const routes = [
   {
@@ -25,7 +26,8 @@ const routes = [
       ...countriesRoutes,
       ...governoratesRoutes,
       ...citiesRoutes,
-      ...companiesRoutes
+      ...companiesRoutes,
+      ...categoriesRoutes,
     ]
   }
 ]

@@ -77,7 +77,6 @@ export default {
   data() {
     return {
       apiUrl: API_ROUTES.COUNTRY.BASE,
-      accountTypes: [],
       formData: {
         name: '',
         name_ar: '',

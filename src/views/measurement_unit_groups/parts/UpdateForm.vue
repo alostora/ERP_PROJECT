@@ -1,14 +1,14 @@
 <template>
   <Dialog
     v-model:visible="formVisible"
-    :header="$t('common.updateTitle', { module: $t('cities.title') })"
+    :header="$t('common.updateTitle', { module: $t('categories.title') })"
     :modal="true"
     :style="{ width: '500px' }"
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
-        <label class="form-label required">{{ $t("cities.name") }}</label>
+        <label class="form-label required">{{ $t("categories.name") }}</label>
         <input
           v-model="formData.name"
           type="text"
@@ -19,7 +19,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t("cities.name_ar") }}</label>
+        <label class="form-label required">{{ $t("categories.name_ar") }}</label>
         <input
           v-model="formData.name_ar"
           type="text"
@@ -74,13 +74,21 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.CITY.BASE,
+      apiUrl: API_ROUTES.CATEGORY.BASE,
       formData: {
         id: "",
         name: "",
         name_ar: "",
       },
     };
+  },
+
+  mounted() {},
+
+  computed: {
+    currentLanguage() {
+      return localStorage.getItem("language") || "en";
+    },
   },
 
   methods: {
