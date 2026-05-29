@@ -26,11 +26,49 @@
   border-left: 1px solid var(--border-color);
 }
 
+/* Sidebar Navigation Container with Scrollbar */
 .sidebar-nav {
   padding: 1rem 0.75rem;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100vh - 64px);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--surface-hover);
+}
+
+/* Webkit scrollbar styles (Chrome, Safari, Edge) */
+.sidebar-nav::-webkit-scrollbar {
+  width: 1px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+  background: var(--surface-hover);
+  border-radius: 1px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 1px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-hover);
+}
+
+/* Firefox scrollbar */
+@-moz-document url-prefix() {
+  .sidebar-nav {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) var(--surface-hover);
+  }
+}
+
+/* Collapsed sidebar scrollbar */
+.app-sidebar.collapsed .sidebar-nav::-webkit-scrollbar {
+  width: 0px;
 }
 
 /* Base nav item */
@@ -81,7 +119,7 @@
 }
 
 .nav-level-1:hover {
-  background: rgba(52, 152, 219, 0.12);
+  background: rgba(Guy, 152, 219, 0.12);
   color: #3498db;
 }
 
@@ -147,7 +185,7 @@
   color: #f39c12;
 }
 
-/* ========== LEVEL 5+ - Deeper levels ========== */
+/* ========== LEVEL 5 - Violet ========== */
 .nav-level-5 {
   padding-left: 6rem !important;
   background: rgba(168, 85, 247, 0.06);
@@ -166,6 +204,7 @@
   color: #a855f7;
 }
 
+/* ========== LEVEL 6 - Pink ========== */
 .nav-level-6 {
   padding-left: 7rem !important;
   background: rgba(236, 72, 153, 0.06);
@@ -184,6 +223,7 @@
   color: #ec4899;
 }
 
+/* ========== LEVEL 7 - Green ========== */
 .nav-level-7 {
   padding-left: 8rem !important;
   background: rgba(34, 197, 94, 0.06);
