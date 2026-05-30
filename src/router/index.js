@@ -10,6 +10,8 @@ import companiesRoutes from '@/views/companies/routes/routes'
 import categoriesRoutes from '@/views/categories/routes/routes'
 import measurementUnitGroups from '@/views/measurement_unit_groups/routes/routes'
 import measurementUnits from '@/views/measurement_units/routes/routes'
+import variants from '@/views/variants/routes/routes'
+import variantValues from '@/views/variant_values/routes/routes'
 
 const routes = [
   {
@@ -32,6 +34,8 @@ const routes = [
       ...categoriesRoutes,
       ...measurementUnitGroups,
       ...measurementUnits,
+      ...variants,
+      ...variantValues,
     ],
   },
 ]

@@ -1,14 +1,18 @@
 <template>
   <Dialog
     v-model:visible="formVisible"
-    :header="$t('common.updateTitle', { module: $t('measurementUnitGroups.title') })"
+    :header="$t('common.createTitle', { module: $t('variants.title') })"
     :modal="true"
     :style="{ width: '500px' }"
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
-        <label class="form-label required">{{ $t('measurementUnitGroups.name') }}</label>
+        <input type="hidden" v-model="formData.company_id" />
+        <small v-if="errors.company_id" class="error-message">{{ errors.company_id }}</small>
+      </div>
+      <div class="form-group">
+        <label class="form-label required">{{ $t('variants.name') }}</label>
         <input
           v-model="formData.name"
           type="text"
@@ -19,7 +23,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('measurementUnitGroups.name_ar') }}</label>
+        <label class="form-label required">{{ $t('variants.name_ar') }}</label>
         <input
           v-model="formData.name_ar"
           type="text"
@@ -29,23 +33,12 @@
         <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('measurementUnitGroups.symbol') }}</label>
-        <input
-          v-model="formData.symbol"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.symbol }"
-        />
-        <small v-if="errors.symbol" class="error-message">{{ errors.symbol }}</small>
-      </div>
-
       <div class="flex justify-end gap-2 mt-4">
         <button type="button" class="btn btn-outline ml-2 mr-2" @click="closeFormModal">
           {{ $t('common.cancel') }}
         </button>
         <button type="submit" class="btn btn-primary" :disabled="formLoading">
-          {{ formLoading ? $t('common.loading') : $t('common.update') }}
+          {{ formLoading ? $t('common.loading') : $t('common.create') }}
         </button>
       </div>
     </form>
@@ -54,81 +47,52 @@
 
 <script>
 import Dialog from 'primevue/dialog'
+import customFunctions from '../custom_functions/customFunctions'
 import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
-import customFunctions from '../custom_functions/customFunctions'
 
 export default {
-  name: 'UpdateForm',
+  name: 'CreateForm',
   mixins: [formMixin, customFunctions, validationRequest],
   components: { Dialog },
 
   props: {
-    selected_item: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
-
-  watch: {
-    selected_item: {
-      immediate: true,
-      deep: true,
-      handler(selectedItem) {
-        if (selectedItem && selectedItem.id) {
-          this.populateForm(selectedItem)
-        }
-      },
+    company_id: {
+      type: String,
+      required: true,
     },
   },
 
   data() {
     return {
-      apiUrl: API_ROUTES.MEASUREMENT_UNIT_GROUP.BASE,
+      apiUrl: API_ROUTES.VARIANT.BASE,
       formData: {
-        id: '',
+        company_id: '',
         name: '',
         name_ar: '',
         symbol: '',
       },
     }
   },
-
   computed: {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
   },
-
   methods: {
-    populateForm(selectedItem) {
-      this.formData = {
-        id: selectedItem.id || '',
-        name: selectedItem.name || '',
-        name_ar: selectedItem.name_ar || '',
-        symbol: selectedItem.symbol || '',
-      }
-    },
-
     openModal() {
-      this.formVisible = true
+      this.openFormModal()
+      this.formData.company_id = this.company_id || this.$route.params.company_id
     },
 
     async handleSubmit() {
-      if (!this.validateUpdateForm(this.formData)) {
+      console.log(this.formData)
+      if (!this.validateCreateForm(this.formData)) {
         return
       }
 
-      const data = { ...this.formData }
-      delete data.id
-
-      await this.submitUpdateForm(
-        this.apiUrl,
-        this.formData.id,
-        data,
-        this.$t('common.updatedSuccessfully')
-      )
+      await this.submitCreateForm(this.apiUrl, this.formData, this.$t('common.createdSuccessfully'))
     },
   },
 }

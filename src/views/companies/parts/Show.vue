@@ -28,7 +28,7 @@
           <p class="text-secondary">{{ itemData.name_ar }}</p>
         </div>
         <button class="btn btn-outline" @click="$router.back()">
-          <i class="pi pi-arrow-left"></i>
+          <i :class="currentLanguage === 'ar' ? 'pi pi-arrow-right' : 'pi pi-arrow-left'"></i>
           {{ $t('common.back') }}
         </button>
       </div>

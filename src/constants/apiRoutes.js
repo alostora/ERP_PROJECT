@@ -45,4 +45,12 @@ export const API_ROUTES = {
     SEARCH: `${BASE_URL}/admin/company/measurement-units/search`,
     BASE: `${BASE_URL}/admin/company/measurement-unit`,
   },
+  VARIANT: {
+    SEARCH: `${BASE_URL}/admin/company/variants/search`,
+    BASE: `${BASE_URL}/admin/company/variant`,
+  },
+  VARIANT_VALUE: {
+    SEARCH: `${BASE_URL}/admin/company/variant-values/search`,
+    BASE: `${BASE_URL}/admin/company/variant-value`,
+  },
 }

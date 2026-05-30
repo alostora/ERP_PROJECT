@@ -11,6 +11,8 @@ import enClients from './locales/en/clients'
 import enCategories from './locales/en/categories'
 import enMeasurementUnitGroups from './locales/en/measurementUnitGroups'
 import enMeasurementUnits from './locales/en/measurementUnits'
+import enVariants from './locales/en/variants'
+import enVariantValues from './locales/en/variantValues'
 
 // Import Arabic translations
 import arCommon from './locales/ar/common'
@@ -23,6 +25,8 @@ import arClients from './locales/ar/clients'
 import arCategories from './locales/ar/categories'
 import arMeasurementUnitGroups from './locales/ar/measurementUnitGroups'
 import arMeasurementUnits from './locales/ar/measurementUnits'
+import arVariants from './locales/ar/variants'
+import arVariantValues from './locales/ar/variantValues'
 
 const messages = {
   en: {
@@ -36,6 +40,8 @@ const messages = {
     categories: enCategories,
     measurementUnitGroups: enMeasurementUnitGroups,
     measurementUnits: enMeasurementUnits,
+    variants: enVariants,
+    variantValues: enVariantValues,
   },
   ar: {
     common: arCommon,
@@ -48,6 +54,8 @@ const messages = {
     categories: arCategories,
     measurementUnitGroups: arMeasurementUnitGroups,
     measurementUnits: arMeasurementUnits,
+    variants: arVariants,
+    variantValues: arVariantValues,
   },
 }
 
