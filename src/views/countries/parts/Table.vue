@@ -65,7 +65,7 @@
               class="btn-sm btn-outline"
               @click="$router.push({ name: 'governorates', query: { country_id: data.id } })"
             >
-              <i class="pi pi-map-marker"></i>
+              <i class="pi pi-map-marker text-primary"></i>
               {{ $t('governorates.title') }}
             </button>
           </template>
@@ -75,7 +75,7 @@
           <template #body="{ data }">
             <div class="actions-cell">
               <button class="btn-icon" @click="openUpdateModal(data)" :title="$t('common.edit')">
-                <i class="pi pi-pencil"></i>
+                <i class="pi pi-pencil text-success"></i>
               </button>
               <button
                 class="btn-icon text-danger"

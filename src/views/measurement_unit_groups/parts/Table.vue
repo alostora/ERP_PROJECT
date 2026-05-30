@@ -73,7 +73,7 @@
                 })
               "
             >
-              <i class="pi pi-map-marker"></i>
+              <i class="pi pi-calculator text-primary"></i>
               {{ $t('measurementUnits.title') }}
             </button>
           </template>
@@ -83,7 +83,7 @@
           <template #body="{ data }">
             <div class="actions-cell">
               <button class="btn-icon" @click="openUpdateModal(data)" :title="$t('common.edit')">
-                <i class="pi pi-pencil"></i>
+                <i class="pi pi-pencil text-success"></i>
               </button>
               <button
                 class="btn-icon text-danger"
@@ -98,11 +98,7 @@
       </DataTable>
     </div>
 
-    <CreateForm
-      ref="createModal"
-      @created="fetchData"
-      :company_id="company_id"
-    />
+    <CreateForm ref="createModal" @created="fetchData" :company_id="company_id" />
     <UpdateForm ref="updateModal" :selected_item="selectedItem" @updated="fetchData" />
 
     <Toast />

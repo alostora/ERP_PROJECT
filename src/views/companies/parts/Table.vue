@@ -144,7 +144,7 @@
           <template #body="{ data }">
             <div class="actions-cell">
               <button class="btn-icon" @click="openUpdateModal(data)" :title="$t('common.edit')">
-                <i class="pi pi-pencil"></i>
+                <i class="pi pi-pencil text-success"></i>
               </button>
               <button
                 class="btn-icon text-danger"
@@ -158,7 +158,7 @@
                 @click="$router.push(`/company/${data.id}`)"
                 :title="$t('common.view')"
               >
-                <i class="pi pi-eye"></i>
+                <i class="pi pi-eye text-info"></i>
               </button>
             </div>
           </template>
