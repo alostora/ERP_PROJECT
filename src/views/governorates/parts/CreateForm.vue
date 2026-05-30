@@ -9,7 +9,6 @@
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
         <label class="form-label required">{{ $t('governorates.country') }}</label>
-
         <Select
           v-model="formData.country_id"
           :options="countries"

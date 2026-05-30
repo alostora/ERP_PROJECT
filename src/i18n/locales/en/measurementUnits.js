@@ -14,5 +14,6 @@ export default {
     measurementUnitGroupIdRequired: 'Measurement unit group is required',
     nameRequired: 'Name is required',
     nameArRequired: 'Arabic name is required',
+    factorValueRequired: 'Factor value required',
   },
 }

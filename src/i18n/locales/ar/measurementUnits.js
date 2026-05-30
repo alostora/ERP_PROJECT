@@ -14,5 +14,6 @@ export default {
     measurementUnitGroupIdRequired: 'المجموعة مطلوبة',
     nameRequired: 'الاسم مطلوب',
     nameArRequired: 'الاسم بالعربية مطلوب',
+    factorValueRequired: 'معامل التحويل مطلوب',
   },
 }

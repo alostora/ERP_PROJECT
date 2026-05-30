@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h1 class="page-title">{{ $t('measurementUnitGroups.title') }}</h1>
+      <h1 class="page-title">{{ $t('measurementUnits.title') }}</h1>
       <button class="btn btn-primary" @click="openCreateModal">
         <i class="pi pi-plus"></i>
         {{ $t('common.addNew') }}
@@ -22,6 +22,21 @@
                 :placeholder="$t('common.search')"
               />
             </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-3">
+            <Select
+              v-model="filters.measurement_unit_group_id"
+              :options="measurementUnitGroups"
+              :optionLabel="measurementUnitGroupLabel"
+              optionValue="id"
+              :placeholder="$t('common.all') + ' ' + $t('measurementUnitGroups.title')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="fetchData"
+            />
           </div>
 
           <div class="col-6 col-md-3 col-lg-2">
@@ -50,34 +65,19 @@
         resizableColumns
         showGridlines
       >
-        <Column field="id" :header="$t('measurementUnitGroups.id')" class="col-1">
+        <Column field="id" :header="$t('measurementUnits.id')" class="col-1">
           <template #body="slotProps">
             <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
           </template>
         </Column>
 
-        <Column field="name" :header="$t('measurementUnitGroups.name')" sortable />
+        <Column field="name" :header="$t('measurementUnits.name')" sortable />
 
-        <Column field="name_ar" :header="$t('measurementUnitGroups.name_ar')" sortable />
+        <Column field="name_ar" :header="$t('measurementUnits.name_ar')" sortable />
 
-        <Column field="symbol" :header="$t('measurementUnitGroups.symbol')" sortable />
+        <Column field="symbol" :header="$t('measurementUnits.symbol')" sortable />
 
-        <Column :header="$t('measurementUnits.title')">
-          <template #body="{ data }">
-            <button
-              class="btn-sm btn-outline"
-              @click="
-                $router.push({
-                  name: 'measurement-units',
-                  query: { measurement_unit_group_id: data.id },
-                })
-              "
-            >
-              <i class="pi pi-map-marker"></i>
-              {{ $t('measurementUnits.title') }}
-            </button>
-          </template>
-        </Column>
+        <Column field="factor_value" :header="$t('measurementUnits.factor_value')" sortable />
 
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
@@ -102,6 +102,7 @@
       ref="createModal"
       @created="fetchData"
       :company_id="company_id"
+      :measurement_unit_group_id="filters.measurement_unit_group_id"
     />
     <UpdateForm ref="updateModal" :selected_item="selectedItem" @updated="fetchData" />
 
@@ -120,18 +121,28 @@ import UpdateForm from './UpdateForm.vue'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
+import Select from 'primevue/select'
 
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm },
+  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm, Select },
 
   watch: {
     '$route.params.company_id': {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
           this.company_id = newVal
-          this.apiUrl = `${API_ROUTES.MEASUREMENT_UNIT_GROUP.SEARCH}/${newVal}`
+          this.apiUrl = `${API_ROUTES.MEASUREMENT_UNIT.SEARCH}/${newVal}`
+        }
+      },
+      immediate: true,
+    },
+    '$route.query.measurement_unit_group_id': {
+      handler(newVal) {
+        if (newVal) {
+          this.filters.measurement_unit_group_id = newVal
+          this.fetchData()
         }
       },
       immediate: true,
@@ -140,16 +151,27 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.MEASUREMENT_UNIT_GROUP.SEARCH,
-      deleteUrl: API_ROUTES.MEASUREMENT_UNIT_GROUP.BASE,
+      apiUrl: API_ROUTES.MEASUREMENT_UNIT.SEARCH,
+      deleteUrl: API_ROUTES.MEASUREMENT_UNIT.BASE,
       company_id: '',
-      filters: { query_string: '' },
+      filters: { query_string: '', measurement_unit_group_id: '' },
       selectedItem: {},
     }
   },
 
+  computed: {
+    currentLanguage() {
+      return localStorage.getItem('language') || 'en'
+    },
+
+    measurementUnitGroupLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+    },
+  },
+
   mounted() {
     this.fetchData()
+    this.loadMeasurementUnitGroups(this.company_id)
   },
 
   methods: {
