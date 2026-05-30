@@ -121,8 +121,8 @@ export default {
     measurementUnitGroups: 'Measurement Unit Groups',
     measurementUnits: 'Measurement Units',
     variants: 'Variants',
-    products: 'Products',
-    finalProducts: 'Final Products',
+    products: 'Product Departments',
+    finalProducts: 'Products',
 
     // Business Operations (Level 3)
     contacts: 'Contacts',

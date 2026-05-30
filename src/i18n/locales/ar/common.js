@@ -117,12 +117,12 @@ export default {
     companyDetails: 'تفاصيل الشركة',
 
     // Products & Inventory (Level 3)
-    categories: 'التصنيفات',
+    categories: 'الاقسام',
     measurementUnitGroups: 'مجموعات وحدات القياس',
     measurementUnits: 'وحدات القياس',
     variants: 'الخصائص',
-    products: 'المنتجات',
-    finalProducts: 'المنتجات النهائية',
+    products: 'الاصناف',
+    finalProducts: 'المنتجات',
 
     // Business Operations (Level 3)
     contacts: 'جهات الاتصال',
