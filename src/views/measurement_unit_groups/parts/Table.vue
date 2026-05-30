@@ -73,7 +73,7 @@
                 })
               "
             >
-              <i class="pi pi-calculator text-primary"></i>
+              <i class="pi pi-link text-primary"></i>
               {{ $t('measurementUnits.title') }}
             </button>
           </template>
@@ -83,7 +83,7 @@
           <template #body="{ data }">
             <div class="actions-cell">
               <button class="btn-icon" @click="openUpdateModal(data)" :title="$t('common.edit')">
-                <i class="pi pi-pencil text-success"></i>
+                <i class="pi pi-pen-to-square text-success"></i>
               </button>
               <button
                 class="btn-icon text-danger"

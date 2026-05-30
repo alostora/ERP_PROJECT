@@ -9,9 +9,19 @@
     </div>
 
     <div class="card">
+      <div class="flex align-center gap-3 mb-2">
+        <button
+          class="btn btn-outline"
+          @click="$router.push(`/company/measurement-unit-groups/${company_id}`)"
+        >
+          <i :class="currentLanguage === 'ar' ? 'pi pi-arrow-right' : 'pi pi-arrow-left'"></i>
+          {{ $t('common.back') }}
+        </button>
+      </div>
+
       <div class="filters-bar">
         <div class="row">
-          <div class="col-12 col-md-6 col-lg-4">
+          <div class="col-12 col-md-6 col-lg-4 mb-1">
             <div class="search-wrapper">
               <i class="pi pi-search search-icon"></i>
               <input
@@ -24,7 +34,7 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-3">
+          <div class="col-12 col-md-6 col-lg-4 mb-1">
             <Select
               v-model="filters.measurement_unit_group_id"
               :options="measurementUnitGroups"
@@ -83,7 +93,7 @@
           <template #body="{ data }">
             <div class="actions-cell">
               <button class="btn-icon" @click="openUpdateModal(data)" :title="$t('common.edit')">
-                <i class="pi pi-pencil text-success"></i>
+                <i class="pi pi-pen-to-square text-success"></i>
               </button>
               <button
                 class="btn-icon text-danger"

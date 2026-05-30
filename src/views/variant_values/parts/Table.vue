@@ -18,7 +18,7 @@
 
       <div class="filters-bar">
         <div class="row">
-          <div class="col-12 col-md-6 col-lg-4">
+          <div class="col-12 col-md-6 col-lg-4 mb-1">
             <div class="search-wrapper">
               <i class="pi pi-search search-icon"></i>
               <input
@@ -31,7 +31,7 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-6 col-lg-3">
+          <div class="col-12 col-md-6 col-lg-4 mb-1">
             <Select
               v-model="filters.variant_id"
               :options="variants"
@@ -46,7 +46,7 @@
             />
           </div>
 
-          <div class="col-6 col-md-3 col-lg-2">
+          <div class="col-12 col-md-3 col-lg-2">
             <select v-model="perPage" @change="fetchData" class="select">
               <option :value="5">5</option>
               <option :value="10">10</option>
@@ -86,7 +86,7 @@
           <template #body="{ data }">
             <div class="actions-cell">
               <button class="btn-icon" @click="openUpdateModal(data)" :title="$t('common.edit')">
-                <i class="pi pi-pencil text-success"></i>
+                <i class="pi pi-pen-to-square text-success"></i>
               </button>
               <button
                 class="btn-icon text-danger"
