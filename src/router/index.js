@@ -12,6 +12,7 @@ import measurementUnitGroups from '@/views/measurement_unit_groups/routes/routes
 import measurementUnits from '@/views/measurement_units/routes/routes'
 import variants from '@/views/variants/routes/routes'
 import variantValues from '@/views/variant_values/routes/routes'
+import products from '@/views/products/routes/routes'
 
 const routes = [
   {
@@ -36,6 +37,7 @@ const routes = [
       ...measurementUnits,
       ...variants,
       ...variantValues,
+      ...products,
     ],
   },
 ]

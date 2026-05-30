@@ -139,11 +139,6 @@ export const sidebarItems = {
               icon: 'pi pi-box',
               items: [
                 {
-                  label: 'common.menu.categories',
-                  icon: 'pi pi-circle-fill',
-                  path: `/company/categories/${this.company_id}`,
-                },
-                {
                   label: 'common.menu.measurementUnitGroups',
                   icon: 'pi pi-circle-fill',
                   path: `/company/measurement-unit-groups/${this.company_id}`,
@@ -157,6 +152,11 @@ export const sidebarItems = {
                   label: 'common.menu.variants',
                   icon: 'pi pi-circle-fill',
                   path: `/company/variants/${this.company_id}`,
+                },
+                {
+                  label: 'common.menu.categories',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/categories/${this.company_id}`,
                 },
                 {
                   label: 'common.menu.products',

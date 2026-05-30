@@ -33,10 +33,6 @@ export const API_ROUTES = {
     SEARCH: `${BASE_URL}/admin/companies/search`,
     BASE: `${BASE_URL}/admin/company`,
   },
-  CATEGORY: {
-    SEARCH: `${BASE_URL}/admin/company/categories/search`,
-    BASE: `${BASE_URL}/admin/company/category`,
-  },
   MEASUREMENT_UNIT_GROUP: {
     SEARCH: `${BASE_URL}/admin/company/measurement-unit-groups/search`,
     BASE: `${BASE_URL}/admin/company/measurement-unit-group`,
@@ -52,5 +48,13 @@ export const API_ROUTES = {
   VARIANT_VALUE: {
     SEARCH: `${BASE_URL}/admin/company/variant-values/search`,
     BASE: `${BASE_URL}/admin/company/variant-value`,
+  },
+  CATEGORY: {
+    SEARCH: `${BASE_URL}/admin/company/categories/search`,
+    BASE: `${BASE_URL}/admin/company/category`,
+  },
+  PRODUCT: {
+    SEARCH: `${BASE_URL}/admin/company/products/search`,
+    BASE: `${BASE_URL}/admin/company/product`,
   },
 }
