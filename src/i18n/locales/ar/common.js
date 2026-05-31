@@ -82,7 +82,6 @@ export default {
 
   // Navigation Menu - Complete
   menu: {
-    // Main Groups
     dashboard: 'لوحة التحكم',
     userManagement: 'إدارة المستخدمين',
     locations: 'المواقع',
@@ -91,32 +90,26 @@ export default {
     reportsGroup: 'التقارير',
     settingsGroup: 'الإعدادات',
 
-    // Company Management (Level 2)
     companyManagement: 'إدارة الشركة',
     productsInventory: 'المنتجات والمخزون',
     businessOperations: 'العمليات التجارية',
     financial: 'المالية',
 
-    // Branch Management (Level 2)
     branchManagement: 'إدارة الفرع',
 
-    // Users & Permissions (Level 3)
     users: 'المستخدمين',
     allUsers: 'جميع المستخدمين',
     roles: 'الصلاحيات',
     permissions: 'الأذونات',
 
-    // Locations (Level 3)
     countries: 'الدول',
     governorates: 'المحافظات',
     cities: 'المدن',
 
-    // Companies (Level 3)
     companies: 'الشركات',
     allCompanies: 'جميع الشركات',
     companyDetails: 'تفاصيل الشركة',
 
-    // Products & Inventory (Level 3)
     categories: 'الاقسام',
     measurementUnitGroups: 'مجموعات وحدات القياس',
     measurementUnits: 'وحدات القياس',
@@ -124,33 +117,27 @@ export default {
     products: 'الاصناف',
     finalProducts: 'المنتجات',
 
-    // Business Operations (Level 3)
     contacts: 'جهات الاتصال',
     branches: 'الفروع',
     employees: 'الموظفين',
 
-    // Financial (Level 3)
-    invoiceStages: 'مراحل الفاتورة',
+    operationsStages: 'مراحل العمليات',
     taxes: 'الضرائب',
     discounts: 'الخصومات',
 
-    // Branch Details (Level 3)
     branchDetails: 'تفاصيل الفرع',
     warehouses: 'المستودعات',
     branchEmployees: 'موظفي الفرع',
     purchasesInvoices: 'فواتير المشتريات',
     backToList: 'العودة للقائمة',
 
-    // Sales (Level 3)
     orders: 'الطلبات',
     invoices: 'الفواتير',
 
-    // Reports (Level 3)
     salesReports: 'تقارير المبيعات',
     inventoryReports: 'تقارير المخزون',
     financialReports: 'التقارير المالية',
 
-    // Settings (Level 3)
     generalSettings: 'الإعدادات العامة',
     profile: 'الملف الشخصي',
     logout: 'تسجيل الخروج',

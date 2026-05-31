@@ -133,6 +133,39 @@ export const sidebarItems = {
               path: `/company/${this.company_id}`,
             },
 
+            // Settings Subgroup
+            {
+              label: 'common.menu.settingsGroup',
+              icon: 'pi pi-cog',
+              items: [
+                {
+                  label: 'common.menu.operationsStages',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/stages/${this.company_id}`,
+                },
+                {
+                  label: 'common.menu.taxes',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/${this.company_id}/taxes`,
+                },
+                {
+                  label: 'common.menu.discounts',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/${this.company_id}/discounts`,
+                },
+                {
+                  label: 'common.menu.contacts',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/${this.company_id}/contacts`,
+                },
+                {
+                  label: 'common.menu.employees',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/${this.company_id}/employees`,
+                },
+              ],
+            },
+
             // Products & Inventory Subgroup (3rd level)
             {
               label: 'common.menu.productsInventory',
@@ -167,52 +200,6 @@ export const sidebarItems = {
                   label: 'common.menu.finalProducts',
                   icon: 'pi pi-circle-fill',
                   path: `/company/final-products/${this.company_id}`,
-                },
-              ],
-            },
-
-            // Business Operations Subgroup
-            {
-              label: 'common.menu.businessOperations',
-              icon: 'pi pi-briefcase',
-              items: [
-                {
-                  label: 'common.menu.contacts',
-                  icon: 'pi pi-circle-fill',
-                  path: `/company/${this.company_id}/contacts`,
-                },
-                {
-                  label: 'common.menu.branches',
-                  icon: 'pi pi-circle-fill',
-                  path: `/company/${this.company_id}/branches`,
-                },
-                {
-                  label: 'common.menu.employees',
-                  icon: 'pi pi-circle-fill',
-                  path: `/company/${this.company_id}/employees`,
-                },
-              ],
-            },
-
-            // Financial Subgroup
-            {
-              label: 'common.menu.financial',
-              icon: 'pi pi-dollar',
-              items: [
-                {
-                  label: 'common.menu.invoiceStages',
-                  icon: 'pi pi-circle-fill',
-                  path: `/company/${this.company_id}/invoice-stages`,
-                },
-                {
-                  label: 'common.menu.taxes',
-                  icon: 'pi pi-circle-fill',
-                  path: `/company/${this.company_id}/taxes`,
-                },
-                {
-                  label: 'common.menu.discounts',
-                  icon: 'pi pi-circle-fill',
-                  path: `/company/${this.company_id}/discounts`,
                 },
               ],
             },

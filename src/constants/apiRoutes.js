@@ -8,6 +8,7 @@ export const API_ROUTES = {
   LOOKUP: {
     ACCOUNT_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.USER_ACCOUNT_TYPE}`,
     CURRENCIES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.CURRENCY}`,
+    STAGE_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.STAGE_TYPE}`,
   },
   USER: {
     SEARCH: `${BASE_URL}/admin/users/search`,
@@ -65,5 +66,9 @@ export const API_ROUTES = {
   FINAL_PRODUCT_VARIANT_VALUE: {
     SEARCH: `${BASE_URL}/admin/company/product/final-product-variant-values/search`,
     BASE: `${BASE_URL}/admin/company/product/final-product-variant-value`,
+  },
+  STAGE: {
+    SEARCH: `${BASE_URL}/admin/company/stages/search`,
+    BASE: `${BASE_URL}/admin/company/stage`,
   },
 }
