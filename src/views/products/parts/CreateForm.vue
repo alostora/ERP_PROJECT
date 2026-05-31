@@ -13,7 +13,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('measurementUnits.group') }}</label>
+        <label class="form-label required">{{ $t('categories.title') }}</label>
         <Select
           v-model="formData.category_id"
           :options="categories"

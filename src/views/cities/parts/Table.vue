@@ -39,7 +39,7 @@
             />
           </div>
 
-          <div class="col-12 col-md-6 col-lg-3 mt-2 mt-md-0" v-if="governorates.length">
+          <div class="col-12 col-md-6 col-lg-3 mt-2 mt-md-0" v-if="filters.country_id">
             <Select
               v-model="filters.governorate_id"
               :options="governorates"

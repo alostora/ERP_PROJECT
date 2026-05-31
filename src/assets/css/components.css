@@ -20,6 +20,11 @@
   color: white;
 }
 
+.btn-danger {
+  background: var(--color-danger);
+  color: white;
+}
+
 .btn-primary:hover {
   background: var(--color-primary-hover);
 }

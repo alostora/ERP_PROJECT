@@ -4,7 +4,7 @@ export default {
   name: 'الاسم',
   name_ar: 'الاسم (عربي)',
   company: 'الشركة',
-  category: 'الشركة',
+  category: 'القسم',
   createdAt: 'تاريخ الإنشاء',
   validation: {
     companyIdRequired: 'الشركة مطلوبة',
