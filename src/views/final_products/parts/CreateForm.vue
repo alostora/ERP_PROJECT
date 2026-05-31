@@ -137,9 +137,8 @@
       </div>
 
       <!-- /////////////////////////////////////////////////////////////////////////////// -->
+      <!-- Variants Section -->
 
-      <!-- Variants Section -->
-      <!-- Variants Section -->
       <div class="field mb-3">
         <div class="flex justify-between align-center mb-3">
           <h3 class="text-lg font-semibold m-0">{{ $t('finalProducts.variants') }}</h3>
@@ -233,6 +232,7 @@
         </div>
       </div>
 
+      <!-- Variants Section -->
       <!-- /////////////////////////////////////////////////////////////////////////////// -->
 
       <div class="flex justify-end gap-2 mt-4">
