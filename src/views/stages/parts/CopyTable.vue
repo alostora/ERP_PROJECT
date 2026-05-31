@@ -65,48 +65,36 @@
         resizableColumns
         showGridlines
       >
-        <Column field="stage_sort" :header="$t('stages.stage_sort')" sortable>
-          <template #body="{ data, index }">
-            <div
-              draggable="true"
-              @dragstart="dragStart($event, index)"
-              @dragover="dragOver($event)"
-              @drop="drop($event, index)"
-              class="drag-item"
-            >
-              <i class="pi pi-bars"></i>
-              {{ data.stage_sort }}
-            </div>
+        <Column field="id" :header="$t('stages.id')" class="col-1">
+          <template #body="slotProps">
+            <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
           </template>
         </Column>
 
-        <Column field="name" :header="$t('stages.name')" />
+        <Column field="stage_sort" :header="$t('stages.stage_sort')" sortable />
 
-        <Column field="name_ar" :header="$t('stages.name_ar')" />
+        <Column field="name" :header="$t('stages.name')" sortable />
 
-        <Column :header="$t('stages.type')">
-          <template #body="{ data }">
-            <div v-if="data.type" class="badge badge-info">
-              {{ currentLanguage == 'ar' ? data.type?.name_ar : data.type?.name }}
-            </div>
-          </template>
-        </Column>
+        <Column field="name_ar" :header="$t('stages.name_ar')" sortable />
 
-        <Column :header="$t('stages.affects_stock')">
-          <template #body="{ data }">
-            <div v-if="data.affects_stock" class="badge badge-success">
-              {{ $t('common.yes') }}
-            </div>
-            <ToggleSwitch v-else v-model="data.affects_stock" @change="setDefault(data.id)" />
-          </template>
-        </Column>
+        <Column field="affects_stock" :header="$t('stages.affects_stock')" sortable />
+
+        <Column field="details" :header="$t('stages.details')" sortable />
+
+        <Column field="details_ar" :header="$t('stages.details_ar')" sortable />
 
         <Column :header="$t('stages.is_default')">
           <template #body="{ data }">
             <div v-if="data.is_default" class="badge badge-success">
               {{ $t('common.default') }}
             </div>
-            <ToggleSwitch v-else v-model="data.is_default" @change="setAffectsStock(data.id)" />
+            <div v-if="!data.is_default">
+              <ToggleSwitch
+                v-model="data.is_default"
+                @change="setDefault(data.id)"
+                :disabled="data.is_default"
+              />
+            </div>
           </template>
         </Column>
 
@@ -156,7 +144,7 @@ import Select from 'primevue/select'
 import ToggleSwitch from 'primevue/toggleswitch'
 
 export default {
-  name: 'Table',
+  name: 'CopyTable',
   mixins: [tableMixin, customFunctions],
   components: {
     DataTable,
@@ -224,25 +212,8 @@ export default {
 
     setDefault(stageId) {
       this.setDefaultSage(stageId)
-    },
-
-    setAffectsStock(stageId) {
-      this.setAffectsStockSage(stageId)
+      this.fetchData()
     },
   },
 }
 </script>
-
-<style scoped>
-.drag-item {
-  cursor: grab;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.25rem 0.5rem;
-}
-
-.drag-item:active {
-  cursor: grabbing;
-}
-</style>

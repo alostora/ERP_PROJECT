@@ -14,11 +14,12 @@ export default {
   back: 'Back',
   addNew: 'Add New',
   confirm: 'Confirm',
+  yes: 'Yes',
 
   confirmYes: 'Yes',
-  confirmNo: 'Camcel',
+  confirmNo: 'Cancel',
 
-  confirmSetDefault: 'Confirm set default',
+  confirmSetDefault: 'Confirm set as default',
   default: 'Default',
 
   // Messages (Headers)
@@ -83,10 +84,8 @@ export default {
   currencyCode: 'Currency Code',
   code: 'Code',
   view: 'View',
-  edit: 'Edit',
-  delete: 'Delete',
 
-  // Navigation Menu - Complete
+  // Navigation Menu
   menu: {
     dashboard: 'Dashboard',
     userManagement: 'User Management',
@@ -120,21 +119,21 @@ export default {
     measurementUnitGroups: 'Measurement Unit Groups',
     measurementUnits: 'Measurement Units',
     variants: 'Variants',
-    products: 'Product Departments',
-    finalProducts: 'Products',
+    products: 'Products',
+    finalProducts: 'Final Products',
 
     contacts: 'Contacts',
     branches: 'Branches',
     employees: 'Employees',
 
-    operationsStages: 'Operations Stages',
+    operationsStages: 'Operation Stages',
     taxes: 'Taxes',
     discounts: 'Discounts',
 
     branchDetails: 'Branch Details',
     warehouses: 'Warehouses',
     branchEmployees: 'Branch Employees',
-    purchasesInvoices: 'Purchases Invoices',
+    purchasesInvoices: 'Purchase Invoices',
     backToList: 'Back to List',
 
     orders: 'Orders',

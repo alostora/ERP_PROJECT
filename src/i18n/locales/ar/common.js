@@ -14,6 +14,7 @@ export default {
   back: 'رجوع',
   addNew: 'إضافة جديد',
   confirm: 'تأكيد',
+  yes: 'نعم',
 
   confirmYes: 'نعم',
   confirmNo: 'إلغاء',
@@ -83,10 +84,8 @@ export default {
   currencyCode: 'كود العملة',
   code: 'الكود',
   view: 'عرض',
-  edit: 'تعديل',
-  delete: 'حذف',
 
-  // Navigation Menu - Complete
+  // Navigation Menu
   menu: {
     dashboard: 'لوحة التحكم',
     userManagement: 'إدارة المستخدمين',
@@ -116,12 +115,12 @@ export default {
     allCompanies: 'جميع الشركات',
     companyDetails: 'تفاصيل الشركة',
 
-    categories: 'الاقسام',
+    categories: 'الأقسام',
     measurementUnitGroups: 'مجموعات وحدات القياس',
     measurementUnits: 'وحدات القياس',
     variants: 'الخصائص',
-    products: 'الاصناف',
-    finalProducts: 'المنتجات',
+    products: 'الأصناف',
+    finalProducts: 'المنتجات النهائية',
 
     contacts: 'جهات الاتصال',
     branches: 'الفروع',

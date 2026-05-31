@@ -71,5 +71,7 @@ export const API_ROUTES = {
     SEARCH: `${BASE_URL}/admin/company/stages/search`,
     BASE: `${BASE_URL}/admin/company/stage`,
     SET_DEFAULT: `${BASE_URL}/admin/company/stage-set-default`,
+    SET_AFFECTS_STOCK: `${BASE_URL}/admin/company/stage-set-affects-stock`,
+    SET_SORT: `${BASE_URL}/admin/company/stage-set-sort`,
   },
 }
