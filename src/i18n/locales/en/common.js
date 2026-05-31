@@ -12,8 +12,14 @@ export default {
   reset: 'Reset',
   close: 'Close',
   back: 'Back',
-  confirm: 'Confirm',
   addNew: 'Add New',
+  confirm: 'Confirm',
+
+  confirmYes: 'Yes',
+  confirmNo: 'Camcel',
+
+  confirmSetDefault: 'Confirm set default',
+  default: 'Default',
 
   // Messages (Headers)
   success: 'Success',

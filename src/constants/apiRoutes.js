@@ -70,5 +70,6 @@ export const API_ROUTES = {
   STAGE: {
     SEARCH: `${BASE_URL}/admin/company/stages/search`,
     BASE: `${BASE_URL}/admin/company/stage`,
+    SET_DEFAULT: `${BASE_URL}/admin/company/stage-set-default`,
   },
 }

@@ -12,8 +12,14 @@ export default {
   reset: 'إعادة تعيين',
   close: 'إغلاق',
   back: 'رجوع',
-  confirm: 'تأكيد',
   addNew: 'إضافة جديد',
+  confirm: 'تأكيد',
+
+  confirmYes: 'نعم',
+  confirmNo: 'إلغاء',
+
+  confirmSetDefault: 'تأكيد تعيين كافتراضي',
+  default: 'افتراضي',
 
   // Messages (Headers)
   success: 'نجاح',

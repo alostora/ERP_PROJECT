@@ -9,19 +9,19 @@ export default {
       this.errors = {}
 
       if (!form.company_id?.trim()) {
-        this.errors.company_id = this.$t('products.validation.companyIdRequired')
+        this.errors.company_id = this.$t('stages.validation.companyIdRequired')
       }
 
-      if (!form.category_id?.trim()) {
-        this.errors.category_id = this.$t('products.validation.categoryIdRequired')
+      if (!form.type_id?.trim()) {
+        this.errors.type_id = this.$t('stages.validation.typeIdRequired')
       }
 
       if (!form.name?.trim()) {
-        this.errors.name = this.$t('products.validation.nameRequired')
+        this.errors.name = this.$t('stages.validation.nameRequired')
       }
 
       if (!form.name_ar?.trim()) {
-        this.errors.name_ar = this.$t('products.validation.nameArRequired')
+        this.errors.name_ar = this.$t('stages.validation.nameArRequired')
       }
 
       return Object.keys(this.errors).length === 0
@@ -31,11 +31,11 @@ export default {
       this.errors = {}
 
       if (!form.name?.trim()) {
-        this.errors.name = this.$t('products.validation.nameRequired')
+        this.errors.name = this.$t('stages.validation.nameRequired')
       }
 
       if (!form.name_ar?.trim()) {
-        this.errors.name_ar = this.$t('products.validation.nameArRequired')
+        this.errors.name_ar = this.$t('stages.validation.nameArRequired')
       }
 
       return Object.keys(this.errors).length === 0

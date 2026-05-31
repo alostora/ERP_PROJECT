@@ -123,6 +123,10 @@ export default {
       type: String,
       required: true,
     },
+    type_id: {
+      type: String,
+      required: false,
+    },
   },
 
   data() {
@@ -158,6 +162,7 @@ export default {
     openModal() {
       this.openFormModal()
       this.formData.company_id = this.company_id || this.$route.params.company_id
+      this.formData.type_id = this.type_id
     },
 
     async handleSubmit() {

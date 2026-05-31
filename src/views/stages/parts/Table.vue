@@ -77,11 +77,26 @@
 
         <Column field="name_ar" :header="$t('stages.name_ar')" sortable />
 
-        <Column field="is_default" :header="$t('stages.is_default')" sortable />
+        <Column field="affects_stock" :header="$t('stages.affects_stock')" sortable />
 
         <Column field="details" :header="$t('stages.details')" sortable />
 
         <Column field="details_ar" :header="$t('stages.details_ar')" sortable />
+
+        <Column :header="$t('stages.is_default')">
+          <template #body="{ data }">
+            <div v-if="data.is_default" class="badge badge-success">
+              {{ $t('common.default') }}
+            </div>
+            <div v-if="!data.is_default">
+              <ToggleSwitch
+                v-model="data.is_default"
+                @change="setDefault(data.id)"
+                :disabled="data.is_default"
+              />
+            </div>
+          </template>
+        </Column>
 
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
@@ -102,7 +117,12 @@
       </DataTable>
     </div>
 
-    <CreateForm ref="createModal" @created="fetchData" :company_id="company_id" />
+    <CreateForm
+      ref="createModal"
+      @created="fetchData"
+      :company_id="company_id"
+      :type_id="filters.type_id"
+    />
     <UpdateForm ref="updateModal" :selected_item="selectedItem" @updated="fetchData" />
 
     <Toast />
@@ -121,11 +141,21 @@ import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import Select from 'primevue/select'
+import ToggleSwitch from 'primevue/toggleswitch'
 
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm, Select },
+  components: {
+    DataTable,
+    Column,
+    Toast,
+    ConfirmDialog,
+    CreateForm,
+    UpdateForm,
+    Select,
+    ToggleSwitch,
+  },
 
   watch: {
     '$route.params.company_id': {
@@ -178,6 +208,11 @@ export default {
 
     deleteRow(item) {
       this.deleteItem(this.deleteUrl, item.id, item.name)
+    },
+
+    setDefault(stageId) {
+      this.setDefaultSage(stageId)
+      this.fetchData()
     },
   },
 }
