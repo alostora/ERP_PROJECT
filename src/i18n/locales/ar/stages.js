@@ -12,6 +12,7 @@ export default {
   icon: 'الأيقونة',
   company: 'الشركة',
   type: 'نوع المرحلة',
+  orderUpdated: 'تم اعادة الترتيب',
   createdAt: 'تاريخ الإنشاء',
   validation: {
     companyIdRequired: 'الشركة مطلوبة',

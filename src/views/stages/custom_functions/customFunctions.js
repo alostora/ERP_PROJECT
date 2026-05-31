@@ -8,7 +8,7 @@ export const customFunctions = {
     return {
       stageTypeUrl: API_ROUTES.LOOKUP.STAGE_TYPES,
       stageSetDefaultUrl: API_ROUTES.STAGE.SET_DEFAULT,
-      stageSetAffectsStockUrl: API_ROUTES.STAGE.SET_DEFAULT,
+      stageSetAffectsStockUrl: API_ROUTES.STAGE.SET_AFFECTS_STOCK,
       stageSetSorttUrl: API_ROUTES.STAGE.SET_SORT,
       stageTypes: [],
       dragIndex: null,
@@ -20,9 +20,11 @@ export const customFunctions = {
         const response = await API.get(`${this.stageTypeUrl}`)
         this.stageTypes = response.data.data || []
 
-        if (this.stageTypes.length > 0 && !this.filters.type_id) {
-          this.filters.type_id = this.stageTypes[0].id
-          this.fetchData()
+        if (this.filters) {
+          if (this.stageTypes.length > 0 && !this.filters.type_id) {
+            this.filters.type_id = this.stageTypes[0].id
+            this.fetchData()
+          }
         }
       } catch (error) {
         console.error('Error loading stage types:', error)
@@ -65,7 +67,7 @@ export const customFunctions = {
       })
     },
 
-    async setAffectsStockSage(stageId) {
+    async setAffectsStockStage(stageId) {
       this.$confirm.require({
         message: this.$t('common.confirmSetDefault'),
         header: this.$t('common.confirmSetDefault'),
@@ -131,7 +133,7 @@ export const customFunctions = {
         this.$toast.add({
           severity: 'success',
           summary: this.$t('common.success'),
-          detail: this.$t('common.orderUpdated'),
+          detail: this.$t('stages.orderUpdated'),
           life: 3000,
         })
       } catch (error) {

@@ -97,16 +97,24 @@
             <div v-if="data.affects_stock" class="badge badge-success">
               {{ $t('common.yes') }}
             </div>
-            <ToggleSwitch v-else v-model="data.affects_stock" @change="setDefault(data.id)" />
+            <div v-else-if="!data.affects_stock">
+              <ToggleSwitch
+                v-model="data.affects_stock"
+                @change="setAffectsStock(data.id)"
+                :disabled="data.affects_stock"
+              />
+            </div>
           </template>
         </Column>
 
         <Column :header="$t('stages.is_default')">
           <template #body="{ data }">
             <div v-if="data.is_default" class="badge badge-success">
-              {{ $t('common.default') }}
+              {{ $t('common.yes') }}
             </div>
-            <ToggleSwitch v-else v-model="data.is_default" @change="setAffectsStock(data.id)" />
+            <div v-else-if="!data.is_default">
+              <ToggleSwitch v-model="data.is_default" @change="setDefault(data.id)" />
+            </div>
           </template>
         </Column>
 
@@ -227,7 +235,7 @@ export default {
     },
 
     setAffectsStock(stageId) {
-      this.setAffectsStockSage(stageId)
+      this.setAffectsStockStage(stageId)
     },
   },
 }

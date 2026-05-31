@@ -12,6 +12,7 @@ export default {
   icon: 'Icon',
   company: 'Company',
   type: 'Stage Type',
+  orderUpdated: 'Order updated',
   createdAt: 'Created At',
   validation: {
     companyIdRequired: 'Company is required',
