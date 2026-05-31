@@ -91,6 +91,7 @@ export const tableMixin = {
         acceptLabel: this.$t('common.confirmDeleteYes'),
         rejectLabel: this.$t('common.confirmDeleteNo'),
         accept: async () => {
+          this.loading = true
           try {
             await API.delete(`${url}/${id}`)
             this.$toast.add({
@@ -107,7 +108,12 @@ export const tableMixin = {
               detail: error.response?.data?.message || this.$t('common.deleteFailed'),
               life: 3000,
             })
+          } finally {
+            this.loading = false
           }
+        },
+        reject: () => {
+          this.loading = false
         },
       })
     },

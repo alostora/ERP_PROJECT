@@ -9,6 +9,15 @@
     </div>
 
     <div class="card">
+      <div class="flex align-center gap-3 mb-2">
+        <button
+          class="btn btn-outline"
+          @click="$router.push(`/company/final-products/${company_id}`)"
+        >
+          <i :class="currentLanguage === 'ar' ? 'pi pi-arrow-right' : 'pi pi-arrow-left'"></i>
+          {{ $t('common.back') }}
+        </button>
+      </div>
       <div class="filters-bar">
         <div class="row">
           <div class="col-12 col-md-6 col-lg-4 mb-1">
@@ -145,7 +154,7 @@ export default {
   components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm },
 
   watch: {
-    '$route.params.final_product_id': {
+    final_product_id: {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
           this.apiUrl = `${API_ROUTES.FINAL_PRODUCT_VARIANT_VALUE.SEARCH}/${newVal}`
@@ -170,7 +179,6 @@ export default {
     return {
       apiUrl: API_ROUTES.FINAL_PRODUCT_VARIANT_VALUE.SEARCH,
       deleteUrl: API_ROUTES.FINAL_PRODUCT_VARIANT_VALUE.BASE,
-      company_id: '',
       filters: { query_string: '', category_id: '', product_id: '' },
       selectedItem: {},
     }
@@ -187,6 +195,10 @@ export default {
   },
 
   methods: {
+    goBack() {
+      this.$router.push(`/company/final-products/${this.company_id}`)
+    },
+
     openCreateModal() {
       this.$refs.createModal.openModal()
     },
