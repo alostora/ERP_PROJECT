@@ -39,6 +39,7 @@ export const customFunctions = {
       }
     },
   },
+
   methods: {
     async loadCategories(companyId) {
       try {
