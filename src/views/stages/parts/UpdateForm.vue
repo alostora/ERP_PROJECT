@@ -96,7 +96,7 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.PRODUCT.BASE,
+      apiUrl: API_ROUTES.STAGE.BASE,
       formData: {
         id: '',
         name: '',
