@@ -14,6 +14,7 @@ import variants from '@/views/variants/routes/routes'
 import variantValues from '@/views/variant_values/routes/routes'
 import products from '@/views/products/routes/routes'
 import finalProducts from '@/views/final_products/routes/routes'
+import finalProductVariantValues from '@/views/final_product_variant_values/routes/routes'
 
 const routes = [
   {
@@ -40,6 +41,7 @@ const routes = [
       ...variantValues,
       ...products,
       ...finalProducts,
+      ...finalProductVariantValues,
     ],
   },
 ]

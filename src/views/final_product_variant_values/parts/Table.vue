@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h1 class="page-title">{{ $t('finalProducts.title') }}</h1>
+      <h1 class="page-title">{{ $t('finalProductVariantValues.title') }}</h1>
       <button class="btn btn-primary" @click="openCreateModal">
         <i class="pi pi-plus"></i>
         {{ $t('common.addNew') }}
@@ -22,36 +22,6 @@
                 :placeholder="$t('common.search')"
               />
             </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4 mb-1">
-            <Select
-              v-model="filters.category_id"
-              :options="categories"
-              :optionLabel="categoryLabel"
-              optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('categories.title')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="onCategoryChange"
-            />
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4 mb-1" v-if="this.filters.category_id">
-            <Select
-              v-model="filters.product_id"
-              :options="products"
-              :optionLabel="productLabel"
-              optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('products.title')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="fetchData"
-            />
           </div>
 
           <div class="col-6 col-md-3 col-lg-2">
@@ -80,93 +50,43 @@
         resizableColumns
         showGridlines
       >
-        <Column field="id" :header="$t('finalProducts.id')" class="col-1">
+        <Column field="id" :header="$t('finalProductVariantValues.id')" class="col-1">
           <template #body="slotProps">
             <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
           </template>
         </Column>
 
-        <Column :header="$t('finalProducts.category')" class="col-1">
+        <Column :header="$t('finalProductVariantValues.finalProduct')" class="col-1">
           <template #body="{ data }">
             <div class="info-item">
               {{
                 currentLanguage === 'ar'
-                  ? data.category?.name_ar || '-'
-                  : data.category?.name || '-'
+                  ? data.final_product?.name_ar || '-'
+                  : data.final_product?.name || '-'
               }}
             </div>
           </template>
         </Column>
 
-        <Column :header="$t('finalProducts.product')" class="col-1">
+        <Column :header="$t('finalProductVariantValues.variant')" class="col-1">
           <template #body="{ data }">
             <div class="info-item">
               {{
-                currentLanguage === 'ar' ? data.product?.name_ar || '-' : data.product?.name || '-'
+                currentLanguage === 'ar' ? data.variant?.name_ar || '-' : data.variant?.name || '-'
               }}
             </div>
           </template>
         </Column>
 
-        <Column :header="$t('finalProducts.purchasesMeasurementUnit')" class="col-1">
-          <template #body="{ data }">
-            <div class="info-item">
-              {{
-                currentLanguage === 'ar'
-                  ? data.purchases_measurement_unit?.name_ar || '-'
-                  : data.purchases_measurement_unit?.name || '-'
-              }}
-            </div>
-          </template>
-        </Column>
-
-        <Column :header="$t('finalProducts.salesMeasurementUnit')" class="col-1">
+        <Column :header="$t('finalProductVariantValues.variantValue')" class="col-1">
           <template #body="{ data }">
             <div class="info-item">
               {{
                 currentLanguage === 'ar'
-                  ? data.sales_measurement_unit?.name_ar || '-'
-                  : data.sales_measurement_unit?.name || '-'
+                  ? data.variant_value?.value_ar || '-'
+                  : data.variant_value?.value || '-'
               }}
             </div>
-          </template>
-        </Column>
-
-        <Column field="name" :header="$t('finalProducts.name')" class="col-1" sortable />
-
-        <Column field="name_ar" :header="$t('finalProducts.name_ar')" class="col-1" sortable />
-
-        <Column field="price" :header="$t('finalProducts.price')" class="col-1" sortable />
-
-        <Column :header="$t('finalProducts.totalTax')" class="col-1">
-          <template #body="{ data }">
-            <div class="info-item">
-              {{ data.tax_calculation?.total_tax || 0 }}
-            </div>
-          </template>
-        </Column>
-
-        <Column
-          field="grand_total_price"
-          :header="$t('finalProducts.grandTotalPrice')"
-          class="col-1"
-          sortable
-        />
-
-        <Column :header="$t('finalProductVariantValues.title')">
-          <template #body="{ data }">
-            <button
-              class="btn-sm btn-outline"
-              @click="
-                $router.push({
-                  name: 'final-product-variant-values',
-                  params: { company_id: company_id, final_product_id: data.id },
-                })
-              "
-            >
-              <i class="pi pi-link text-primary"></i>
-              {{ $t('finalProductVariantValues.title') }}
-            </button>
           </template>
         </Column>
 
@@ -189,11 +109,17 @@
       </DataTable>
     </div>
 
-    <CreateForm ref="createModal" @created="fetchData" :company_id="company_id" />
+    <CreateForm
+      ref="createModal"
+      :company_id="company_id"
+      :final_product_id="final_product_id"
+      @created="fetchData"
+    />
     <UpdateForm
       ref="updateModal"
       :selected_item="selectedItem"
       :company_id="company_id"
+      :final_product_id="final_product_id"
       @updated="fetchData"
     />
 
@@ -212,29 +138,38 @@ import UpdateForm from './UpdateForm.vue'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
-import Select from 'primevue/select'
 
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm, Select },
+  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm },
 
   watch: {
-    '$route.params.company_id': {
+    '$route.params.final_product_id': {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
-          this.company_id = newVal
-          this.apiUrl = `${API_ROUTES.FINAL_PRODUCT.SEARCH}/${newVal}`
+          this.apiUrl = `${API_ROUTES.FINAL_PRODUCT_VARIANT_VALUE.SEARCH}/${newVal}`
         }
       },
       immediate: true,
     },
   },
 
+  props: {
+    company_id: {
+      type: String,
+      default: '',
+    },
+    final_product_id: {
+      type: String,
+      default: '',
+    },
+  },
+
   data() {
     return {
-      apiUrl: API_ROUTES.FINAL_PRODUCT.SEARCH,
-      deleteUrl: API_ROUTES.FINAL_PRODUCT.BASE,
+      apiUrl: API_ROUTES.FINAL_PRODUCT_VARIANT_VALUE.SEARCH,
+      deleteUrl: API_ROUTES.FINAL_PRODUCT_VARIANT_VALUE.BASE,
       company_id: '',
       filters: { query_string: '', category_id: '', product_id: '' },
       selectedItem: {},
@@ -245,30 +180,13 @@ export default {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
-
-    categoryLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    productLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
   },
 
   mounted() {
     this.fetchData()
-    this.loadCategories(this.company_id)
   },
 
   methods: {
-    async onCategoryChange() {
-      await this.loadProducts(this.company_id, this.filters.category_id)
-
-      this.filters.product_id = ''
-
-      this.fetchData()
-    },
-
     openCreateModal() {
       this.$refs.createModal.openModal()
     },

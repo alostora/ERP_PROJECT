@@ -43,6 +43,7 @@ export const API_ROUTES = {
   },
   VARIANT: {
     SEARCH: `${BASE_URL}/admin/company/variants/search`,
+    LIST: `${BASE_URL}/admin/company/variants/list`,
     BASE: `${BASE_URL}/admin/company/variant`,
   },
   VARIANT_VALUE: {
@@ -60,5 +61,9 @@ export const API_ROUTES = {
   FINAL_PRODUCT: {
     SEARCH: `${BASE_URL}/admin/company/product/company-final-products/search`,
     BASE: `${BASE_URL}/admin/company/product/final-product`,
+  },
+  FINAL_PRODUCT_VARIANT_VALUE: {
+    SEARCH: `${BASE_URL}/admin/company/product/final-product-variant-values/search`,
+    BASE: `${BASE_URL}/admin/company/product/final-product-variant-value`,
   },
 }
