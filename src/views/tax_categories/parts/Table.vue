@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h1 class="page-title">{{ $t('taxes.title') }}</h1>
+      <h1 class="page-title">{{ $t('taxCategories.title') }}</h1>
       <button class="btn btn-primary" @click="openCreateModal">
         <i class="pi pi-plus"></i>
         {{ $t('common.addNew') }}
@@ -22,21 +22,6 @@
                 :placeholder="$t('common.search')"
               />
             </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4 mb-1">
-            <Select
-              v-model="filters.type_id"
-              :options="taxTypes"
-              :optionLabel="taxTypeLabel"
-              optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('taxes.type')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="fetchData"
-            />
           </div>
 
           <div class="col-6 col-md-3 col-lg-2">
@@ -65,34 +50,35 @@
         resizableColumns
         showGridlines
       >
-        <Column field="id" :header="$t('taxes.id')" class="col-1">
+        <Column field="id" :header="$t('taxCategories.id')" class="col-1">
           <template #body="slotProps">
             <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
           </template>
         </Column>
 
-        <Column field="name" :header="$t('taxes.name')" />
+        <Column field="name" :header="$t('taxCategories.name')" />
 
-        <Column field="name_ar" :header="$t('taxes.name_ar')" />
+        <Column field="name_ar" :header="$t('taxCategories.name_ar')" />
 
-        <Column :header="$t('taxes.type')">
-          <template #body="{ data }">
-            <div v-if="data.type" class="badge badge-info">
-              {{ currentLanguage == 'ar' ? data.type?.name_ar : data.type?.name }}
-            </div>
-          </template>
-        </Column>
-
-        <Column field="value" :header="$t('taxes.value')" />
-
-        <Column :header="$t('taxes.is_active')">
+        <Column :header="$t('taxCategories.is_active')">
           <template #body="{ data }">
             <ToggleSwitch v-model="data.is_active" @change="toggleActive(data)" />
             {{ data.is_active ? $t('common.yes') : $t('common.no') }}
           </template>
         </Column>
 
-        <Column :header="$t('taxes.is_system')">
+        <Column :header="$t('taxCategories.is_default')">
+          <template #body="{ data }">
+            <div v-if="data.is_default" class="badge badge-success">
+              {{ $t('common.yes') }}
+            </div>
+            <div v-else-if="!data.is_default">
+              <ToggleSwitch v-model="data.is_default" @change="setDefault(data.id)" />
+            </div>
+          </template>
+        </Column>
+
+        <Column :header="$t('taxCategories.is_system')">
           <template #body="{ data }">
             <div v-if="data.is_system" class="badge badge-success">
               {{ $t('common.yes') }}
@@ -122,12 +108,7 @@
       </DataTable>
     </div>
 
-    <CreateForm
-      ref="createModal"
-      @created="fetchData"
-      :company_id="company_id"
-      :type_id="filters.type_id"
-    />
+    <CreateForm ref="createModal" @created="fetchData" :company_id="company_id" />
     <UpdateForm ref="updateModal" :selected_item="selectedItem" @updated="fetchData" />
 
     <Toast />
@@ -167,7 +148,7 @@ export default {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
           this.company_id = newVal
-          this.apiUrl = `${API_ROUTES.TAX.SEARCH}/${newVal}`
+          this.apiUrl = `${API_ROUTES.TAX_CATEGORY.SEARCH}/${newVal}`
         }
       },
       immediate: true,
@@ -176,10 +157,10 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.TAX.SEARCH,
-      deleteUrl: API_ROUTES.TAX.BASE,
+      apiUrl: API_ROUTES.TAX_CATEGORY.SEARCH,
+      deleteUrl: API_ROUTES.TAX_CATEGORY.BASE,
       company_id: '',
-      filters: { query_string: '', type_id: '' },
+      filters: { query_string: '' },
       selectedItem: {},
     }
   },
@@ -188,15 +169,11 @@ export default {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
-
-    taxTypeLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
   },
 
   mounted() {
     this.fetchData()
-    this.loadTaxTypes()
+    this.loadTaxes(this.company_id)
   },
 
   methods: {
@@ -217,10 +194,14 @@ export default {
 
     toggleActive(item) {
       if (item.is_active == false) {
-        this.setInactiveTax(item.id)
+        this.setInactiveTaxCategory(item.id)
       } else {
-        this.setActiveTax(item.id)
+        this.setActiveTaxCategory(item.id)
       }
+    },
+
+    setDefault(taxCategoryId) {
+      this.setDefaultTaxCategory(taxCategoryId)
     },
   },
 }

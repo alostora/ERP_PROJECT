@@ -129,6 +129,7 @@ export default {
 
     operationsStages: 'مراحل العمليات',
     taxes: 'الضرائب',
+    taxCategories: 'فئات الضرائب',
     discounts: 'الخصومات',
 
     branchDetails: 'تفاصيل الفرع',

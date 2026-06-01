@@ -149,9 +149,9 @@ export const sidebarItems = {
                   path: `/company/taxes/${this.company_id}`,
                 },
                 {
-                  label: 'common.menu.discounts',
+                  label: 'common.menu.taxCategories',
                   icon: 'pi pi-circle-fill',
-                  path: `/company/${this.company_id}/discounts`,
+                  path: `/company/tax-categories/${this.company_id}`,
                 },
                 {
                   label: 'common.menu.contacts',
@@ -162,6 +162,11 @@ export const sidebarItems = {
                   label: 'common.menu.employees',
                   icon: 'pi pi-circle-fill',
                   path: `/company/${this.company_id}/employees`,
+                },
+                {
+                  label: 'common.menu.discounts',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/${this.company_id}/discounts`,
                 },
               ],
             },

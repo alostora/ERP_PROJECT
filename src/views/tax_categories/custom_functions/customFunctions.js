@@ -6,23 +6,60 @@ export const customFunctions = {
   mixins: [tableMixin],
   data() {
     return {
-      taxTypeUrl: API_ROUTES.LOOKUP.TAX_TYPES,
-      taxSetActiveUrl: API_ROUTES.TAX.SET_ACTIVE,
-      taxSetInactiveUrl: API_ROUTES.TAX.SET_INACTIVE,
-      taxTypes: [],
+      taxUrl: API_ROUTES.TAX.SEARCH,
+      taxCategorySetActiveUrl: API_ROUTES.TAX_CATEGORY.SET_ACTIVE,
+      taxCategorySetInactiveUrl: API_ROUTES.TAX_CATEGORY.SET_INACTIVE,
+      taxCategorySetDefaultUrl: API_ROUTES.TAX_CATEGORY.SET_DEFAULT,
+      taxes: [],
     }
   },
   methods: {
-    async loadTaxTypes() {
+    async loadTaxes(companyId) {
       try {
-        const response = await API.get(`${this.taxTypeUrl}`)
-        this.taxTypes = response.data.data || []
+        const response = await API.get(`${this.taxUrl}/${companyId}`)
+        this.taxes = response.data.data || []
       } catch (error) {
-        console.error('Error loading taxes types:', error)
+        console.error('Error loading taxes:', error)
       }
     },
 
-    async setActiveTax(taxId) {
+    async setDefaultTaxCategory(taxCategoryId) {
+      this.$confirm.require({
+        message: this.$t('common.confirmSetDefault'),
+        header: this.$t('common.confirmSetDefault'),
+        icon: 'pi pi-exclamation-triangle',
+        acceptClass: 'p-button-danger',
+        acceptLabel: this.$t('common.confirmYes'),
+        rejectLabel: this.$t('common.confirmNo'),
+        accept: async () => {
+          this.loading = true
+          try {
+            await API.patch(`${this.taxCategorySetDefaultUrl}/${taxCategoryId}`)
+            this.$toast.add({
+              severity: 'success',
+              summary: this.$t('common.success'),
+              detail: this.$t('common.updatedSuccessfully'),
+              life: 3000,
+            })
+            this.fetchData()
+          } catch (error) {
+            this.$toast.add({
+              severity: 'error',
+              summary: this.$t('common.error'),
+              detail: error.response?.data?.message || this.$t('common.updateFailed'),
+              life: 3000,
+            })
+          } finally {
+            this.loading = false
+          }
+        },
+        reject: () => {
+          this.loading = false
+        },
+      })
+    },
+
+    async setActiveTaxCategory(taxCategoryId) {
       this.$confirm.require({
         message: this.$t('common.confirmSetActive'),
         header: this.$t('common.confirmSetActive'),
@@ -33,7 +70,7 @@ export const customFunctions = {
         accept: async () => {
           this.loading = true
           try {
-            await API.patch(`${this.taxSetActiveUrl}/${taxId}`)
+            await API.patch(`${this.taxCategorySetActiveUrl}/${taxCategoryId}`)
             this.$toast.add({
               severity: 'success',
               summary: this.$t('common.success'),
@@ -59,7 +96,7 @@ export const customFunctions = {
       })
     },
 
-    async setInactiveTax(taxId) {
+    async setInactiveTaxCategory(taxCategoryId) {
       this.$confirm.require({
         message: this.$t('common.confirmSetInactive'),
         header: this.$t('common.confirmSetInactive'),
@@ -70,7 +107,7 @@ export const customFunctions = {
         accept: async () => {
           this.loading = true
           try {
-            await API.patch(`${this.taxSetInactiveUrl}/${taxId}`)
+            await API.patch(`${this.taxCategorySetInactiveUrl}/${taxCategoryId}`)
             this.$toast.add({
               severity: 'success',
               summary: this.$t('common.success'),

@@ -129,6 +129,7 @@ export default {
 
     operationsStages: 'Operation Stages',
     taxes: 'Taxes',
+    taxCategories: 'Tax Categories',
     discounts: 'Discounts',
 
     branchDetails: 'Branch Details',

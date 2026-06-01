@@ -81,4 +81,11 @@ export const API_ROUTES = {
     SET_ACTIVE: `${BASE_URL}/admin/company/tax/set-active`,
     SET_INACTIVE: `${BASE_URL}/admin/company/tax/set-inactive`,
   },
+  TAX_CATEGORY: {
+    SEARCH: `${BASE_URL}/admin/company/tax-categories/search`,
+    BASE: `${BASE_URL}/admin/company/tax-category`,
+    SET_ACTIVE: `${BASE_URL}/admin/company/tax-category/set-active`,
+    SET_INACTIVE: `${BASE_URL}/admin/company/tax-category/set-inactive`,
+    SET_DEFAULT: `${BASE_URL}/admin/company/tax-category/set-default`,
+  },
 }

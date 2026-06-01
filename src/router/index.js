@@ -17,6 +17,7 @@ import finalProducts from '@/views/final_products/routes/routes'
 import finalProductVariantValues from '@/views/final_product_variant_values/routes/routes'
 import stages from '@/views/stages/routes/routes'
 import taxes from '@/views/taxes/routes/routes'
+import taxCategories from '@/views/tax_categories/routes/routes'
 
 const routes = [
   {
@@ -46,6 +47,7 @@ const routes = [
       ...finalProductVariantValues,
       ...stages,
       ...taxes,
+      ...taxCategories,
     ],
   },
 ]

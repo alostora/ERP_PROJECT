@@ -1,0 +1,20 @@
+export default {
+  title: 'أقسام الضرائب',
+  id: '#',
+  name: 'الاسم',
+  name_ar: 'الاسم (عربي)',
+  details: 'التفاصيل / ملاحظات',
+  details_ar: 'التفاصيل / ملاحظات (عربي)',
+  is_default: 'افتراضي؟',
+  is_active: 'نشط؟',
+  is_system: 'تابع للنظام؟',
+  taxes: 'الضرائب',
+  company: 'الشركة',
+  createdAt: 'تاريخ الإنشاء',
+  validation: {
+    companyIdRequired: 'الشركة مطلوبة',
+    nameRequired: 'الاسم مطلوب',
+    nameArRequired: 'الاسم بالعربية مطلوب',
+    taxIdsRequired: 'يجب اختيار ضريبة واحدة على الأقل',
+  },
+}
