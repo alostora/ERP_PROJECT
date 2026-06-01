@@ -13,13 +13,20 @@ export default {
   close: 'إغلاق',
   back: 'رجوع',
   addNew: 'إضافة جديد',
-  confirm: 'تأكيد',
-  yes: 'نعم',
 
+  confirm: 'تأكيد',
   confirmYes: 'نعم',
   confirmNo: 'إلغاء',
-
   confirmSetDefault: 'تأكيد تعيين كافتراضي',
+  confirmSetActive: 'تأكيد تعيين كمفعل',
+  confirmSetInactive: 'تأكيد تعيين كغير مفعل',
+  confirmDeleteTitle: 'تأكيد الحذف',
+  confirmDeleteMessage: 'هل أنت متأكد من حذف "{itemName}"؟',
+  confirmDeleteYes: 'نعم، احذف',
+  confirmDeleteNo: 'إلغاء',
+
+  yes: 'نعم',
+  no: 'لا',
   default: 'افتراضي',
 
   // Messages (Headers)
@@ -71,12 +78,6 @@ export default {
   fetchFailed: 'فشل تحميل البيانات',
   networkError: 'خطأ في الشبكة',
   validationError: 'خطأ في التحقق',
-
-  // Delete Confirmation
-  confirmDeleteTitle: 'تأكيد الحذف',
-  confirmDeleteMessage: 'هل أنت متأكد من حذف "{itemName}"؟',
-  confirmDeleteYes: 'نعم، احذف',
-  confirmDeleteNo: 'إلغاء',
 
   // Common
   select: 'اختر',

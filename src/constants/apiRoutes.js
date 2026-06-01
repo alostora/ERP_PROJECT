@@ -9,6 +9,7 @@ export const API_ROUTES = {
     ACCOUNT_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.USER_ACCOUNT_TYPE}`,
     CURRENCIES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.CURRENCY}`,
     STAGE_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.STAGE_TYPE}`,
+    TAX_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.TAX_TYPE}`,
   },
   USER: {
     SEARCH: `${BASE_URL}/admin/users/search`,
@@ -73,5 +74,11 @@ export const API_ROUTES = {
     SET_DEFAULT: `${BASE_URL}/admin/company/stage-set-default`,
     SET_AFFECTS_STOCK: `${BASE_URL}/admin/company/stage-set-affects-stock`,
     SET_SORT: `${BASE_URL}/admin/company/stage-set-sort`,
+  },
+  TAX: {
+    SEARCH: `${BASE_URL}/admin/company/taxes/search`,
+    BASE: `${BASE_URL}/admin/company/tax`,
+    SET_ACTIVE: `${BASE_URL}/admin/company/tax/set-active`,
+    SET_INACTIVE: `${BASE_URL}/admin/company/tax/set-inactive`,
   },
 }

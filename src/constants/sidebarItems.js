@@ -146,7 +146,7 @@ export const sidebarItems = {
                 {
                   label: 'common.menu.taxes',
                   icon: 'pi pi-circle-fill',
-                  path: `/company/${this.company_id}/taxes`,
+                  path: `/company/taxes/${this.company_id}`,
                 },
                 {
                   label: 'common.menu.discounts',

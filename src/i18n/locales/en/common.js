@@ -13,13 +13,20 @@ export default {
   close: 'Close',
   back: 'Back',
   addNew: 'Add New',
-  confirm: 'Confirm',
-  yes: 'Yes',
 
+  confirm: 'Confirm',
   confirmYes: 'Yes',
   confirmNo: 'Cancel',
-
   confirmSetDefault: 'Confirm set as default',
+  confirmSetActive: 'Confirm set active',
+  confirmSetInactive: 'Confirm set inactive',
+  confirmDeleteTitle: 'Confirm Delete',
+  confirmDeleteMessage: 'Are you sure you want to delete "{itemName}"?',
+  confirmDeleteYes: 'Yes, Delete',
+  confirmDeleteNo: 'Cancel',
+
+  yes: 'Yes',
+
   default: 'Default',
 
   // Messages (Headers)
@@ -71,12 +78,6 @@ export default {
   fetchFailed: 'Failed to load data',
   networkError: 'Network error',
   validationError: 'Validation error',
-
-  // Delete Confirmation
-  confirmDeleteTitle: 'Confirm Delete',
-  confirmDeleteMessage: 'Are you sure you want to delete "{itemName}"?',
-  confirmDeleteYes: 'Yes, Delete',
-  confirmDeleteNo: 'Cancel',
 
   // Common
   select: 'Select',

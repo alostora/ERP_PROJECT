@@ -1,0 +1,21 @@
+export default {
+  title: 'الضرائب',
+  id: '#',
+  name: 'الاسم',
+  name_ar: 'الاسم (عربي)',
+  value: 'قيمة الضريبة',
+  details: 'التفاصيل / ملاحظات',
+  details_ar: 'التفاصيل / ملاحظات (عربي)',
+  is_active: 'نشط',
+  is_system: 'تابع للنظام؟',
+  company: 'الشركة',
+  type: 'نوع الضريبة',
+  createdAt: 'تاريخ الإنشاء',
+  validation: {
+    companyIdRequired: 'الشركة مطلوبة',
+    typeIdRequired: 'نوع الضريبة مطلوب',
+    nameRequired: 'الاسم مطلوب',
+    nameArRequired: 'الاسم بالعربية مطلوب',
+    valueRequired: 'قيمة الضريبة مطلوبة',
+  },
+}

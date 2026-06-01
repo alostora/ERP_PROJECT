@@ -1,0 +1,21 @@
+export default {
+  title: 'Taxes',
+  id: '#',
+  name: 'Name',
+  name_ar: 'Name (Arabic)',
+  value: 'Value',
+  details: 'Details / Notes',
+  details_ar: 'Details / Notes (Arabic)',
+  is_active: 'Active',
+  is_system: 'Is system',
+  company: 'Company',
+  type: 'Tax Type',
+  createdAt: 'Created At',
+  validation: {
+    companyIdRequired: 'Company is required',
+    typeIdRequired: 'Tax type is required',
+    nameRequired: 'Name is required',
+    nameArRequired: 'Arabic name is required',
+    valueRequired: 'Value is required',
+  },
+}
