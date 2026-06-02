@@ -35,6 +35,14 @@ export const API_ROUTES = {
     SEARCH: `${BASE_URL}/admin/companies/search`,
     BASE: `${BASE_URL}/admin/company`,
   },
+  BRANCH: {
+    SEARCH: `${BASE_URL}/admin/company/branches/search`,
+    BASE: `${BASE_URL}/admin/company/branch`,
+  },
+  WAREHOUSE: {
+    SEARCH: `${BASE_URL}/admin/company/warehouses/search`,
+    BASE: `${BASE_URL}/admin/company/warehouse`,
+  },
   MEASUREMENT_UNIT_GROUP: {
     SEARCH: `${BASE_URL}/admin/company/measurement-unit-groups/search`,
     BASE: `${BASE_URL}/admin/company/measurement-unit-group`,
@@ -99,5 +107,9 @@ export const API_ROUTES = {
 
     ATTACH_TAXES: `${BASE_URL}/admin/company/tax-category/attach-taxes`, //method: post, body: { taxes: [tax_id=>required, fixed_amount_override=>nullable] }
     DELETE_TAX: `${BASE_URL}/admin/company/tax-category/detach-tax`, //method: delete, {taxCategoryId}/{taxId} }
+  },
+  EMPLOYEE: {
+    SEARCH: `${BASE_URL}/admin/company/employees/search`,
+    BASE: `${BASE_URL}/admin/company/employee`,
   },
 }
