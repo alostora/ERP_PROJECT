@@ -1,0 +1,40 @@
+export default {
+  title: 'Tax Category Taxes',
+  id: '#',
+  tax: 'Tax',
+  taxCategory: {
+    name: 'Tax Category Name',
+    nameAr: 'Tax Category Name (Arabic)',
+    is_default: 'Is Default?',
+    is_active: 'Is Active?',
+    is_system: 'Is System?',
+  },
+  tax: {
+    noTaxes: 'No Taxes Found',
+    addTax: 'Add Tax',
+    tax: 'Tax',
+    taxes: 'Taxes',
+    name: 'Tax Name',
+    nameAr: 'Tax Name (Arabic)',
+    is_default: 'Is Default?',
+    value: 'Tax Rate',
+    is_active: 'Is Active?',
+    is_system: 'Is System?',
+    type: 'Tax Type',
+  },
+
+  fixedAmountOverride: 'Fixed Amount Override',
+  sortOrder: 'Sort Order',
+  isSystem: 'Is System',
+  createdAt: 'Created At',
+
+  validation: {
+    taxIdRequired: 'Tax ID is required',
+    taxIdExists: 'Tax does not exist',
+    taxCategoryIdRequired: 'Tax category is required',
+    fixedAmountOverrideNumeric: 'Fixed amount override must be a number',
+    sortOrderRequired: 'Sort order is required',
+    sortOrderInteger: 'Sort order must be an integer',
+    atLeastOneTax: 'At least one tax must be added',
+  },
+}

@@ -19,6 +19,7 @@ import enFinalProductVariantValues from './locales/en/finalProductVariantValues'
 import enStages from './locales/en/stages'
 import enTaxes from './locales/en/taxes'
 import enTaxCategories from './locales/en/taxCategories'
+import enTaxCategoryTaxes from './locales/en/taxCategoryTaxes'
 
 // Import Arabic translations
 import arCommon from './locales/ar/common'
@@ -39,6 +40,7 @@ import arFinalProductVariantValues from './locales/ar/finalProductVariantValues'
 import arStages from './locales/ar/stages'
 import arTaxes from './locales/ar/taxes'
 import arTaxCategories from './locales/ar/taxCategories'
+import arTaxCategoryTaxes from './locales/ar/taxCategoryTaxes'
 
 const messages = {
   en: {
@@ -60,6 +62,7 @@ const messages = {
     stages: enStages,
     taxes: enTaxes,
     taxCategories: enTaxCategories,
+    taxCategoryTaxes: enTaxCategoryTaxes,
   },
   ar: {
     common: arCommon,
@@ -80,6 +83,7 @@ const messages = {
     stages: arStages,
     taxes: arTaxes,
     taxCategories: arTaxCategories,
+    taxCategoryTaxes: arTaxCategoryTaxes,
   },
 }
 

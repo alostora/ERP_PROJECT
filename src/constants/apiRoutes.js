@@ -87,5 +87,17 @@ export const API_ROUTES = {
     SET_ACTIVE: `${BASE_URL}/admin/company/tax-category/set-active`,
     SET_INACTIVE: `${BASE_URL}/admin/company/tax-category/set-inactive`,
     SET_DEFAULT: `${BASE_URL}/admin/company/tax-category/set-default`,
+    ATTACH_TAXES: `${BASE_URL}/admin/company/tax-category/attach-taxes`, //method: post, body: { taxes: [tax_id=>required, fixed_amount_override=>nullable] }
+    REPLACE_TAXES: `${BASE_URL}/admin/company/tax-category/sync-taxes`, //method: post, body: { taxes: [tax_id=>required, fixed_amount_override=>nullable] }
+    DELETE_TAXES: `${BASE_URL}/admin/company/tax-category/detach-taxes`, //method: delete, body: { tax_ids: [] }
+  },
+  TAX_CATEGORY_TAX: {
+    SEARCH: `${BASE_URL}/admin/company/tax-category-taxes/search`,
+    BASE: `${BASE_URL}/admin/company/tax-category-tax`,
+    UPDATE: `${BASE_URL}/admin/company/tax-category-tax/update-tax-pivot`, //method: patch, body: { taxes: [fixed_amount_override=>nullable] }
+    SET_SORT: `${BASE_URL}/admin/company/tax-category-tax/tax-category-tax-set-sort`, //method: patch, body: { taxes: [new_position=>required] }
+
+    ATTACH_TAXES: `${BASE_URL}/admin/company/tax-category/attach-taxes`, //method: post, body: { taxes: [tax_id=>required, fixed_amount_override=>nullable] }
+    DELETE_TAX: `${BASE_URL}/admin/company/tax-category/detach-tax`, //method: delete, {taxCategoryId}/{taxId} }
   },
 }

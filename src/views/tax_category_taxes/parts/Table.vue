@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h1 class="page-title">{{ $t('taxCategories.title') }}</h1>
+      <h1 class="page-title">{{ $t('taxCategoryTaxes.title') }}</h1>
       <button class="btn btn-primary" @click="openCreateModal">
         <i class="pi pi-plus"></i>
         {{ $t('common.addNew') }}
@@ -9,6 +9,15 @@
     </div>
 
     <div class="card">
+      <div class="flex align-center gap-3 mb-2">
+        <button
+          class="btn btn-outline"
+          @click="$router.push(`/company/tax-categories/${company_id}`)"
+        >
+          <i :class="currentLanguage === 'ar' ? 'pi pi-arrow-right' : 'pi pi-arrow-left'"></i>
+          {{ $t('common.back') }}
+        </button>
+      </div>
       <div class="filters-bar">
         <div class="row">
           <div class="col-12 col-md-6 col-lg-4 mb-1">
@@ -50,56 +59,87 @@
         resizableColumns
         showGridlines
       >
-        <Column field="id" :header="$t('taxCategories.id')" class="col-1">
+        <Column field="id" :header="$t('taxCategoryTaxes.id')" class="col-1">
           <template #body="slotProps">
             <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
           </template>
         </Column>
 
-        <Column field="name" :header="$t('taxCategories.name')" />
-
-        <Column field="name_ar" :header="$t('taxCategories.name_ar')" />
-
-        <Column :header="$t('taxCategories.is_active')">
+        <Column :header="$t('taxCategoryTaxes.taxCategory.name')">
           <template #body="{ data }">
-            <ToggleSwitch v-model="data.is_active" @change="toggleActive(data)" />
-            {{ data.is_active ? $t('common.yes') : $t('common.no') }}
+            {{ data.tax_categorty ? data.tax_categorty.name : '-' }}
           </template>
         </Column>
 
-        <Column :header="$t('taxCategories.is_default')">
+        <Column :header="$t('taxCategoryTaxes.taxCategory.nameAr')">
           <template #body="{ data }">
-            <div v-if="data.is_default" class="badge badge-success">
-              {{ $t('common.yes') }}
-            </div>
-            <div v-else-if="!data.is_default">
-              <ToggleSwitch v-model="data.is_default" @change="setDefault(data.id)" />
-            </div>
+            {{ data.tax_categorty ? data.tax_categorty.name_ar : '-' }}
           </template>
         </Column>
 
-        <Column :header="$t('taxCategories.is_system')">
+        <Column :header="$t('taxCategoryTaxes.tax.name')">
           <template #body="{ data }">
-            <div v-if="data.is_system" class="badge badge-success">
+            {{ data.tax ? data.tax.name : '-' }}
+          </template>
+        </Column>
+
+        <Column :header="$t('taxCategoryTaxes.tax.nameAr')">
+          <template #body="{ data }">
+            {{ data.tax ? data.tax.name_ar : '-' }}
+          </template>
+        </Column>
+
+        <Column :header="$t('taxCategoryTaxes.tax.value')">
+          <template #body="{ data }">
+            {{ data.tax ? data.tax.value : 0 }}
+          </template>
+        </Column>
+
+        <Column :header="$t('taxCategoryTaxes.tax.is_active')">
+          <template #body="{ data }">
+            <div v-if="data.tax && data.tax.is_active" class="badge badge-success">
               {{ $t('common.yes') }}
             </div>
-            <div v-else-if="!data.is_system" class="badge badge-warning">
+            <div v-else-if="data.tax && !data.tax.is_active" class="badge badge-warning">
               {{ $t('common.no') }}
             </div>
           </template>
         </Column>
 
-        <Column :header="$t('taxCategoryTaxes.title')">
+        <Column :header="$t('taxCategoryTaxes.tax.is_default')">
           <template #body="{ data }">
-            <button
-              class="btn-sm btn-outline"
-              @click="$router.push(`/company/tax-category-taxes/${company_id}/${data.id}`)"
-            >
-              <i class="pi pi-link text-primary"></i>
-              {{ $t('taxCategoryTaxes.title') }}
-            </button>
+            <div v-if="data.tax && data.tax.is_default" class="badge badge-success">
+              {{ $t('common.yes') }}
+            </div>
+            <div v-else-if="data.tax && !data.tax.is_default" class="badge badge-warning">
+              {{ $t('common.no') }}
+            </div>
           </template>
         </Column>
+
+        <Column :header="$t('taxCategoryTaxes.tax.is_system')">
+          <template #body="{ data }">
+            <div v-if="data.tax && data.tax.is_system" class="badge badge-success">
+              {{ $t('common.yes') }}
+            </div>
+            <div v-else-if="data.tax && !data.tax.is_system" class="badge badge-warning">
+              {{ $t('common.no') }}
+            </div>
+          </template>
+        </Column>
+
+        <Column :header="$t('taxCategoryTaxes.tax.type')">
+          <template #body="{ data }">
+            <div v-if="data.tax && data.tax.type" class="badge badge-success">
+              {{ currentLanguage === 'en' ? data.tax.type.name : data.tax.type.name_ar }}
+            </div>
+          </template>
+        </Column>
+
+        <Column
+          field="fixed_amount_override"
+          :header="$t('taxCategoryTaxes.fixedAmountOverride')"
+        />
 
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
@@ -120,8 +160,19 @@
       </DataTable>
     </div>
 
-    <CreateForm ref="createModal" @created="fetchData" :company_id="company_id" />
-    <UpdateForm ref="updateModal" :selected_item="selectedItem" @updated="fetchData" />
+    <CreateForm
+      ref="createModal"
+      @created="fetchData"
+      :company_id="company_id"
+      :tax_category_id="tax_category_id"
+    />
+    <UpdateForm
+      ref="updateModal"
+      :tax_category_id="tax_category_id"
+      :tax_id="tax_id"
+      :selected_item="selectedItem"
+      @updated="fetchData"
+    />
 
     <Toast />
     <ConfirmDialog />
@@ -156,24 +207,34 @@ export default {
   },
 
   watch: {
-    '$route.params.company_id': {
+    '$route.params.tax_category_id': {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
-          this.company_id = newVal
-          this.apiUrl = `${API_ROUTES.TAX_CATEGORY.SEARCH}/${newVal}`
+          this.apiUrl = `${API_ROUTES.TAX_CATEGORY_TAX.SEARCH}/${newVal}`
         }
       },
       immediate: true,
     },
   },
 
+  props: {
+    company_id: {
+      type: String,
+      required: true,
+    },
+    tax_category_id: {
+      type: String,
+      required: true,
+    },
+  },
+
   data() {
     return {
-      apiUrl: API_ROUTES.TAX_CATEGORY.SEARCH,
-      deleteUrl: API_ROUTES.TAX_CATEGORY.BASE,
-      company_id: '',
+      apiUrl: API_ROUTES.TAX_CATEGORY_TAX.SEARCH,
+      deleteUrl: API_ROUTES.TAX_CATEGORY_TAX.DELETE_TAX,
       filters: { query_string: '' },
       selectedItem: {},
+      tax_id: null,
     }
   },
 
@@ -185,7 +246,6 @@ export default {
 
   mounted() {
     this.fetchData()
-    this.loadTaxes(this.company_id)
   },
 
   methods: {
@@ -194,6 +254,7 @@ export default {
     },
 
     openUpdateModal(item) {
+      this.tax_id = item.tax.id
       this.selectedItem = { ...item }
       this.$nextTick(() => {
         this.$refs.updateModal.openModal()
@@ -201,19 +262,9 @@ export default {
     },
 
     deleteRow(item) {
-      this.deleteItem(this.deleteUrl, item.id, item.name)
-    },
+      const taxCategoryTaxId = this.tax_category_id + '/' + item.tax.id
 
-    toggleActive(item) {
-      if (item.is_active == false) {
-        this.setInactiveTaxCategory(item.id)
-      } else {
-        this.setActiveTaxCategory(item.id)
-      }
-    },
-
-    setDefault(taxCategoryId) {
-      this.setDefaultTaxCategory(taxCategoryId)
+      this.deleteItem(this.deleteUrl, taxCategoryTaxId, item.name)
     },
   },
 }

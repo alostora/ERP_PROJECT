@@ -18,6 +18,7 @@ import finalProductVariantValues from '@/views/final_product_variant_values/rout
 import stages from '@/views/stages/routes/routes'
 import taxes from '@/views/taxes/routes/routes'
 import taxCategories from '@/views/tax_categories/routes/routes'
+import taxCategoryTaxes from '@/views/tax_category_taxes/routes/routes'
 
 const routes = [
   {
@@ -48,6 +49,7 @@ const routes = [
       ...stages,
       ...taxes,
       ...taxCategories,
+      ...taxCategoryTaxes,
     ],
   },
 ]
