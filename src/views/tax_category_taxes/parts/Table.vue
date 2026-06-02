@@ -59,21 +59,30 @@
         resizableColumns
         showGridlines
       >
-        <Column field="id" :header="$t('taxCategoryTaxes.id')" class="col-1">
-          <template #body="slotProps">
-            <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
+        <Column field="id" :header="$t('taxCategoryTaxes.sortOrder')" class="col-1" sortable>
+          <template #body="{ data, index }">
+            <div
+              draggable="true"
+              @dragstart="dragStart($event, index)"
+              @dragover="dragOver($event)"
+              @drop="drop($event, index)"
+              class="drag-item"
+            >
+              <i class="pi pi-bars"></i>
+              {{ data.sort_order }}
+            </div>
           </template>
         </Column>
 
         <Column :header="$t('taxCategoryTaxes.taxCategory.name')">
           <template #body="{ data }">
-            {{ data.tax_categorty ? data.tax_categorty.name : '-' }}
+            {{ data.tax_category ? data.tax_category.name : '-' }}
           </template>
         </Column>
 
         <Column :header="$t('taxCategoryTaxes.taxCategory.nameAr')">
           <template #body="{ data }">
-            {{ data.tax_categorty ? data.tax_categorty.name_ar : '-' }}
+            {{ data.tax_category ? data.tax_category.name_ar : '-' }}
           </template>
         </Column>
 

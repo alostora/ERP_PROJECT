@@ -5,6 +5,7 @@ export const customFunctions = {
   data() {
     return {
       taxUrl: API_ROUTES.TAX.SEARCH,
+      taxCategoryTaxSetSorttUrl: API_ROUTES.TAX_CATEGORY_TAX.SET_SORT,
       taxes: [],
       taxRows: [
         {
@@ -12,6 +13,7 @@ export const customFunctions = {
           fixed_amount_override: null,
         },
       ],
+      dragIndex: null,
     }
   },
 
@@ -66,6 +68,58 @@ export const customFunctions = {
     onFixedAmountChange(rowIndex, event) {
       this.taxRows[rowIndex].fixed_amount_override = event.target.value
       this.formData.taxes = this.taxRows.filter((row) => row.tax_id)
+    },
+
+    //////////////////////////////////////////////////////
+
+    dragStart(event, index) {
+      this.dragIndex = index
+      event.dataTransfer.effectAllowed = 'move'
+      event.target.style.opacity = '0.5'
+    },
+
+    dragOver(event) {
+      event.preventDefault()
+      event.dataTransfer.dropEffect = 'move'
+    },
+
+    async drop(event, dropIndex) {
+      event.preventDefault()
+      event.target.style.opacity = '1'
+
+      if (this.dragIndex === dropIndex) return
+
+      const draggedItem = this.items[this.dragIndex]
+      const newPosition = dropIndex + 1
+
+      console.log('Dragged Item:', draggedItem)
+
+      try {
+        await API.patch(
+          `${this.taxCategoryTaxSetSorttUrl}/${draggedItem.tax_category.id}/${draggedItem.tax.id}`,
+          {
+            new_position: newPosition,
+          }
+        )
+        this.fetchData()
+        this.$toast.add({
+          severity: 'success',
+          summary: this.$t('common.success'),
+          detail: this.$t('taxCategoryTaxes.orderUpdated'),
+          life: 3000,
+        })
+      } catch (error) {
+        this.$toast.add({
+          severity: 'error',
+          summary: this.$t('common.error'),
+          // detail: error.response?.data?.message || this.$t('common.updateFailed'),
+          detail: error,
+          life: 3000,
+        })
+        this.fetchData()
+      }
+
+      this.dragIndex = null
     },
   },
 }

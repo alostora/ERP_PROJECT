@@ -24,6 +24,7 @@ export default {
 
   fixedAmountOverride: 'مبلغ ثابت بديل',
   sortOrder: 'التسلسل',
+  orderUpdated: 'تم تحديث التسلسل',
   isSystem: 'نظامي',
   createdAt: 'تاريخ الإنشاء',
 

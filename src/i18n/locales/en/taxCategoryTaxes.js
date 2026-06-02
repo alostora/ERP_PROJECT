@@ -25,6 +25,7 @@ export default {
 
   fixedAmountOverride: 'Fixed Amount Override',
   sortOrder: 'Sort Order',
+  orderUpdated: 'Sort Order Updated',
   isSystem: 'Is System',
   createdAt: 'Created At',
 
