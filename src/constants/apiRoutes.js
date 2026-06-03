@@ -41,8 +41,9 @@ export const API_ROUTES = {
     SET_DEFAULT: `${BASE_URL}/admin/company/branch-set-default`,
   },
   WAREHOUSE: {
-    SEARCH: `${BASE_URL}/admin/company/warehouses/search`,
-    BASE: `${BASE_URL}/admin/company/warehouse`,
+    SEARCH: `${BASE_URL}/admin/company/branch/warehouses/search`,
+    BASE: `${BASE_URL}/admin/company/branch/warehouse`,
+    SET_DEFAULT: `${BASE_URL}/admin/company/branch/warehouse-set-default`,
   },
   MEASUREMENT_UNIT_GROUP: {
     SEARCH: `${BASE_URL}/admin/company/measurement-unit-groups/search`,

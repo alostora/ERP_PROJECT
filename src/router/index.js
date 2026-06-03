@@ -22,6 +22,7 @@ import taxCategoryTaxes from '@/views/tax_category_taxes/routes/routes'
 import employees from '@/views/employees/routes/routes'
 import contacts from '@/views/contacts/routes/routes'
 import branches from '@/views/branches/routes/routes'
+import warehouses from '@/views/warehouses/routes/routes'
 
 const routes = [
   {
@@ -56,6 +57,7 @@ const routes = [
       ...employees,
       ...contacts,
       ...branches,
+      ...warehouses,
     ],
   },
 ]

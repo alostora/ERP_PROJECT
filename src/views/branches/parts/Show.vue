@@ -61,7 +61,7 @@
               </div>
             </div>
             <h2 class="text-xl font-bold mt-3">{{ itemData.name }}</h2>
-            <p class="text-secondary">{{ itemData.name_ar }}</p>
+            <p class="text-secondary">{{ itemData.company?.name }}</p>
 
             <div class="divider"></div>
 

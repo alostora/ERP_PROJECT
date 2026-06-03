@@ -229,11 +229,11 @@ export const sidebarItems = {
               icon: 'pi pi-circle-fill',
               path: `/company/branch/${this.company_id}/${this.branch_id}`,
             },
-            // {
-            //   label: 'common.menu.warehouses',
-            //   icon: 'pi pi-circle-fill',
-            //   path: `/branch/${this.company_id}/warehouses/${this.branch_id}`,
-            // },
+            {
+              label: 'common.menu.warehouses',
+              icon: 'pi pi-circle-fill',
+              path: `/company/branch/warehouses/${this.company_id}/${this.branch_id}`,
+            },
             // {
             //   label: 'common.menu.branchEmployees',
             //   icon: 'pi pi-circle-fill',

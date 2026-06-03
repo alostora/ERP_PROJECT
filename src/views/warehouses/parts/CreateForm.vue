@@ -1,7 +1,7 @@
 <template>
   <Dialog
     v-model:visible="formVisible"
-    :header="$t('common.createTitle', { module: $t('branches.title') })"
+    :header="$t('common.createTitle', { module: $t('warehouses.title') })"
     :modal="true"
     :style="{ width: '500px' }"
     @hide="closeFormModal"
@@ -11,11 +11,15 @@
         <input type="hidden" v-model="formData.company_id" />
         <small v-if="errors.company_id" class="error-message">{{ errors.company_id }}</small>
       </div>
+      <div class="form-group">
+        <input type="hidden" v-model="formData.branch_id" />
+        <small v-if="errors.branch_id" class="error-message">{{ errors.branch_id }}</small>
+      </div>
 
       <div class="row">
         <div class="col-12 col-md-6">
           <div class="form-group">
-            <label class="form-label">{{ $t('branches.is_default') }}</label>
+            <label class="form-label">{{ $t('warehouses.is_default') }}</label>
             <div class="flex align-center">
               <ToggleSwitch v-model="formData.is_default" />
             </div>
@@ -24,7 +28,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('branches.name') }}</label>
+        <label class="form-label required">{{ $t('warehouses.name') }}</label>
         <input
           v-model="formData.name"
           type="text"
@@ -35,7 +39,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('branches.name_ar') }}</label>
+        <label class="form-label required">{{ $t('warehouses.name_ar') }}</label>
         <input
           v-model="formData.name_ar"
           type="text"
@@ -46,26 +50,15 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('branches.phone') }}</label>
-        <input
-          v-model="formData.phone"
-          type="number"
-          class="input"
-          :class="{ 'input-error': errors.phone }"
-        />
-        <small v-if="errors.phone" class="error-message">{{ errors.phone }}</small>
+        <label class="form-label required">{{ $t('warehouses.details') }}</label>
+        <textarea v-model="formData.details" class="textarea" rows="3"></textarea>
+        <small v-if="errors.details" class="error-message">{{ errors.details }}</small>
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('branches.address') }}</label>
-        <textarea v-model="formData.address_ar" class="textarea" rows="3"></textarea>
-        <small v-if="errors.address" class="error-message">{{ errors.address }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('branches.address_ar') }}</label>
-        <textarea v-model="formData.address_ar" class="textarea" rows="3"></textarea>
-        <small v-if="errors.address_ar" class="error-message">{{ errors.address_ar }}</small>
+        <label class="form-label required">{{ $t('warehouses.details_ar') }}</label>
+        <textarea v-model="formData.details_ar" class="textarea" rows="3"></textarea>
+        <small v-if="errors.details_ar" class="error-message">{{ errors.details_ar }}</small>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -99,18 +92,22 @@ export default {
       type: String,
       required: true,
     },
+    branch_id: {
+      type: String,
+      required: true,
+    },
   },
 
   data() {
     return {
-      apiUrl: API_ROUTES.BRANCH.BASE,
+      apiUrl: API_ROUTES.WAREHOUSE.BASE,
       formData: {
-        company_id: '',
+        company_id: this.company_id,
+        branch_id: this.branch_id,
         name: '',
         name_ar: '',
-        address: '',
-        address_ar: '',
-        phone: '',
+        details: '',
+        details_ar: '',
         is_default: '',
       },
     }
@@ -127,6 +124,7 @@ export default {
     openModal() {
       this.openFormModal()
       this.formData.company_id = this.company_id || this.$route.params.company_id
+      this.formData.branch_id = this.branch_id || this.$route.params.branch_id
     },
 
     async handleSubmit() {

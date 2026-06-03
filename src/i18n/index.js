@@ -23,6 +23,7 @@ import enTaxCategoryTaxes from './locales/en/taxCategoryTaxes'
 import enEmployees from './locales/en/employees'
 import enContacts from './locales/en/contacts'
 import enBranches from './locales/en/branches'
+import enWarehouses from './locales/en/warehouses'
 
 // Import Arabic translations
 import arCommon from './locales/ar/common'
@@ -47,6 +48,7 @@ import arTaxCategoryTaxes from './locales/ar/taxCategoryTaxes'
 import arEmployees from './locales/ar/employees'
 import arContacts from './locales/ar/contacts'
 import arBranches from './locales/ar/branches'
+import arWarehouses from './locales/ar/warehouses'
 
 const messages = {
   en: {
@@ -72,6 +74,7 @@ const messages = {
     employees: enEmployees,
     contacts: enContacts,
     branches: enBranches,
+    warehouses: enWarehouses,
   },
   ar: {
     common: arCommon,
@@ -96,6 +99,7 @@ const messages = {
     employees: arEmployees,
     contacts: arContacts,
     branches: arBranches,
+    warehouses: arWarehouses,
   },
 }
 

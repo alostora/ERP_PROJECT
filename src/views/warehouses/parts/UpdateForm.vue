@@ -1,21 +1,16 @@
 <template>
   <Dialog
     v-model:visible="formVisible"
-    :header="$t('common.createTitle', { module: $t('branches.title') })"
+    :header="$t('common.updateTitle', { module: $t('warehouses.title') })"
     :modal="true"
     :style="{ width: '500px' }"
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <input type="hidden" v-model="formData.company_id" />
-        <small v-if="errors.company_id" class="error-message">{{ errors.company_id }}</small>
-      </div>
-
       <div class="row">
         <div class="col-12 col-md-6">
           <div class="form-group">
-            <label class="form-label">{{ $t('branches.is_default') }}</label>
+            <label class="form-label">{{ $t('warehouses.is_default') }}</label>
             <div class="flex align-center">
               <ToggleSwitch v-model="formData.is_default" />
             </div>
@@ -24,7 +19,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('branches.name') }}</label>
+        <label class="form-label required">{{ $t('warehouses.name') }}</label>
         <input
           v-model="formData.name"
           type="text"
@@ -35,7 +30,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('branches.name_ar') }}</label>
+        <label class="form-label required">{{ $t('warehouses.name_ar') }}</label>
         <input
           v-model="formData.name_ar"
           type="text"
@@ -46,26 +41,25 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('branches.phone') }}</label>
+        <label class="form-label required">{{ $t('warehouses.details') }}</label>
         <input
-          v-model="formData.phone"
-          type="number"
+          v-model="formData.details"
+          type="text"
           class="input"
-          :class="{ 'input-error': errors.phone }"
+          :class="{ 'input-error': errors.details }"
         />
-        <small v-if="errors.phone" class="error-message">{{ errors.phone }}</small>
+        <small v-if="errors.details" class="error-message">{{ errors.details }}</small>
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('branches.address') }}</label>
-        <textarea v-model="formData.address_ar" class="textarea" rows="3"></textarea>
-        <small v-if="errors.address" class="error-message">{{ errors.address }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('branches.address_ar') }}</label>
-        <textarea v-model="formData.address_ar" class="textarea" rows="3"></textarea>
-        <small v-if="errors.address_ar" class="error-message">{{ errors.address_ar }}</small>
+        <label class="form-label required">{{ $t('warehouses.details_ar') }}</label>
+        <input
+          v-model="formData.details_ar"
+          type="text"
+          class="input"
+          :class="{ 'input-error': errors.details_ar }"
+        />
+        <small v-if="errors.details_ar" class="error-message">{{ errors.details_ar }}</small>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -73,7 +67,7 @@
           {{ $t('common.cancel') }}
         </button>
         <button type="submit" class="btn btn-primary" :disabled="formLoading">
-          {{ formLoading ? $t('common.loading') : $t('common.create') }}
+          {{ formLoading ? $t('common.loading') : $t('common.update') }}
         </button>
       </div>
     </form>
@@ -82,60 +76,88 @@
 
 <script>
 import Dialog from 'primevue/dialog'
-import customFunctions from '../custom_functions/customFunctions'
 import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
-import Select from 'primevue/select'
+import customFunctions from '../custom_functions/customFunctions'
 import ToggleSwitch from 'primevue/toggleswitch'
 
 export default {
-  name: 'CreateForm',
+  name: 'UpdateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog, Select, ToggleSwitch },
+  components: { Dialog, ToggleSwitch },
 
   props: {
-    company_id: {
-      type: String,
-      required: true,
+    selected_item: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+
+  watch: {
+    selected_item: {
+      immediate: true,
+      deep: true,
+      handler(selectedItem) {
+        if (selectedItem && selectedItem.id) {
+          this.populateForm(selectedItem)
+        }
+      },
     },
   },
 
   data() {
     return {
-      apiUrl: API_ROUTES.BRANCH.BASE,
+      apiUrl: API_ROUTES.WAREHOUSE.BASE,
       formData: {
-        company_id: '',
+        id: '',
         name: '',
         name_ar: '',
-        address: '',
-        address_ar: '',
-        phone: '',
+        details: '',
+        details_ar: '',
         is_default: '',
       },
     }
   },
+
+  mounted() {},
+
   computed: {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
   },
 
-  mounted() {},
-
   methods: {
+    populateForm(selectedItem) {
+      this.formData = {
+        id: selectedItem.id || '',
+        name: selectedItem.name || '',
+        name_ar: selectedItem.name_ar || '',
+        details: selectedItem.details || '',
+        details_ar: selectedItem.details_ar || '',
+        is_default: selectedItem.is_default || '',
+      }
+    },
+
     openModal() {
-      this.openFormModal()
-      this.formData.company_id = this.company_id || this.$route.params.company_id
+      this.formVisible = true
     },
 
     async handleSubmit() {
-      console.log(this.formData)
-      if (!this.validateCreateForm(this.formData)) {
+      if (!this.validateUpdateForm(this.formData)) {
         return
       }
 
-      await this.submitCreateForm(this.apiUrl, this.formData, this.$t('common.createdSuccessfully'))
+      const data = { ...this.formData }
+      delete data.id
+
+      await this.submitUpdateForm(
+        this.apiUrl,
+        this.formData.id,
+        data,
+        this.$t('common.updatedSuccessfully')
+      )
     },
   },
 }
