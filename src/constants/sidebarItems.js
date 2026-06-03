@@ -43,38 +43,6 @@ export const sidebarItems = {
             { label: 'common.menu.allCompanies', icon: 'pi pi-circle-fill', path: '/companies' },
           ],
         },
-
-        // Sales & Invoices Group
-        // {
-        //      label: "common.menu.salesGroup",
-        //      icon: "pi pi-chart-line",
-        //      items: [
-        //           { label: "common.menu.orders", icon: "pi pi-circle-fill", path: "/orders" },
-        //           { label: "common.menu.invoices", icon: "pi pi-circle-fill", path: "/invoices" },
-        //           { label: "common.menu.invoiceStages", icon: "pi pi-circle-fill", path: "/invoice-stages" },
-        //      ]
-        // },
-
-        // // Reports Group
-        // {
-        //      label: "common.menu.reportsGroup",
-        //      icon: "pi pi-chart-bar",
-        //      items: [
-        //           { label: "common.menu.salesReports", icon: "pi pi-circle-fill", path: "/reports/sales" },
-        //           { label: "common.menu.inventoryReports", icon: "pi pi-circle-fill", path: "/reports/inventory" },
-        //           { label: "common.menu.financialReports", icon: "pi pi-circle-fill", path: "/reports/financial" },
-        //      ]
-        // },
-
-        // // Settings Group
-        // {
-        //      label: "common.menu.settingsGroup",
-        //      icon: "pi pi-cog",
-        //      items: [
-        //           { label: "common.menu.generalSettings", icon: "pi pi-circle-fill", path: "/settings" },
-        //           { label: "common.menu.profile", icon: "pi pi-circle-fill", path: "/profile" },
-        //      ]
-        // },
       ]
     },
   },
