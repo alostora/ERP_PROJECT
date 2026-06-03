@@ -112,4 +112,20 @@ export const API_ROUTES = {
     SEARCH: `${BASE_URL}/admin/company/employees/search`,
     BASE: `${BASE_URL}/admin/company/employee`,
   },
+  CONTACT: {
+    SEARCH: `${BASE_URL}/admin/company/contacts/search`,
+    BASE: `${BASE_URL}/admin/company/contact`,
+  },
+  CONTACT_PHONE: {
+    SEARCH: `${BASE_URL}/admin/company/contact-phones/search`,
+    BASE: `${BASE_URL}/admin/company/contact-phone`,
+  },
+  CONTACT_ADDRESS: {
+    SEARCH: `${BASE_URL}/admin/company/contact-addresses/search`,
+    BASE: `${BASE_URL}/admin/company/contact-address`,
+  },
+  CONTACT_EMAIL: {
+    SEARCH: `${BASE_URL}/admin/company/contact-emails/search`,
+    BASE: `${BASE_URL}/admin/company/contact-email`,
+  },
 }

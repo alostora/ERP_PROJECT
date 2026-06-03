@@ -20,6 +20,7 @@ import taxes from '@/views/taxes/routes/routes'
 import taxCategories from '@/views/tax_categories/routes/routes'
 import taxCategoryTaxes from '@/views/tax_category_taxes/routes/routes'
 import employees from '@/views/employees/routes/routes'
+import contacts from '@/views/contacts/routes/routes'
 
 const routes = [
   {
@@ -52,6 +53,7 @@ const routes = [
       ...taxCategories,
       ...taxCategoryTaxes,
       ...employees,
+      ...contacts,
     ],
   },
 ]

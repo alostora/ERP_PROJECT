@@ -1,49 +1,14 @@
 <template>
   <Dialog
     v-model:visible="formVisible"
-    :header="$t('common.updateTitle', { module: $t('employees.title') })"
+    :header="$t('common.updateTitle', { module: $t('contacts.title') })"
     :modal="true"
     :style="{ width: '500px' }"
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
-        <label class="form-label required">{{ $t('employees.branch') }}</label>
-        <div class="col-12">
-          <Select
-            v-model="formData.branch_id"
-            :options="branches"
-            :optionLabel="branchLabel"
-            optionValue="id"
-            :placeholder="$t('common.all') + ' ' + $t('employees.branch')"
-            :filter="true"
-            :showClear="true"
-            :filterPlaceholder="$t('common.search')"
-            class="w-full"
-            @change="onBranchChange"
-          />
-        </div>
-      </div>
-
-      <div class="form-group" v-if="this.formData.branch_id && warehouses.length">
-        <label class="form-label required">{{ $t('employees.warehouse') }}</label>
-        <div class="col-12">
-          <Select
-            v-model="formData.warehouse_id"
-            :options="warehouses"
-            :optionLabel="warehouseLabel"
-            optionValue="id"
-            :placeholder="$t('common.all') + ' ' + $t('employees.warehouse')"
-            :filter="true"
-            :showClear="true"
-            :filterPlaceholder="$t('common.search')"
-            class="w-full"
-          />
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('employees.name') }}</label>
+        <label class="form-label required">{{ $t('contacts.name') }}</label>
         <input
           v-model="formData.name"
           type="text"
@@ -54,7 +19,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{ $t('employees.email') }}</label>
+        <label class="form-label required">{{ $t('contacts.email') }}</label>
         <input
           v-model="formData.email"
           type="email"
@@ -65,17 +30,12 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">{{ $t('employees.phone') }}</label>
+        <label class="form-label">{{ $t('contacts.phone') }}</label>
         <input v-model="formData.phone" type="text" class="input" />
       </div>
 
       <div class="form-group">
-        <label class="form-label">{{ $t('employees.passwordLeaveBlank') }}</label>
-        <input v-model="formData.password" type="password" class="input" />
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">{{ $t('employees.address') }}</label>
+        <label class="form-label">{{ $t('contacts.address') }}</label>
         <textarea v-model="formData.address" class="textarea" rows="3"></textarea>
       </div>
 
@@ -97,12 +57,11 @@ import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
 import customFunctions from '../custom_functions/customFunctions'
-import Select from 'primevue/select'
 
 export default {
   name: 'UpdateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog, Select },
+  components: { Dialog },
 
   props: {
     selected_item: {
@@ -125,16 +84,13 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.EMPLOYEE.BASE,
+      apiUrl: API_ROUTES.CONTACT.BASE,
       formData: {
         id: '',
         name: '',
         email: '',
         phone: '',
-        password: '',
         address: '',
-        branch_id: '',
-        warehouse_id: '',
       },
     }
   },
@@ -145,14 +101,6 @@ export default {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
-
-    branchLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    warehouseLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
   },
 
   methods: {
@@ -160,23 +108,11 @@ export default {
       this.formData = {
         id: selectedItem.id || '',
         company_id: selectedItem.company_id || '',
-        branch_id: selectedItem.branch_id || '',
-        warehouse_id: selectedItem.warehouse_id || '',
         name: selectedItem.name || '',
         email: selectedItem.email || '',
         phone: selectedItem.phone || '',
-        password: '',
         address: selectedItem.address || '',
       }
-
-      this.loadBranches(selectedItem.company_id)
-      this.loadWarehouses(selectedItem.branch_id)
-    },
-
-    async onBranchChange() {
-      await this.loadWarehouses(this.formData.branch_id)
-
-      this.formData.warehouse_id = ''
     },
 
     openModal() {

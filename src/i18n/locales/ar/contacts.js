@@ -1,0 +1,21 @@
+export default {
+  title: 'الموظفون',
+  id: '#',
+  name: 'الاسم',
+  email: 'البريد الإلكتروني',
+  phone: 'الهاتف / الجوال',
+  address: 'العنوان',
+  company: 'الشركة',
+  relatedModels: 'معلومات ذات صلة',
+  addresses: 'العنواين',
+  emails: 'البريد الإلكتروني',
+  phones: 'الهاتف / الجوال',
+  is_default: 'افتراضي؟',
+  createdAt: 'تاريخ الإنشاء',
+  validation: {
+    companyIdRequired: 'الشركة مطلوبة',
+    nameRequired: 'الاسم مطلوب',
+    emailRequired: 'البريد الإلكتروني مطلوب',
+    phoneRequired: 'الهاتف / الجوال مطلوب',
+  },
+}

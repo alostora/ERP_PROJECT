@@ -6,7 +6,7 @@ export default {
   details: 'التفاصيل / ملاحظات',
   details_ar: 'التفاصيل / ملاحظات (عربي)',
   stage_sort: 'الترتيب',
-  is_default: 'افتراضي',
+  is_default: 'افتراضي؟',
   affects_stock: 'يؤثر على المخزون',
   color: 'اللون',
   icon: 'الأيقونة',

@@ -1,0 +1,21 @@
+export default {
+  title: 'Employees',
+  id: '#',
+  name: 'Name',
+  email: 'Email',
+  phone: 'Phone / Mobile',
+  address: 'Address',
+  company: 'Company',
+  relatedModels: 'Related Information',
+  addresses: 'Addresses',
+  emails: 'Emails',
+  phones: 'Phones',
+  is_default: 'Is default?',
+  createdAt: 'Created At',
+  validation: {
+    companyIdRequired: 'Company is required',
+    nameRequired: 'Name is required',
+    emailRequired: 'Email is required',
+    phoneRequired: 'Phone / Mobile is required',
+  },
+}
