@@ -19,8 +19,8 @@ export const sidebarItems = {
           icon: 'pi pi-users',
           items: [
             { label: 'common.menu.allUsers', icon: 'pi pi-circle-fill', path: '/users' },
-            { label: 'common.menu.roles', icon: 'pi pi-circle-fill', path: '/roles' },
-            { label: 'common.menu.permissions', icon: 'pi pi-circle-fill', path: '/permissions' },
+            // { label: 'common.menu.roles', icon: 'pi pi-circle-fill', path: '/roles' },
+            // { label: 'common.menu.permissions', icon: 'pi pi-circle-fill', path: '/permissions' },
           ],
         },
 
@@ -119,10 +119,22 @@ export const sidebarItems = {
 
   methods: {
     handleSidebarItems() {
+      // Start with default items
       this.sidebar_items = [...this.defaultSidebarItems]
 
+      const companiesGroup = this.sidebar_items.find(
+        (item) => item.label === 'common.menu.companiesGroup'
+      )
+
+      // Always remove companyManagement first (cleanup)
+      if (companiesGroup) {
+        companiesGroup.items = companiesGroup.items.filter(
+          (item) => item.label !== 'common.menu.companyManagement'
+        )
+      }
+
       // Add Company Management (2nd level) when company is selected
-      if (this.company_id && !this.branch_id) {
+      if (this.company_id) {
         const companyManagement = {
           label: 'common.menu.companyManagement',
           icon: 'pi pi-building',
@@ -163,11 +175,11 @@ export const sidebarItems = {
                   icon: 'pi pi-circle-fill',
                   path: `/company/contacts/${this.company_id}`,
                 },
-                {
-                  label: 'common.menu.discounts',
-                  icon: 'pi pi-circle-fill',
-                  path: `/company/discounts/${this.company_id}`,
-                },
+                // {
+                //   label: 'common.menu.discounts',
+                //   icon: 'pi pi-circle-fill',
+                //   path: `/company/discounts/${this.company_id}`,
+                // },
               ],
             },
 
@@ -212,14 +224,32 @@ export const sidebarItems = {
         }
 
         // Find companies group and insert company management after it
-        const companiesIndex = this.sidebar_items.findIndex(
-          (item) => item.label === 'common.menu.companiesGroup'
-        )
-        if (companiesIndex !== -1) {
-          this.sidebar_items.splice(companiesIndex + 1, 0, companyManagement)
+        // const companiesIndex = this.sidebar_items.findIndex(
+        //   (item) => item.label === 'common.menu.companiesGroup'
+        // )
+        // if (companiesIndex !== -1) {
+        //   this.sidebar_items.splice(companiesIndex + 1, 0, companyManagement)
+        // } else {
+        //   this.sidebar_items.push(companyManagement)
+        // }
+
+        if (companiesGroup) {
+          // Remove existing to avoid duplicates
+          companiesGroup.items = companiesGroup.items.filter(
+            (item) => item.label !== 'common.menu.companyManagement'
+          )
+          companiesGroup.items.push(companyManagement)
         } else {
           this.sidebar_items.push(companyManagement)
         }
+      }
+
+      // Always remove branchManagement first (cleanup)
+      const branchIndex = this.sidebar_items.findIndex(
+        (item) => item.label === 'common.menu.branchManagement'
+      )
+      if (branchIndex !== -1) {
+        this.sidebar_items.splice(branchIndex, 1)
       }
 
       // Add Branch Management (3rd level) when branch is selected
@@ -255,6 +285,14 @@ export const sidebarItems = {
             },
           ],
         }
+        // Remove existing to avoid duplicates
+        const existingIndex = this.sidebar_items.findIndex(
+          (item) => item.label === 'common.menu.branchManagement'
+        )
+        if (existingIndex !== -1) {
+          this.sidebar_items.splice(existingIndex, 1)
+        }
+
         this.sidebar_items.push(branchManagement)
       }
     },
