@@ -278,3 +278,17 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.drag-item {
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.drag-item:active {
+  cursor: grabbing;
+}
+</style>
