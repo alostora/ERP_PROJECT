@@ -223,16 +223,7 @@ export const sidebarItems = {
           ],
         }
 
-        // Find companies group and insert company management after it
-        // const companiesIndex = this.sidebar_items.findIndex(
-        //   (item) => item.label === 'common.menu.companiesGroup'
-        // )
-        // if (companiesIndex !== -1) {
-        //   this.sidebar_items.splice(companiesIndex + 1, 0, companyManagement)
-        // } else {
-        //   this.sidebar_items.push(companyManagement)
-        // }
-
+        //put company items inside its group
         if (companiesGroup) {
           // Remove existing to avoid duplicates
           companiesGroup.items = companiesGroup.items.filter(
