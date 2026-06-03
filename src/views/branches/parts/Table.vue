@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h1 class="page-title">{{ $t('stages.title') }}</h1>
+      <h1 class="page-title">{{ $t('branches.title') }}</h1>
       <button class="btn btn-primary" @click="openCreateModal">
         <i class="pi pi-plus"></i>
         {{ $t('common.addNew') }}
@@ -9,6 +9,13 @@
     </div>
 
     <div class="card">
+      <div class="flex align-center gap-3 mb-2">
+        <button class="btn btn-outline" @click="$router.push(`/company/${company_id}`)">
+          <i :class="currentLanguage === 'ar' ? 'pi pi-arrow-right' : 'pi pi-arrow-left'"></i>
+          {{ $t('common.back') }}
+        </button>
+      </div>
+
       <div class="filters-bar">
         <div class="row">
           <div class="col-12 col-md-6 col-lg-4 mb-1">
@@ -22,21 +29,6 @@
                 :placeholder="$t('common.search')"
               />
             </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4 mb-1">
-            <Select
-              v-model="filters.type_id"
-              :options="stageTypes"
-              :optionLabel="stageTypeLabel"
-              optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('stages.type')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="fetchData"
-            />
           </div>
 
           <div class="col-6 col-md-3 col-lg-2">
@@ -65,55 +57,25 @@
         resizableColumns
         showGridlines
       >
-        <Column field="stage_sort" :header="$t('stages.stage_sort')" sortable>
-          <template #body="{ data, index }">
-            <div
-              draggable="true"
-              @dragstart="dragStart($event, index)"
-              @dragover="dragOver($event)"
-              @drop="drop($event, index)"
-              class="drag-item"
-            >
-              <i class="pi pi-bars"></i>
-              {{ data.stage_sort }}
-            </div>
+        <Column field="id" :header="$t('branches.id')" class="col-1">
+          <template #body="slotProps">
+            <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
           </template>
         </Column>
 
-        <Column field="name" :header="$t('stages.name')" />
+        <Column field="name" :header="$t('branches.name')" sortable />
 
-        <Column field="name_ar" :header="$t('stages.name_ar')" />
+        <Column field="name_ar" :header="$t('branches.name_ar')" sortable />
 
-        <Column :header="$t('stages.type')">
-          <template #body="{ data }">
-            <div v-if="data.type" class="badge badge-info">
-              {{ currentLanguage == 'ar' ? data.type?.name_ar : data.type?.name }}
-            </div>
-          </template>
-        </Column>
+        <Column field="phone" :header="$t('branches.phone')" sortable />
 
-        <Column :header="$t('stages.affects_stock')">
-          <template #body="{ data }">
-            <div v-if="data.affects_stock" class="badge badge-success">
-              {{ $t('common.yes') }}
-            </div>
-            <div v-else-if="!data.affects_stock">
-              <ToggleSwitch
-                v-model="data.affects_stock"
-                @change="setAffectsStockStage(data.id)"
-                :disabled="data.affects_stock"
-              />
-            </div>
-          </template>
-        </Column>
-
-        <Column :header="$t('stages.is_default')">
+        <Column :header="$t('branches.is_default')">
           <template #body="{ data }">
             <div v-if="data.is_default" class="badge badge-success">
               {{ $t('common.yes') }}
             </div>
             <div v-else-if="!data.is_default">
-              <ToggleSwitch v-model="data.is_default" @change="setDefaultSage(data.id)" />
+              <ToggleSwitch v-model="data.is_default" @change="setDefaultBranch(data.id)" />
             </div>
           </template>
         </Column>
@@ -131,18 +93,21 @@
               >
                 <i class="pi pi-trash"></i>
               </button>
+
+              <button
+                class="btn-icon"
+                @click="$router.push(`/company/branch/${data.company_id}/${data.id}`)"
+                :title="$t('common.view')"
+              >
+                <i class="pi pi-eye text-info"></i>
+              </button>
             </div>
           </template>
         </Column>
       </DataTable>
     </div>
 
-    <CreateForm
-      ref="createModal"
-      @created="fetchData"
-      :company_id="company_id"
-      :type_id="filters.type_id"
-    />
+    <CreateForm ref="createModal" @created="fetchData" :company_id="company_id" />
     <UpdateForm ref="updateModal" :selected_item="selectedItem" @updated="fetchData" />
 
     <Toast />
@@ -160,41 +125,36 @@ import UpdateForm from './UpdateForm.vue'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
-import Select from 'primevue/select'
 import ToggleSwitch from 'primevue/toggleswitch'
 
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: {
-    DataTable,
-    Column,
-    Toast,
-    ConfirmDialog,
-    CreateForm,
-    UpdateForm,
-    Select,
-    ToggleSwitch,
-  },
+  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm, ToggleSwitch },
 
   watch: {
     '$route.params.company_id': {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
-          this.company_id = newVal
-          this.apiUrl = `${API_ROUTES.STAGE.SEARCH}/${newVal}`
+          this.apiUrl = `${API_ROUTES.BRANCH.SEARCH}/${newVal}`
         }
       },
       immediate: true,
     },
   },
 
+  props: {
+    company_id: {
+      type: String,
+      required: false,
+    },
+  },
+
   data() {
     return {
-      apiUrl: API_ROUTES.STAGE.SEARCH,
-      deleteUrl: API_ROUTES.STAGE.BASE,
-      company_id: '',
-      filters: { query_string: '', type_id: '' },
+      apiUrl: API_ROUTES.BRANCH.SEARCH,
+      deleteUrl: API_ROUTES.BRANCH.BASE,
+      filters: { query_string: '' },
       selectedItem: {},
     }
   },
@@ -203,15 +163,10 @@ export default {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
-
-    stageTypeLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
   },
 
   mounted() {
     this.fetchData()
-    this.loadStageTypes()
   },
 
   methods: {
@@ -232,17 +187,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.drag-item {
-  cursor: grab;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.25rem 0.5rem;
-}
-
-.drag-item:active {
-  cursor: grabbing;
-}
-</style>

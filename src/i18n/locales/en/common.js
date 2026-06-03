@@ -91,17 +91,26 @@ export default {
     dashboard: 'Dashboard',
     userManagement: 'User Management',
     locations: 'Locations',
-    companiesGroup: 'Companies',
     salesGroup: 'Sales & Invoices',
     reportsGroup: 'Reports',
     settingsGroup: 'Settings',
 
     companyManagement: 'Company Management',
+    companiesGroup: 'Companies',
+    companies: 'Companies',
+    allCompanies: 'All Companies',
+    companyDetails: 'Company Details',
+
+    branchManagement: 'Branch Management',
+    branchesGroup: 'Branches',
+    branches: 'Branches',
+    allBranches: 'All Branches',
+    branchDetails: 'Branch Details',
+    branchEmployees: 'Branch Employees',
+
     productsInventory: 'Products & Inventory',
     businessOperations: 'Business Operations',
     financial: 'Financial',
-
-    branchManagement: 'Branch Management',
 
     users: 'Users',
     allUsers: 'All Users',
@@ -112,10 +121,6 @@ export default {
     governorates: 'Governorates',
     cities: 'Cities',
 
-    companies: 'Companies',
-    allCompanies: 'All Companies',
-    companyDetails: 'Company Details',
-
     categories: 'Categories',
     measurementUnitGroups: 'Measurement Unit Groups',
     measurementUnits: 'Measurement Units',
@@ -124,7 +129,6 @@ export default {
     finalProducts: 'Final Products',
 
     contacts: 'Contacts',
-    branches: 'Branches',
     employees: 'Employees',
 
     operationsStages: 'Operation Stages',
@@ -132,9 +136,7 @@ export default {
     taxCategories: 'Tax Categories',
     discounts: 'Discounts',
 
-    branchDetails: 'Branch Details',
     warehouses: 'Warehouses',
-    branchEmployees: 'Branch Employees',
     purchasesInvoices: 'Purchase Invoices',
     backToList: 'Back to List',
 

@@ -201,55 +201,53 @@ export const sidebarItems = {
         } else {
           this.sidebar_items.push(companyManagement)
         }
-      }
 
-      // Always remove branchManagement first (cleanup)
-      const branchIndex = this.sidebar_items.findIndex(
-        (item) => item.label === 'common.menu.branchManagement'
-      )
-      if (branchIndex !== -1) {
-        this.sidebar_items.splice(branchIndex, 1)
-      }
-
-      // Add Branch Management (3rd level) when branch is selected
-      if (this.branch_id && this.company_id) {
         const branchManagement = {
-          label: 'common.menu.branchManagement',
+          label: 'common.menu.branchesGroup',
           icon: 'pi pi-map-marker',
           items: [
             {
-              label: 'common.menu.branchDetails',
-              icon: 'pi pi-circle-fill',
-              path: `/branch/${this.company_id}/show/${this.branch_id}`,
-            },
-            {
-              label: 'common.menu.warehouses',
-              icon: 'pi pi-circle-fill',
-              path: `/branch/${this.company_id}/warehouses/${this.branch_id}`,
-            },
-            {
-              label: 'common.menu.branchEmployees',
-              icon: 'pi pi-circle-fill',
-              path: `/branch/${this.company_id}/employees/${this.branch_id}`,
-            },
-            {
-              label: 'common.menu.purchasesInvoices',
-              icon: 'pi pi-circle-fill',
-              path: `/branch/${this.company_id}/purchases-invoices/${this.branch_id}`,
-            },
-            {
-              label: 'common.menu.backToList',
-              icon: 'pi pi-arrow-left',
-              path: `/company/${this.company_id}/branches`,
+              label: 'common.menu.allBranches',
+              icon: 'pi pi-share-alt',
+              path: `/company/branches/${this.company_id}`,
             },
           ],
         }
         // Remove existing to avoid duplicates
         const existingIndex = this.sidebar_items.findIndex(
-          (item) => item.label === 'common.menu.branchManagement'
+          (item) => item.label === 'common.menu.branchesGroup'
         )
         if (existingIndex !== -1) {
           this.sidebar_items.splice(existingIndex, 1)
+        }
+
+        // Add branch-specific items only when branch_id exists
+        if (this.branch_id) {
+          const branchItems = [
+            {
+              label: 'common.menu.branchDetails',
+              icon: 'pi pi-circle-fill',
+              path: `/company/branch/${this.company_id}/${this.branch_id}`,
+            },
+            // {
+            //   label: 'common.menu.warehouses',
+            //   icon: 'pi pi-circle-fill',
+            //   path: `/branch/${this.company_id}/warehouses/${this.branch_id}`,
+            // },
+            // {
+            //   label: 'common.menu.branchEmployees',
+            //   icon: 'pi pi-circle-fill',
+            //   path: `/branch/${this.company_id}/employees/${this.branch_id}`,
+            // },
+            // {
+            //   label: 'common.menu.purchasesInvoices',
+            //   icon: 'pi pi-circle-fill',
+            //   path: `/branch/${this.company_id}/purchases-invoices/${this.branch_id}`,
+            // },
+          ]
+
+          // Add branch items to the existing items array
+          branchManagement.items.push(...branchItems)
         }
 
         this.sidebar_items.push(branchManagement)

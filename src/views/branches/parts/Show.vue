@@ -35,8 +35,8 @@
 
       <div class="card p-0 overflow-hidden mb-4">
         <img
-          v-if="itemData.cover"
-          :src="itemData.cover.file_path"
+          v-if="itemData.company?.cover"
+          :src="itemData.company?.cover.file_path"
           :alt="itemData.name"
           class="w-full h-200 object-cover"
         />
@@ -51,8 +51,8 @@
           <div class="card text-center">
             <div class="flex-center mt-n-50">
               <img
-                v-if="itemData.logo"
-                :src="itemData.logo.file_path"
+                v-if="itemData.company?.logo"
+                :src="itemData.company?.logo.file_path"
                 :alt="itemData.name"
                 class="logo-image"
               />
@@ -68,11 +68,11 @@
             <div class="flex flex-column gap-2">
               <div class="flex align-center gap-2 text-secondary">
                 <i class="pi pi-envelope text-primary"></i>
-                <span>{{ itemData.email || '-' }}</span>
+                <span>{{ itemData.company?.email || '-' }}</span>
               </div>
               <div class="flex align-center gap-2 text-secondary">
                 <i class="pi pi-phone text-primary"></i>
-                <span>{{ itemData.phone || '-' }}</span>
+                <span> {{ itemData.phone || itemData.company?.phone || '-' }}</span>
               </div>
             </div>
           </div>
@@ -80,37 +80,45 @@
 
         <div class="col-12 col-md-8">
           <div class="card">
-            <h3 class="text-lg font-semibold mb-3">{{ $t('companies.basicInfo') }}</h3>
+            <h3 class="text-lg font-semibold mb-3">{{ $t('branches.basicInfo') }}</h3>
 
             <div class="row">
               <div class="col-12 col-md-6">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{ $t('companies.name') }}</label>
+                  <label class="text-xs text-secondary">{{ $t('branches.name') }}</label>
                   <p class="text-sm font-medium">{{ itemData.name }}</p>
                 </div>
               </div>
               <div class="col-12 col-md-6">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{ $t('companies.name_ar') }}</label>
+                  <label class="text-xs text-secondary">{{ $t('branches.name_ar') }}</label>
                   <p class="text-sm font-medium">{{ itemData.name_ar }}</p>
                 </div>
               </div>
               <div class="col-12 col-md-6">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{ $t('companies.email') }}</label>
-                  <p class="text-sm font-medium">{{ itemData.email || '-' }}</p>
+                  <label class="text-xs text-secondary">{{ $t('branches.email') }}</label>
+                  <p class="text-sm font-medium">{{ itemData.company?.email || '-' }}</p>
                 </div>
               </div>
               <div class="col-12 col-md-6">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{ $t('companies.phone') }}</label>
-                  <p class="text-sm font-medium">{{ itemData.phone || '-' }}</p>
+                  <label class="text-xs text-secondary">{{ $t('branches.phone') }}</label>
+                  <p class="text-sm font-medium">
+                    {{ itemData.phone || itemData.company?.phone || '-' }}
+                  </p>
                 </div>
               </div>
               <div class="col-12">
                 <div class="mb-3">
-                  <label class="text-xs text-secondary">{{ $t('companies.address') }}</label>
-                  <p class="text-sm font-medium">{{ itemData.address || '-' }}</p>
+                  <label class="text-xs text-secondary">{{ $t('branches.address') }}</label>
+                  <p class="text-sm font-medium">
+                    {{
+                      currentLanguage == 'ar'
+                        ? itemData.address_ar || itemData.company?.address || '-'
+                        : itemData.address || itemData.company?.address || '-'
+                    }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -118,7 +126,7 @@
             <div class="divider"></div>
 
             <h3 class="text-lg font-semibold mb-3 mt-2">
-              {{ $t('companies.location') }}
+              {{ $t('branches.location') }}
             </h3>
 
             <div class="row">
@@ -159,7 +167,7 @@
                 <div class="mb-3">
                   <label class="text-xs text-secondary">{{ $t('common.currencyCode') }}</label>
                   <p class="text-sm font-medium">
-                    {{ itemData.currency?.prefix || '-' }}
+                    {{ itemData.company?.currency?.prefix || '-' }}
                   </p>
                 </div>
               </div>
@@ -180,12 +188,19 @@ export default {
   mixins: [tableMixin],
   data() {
     return {
-      apiUrl: API_ROUTES.COMPANY.BASE,
+      apiUrl: API_ROUTES.BRANCH.BASE,
     }
   },
 
   watch: {
     '$route.params.company_id': {
+      handler(newVal) {
+        if (newVal && newVal !== 'undefined') {
+        }
+      },
+      immediate: true,
+    },
+    '$route.params.branch_id': {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
           this.showItem(this.apiUrl, newVal)
@@ -203,29 +218,31 @@ export default {
 
   methods: {
     getCountryName() {
-      if (!this.itemData.country) return '-'
+      if (!this.itemData.company?.country) return '-'
       return this.currentLanguage === 'ar'
-        ? this.itemData.country.name_ar
-        : this.itemData.country.name
+        ? this.itemData.company?.country.name_ar
+        : this.itemData.company?.country.name
     },
 
     getGovernorateName() {
-      if (!this.itemData.governorate) return '-'
+      if (!this.itemData.company?.governorate) return '-'
       return this.currentLanguage === 'ar'
-        ? this.itemData.governorate.name_ar
-        : this.itemData.governorate.name
+        ? this.itemData.company?.governorate.name_ar
+        : this.itemData.company?.governorate.name
     },
 
     getCityName() {
-      if (!this.itemData.city) return '-'
-      return this.currentLanguage === 'ar' ? this.itemData.city.name_ar : this.itemData.city.name
+      if (!this.itemData.company?.city) return '-'
+      return this.currentLanguage === 'ar'
+        ? this.itemData.company?.city.name_ar
+        : this.itemData.company?.city.name
     },
 
     getCurrencyName() {
-      if (!this.itemData.currency) return '-'
+      if (!this.itemData.company?.currency) return '-'
       return this.currentLanguage === 'ar'
-        ? this.itemData.currency.name_ar
-        : this.itemData.currency.name
+        ? this.itemData.company?.currency.name_ar
+        : this.itemData.company?.currency.name
     },
   },
 }

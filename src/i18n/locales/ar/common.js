@@ -91,17 +91,26 @@ export default {
     dashboard: 'لوحة التحكم',
     userManagement: 'إدارة المستخدمين',
     locations: 'المواقع',
-    companiesGroup: 'الشركات',
     salesGroup: 'المبيعات والفواتير',
     reportsGroup: 'التقارير',
     settingsGroup: 'الإعدادات',
 
     companyManagement: 'إدارة الشركة',
+    companiesGroup: 'الشركات',
+    companies: 'الشركات',
+    allCompanies: 'جميع الشركات',
+    companyDetails: 'تفاصيل الشركة',
+
+    branchManagement: 'إدارة الفرع',
+    branchesGroup: 'الفروع',
+    branches: 'الفروع',
+    allBranches: 'جميع الفروع',
+    branchDetails: 'تفاصيل الفرع',
+    branchEmployees: 'موظفي الفرع',
+
     productsInventory: 'المنتجات والمخزون',
     businessOperations: 'العمليات التجارية',
     financial: 'المالية',
-
-    branchManagement: 'إدارة الفرع',
 
     users: 'المستخدمين',
     allUsers: 'جميع المستخدمين',
@@ -112,10 +121,6 @@ export default {
     governorates: 'المحافظات',
     cities: 'المدن',
 
-    companies: 'الشركات',
-    allCompanies: 'جميع الشركات',
-    companyDetails: 'تفاصيل الشركة',
-
     categories: 'الأقسام',
     measurementUnitGroups: 'مجموعات وحدات القياس',
     measurementUnits: 'وحدات القياس',
@@ -124,7 +129,6 @@ export default {
     finalProducts: 'المنتجات النهائية',
 
     contacts: 'جهات الاتصال',
-    branches: 'الفروع',
     employees: 'الموظفين',
 
     operationsStages: 'مراحل العمليات',
@@ -132,9 +136,7 @@ export default {
     taxCategories: 'فئات الضرائب',
     discounts: 'الخصومات',
 
-    branchDetails: 'تفاصيل الفرع',
     warehouses: 'المستودعات',
-    branchEmployees: 'موظفي الفرع',
     purchasesInvoices: 'فواتير المشتريات',
     backToList: 'العودة للقائمة',
 

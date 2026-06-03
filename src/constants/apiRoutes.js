@@ -38,6 +38,7 @@ export const API_ROUTES = {
   BRANCH: {
     SEARCH: `${BASE_URL}/admin/company/branches/search`,
     BASE: `${BASE_URL}/admin/company/branch`,
+    SET_DEFAULT: `${BASE_URL}/admin/company/branch-set-default`,
   },
   WAREHOUSE: {
     SEARCH: `${BASE_URL}/admin/company/warehouses/search`,
