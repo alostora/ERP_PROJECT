@@ -143,11 +143,6 @@ export const sidebarItems = {
                   icon: 'pi pi-circle-fill',
                   path: `/company/contacts/${this.company_id}`,
                 },
-                // {
-                //   label: 'common.menu.discounts',
-                //   icon: 'pi pi-circle-fill',
-                //   path: `/company/discounts/${this.company_id}`,
-                // },
               ],
             },
 
@@ -185,6 +180,11 @@ export const sidebarItems = {
                   label: 'common.menu.finalProducts',
                   icon: 'pi pi-circle-fill',
                   path: `/company/final-products/${this.company_id}`,
+                },
+                {
+                  label: 'common.menu.discounts',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/discounts/${this.company_id}`,
                 },
               ],
             },

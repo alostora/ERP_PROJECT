@@ -10,6 +10,7 @@ export const API_ROUTES = {
     CURRENCIES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.CURRENCY}`,
     STAGE_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.STAGE_TYPE}`,
     TAX_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.TAX_TYPE}`,
+    DISCOUNT_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.DISCOUNT_TYPE}`,
   },
   USER: {
     SEARCH: `${BASE_URL}/admin/users/search`,
@@ -37,6 +38,7 @@ export const API_ROUTES = {
   },
   BRANCH: {
     SEARCH: `${BASE_URL}/admin/company/branches/search`,
+    LIST: `${BASE_URL}/admin/company/branches/list`,
     BASE: `${BASE_URL}/admin/company/branch`,
     SET_DEFAULT: `${BASE_URL}/admin/company/branch-set-default`,
   },
@@ -130,5 +132,9 @@ export const API_ROUTES = {
   CONTACT_EMAIL: {
     SEARCH: `${BASE_URL}/admin/company/contact-emails/search`,
     BASE: `${BASE_URL}/admin/company/contact-email`,
+  },
+  DISCOUNT: {
+    SEARCH: `${BASE_URL}/admin/company/discounts/search`,
+    BASE: `${BASE_URL}/admin/company/discount`,
   },
 }
