@@ -4,7 +4,7 @@ import { API_ROUTES } from '@/constants/apiRoutes'
 export const customFunctions = {
   data() {
     return {
-      taxUrl: API_ROUTES.TAX.SEARCH,
+      taxUrl: API_ROUTES.TAX.LIST,
       taxCategoryTaxSetSorttUrl: API_ROUTES.TAX_CATEGORY_TAX.SET_SORT,
       taxes: [],
       taxRows: [
@@ -31,9 +31,11 @@ export const customFunctions = {
   },
 
   methods: {
-    async loadTaxes(companyId) {
+    async loadTaxes(companyId, taxCategoryId) {
       try {
-        const response = await API.get(`${this.taxUrl}/${companyId}`)
+        const params = { tax_category_id: taxCategoryId }
+
+        const response = await API.get(`${this.taxUrl}/${companyId}`, { params })
         this.taxes = response.data.data || []
       } catch (error) {
         console.error('Error loading taxes:', error)

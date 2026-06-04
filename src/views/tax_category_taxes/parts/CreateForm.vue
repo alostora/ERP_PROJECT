@@ -157,7 +157,8 @@ export default {
       this.taxRows = [{ tax_id: null, fixed_amount_override: null }]
 
       const companyId = this.company_id || this.$route.params.company_id
-      this.loadTaxes(companyId)
+
+      this.loadTaxes(companyId, this.formData.tax_category_id)
     },
 
     async handleSubmit() {

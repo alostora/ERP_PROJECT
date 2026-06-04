@@ -87,6 +87,7 @@ export const API_ROUTES = {
   },
   TAX: {
     SEARCH: `${BASE_URL}/admin/company/taxes/search`,
+    LIST: `${BASE_URL}/admin/company/taxes/list`,
     BASE: `${BASE_URL}/admin/company/tax`,
     SET_ACTIVE: `${BASE_URL}/admin/company/tax/set-active`,
     SET_INACTIVE: `${BASE_URL}/admin/company/tax/set-inactive`,
