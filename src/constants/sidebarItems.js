@@ -112,8 +112,6 @@ export const sidebarItems = {
               icon: 'pi pi-circle-fill',
               path: `/company/${this.company_id}`,
             },
-
-            // Settings Subgroup
             {
               label: 'common.menu.settingsGroup',
               icon: 'pi pi-cog',
@@ -188,15 +186,24 @@ export const sidebarItems = {
                 },
               ],
             },
+
+            // Financial Subgroup (3rd level)
+            {
+              label: 'common.menu.financial',
+              icon: 'pi pi-box',
+              items: [
+                {
+                  label: 'common.menu.accountGuide',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/account-guides/${this.company_id}`,
+                },
+              ],
+            },
           ],
         }
 
         //put company items inside its group
         if (companiesGroup) {
-          // Remove existing to avoid duplicates
-          companiesGroup.items = companiesGroup.items.filter(
-            (item) => item.label !== 'common.menu.companyManagement'
-          )
           companiesGroup.items.push(companyManagement)
         } else {
           this.sidebar_items.push(companyManagement)

@@ -11,6 +11,8 @@ export const API_ROUTES = {
     STAGE_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.STAGE_TYPE}`,
     TAX_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.TAX_TYPE}`,
     DISCOUNT_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.DISCOUNT_TYPE}`,
+    ACCOUNT_GUIDE_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.ACCOUNT_GUIDE_TYPE}`,
+    ACCOUNT_GUIDE_NATURE_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.ACCOUNT_GUIDE_NATURE_TYPE}`,
   },
   USER: {
     SEARCH: `${BASE_URL}/admin/users/search`,
@@ -145,5 +147,9 @@ export const API_ROUTES = {
   DISCOUNT_FINAL_PRODUCT: {
     SEARCH: `${BASE_URL}/admin/company/discount-final-products/search`,
     BASE: `${BASE_URL}/admin/company/discount-final-product`,
+  },
+  ACCOUNT_GUIDE: {
+    SEARCH: `${BASE_URL}/admin/company/account-guides/search`,
+    BASE: `${BASE_URL}/admin/company/account-guide`,
   },
 }

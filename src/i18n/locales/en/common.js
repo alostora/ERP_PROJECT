@@ -89,54 +89,69 @@ export default {
   // Navigation Menu
   menu: {
     dashboard: 'Dashboard',
-    userManagement: 'User Management',
-    locations: 'Locations',
-    salesGroup: 'Sales & Invoices',
-    reportsGroup: 'Reports',
-    settingsGroup: 'Settings',
 
-    companyManagement: 'Company Management',
+    //////
+    userManagement: 'User Management',
+    users: 'Users',
+    allUsers: 'All Users',
+
+    //////
+    locations: 'Locations',
+    countries: 'Countries',
+    governorates: 'Governorates',
+    cities: 'Cities',
+
+    //////
     companiesGroup: 'Companies',
     companies: 'Companies',
     allCompanies: 'All Companies',
+    companyManagement: 'Company Management',
     companyDetails: 'Company Details',
 
+    //////
+    settingsGroup: 'Settings',
+    operationsStages: 'Operation Stages',
+    taxes: 'Taxes',
+    taxCategories: 'Tax Categories',
+    employees: 'Employees',
+    contacts: 'Contacts',
+
+    //////
+    productsInventory: 'Products & Inventory',
+    measurementUnitGroups: 'Measurement Unit Groups',
+    measurementUnits: 'Measurement Units',
+    variants: 'Variants',
+    categories: 'Categories',
+    products: 'Products',
+    finalProducts: 'Final Products',
+    discounts: 'Discounts',
+
+    //////
+    financial: 'Financial',
+    accountGuide: 'Account Guide',
+
+    //////
     branchManagement: 'Branch Management',
     branchesGroup: 'Branches',
     branches: 'Branches',
     allBranches: 'All Branches',
     branchDetails: 'Branch Details',
     branchEmployees: 'Branch Employees',
+    warehouses: 'Warehouses',
 
-    productsInventory: 'Products & Inventory',
+    //////
+    //////
+    //////
+    //////
+
+    salesGroup: 'Sales & Invoices',
+    reportsGroup: 'Reports',
+
     businessOperations: 'Business Operations',
-    financial: 'Financial',
 
-    users: 'Users',
-    allUsers: 'All Users',
     roles: 'Roles',
     permissions: 'Permissions',
 
-    countries: 'Countries',
-    governorates: 'Governorates',
-    cities: 'Cities',
-
-    categories: 'Categories',
-    measurementUnitGroups: 'Measurement Unit Groups',
-    measurementUnits: 'Measurement Units',
-    variants: 'Variants',
-    products: 'Products',
-    finalProducts: 'Final Products',
-
-    contacts: 'Contacts',
-    employees: 'Employees',
-
-    operationsStages: 'Operation Stages',
-    taxes: 'Taxes',
-    taxCategories: 'Tax Categories',
-    discounts: 'Discounts',
-
-    warehouses: 'Warehouses',
     purchasesInvoices: 'Purchase Invoices',
     backToList: 'Back to List',
 

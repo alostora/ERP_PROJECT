@@ -89,54 +89,68 @@ export default {
   // Navigation Menu
   menu: {
     dashboard: 'لوحة التحكم',
-    userManagement: 'إدارة المستخدمين',
-    locations: 'المواقع',
-    salesGroup: 'المبيعات والفواتير',
-    reportsGroup: 'التقارير',
-    settingsGroup: 'الإعدادات',
 
-    companyManagement: 'إدارة الشركة',
+    //////
+    userManagement: 'إدارة المستخدمين',
+    users: 'المستخدمين',
+    allUsers: 'جميع المستخدمين',
+
+    //////
+    locations: 'المواقع',
+    countries: 'الدول',
+    governorates: 'المحافظات',
+    cities: 'المدن',
+
+    //////
     companiesGroup: 'الشركات',
     companies: 'الشركات',
     allCompanies: 'جميع الشركات',
+    companyManagement: 'إدارة الشركة',
     companyDetails: 'تفاصيل الشركة',
 
+    //////
+    settingsGroup: 'الإعدادات',
+    operationsStages: 'مراحل العمليات',
+    taxes: 'الضرائب',
+    taxCategories: 'فئات الضرائب',
+    employees: 'الموظفين',
+    contacts: 'جهات الاتصال',
+
+    //////
+    productsInventory: 'المنتجات والمخزون',
+    measurementUnitGroups: 'مجموعات وحدات القياس',
+    measurementUnits: 'وحدات القياس',
+    variants: 'الخصائص',
+    categories: 'الأقسام',
+    products: 'الأصناف',
+    finalProducts: 'المنتجات النهائية',
+    discounts: 'الخصومات',
+
+    //////
+    financial: 'المالية',
+    accountGuide: 'دليل الحسابات',
+
+    //////
     branchManagement: 'إدارة الفرع',
     branchesGroup: 'الفروع',
     branches: 'الفروع',
     allBranches: 'جميع الفروع',
     branchDetails: 'تفاصيل الفرع',
     branchEmployees: 'موظفي الفرع',
+    warehouses: 'المستودعات',
 
-    productsInventory: 'المنتجات والمخزون',
+    //////
+    //////
+    //////
+    //////
+
+    salesGroup: 'المبيعات والفواتير',
+    reportsGroup: 'التقارير',
+
     businessOperations: 'العمليات التجارية',
-    financial: 'المالية',
 
-    users: 'المستخدمين',
-    allUsers: 'جميع المستخدمين',
     roles: 'الصلاحيات',
     permissions: 'الأذونات',
-
-    countries: 'الدول',
-    governorates: 'المحافظات',
-    cities: 'المدن',
-
-    categories: 'الأقسام',
-    measurementUnitGroups: 'مجموعات وحدات القياس',
-    measurementUnits: 'وحدات القياس',
-    variants: 'الخصائص',
-    products: 'الأصناف',
-    finalProducts: 'المنتجات النهائية',
-
-    contacts: 'جهات الاتصال',
-    employees: 'الموظفين',
-
-    operationsStages: 'مراحل العمليات',
-    taxes: 'الضرائب',
-    taxCategories: 'فئات الضرائب',
-    discounts: 'الخصومات',
-
-    warehouses: 'المستودعات',
     purchasesInvoices: 'فواتير المشتريات',
     backToList: 'العودة للقائمة',
 
