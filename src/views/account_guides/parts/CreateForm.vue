@@ -31,26 +31,6 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label required">{{
-          $t('accountGuides.account_nature_type_id')
-        }}</label>
-        <Select
-          v-model="formData.account_nature_type_id"
-          :options="accountGuideNatureTypes"
-          :optionLabel="accountGuideNatureTypeLabel"
-          optionValue="id"
-          :placeholder="$t('common.select') + ' ' + $t('accountGuides.account_nature_type_id')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-        />
-        <small v-if="errors.account_nature_type_id" class="error-message">{{
-          errors.account_nature_type_id
-        }}</small>
-      </div>
-
-      <div class="form-group">
         <label class="form-label required">{{ $t('accountGuides.name') }}</label>
         <input
           v-model="formData.name"
@@ -110,7 +90,6 @@ export default {
       formData: {
         company_id: '',
         account_guide_type_id: '',
-        account_nature_type_id: '',
         name: '',
         name_ar: '',
         description: '',
@@ -127,10 +106,6 @@ export default {
     accountGuideTypeLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
-
-    accountGuideNatureTypeLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
   },
 
   methods: {
@@ -139,7 +114,6 @@ export default {
       this.formData.company_id = this.company_id || this.$route.params.company_id
 
       this.loadAccountGuideTypes()
-      this.loadAccountGuideNatureTypes()
     },
 
     async handleSubmit() {

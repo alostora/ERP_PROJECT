@@ -18,12 +18,6 @@ export default {
         )
       }
 
-      if (!form.account_nature_type_id?.trim()) {
-        this.errors.account_nature_type_id = this.$t(
-          'categories.validation.accountNatureTypeIdRequired'
-        )
-      }
-
       if (!form.name?.trim()) {
         this.errors.name = this.$t('categories.validation.nameRequired')
       }

@@ -10,7 +10,6 @@ export default {
   createdAt: 'Created At',
   validation: {
     companyIdRequired: 'Company is required',
-    accountNatureTypeIdRequired: 'Account nature is required',
     accountGuideTypeIdRequired: 'Account type is required',
     nameRequired: 'Name is required',
     nameArRequired: 'Arabic name is required',

@@ -10,7 +10,6 @@ export default {
   createdAt: 'تاريخ الإنشاء',
   validation: {
     companyIdRequired: 'الشركة مطلوبة',
-    accountNatureTypeIdRequired: 'طبيعة الحساب مطلوبة',
     accountGuideTypeIdRequired: 'النوع مطلوب',
     nameRequired: 'الاسم مطلوب',
     nameArRequired: 'الاسم بالعربية مطلوب',
