@@ -1,5 +1,5 @@
 import Table from '../parts/Table.vue'
-import relatedMdelsRoutes from '@/views/contacts/related_models/routes/routes'
+import relatedMdelsRoutes from '../related_models/routes/routes'
 
 const routes = [
   {

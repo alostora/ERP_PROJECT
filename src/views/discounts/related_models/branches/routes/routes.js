@@ -1,17 +1,15 @@
 import Table from '../parts/Table.vue'
-import relatedMdelsRoutes from '../related_models/routes/routes'
 
 const routes = [
   {
-    path: 'company/discounts/:company_id',
-    name: 'discounts',
+    path: 'discount_branches',
+    name: 'discount-branches',
     component: Table,
     props: (route) => ({
       company_id: route.params.company_id || null,
+      discount_id: route.params.discount_id || null,
     }),
   },
-
-  ...relatedMdelsRoutes,
 ]
 
 export default routes

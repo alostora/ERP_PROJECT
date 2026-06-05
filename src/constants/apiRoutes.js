@@ -74,6 +74,7 @@ export const API_ROUTES = {
   },
   FINAL_PRODUCT: {
     SEARCH: `${BASE_URL}/admin/company/product/company-final-products/search`,
+    LIST: `${BASE_URL}/admin/company/product/final-products/list`,
     BASE: `${BASE_URL}/admin/company/product/final-product`,
   },
   FINAL_PRODUCT_VARIANT_VALUE: {
@@ -136,5 +137,13 @@ export const API_ROUTES = {
   DISCOUNT: {
     SEARCH: `${BASE_URL}/admin/company/discounts/search`,
     BASE: `${BASE_URL}/admin/company/discount`,
+  },
+  DISCOUNT_BRANCH: {
+    SEARCH: `${BASE_URL}/admin/company/discount-branches/search`,
+    BASE: `${BASE_URL}/admin/company/discount-branch`,
+  },
+  DISCOUNT_FINAL_PRODUCT: {
+    SEARCH: `${BASE_URL}/admin/company/discount-final-products/search`,
+    BASE: `${BASE_URL}/admin/company/discount-final-product`,
   },
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h1 class="page-title">{{ $t('contacts.title') }}</h1>
+      <h1 class="page-title">{{ $t('discounts.branches') }}</h1>
       <button class="btn btn-primary" @click="openCreateModal">
         <i class="pi pi-plus"></i>
         {{ $t('common.addNew') }}
@@ -9,6 +9,13 @@
     </div>
 
     <div class="card">
+      <div class="flex align-center gap-3 mb-2">
+        <button class="btn btn-outline" @click="$router.push(`/company/discounts/${company_id}`)">
+          <i :class="currentLanguage === 'ar' ? 'pi pi-arrow-right' : 'pi pi-arrow-left'"></i>
+          {{ $t('common.back') }}
+        </button>
+      </div>
+
       <div class="filters-bar">
         <div class="row">
           <div class="col-12 col-md-6 col-lg-4">
@@ -50,45 +57,29 @@
         resizableColumns
         showGridlines
       >
-        <Column field="id" :header="$t('contacts.id')" class="col-1">
+        <Column field="id" :header="$t('discounts.id')" class="col-1">
           <template #body="slotProps">
             <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
           </template>
         </Column>
 
-        <Column field="name" :header="$t('contacts.name')" sortable />
-
-        <Column field="email" :header="$t('contacts.email')" sortable />
-
-        <Column field="phone" :header="$t('contacts.phone')" />
-
-        <Column field="address" :header="$t('contacts.address')" />
-
-        <Column :header="$t('contacts.relatedModels')">
+        <Column :header="$t('discounts.branche_name')">
           <template #body="{ data }">
-            <button
-              class="btn-sm btn-outline"
-              @click="
-                $router.push({
-                  name: 'contact-related-models',
-                  params: { company_id: this.company_id, contact_id: data.id },
-                })
-              "
-            >
-              <i class="pi pi-link text-primary"></i>
-              {{ $t('contacts.relatedModels') }}
-            </button>
+            <span class="font-mono">{{ data.branch.name }}</span>
           </template>
         </Column>
 
-        <Column field="created_at" :header="$t('contacts.createdAt')" />
+        <Column :header="$t('discounts.branche_name_ar')">
+          <template #body="{ data }">
+            <span class="font-mono">{{ data.branch.name_ar }}</span>
+          </template>
+        </Column>
+
+        <Column field="created_at" :header="$t('discounts.createdAt')" />
 
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
             <div class="actions-cell">
-              <button class="btn-icon" @click="openUpdateModal(data)" :title="$t('common.edit')">
-                <i class="pi pi-pen-to-square text-success"></i>
-              </button>
               <button
                 class="btn-icon text-danger"
                 @click="deleteRow(data)"
@@ -102,8 +93,12 @@
       </DataTable>
     </div>
 
-    <CreateForm ref="createModal" @created="fetchData" :company_id="company_id" />
-    <UpdateForm ref="updateModal" :selected_item="selectedItem" @updated="fetchData" />
+    <CreateForm
+      ref="createModal"
+      @created="fetchData"
+      :company_id="company_id"
+      :discount_id="discount_id"
+    />
 
     <Toast />
     <ConfirmDialog />
@@ -116,7 +111,6 @@ import Column from 'primevue/column'
 import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
 import CreateForm from './CreateForm.vue'
-import UpdateForm from './UpdateForm.vue'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
@@ -124,20 +118,25 @@ import { API_ROUTES } from '@/constants/apiRoutes'
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm },
+  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm },
 
   props: {
     company_id: {
       type: String,
       required: false,
     },
+    discount_id: {
+      type: String,
+      required: false,
+    },
   },
 
   watch: {
-    '$route.params.company_id': {
+    discount_id: {
       handler(newVal) {
         if (newVal) {
-          this.apiUrl = `${API_ROUTES.CONTACT.SEARCH}/${newVal}`
+          this.apiUrl = `${API_ROUTES.DISCOUNT_BRANCH.SEARCH}/${newVal}`
+          console.log('Updated API URL:', this.apiUrl)
         }
       },
       immediate: true,
@@ -146,8 +145,8 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.CONTACT.SEARCH,
-      deleteUrl: API_ROUTES.CONTACT.BASE,
+      apiUrl: API_ROUTES.DISCOUNT_BRANCH.SEARCH,
+      deleteUrl: API_ROUTES.DISCOUNT_BRANCH.BASE,
       filters: { query_string: '' },
       selectedItem: {},
     }

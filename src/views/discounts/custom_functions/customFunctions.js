@@ -6,7 +6,7 @@ export const customFunctions = {
     return {
       discountTypeUrl: API_ROUTES.LOOKUP.DISCOUNT_TYPES,
       discountTypes: [],
-      finalProductUrl: API_ROUTES.FINAL_PRODUCT.SEARCH,
+      finalProductUrl: API_ROUTES.FINAL_PRODUCT.LIST,
       branchUrl: API_ROUTES.BRANCH.LIST,
       finalProducts: [],
       branches: [],

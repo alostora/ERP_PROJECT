@@ -106,6 +106,23 @@
 
         <Column field="details_ar" :header="$t('discounts.details_ar')" sortable />
 
+        <Column :header="$t('discounts.relatedModels')">
+          <template #body="{ data }">
+            <button
+              class="btn-sm btn-outline"
+              @click="
+                $router.push({
+                  name: 'discount-related-models',
+                  params: { company_id: this.company_id, discount_id: data.id },
+                })
+              "
+            >
+              <i class="pi pi-link text-primary"></i>
+              {{ $t('discounts.relatedModels') }}
+            </button>
+          </template>
+        </Column>
+
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
             <div class="actions-cell">
