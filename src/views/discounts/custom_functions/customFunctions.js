@@ -40,26 +40,6 @@ export const customFunctions = {
         console.error('Error loading branches:', error)
       }
     },
-
-    removeFinalProduct(id) {
-      this.formData.final_product_ids = this.formData.final_product_ids.filter((i) => i !== id)
-    },
-
-    removeBranch(id) {
-      this.formData.branch_ids = this.formData.branch_ids.filter((i) => i !== id)
-    },
-
-    getSelectedFinalProductName(id) {
-      if (!id) return ''
-      const item = this.finalProducts.find((p) => p.id === id)
-      return item ? (this.currentLanguage === 'ar' ? item.name_ar : item.name) : ''
-    },
-
-    getSelectedBranchName(id) {
-      if (!id) return ''
-      const item = this.branches.find((b) => b.id === id)
-      return item ? (this.currentLanguage === 'ar' ? item.name_ar : item.name) : ''
-    },
   },
 }
 

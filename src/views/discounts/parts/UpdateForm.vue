@@ -29,6 +29,20 @@
         <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
       </div>
 
+      <div class="form-group">
+        <label class="form-label required">{{ $t('discounts.details') }}</label>
+
+        <textarea v-model="formData.details" class="textarea" rows="3"></textarea>
+        <small v-if="errors.details" class="error-message">{{ errors.details }}</small>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label required">{{ $t('discounts.details_ar') }}</label>
+
+        <textarea v-model="formData.details_ar" class="textarea" rows="3"></textarea>
+        <small v-if="errors.details_ar" class="error-message">{{ errors.details_ar }}</small>
+      </div>
+
       <div class="row">
         <div class="col-12 col-md-6">
           <div class="form-group">
@@ -56,6 +70,39 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label required">{{ $t('discounts.type') }}</label>
+            <Select
+              v-model="formData.type_id"
+              :options="discountTypes"
+              :optionLabel="discountTypeLabel"
+              optionValue="id"
+              :placeholder="$t('common.select') + ' ' + $t('discounts.type')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+            <small v-if="errors.type_id" class="error-message">{{ errors.type_id }}</small>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label required">{{ $t('discounts.value') }}</label>
+            <input
+              v-model="formData.value"
+              type="number"
+              class="input"
+              :class="{ 'input-error': errors.value }"
+            />
+            <small v-if="errors.value" class="error-message">{{ errors.value }}</small>
+          </div>
+        </div>
+      </div>
+
       <div class="flex justify-end gap-2 mt-4">
         <button type="button" class="btn btn-outline ml-2 mr-2" @click="closeFormModal">
           {{ $t('common.cancel') }}
@@ -70,6 +117,7 @@
 
 <script>
 import Dialog from 'primevue/dialog'
+import Select from 'primevue/select'
 import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
@@ -78,7 +126,7 @@ import customFunctions from '../custom_functions/customFunctions'
 export default {
   name: 'UpdateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog },
+  components: { Dialog, Select },
 
   props: {
     selected_item: {
@@ -106,17 +154,26 @@ export default {
         id: '',
         name: '',
         name_ar: '',
+        details: '',
+        details_ar: '',
         date_from: '',
         date_to: '',
+        type_id: '',
+        value: '',
       },
     }
   },
 
-  mounted() {},
+  mounted() {
+    this.loadDiscountTypes()
+  },
 
   computed: {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
+    },
+    discountTypeLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
 
     formattedDateFrom: {
@@ -145,8 +202,12 @@ export default {
         id: selectedItem.id || '',
         name: selectedItem.name || '',
         name_ar: selectedItem.name_ar || '',
+        details: selectedItem.details || '',
+        details_ar: selectedItem.details_ar || '',
         date_from: selectedItem.date_from || '',
         date_to: selectedItem.date_to || '',
+        type_id: selectedItem.type.id || '',
+        value: selectedItem.value || '',
       }
     },
 

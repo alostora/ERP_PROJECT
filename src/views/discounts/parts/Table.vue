@@ -24,6 +24,34 @@
             </div>
           </div>
 
+          <div class="col-12 col-md-6 col-lg-4 mb-1">
+            <Select
+              v-model="filters.type_id"
+              :options="discountTypes"
+              :optionLabel="discountTypeLabel"
+              optionValue="id"
+              :placeholder="$t('common.all') + ' ' + $t('discounts.type')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="fetchData"
+            />
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="form-label required">{{ $t('discounts.date_from') }}</label>
+              <input v-model="filters.date_from" type="date" class="input" @change="fetchData" />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label class="form-label required">{{ $t('discounts.date_to') }}</label>
+              <input v-model="filters.date_to" type="date" class="input" @change="fetchData" />
+            </div>
+          </div>
+
           <div class="col-6 col-md-3 col-lg-2">
             <select v-model="perPage" @change="fetchData" class="select">
               <option :value="5">5</option>
@@ -59,6 +87,24 @@
         <Column field="name" :header="$t('discounts.name')" sortable />
 
         <Column field="name_ar" :header="$t('discounts.name_ar')" sortable />
+
+        <Column field="date_from" :header="$t('discounts.date_from')" sortable />
+
+        <Column field="date_to" :header="$t('discounts.date_to')" sortable />
+
+        <Column field="value" :header="$t('discounts.value')" sortable />
+
+        <Column :header="$t('discounts.type')">
+          <template #body="{ data }">
+            <div v-if="data.type" class="badge badge-info">
+              {{ currentLanguage == 'ar' ? data.type?.name_ar : data.type?.name }}
+            </div>
+          </template>
+        </Column>
+
+        <Column field="details" :header="$t('discounts.details')" sortable />
+
+        <Column field="details_ar" :header="$t('discounts.details_ar')" sortable />
 
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
@@ -97,11 +143,12 @@ import UpdateForm from './UpdateForm.vue'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
+import Select from 'primevue/select'
 
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm },
+  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm, Select },
 
   watch: {
     '$route.params.company_id': {
@@ -120,9 +167,19 @@ export default {
       apiUrl: API_ROUTES.DISCOUNT.SEARCH,
       deleteUrl: API_ROUTES.DISCOUNT.BASE,
       company_id: '',
-      filters: { query_string: '' },
+      filters: { query_string: '', type_id: '', date_from: '', date_to: '' },
       selectedItem: {},
     }
+  },
+
+  computed: {
+    currentLanguage() {
+      return localStorage.getItem('language') || 'en'
+    },
+
+    discountTypeLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+    },
   },
 
   mounted() {

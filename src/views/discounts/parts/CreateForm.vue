@@ -95,6 +95,20 @@
         </div>
       </div>
 
+      <div class="form-group">
+        <label class="form-label required">{{ $t('discounts.details') }}</label>
+
+        <textarea v-model="formData.details" class="textarea" rows="3"></textarea>
+        <small v-if="errors.details" class="error-message">{{ errors.details }}</small>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label required">{{ $t('discounts.details_ar') }}</label>
+
+        <textarea v-model="formData.details_ar" class="textarea" rows="3"></textarea>
+        <small v-if="errors.details_ar" class="error-message">{{ errors.details_ar }}</small>
+      </div>
+
       <!-- Final Products Section -->
       <div class="col-12">
         <div class="form-group">
@@ -107,20 +121,9 @@
               :placeholder="$t('common.select') + ' ' + $t('discounts.final_products')"
               :filter="true"
               :showClear="true"
+              display="chip"
               class="w-full mb-3"
             />
-
-            <div
-              v-if="formData.final_product_ids && formData.final_product_ids.length"
-              class="flex flex-wrap gap-2 mt-2"
-            >
-              <span v-for="id in formData.final_product_ids" :key="id" class="badge badge-primary">
-                {{ getSelectedFinalProductName(id) }}
-                <button type="button" class="remove-badge-btn" @click="removeFinalProduct(id)">
-                  <i class="pi pi-times-circle"></i>
-                </button>
-              </span>
-            </div>
           </div>
         </div>
       </div>
@@ -137,20 +140,9 @@
               :placeholder="$t('common.select') + ' ' + $t('discounts.branches')"
               :filter="true"
               :showClear="true"
+              display="chip"
               class="w-full mb-3"
             />
-
-            <div
-              v-if="formData.branch_ids && formData.branch_ids.length"
-              class="flex flex-wrap gap-2 mt-2"
-            >
-              <span v-for="id in formData.branch_ids" :key="id" class="badge badge-primary">
-                {{ getSelectedBranchName(id) }}
-                <button type="button" class="remove-badge-btn" @click="removeBranch(id)">
-                  <i class="pi pi-times-circle"></i>
-                </button>
-              </span>
-            </div>
           </div>
         </div>
       </div>
@@ -195,6 +187,8 @@ export default {
         company_id: '',
         name: '',
         name_ar: '',
+        details: '',
+        details_ar: '',
         date_from: '',
         date_to: '',
         type_id: '',
