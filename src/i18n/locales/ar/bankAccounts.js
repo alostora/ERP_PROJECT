@@ -1,8 +1,12 @@
 export default {
-  title: 'صناديق النقدية',
+  title: 'حسابات البنوك',
   id: '#',
   name: 'الاسم',
   name_ar: 'الاسم (عربي)',
+  account_number: 'رقم الحساب',
+  iban: 'رقم الأي بان',
+  bank_name: 'اسم البنك',
+  bank_name_ar: '(عربي) اسم البنك',
   details: 'التفاصيل',
   details_ar: 'التفاصيل (عربي)',
   level_code: 'تابع ل',
@@ -19,5 +23,7 @@ export default {
     levelCodeRequired: 'المستوي مطلوب',
     nameRequired: 'الاسم مطلوب',
     nameArRequired: 'الاسم بالعربية مطلوب',
+    bankNameRequired: 'اسم البنك مطلوب',
+    bankNameArRequired: 'اسم البنك بالعربية مطلوب',
   },
 }

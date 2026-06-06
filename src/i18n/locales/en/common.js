@@ -117,7 +117,7 @@ export default {
     contacts: 'Contacts',
 
     //////
-    productsInventory: 'Products & Inventory',
+    productProperties: 'Products & Properties',
     measurementUnitGroups: 'Measurement Unit Groups',
     measurementUnits: 'Measurement Units',
     variants: 'Variants',
@@ -130,6 +130,7 @@ export default {
     financial: 'Financial',
     accountGuides: 'Account Guide',
     cashBoxes: 'Cash Boxes',
+    bankAccounts: 'Bank Accounts',
 
     //////
     branchManagement: 'Branch Management',

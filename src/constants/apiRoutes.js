@@ -159,4 +159,11 @@ export const API_ROUTES = {
     SET_ACTIVE: `${BASE_URL}/admin/company/cash-box/set-active`,
     SET_INACTIVE: `${BASE_URL}/admin/company/cash-box/set-inactive`,
   },
+  BANK_ACCOUNT: {
+    SEARCH: `${BASE_URL}/admin/company/bank-accounts/search`,
+    BASE: `${BASE_URL}/admin/company/bank-account`,
+    SET_DEFAULT: `${BASE_URL}/admin/company/bank-account/set-default`,
+    SET_ACTIVE: `${BASE_URL}/admin/company/bank-account/set-active`,
+    SET_INACTIVE: `${BASE_URL}/admin/company/bank-account/set-inactive`,
+  },
 }

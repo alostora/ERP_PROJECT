@@ -117,7 +117,7 @@ export default {
     contacts: 'جهات الاتصال',
 
     //////
-    productsInventory: 'المنتجات والمخزون',
+    productProperties: 'المنتجات والخصائص',
     measurementUnitGroups: 'مجموعات وحدات القياس',
     measurementUnits: 'وحدات القياس',
     variants: 'الخصائص',
@@ -130,6 +130,7 @@ export default {
     financial: 'المالية',
     accountGuides: 'دليل الحسابات',
     cashBoxes: 'صناديق النقدية',
+    bankAccounts: 'حسابات البنوك',
 
     //////
     branchManagement: 'إدارة الفرع',

@@ -117,6 +117,16 @@ export const sidebarItems = {
               icon: 'pi pi-cog',
               items: [
                 {
+                  label: 'common.menu.measurementUnitGroups',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/measurement-unit-groups/${this.company_id}`,
+                },
+                {
+                  label: 'common.menu.measurementUnits',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/measurement-units/${this.company_id}`,
+                },
+                {
                   label: 'common.menu.operationsStages',
                   icon: 'pi pi-circle-fill',
                   path: `/company/stages/${this.company_id}`,
@@ -144,21 +154,11 @@ export const sidebarItems = {
               ],
             },
 
-            // Products & Inventory Subgroup (3rd level)
+            // Products & Properties Subgroup (3rd level)
             {
-              label: 'common.menu.productsInventory',
+              label: 'common.menu.productProperties',
               icon: 'pi pi-box',
               items: [
-                {
-                  label: 'common.menu.measurementUnitGroups',
-                  icon: 'pi pi-circle-fill',
-                  path: `/company/measurement-unit-groups/${this.company_id}`,
-                },
-                {
-                  label: 'common.menu.measurementUnits',
-                  icon: 'pi pi-circle-fill',
-                  path: `/company/measurement-units/${this.company_id}`,
-                },
                 {
                   label: 'common.menu.variants',
                   icon: 'pi pi-circle-fill',
@@ -201,6 +201,11 @@ export const sidebarItems = {
                   label: 'common.menu.cashBoxes',
                   icon: 'pi pi-circle-fill',
                   path: `/company/cash-boxes/${this.company_id}`,
+                },
+                {
+                  label: 'common.menu.bankAccounts',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/bank-accounts/${this.company_id}`,
                 },
               ],
             },

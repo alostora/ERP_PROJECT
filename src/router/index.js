@@ -26,6 +26,7 @@ import warehouses from '@/views/warehouses/routes/routes'
 import discounts from '@/views/discounts/routes/routes'
 import accountGuides from '@/views/account_guides/routes/routes'
 import cashBoxes from '@/views/cash_boxes/routes/routes'
+import bankAccounts from '@/views/bank_accounts/routes/routes'
 
 const routes = [
   {
@@ -64,6 +65,7 @@ const routes = [
       ...discounts,
       ...accountGuides,
       ...cashBoxes,
+      ...bankAccounts,
     ],
   },
 ]

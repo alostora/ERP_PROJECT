@@ -27,6 +27,7 @@ import enWarehouses from './locales/en/warehouses'
 import enDiscounts from './locales/en/discounts'
 import enAccountGuides from './locales/en/accountGuides'
 import enCashBoxes from './locales/en/cashBoxes'
+import enBankAccounts from './locales/en/bankAccounts'
 
 // Import Arabic translations
 import arCommon from './locales/ar/common'
@@ -55,6 +56,7 @@ import arWarehouses from './locales/ar/warehouses'
 import arDiscounts from './locales/ar/discounts'
 import arAccountGuides from './locales/ar/accountGuides'
 import arCashBoxes from './locales/ar/cashBoxes'
+import arBankAccounts from './locales/ar/bankAccounts'
 
 const messages = {
   en: {
@@ -84,6 +86,7 @@ const messages = {
     discounts: enDiscounts,
     accountGuides: enAccountGuides,
     cashBoxes: enCashBoxes,
+    bankAccounts: enBankAccounts,
   },
 
   ar: {
@@ -113,6 +116,7 @@ const messages = {
     discounts: arDiscounts,
     accountGuides: arAccountGuides,
     cashBoxes: arCashBoxes,
+    bankAccounts: arBankAccounts,
   },
 }
 
