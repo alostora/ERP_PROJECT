@@ -1,0 +1,23 @@
+export default {
+  title: 'Cash Boxes',
+  id: '#',
+  name: 'Name',
+  name_ar: 'Name (Arabic)',
+  details: 'Details',
+  details_ar: 'Details (Arabic)',
+  level_code: 'Parent',
+  balance: 'Balance',
+  is_active: 'Active?',
+  is_default: 'Default?',
+  company: 'Company',
+  branch: 'Branch',
+  branches: 'Branches',
+  createdAt: 'Created At',
+  validation: {
+    companyIdRequired: 'Company is required',
+    branchIdRequired: 'Branch is required',
+    levelCodeRequired: 'Parent is required',
+    nameRequired: 'Name is required',
+    nameArRequired: 'Arabic name is required',
+  },
+}

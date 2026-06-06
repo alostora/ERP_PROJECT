@@ -1,0 +1,23 @@
+export default {
+  title: 'صنودق النقدية',
+  id: '#',
+  name: 'الاسم',
+  name_ar: 'الاسم (عربي)',
+  details: 'التفاصيل',
+  details_ar: 'التفاصيل (عربي)',
+  level_code: 'تابع ل',
+  balance: 'الرصيد',
+  is_active: 'نشط؟',
+  is_default: 'افتراضي؟',
+  company: 'الشركة',
+  branch: 'الفرع',
+  branches: 'الفروع',
+  createdAt: 'تاريخ الإنشاء',
+  validation: {
+    companyIdRequired: 'الشركة مطلوبة',
+    branchIdRequired: 'الفرع مطلوب',
+    levelCodeRequired: 'المستوي مطلوب',
+    nameRequired: 'الاسم مطلوب',
+    nameArRequired: 'الاسم بالعربية مطلوب',
+  },
+}

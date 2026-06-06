@@ -190,12 +190,17 @@ export const sidebarItems = {
             // Financial Subgroup (3rd level)
             {
               label: 'common.menu.financial',
-              icon: 'pi pi-box',
+              icon: 'pi pi-money-bill',
               items: [
                 {
-                  label: 'common.menu.accountGuide',
+                  label: 'common.menu.accountGuides',
                   icon: 'pi pi-circle-fill',
                   path: `/company/account-guides/${this.company_id}`,
+                },
+                {
+                  label: 'common.menu.cashBoxes',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/cash-boxes/${this.company_id}`,
                 },
               ],
             },

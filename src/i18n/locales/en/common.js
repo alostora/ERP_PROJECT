@@ -128,7 +128,8 @@ export default {
 
     //////
     financial: 'Financial',
-    accountGuide: 'Account Guide',
+    accountGuides: 'Account Guide',
+    cashBoxes: 'Cash Boxes',
 
     //////
     branchManagement: 'Branch Management',

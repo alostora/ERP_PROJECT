@@ -152,4 +152,11 @@ export const API_ROUTES = {
     SEARCH: `${BASE_URL}/admin/company/account-guides/search`,
     BASE: `${BASE_URL}/admin/company/account-guide`,
   },
+  CASH_BOX: {
+    SEARCH: `${BASE_URL}/admin/company/cash-boxes/search`,
+    BASE: `${BASE_URL}/admin/company/cash-box`,
+    SET_DEFAULT: `${BASE_URL}/admin/company/cash-box/set-default`,
+    SET_ACTIVE: `${BASE_URL}/admin/company/cash-box/set-active`,
+    SET_INACTIVE: `${BASE_URL}/admin/company/cash-box/set-inactive`,
+  },
 }

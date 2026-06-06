@@ -128,7 +128,8 @@ export default {
 
     //////
     financial: 'المالية',
-    accountGuide: 'دليل الحسابات',
+    accountGuides: 'دليل الحسابات',
+    cashBoxes: 'صناديق النقدية',
 
     //////
     branchManagement: 'إدارة الفرع',
