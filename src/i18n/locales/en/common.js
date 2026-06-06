@@ -133,6 +133,7 @@ export default {
     bankAccounts: 'Bank Accounts',
     wallets: 'E-wallets',
     transferMoneys: 'Money Transfer',
+    payments: 'Journal Vouchers / Payments',
 
     //////
     branchManagement: 'Branch Management',

@@ -14,6 +14,8 @@ export const API_ROUTES = {
     ACCOUNT_GUIDE_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.ACCOUNT_GUIDE_TYPE}`,
     ACCOUNT_GUIDE_NATURE_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.ACCOUNT_GUIDE_NATURE_TYPE}`,
     TRANSFER_MONEY_STATUS: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.TRANSFER_MONEY_STATUS}`,
+    PAYMENT_METHOD: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.PAYMENT_METHOD}`,
+    PAYMENT_STATUS: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.PAYMENT_STATUS}`,
   },
   USER: {
     SEARCH: `${BASE_URL}/admin/users/search`,
@@ -160,6 +162,12 @@ export const API_ROUTES = {
     SET_ACTIVE: `${BASE_URL}/admin/company/cash-box/set-active`,
     SET_INACTIVE: `${BASE_URL}/admin/company/cash-box/set-inactive`,
   },
+  CASH_BOX_SHIFT: {
+    SEARCH: `${BASE_URL}/admin/company/cash-box-shifts/search`,
+    BASE: `${BASE_URL}/admin/company/cash-box-shift`,
+    OPEN: `${BASE_URL}/admin/company/cash-box-shift/open`,
+    CLOSE: `${BASE_URL}/admin/company/cash-box-shift/close`,
+  },
   BANK_ACCOUNT: {
     SEARCH: `${BASE_URL}/admin/company/bank-accounts/search`,
     BASE: `${BASE_URL}/admin/company/bank-account`,
@@ -178,5 +186,11 @@ export const API_ROUTES = {
     SEARCH: `${BASE_URL}/admin/company/transfer-moneys/search`,
     BASE: `${BASE_URL}/admin/company/transfer-money`,
     SET_STATUS: `${BASE_URL}/admin/company/transfer-money/set-status`,
+  },
+  PAYMENT: {
+    SEARCH: `${BASE_URL}/admin/company/payments/search`,
+    BASE: `${BASE_URL}/admin/company/payment`,
+    SET_STATUS: `${BASE_URL}/admin/company/payment/set-status`,
+    CREATE_INVOICE_PAYMENT: `${BASE_URL}/admin/company/invoice-payments`,
   },
 }

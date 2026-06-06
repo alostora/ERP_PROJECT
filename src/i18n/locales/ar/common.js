@@ -135,6 +135,7 @@ export default {
     bankAccounts: 'حسابات البنوك',
     wallets: 'المحافظ الالكترونية',
     transferMoneys: 'حركة / تنقلات الاموال',
+    payments: 'قيود اليومية / المدفوعات',
 
     //////
     branchManagement: 'إدارة الفرع',
