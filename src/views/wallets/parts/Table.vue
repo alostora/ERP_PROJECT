@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h1 class="page-title">{{ $t('cashBoxes.title') }}</h1>
+      <h1 class="page-title">{{ $t('wallets.title') }}</h1>
       <button class="btn btn-primary" @click="openCreateModal">
         <i class="pi pi-plus"></i>
         {{ $t('common.addNew') }}
@@ -30,7 +30,7 @@
               :options="branches"
               :optionLabel="branchLabel"
               optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('cashBoxes.branches')"
+              :placeholder="$t('common.all') + ' ' + $t('wallets.branches')"
               :filter="true"
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
@@ -42,13 +42,13 @@
           <div class="col-12 col-md-6 col-lg-4 mb-1">
             <select v-model="filters.is_active" @change="fetchData" class="select">
               <option :value="null">
-                {{ $t('cashBoxes.is_active') + ' ' + $t('common.all') }}
+                {{ $t('wallets.is_active') + ' ' + $t('common.all') }}
               </option>
               <option :value="1">
-                {{ $t('cashBoxes.is_active') + ' ' + $t('common.yes') }}
+                {{ $t('wallets.is_active') + ' ' + $t('common.yes') }}
               </option>
               <option :value="0">
-                {{ $t('cashBoxes.is_active') + ' ' + $t('common.no') }}
+                {{ $t('wallets.is_active') + ' ' + $t('common.no') }}
               </option>
             </select>
           </div>
@@ -56,14 +56,27 @@
           <div class="col-12 col-md-6 col-lg-4 mb-1">
             <select v-model="filters.level_code" @change="fetchData" class="select">
               <option :value="null">
-                {{ $t('cashBoxes.level_code') + ' ' + $t('common.all') }}
+                {{ $t('wallets.level_code') + ' ' + $t('common.all') }}
               </option>
               <option :value="1">
-                {{ $t('cashBoxes.level_code') + ' ' + $t('cashBoxes.company') }}
+                {{ $t('wallets.level_code') + ' ' + $t('wallets.company') }}
               </option>
               <option :value="2">
-                {{ $t('cashBoxes.level_code') + ' ' + $t('cashBoxes.branch') }}
+                {{ $t('wallets.level_code') + ' ' + $t('wallets.branch') }}
               </option>
+            </select>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-4 mb-1">
+            <select v-model="filters.provider_code" @change="fetchData" class="select">
+              <option :value="null">
+                {{ $t('wallets.level_code') + ' ' + $t('common.all') }}
+              </option>
+              <option :value="1">{{ $t('wallets.vodafone') }}</option>
+              <option :value="2">{{ $t('wallets.orange') }}</option>
+              <option :value="3">{{ $t('wallets.etisalat') }}</option>
+              <option :value="4">{{ $t('wallets.fawry') }}</option>
+              <option :value="4">{{ $t('wallets.other') }}</option>
             </select>
           </div>
 
@@ -93,19 +106,31 @@
         resizableColumns
         showGridlines
       >
-        <Column field="id" :header="$t('cashBoxes.id')" class="col-1">
+        <Column field="id" :header="$t('wallets.id')" class="col-1">
           <template #body="slotProps">
             <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
           </template>
         </Column>
 
-        <Column field="name" :header="$t('cashBoxes.name')" />
+        <Column field="name" :header="$t('wallets.name')" />
 
-        <Column field="name_ar" :header="$t('cashBoxes.name_ar')" />
+        <Column field="name_ar" :header="$t('wallets.name_ar')" />
 
-        <Column field="balance" :header="$t('cashBoxes.balance')" />
+        <Column field="owner_name" :header="$t('wallets.owner_name')" />
 
-        <Column :header="$t('cashBoxes.level_code')">
+        <Column field="mobile_number" :header="$t('wallets.mobile_number')" />
+
+        <Column field="balance" :header="$t('wallets.balance')" />
+
+        <Column :header="$t('wallets.provider')">
+          <template #body="{ data }">
+            <div class="badge badge-primary">
+              {{ currentLanguage == 'ar' ? data.provider?.name_ar : data.provider?.name }}
+            </div>
+          </template>
+        </Column>
+
+        <Column :header="$t('wallets.level_code')">
           <template #body="{ data }">
             <div class="badge badge-primary">
               {{ currentLanguage == 'ar' ? data.level?.name_ar : data.level?.name }}
@@ -113,18 +138,18 @@
           </template>
         </Column>
 
-        <Column :header="$t('cashBoxes.is_default')">
+        <Column :header="$t('wallets.is_default')">
           <template #body="{ data }">
             <div v-if="data.is_default" class="badge badge-success">
               {{ $t('common.yes') }}
             </div>
             <div v-else-if="!data.is_default">
-              <ToggleSwitch v-model="data.is_default" @change="setDefaultCashBox(data.id)" />
+              <ToggleSwitch v-model="data.is_default" @change="setDefaultWallet(data.id)" />
             </div>
           </template>
         </Column>
 
-        <Column :header="$t('cashBoxes.is_active')">
+        <Column :header="$t('wallets.is_active')">
           <template #body="{ data }">
             <ToggleSwitch v-model="data.is_active" @change="toggleActive(data)" />
             {{ data.is_active ? $t('common.yes') : $t('common.no') }}
@@ -190,7 +215,7 @@ export default {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
           this.company_id = newVal
-          this.apiUrl = `${API_ROUTES.CASH_BOX.SEARCH}/${newVal}`
+          this.apiUrl = `${API_ROUTES.WALLET.SEARCH}/${newVal}`
         }
       },
       immediate: true,
@@ -206,10 +231,16 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.CASH_BOX.SEARCH,
-      deleteUrl: API_ROUTES.CASH_BOX.BASE,
+      apiUrl: API_ROUTES.WALLET.SEARCH,
+      deleteUrl: API_ROUTES.WALLET.BASE,
       company_id: '',
-      filters: { query_string: '', is_active: null, level_code: null, branch_id: '' },
+      filters: {
+        query_string: '',
+        is_active: null,
+        level_code: null,
+        branch_id: '',
+        provider_code: '',
+      },
       selectedItem: {},
     }
   },
@@ -247,9 +278,9 @@ export default {
 
     toggleActive(item) {
       if (item.is_active == false) {
-        this.setInactiveCashBox(item.id)
+        this.setInactiveWallet(item.id)
       } else {
-        this.setActiveCashBox(item.id)
+        this.setActiveWallet(item.id)
       }
     },
   },

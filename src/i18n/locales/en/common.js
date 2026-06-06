@@ -131,6 +131,7 @@ export default {
     accountGuides: 'Account Guide',
     cashBoxes: 'Cash Boxes',
     bankAccounts: 'Bank Accounts',
+    wallets: 'E-wallets',
 
     //////
     branchManagement: 'Branch Management',

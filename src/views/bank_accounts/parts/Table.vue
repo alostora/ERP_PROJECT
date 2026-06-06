@@ -116,7 +116,7 @@
         <Column :header="$t('bankAccounts.level_code')">
           <template #body="{ data }">
             <div class="badge badge-primary">
-              {{ currentLanguage == 'ar' ? data.level_code?.name_ar : data.level_code?.name }}
+              {{ currentLanguage == 'ar' ? data.level?.name_ar : data.level?.name }}
             </div>
           </template>
         </Column>

@@ -166,4 +166,11 @@ export const API_ROUTES = {
     SET_ACTIVE: `${BASE_URL}/admin/company/bank-account/set-active`,
     SET_INACTIVE: `${BASE_URL}/admin/company/bank-account/set-inactive`,
   },
+  WALLET: {
+    SEARCH: `${BASE_URL}/admin/company/wallets/search`,
+    BASE: `${BASE_URL}/admin/company/wallet`,
+    SET_DEFAULT: `${BASE_URL}/admin/company/wallet/set-default`,
+    SET_ACTIVE: `${BASE_URL}/admin/company/wallet/set-active`,
+    SET_INACTIVE: `${BASE_URL}/admin/company/wallet/set-inactive`,
+  },
 }

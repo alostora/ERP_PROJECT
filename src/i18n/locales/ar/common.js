@@ -131,6 +131,7 @@ export default {
     accountGuides: 'دليل الحسابات',
     cashBoxes: 'صناديق النقدية',
     bankAccounts: 'حسابات البنوك',
+    wallets: 'المحافظ الالكترونية',
 
     //////
     branchManagement: 'إدارة الفرع',
