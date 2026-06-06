@@ -62,7 +62,7 @@
             <Select
               v-model="formData.from_id"
               :options="fromOptions"
-              :optionLabel="optionLabel"
+              :optionLabel="transferMoneyOptionLabel"
               optionValue="id"
               :placeholder="$t('common.select') + ' ' + fromPlaceholderLabel"
               :filter="true"
@@ -77,14 +77,12 @@
 
       <div class="row">
         <div class="col-12 col-md-6">
-          <div class="form-group">
-            <label class="form-label required">{{ $t('transferMoneys.to') }}</label>
-            <select v-model="to" @change="determineTransferTo" class="select">
-              <option :value="1">{{ $t('transferMoneys.cashBox') }}</option>
-              <option :value="2">{{ $t('transferMoneys.bankAccount') }}</option>
-              <option :value="3">{{ $t('transferMoneys.wallet') }}</option>
-            </select>
-          </div>
+          <label class="form-label required">{{ $t('transferMoneys.to') }}</label>
+          <select v-model="to" @change="determineTransferTo" class="select">
+            <option :value="1">{{ $t('transferMoneys.cashBox') }}</option>
+            <option :value="2">{{ $t('transferMoneys.bankAccount') }}</option>
+            <option :value="3">{{ $t('transferMoneys.wallet') }}</option>
+          </select>
         </div>
 
         <div class="col-12 col-md-6">
@@ -93,7 +91,7 @@
             <Select
               v-model="formData.to_id"
               :options="toOptions"
-              :optionLabel="optionLabel"
+              :optionLabel="transferMoneyOptionLabel"
               optionValue="id"
               :placeholder="$t('common.select') + ' ' + toPlaceholderLabel"
               :filter="true"
@@ -176,11 +174,11 @@ export default {
       return localStorage.getItem('language') || 'en'
     },
 
-    optionLabel() {
+    branchLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
 
-    branchLabel() {
+    transferMoneyOptionLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
 

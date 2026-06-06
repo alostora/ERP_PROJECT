@@ -11,7 +11,7 @@
         <label class="form-label required">{{ $t('transferMoneys.status') }}</label>
         <Select
           v-model="formData.status_id"
-          :options="status"
+          :options="statusList"
           :optionLabel="statusLabel"
           optionValue="id"
           :placeholder="$t('common.select') + ' ' + $t('transferMoneys.status')"

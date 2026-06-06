@@ -23,8 +23,10 @@
               />
             </div>
           </div>
+        </div>
 
-          <div class="col-12 col-md-6 col-lg-4 mb-1">
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-4 mt-1">
             <Select
               v-model="filters.branch_id"
               :options="branches"
@@ -38,7 +40,83 @@
               @change="fetchData"
             />
           </div>
+          <div class="col-12 col-md-6 col-lg-4 mt-1">
+            <Select
+              v-model="filters.status_id"
+              :options="statusList"
+              :optionLabel="statusLabel"
+              optionValue="id"
+              :placeholder="$t('common.all') + ' ' + $t('transferMoneys.status')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="fetchData"
+            />
+          </div>
+        </div>
 
+        <div class="row">
+          <div class="col-lg-6 col-md-12 mt-1">
+            <div class="form-group">
+              <select v-model="from" @change="determineTransferFrom" class="select">
+                <option :value="null">{{ $t('common.select') }}</option>
+                <option :value="1">{{ $t('transferMoneys.cashBox') }}</option>
+                <option :value="2">{{ $t('transferMoneys.bankAccount') }}</option>
+                <option :value="3">{{ $t('transferMoneys.wallet') }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-12 mt-1">
+            <div class="form-group">
+              <Select
+                v-model="filters.from_id"
+                :options="fromOptions"
+                :optionLabel="transferMoneyOptionLabel"
+                optionValue="id"
+                :placeholder="$t('common.select') + ' ' + fromPlaceholderLabel"
+                :filter="true"
+                :showClear="true"
+                :filterPlaceholder="$t('common.search')"
+                class="w-full"
+                @change="fetchData"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <select v-model="to" @change="determineTransferTo" class="select">
+                <option :value="null">{{ $t('common.select') }}</option>
+                <option :value="1">{{ $t('transferMoneys.cashBox') }}</option>
+                <option :value="2">{{ $t('transferMoneys.bankAccount') }}</option>
+                <option :value="3">{{ $t('transferMoneys.wallet') }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="form-group">
+              <Select
+                v-model="filters.to_id"
+                :options="toOptions"
+                :optionLabel="transferMoneyOptionLabel"
+                optionValue="id"
+                :placeholder="$t('common.select') + ' ' + toPlaceholderLabel"
+                :filter="true"
+                :showClear="true"
+                :filterPlaceholder="$t('common.search')"
+                class="w-full"
+                @change="fetchData"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
           <div class="col-6 col-md-3 col-lg-2">
             <select v-model="perPage" @change="fetchData" class="select">
               <option :value="5">5</option>
@@ -71,19 +149,29 @@
           </template>
         </Column>
 
-        <Column field="amount" :header="$t('transferMoneys.amount')" />
+        <Column field="amount" :header="$t('transferMoneys.amount')" class="col-2" />
 
-        <Column :header="$t('transferMoneys.from')">
+        <Column :header="$t('transferMoneys.from')" class="col-2">
           <template #body="{ data }">
             {{ currentLanguage == 'ar' ? data.from_model?.name_ar : data.from_model?.name }}
           </template>
         </Column>
 
-        <Column :header="$t('transferMoneys.to')">
+        <Column :header="$t('transferMoneys.to')" class="col-2">
           <template #body="{ data }">
             {{ currentLanguage == 'ar' ? data.to_model?.name_ar : data.to_model?.name }}
           </template>
         </Column>
+
+        <Column :header="$t('transferMoneys.status')" class="col-2">
+          <template #body="{ data }">
+            <div v-if="data.status" class="badge badge-info">
+              {{ currentLanguage == 'ar' ? data.status?.name_ar : data.status?.name }}
+            </div>
+          </template>
+        </Column>
+
+        <Column field="created_at" :header="$t('transferMoneys.createdAt')" class="col-2" />
 
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
@@ -149,6 +237,16 @@ export default {
       },
       immediate: true,
     },
+
+    branch_id: {
+      handler(newVal) {
+        if (newVal) {
+          this.filters.branch_id = newVal
+          this.fetchData()
+        }
+      },
+      immediate: true,
+    },
   },
 
   props: {
@@ -163,7 +261,9 @@ export default {
       apiUrl: API_ROUTES.TRANSFER_MONEY.SEARCH,
       deleteUrl: API_ROUTES.TRANSFER_MONEY.BASE,
       company_id: '',
-      filters: { query_string: '', branch_id: '' },
+      to: null,
+      from: null,
+      filters: { query_string: '', branch_id: '', from_id: '', to_id: '' },
       selectedItem: {},
     }
   },
@@ -176,11 +276,50 @@ export default {
     branchLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
+
+    statusLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+    },
+
+    /////////////////////////////////////
+
+    transferMoneyOptionLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+    },
+
+    fromOptions() {
+      if (this.from === 1) return this.cashBoxes
+      if (this.from === 2) return this.bankAccounts
+      if (this.from === 3) return this.wallets
+      return []
+    },
+
+    fromPlaceholderLabel() {
+      if (this.from === 1) return this.$t('transferMoneys.selectCashBox')
+      if (this.from === 2) return this.$t('transferMoneys.selectBankAccount')
+      if (this.from === 3) return this.$t('transferMoneys.selectWallet')
+      return ''
+    },
+
+    toOptions() {
+      if (this.to === 1) return this.cashBoxes
+      if (this.to === 2) return this.bankAccounts
+      if (this.to === 3) return this.wallets
+      return []
+    },
+
+    toPlaceholderLabel() {
+      if (this.to === 1) return this.$t('transferMoneys.selectCashBox')
+      if (this.to === 2) return this.$t('transferMoneys.selectBankAccount')
+      if (this.to === 3) return this.$t('transferMoneys.selectWallet')
+      return ''
+    },
   },
 
   mounted() {
     this.fetchData()
     this.loadBranches(this.company_id)
+    this.loadStatusList()
   },
 
   methods: {
@@ -197,6 +336,34 @@ export default {
 
     deleteRow(item) {
       this.deleteItem(this.deleteUrl, item.id, item.name)
+    },
+
+    determineTransferFrom() {
+      if (this.from === 1) {
+        this.loadCashBoxes(this.company_id)
+      }
+
+      if (this.from === 2) {
+        this.loadBankAccounts(this.company_id)
+      }
+
+      if (this.from === 3) {
+        this.loadWallets(this.company_id)
+      }
+    },
+
+    determineTransferTo() {
+      if (this.to === 1) {
+        this.loadCashBoxes(this.company_id)
+      }
+
+      if (this.to === 2) {
+        this.loadBankAccounts(this.company_id)
+      }
+
+      if (this.to === 3) {
+        this.loadWallets(this.company_id)
+      }
     },
   },
 }
