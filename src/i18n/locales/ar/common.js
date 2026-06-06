@@ -1,3 +1,5 @@
+import transferMoneys from './transferMoneys'
+
 export default {
   // Buttons
   create: 'إنشاء',
@@ -132,6 +134,7 @@ export default {
     cashBoxes: 'صناديق النقدية',
     bankAccounts: 'حسابات البنوك',
     wallets: 'المحافظ الالكترونية',
+    transferMoneys: 'حركة / تنقلات الاموال',
 
     //////
     branchManagement: 'إدارة الفرع',

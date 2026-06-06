@@ -132,6 +132,7 @@ export default {
     cashBoxes: 'Cash Boxes',
     bankAccounts: 'Bank Accounts',
     wallets: 'E-wallets',
+    transferMoneys: 'Money Transfer',
 
     //////
     branchManagement: 'Branch Management',

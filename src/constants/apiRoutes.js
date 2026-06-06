@@ -13,6 +13,7 @@ export const API_ROUTES = {
     DISCOUNT_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.DISCOUNT_TYPE}`,
     ACCOUNT_GUIDE_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.ACCOUNT_GUIDE_TYPE}`,
     ACCOUNT_GUIDE_NATURE_TYPES: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.ACCOUNT_GUIDE_NATURE_TYPE}`,
+    TRANSFER_MONEY_STATUS: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.TRANSFER_MONEY_STATUS}`,
   },
   USER: {
     SEARCH: `${BASE_URL}/admin/users/search`,
@@ -172,5 +173,10 @@ export const API_ROUTES = {
     SET_DEFAULT: `${BASE_URL}/admin/company/wallet/set-default`,
     SET_ACTIVE: `${BASE_URL}/admin/company/wallet/set-active`,
     SET_INACTIVE: `${BASE_URL}/admin/company/wallet/set-inactive`,
+  },
+  TRANSFER_MONEY: {
+    SEARCH: `${BASE_URL}/admin/company/transfer-moneys/search`,
+    BASE: `${BASE_URL}/admin/company/transfer-money`,
+    SET_STATUS: `${BASE_URL}/admin/company/transfer-money/set-status`,
   },
 }

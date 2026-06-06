@@ -212,6 +212,11 @@ export const sidebarItems = {
                   icon: 'pi pi-circle-fill',
                   path: `/company/wallets/${this.company_id}`,
                 },
+                {
+                  label: 'common.menu.transferMoneys',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/transfer-moneys/${this.company_id}`,
+                },
               ],
             },
           ],
