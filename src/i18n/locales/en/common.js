@@ -24,6 +24,7 @@ export default {
   confirmDeleteMessage: 'Are you sure you want to delete "{itemName}"?',
   confirmDeleteYes: 'Yes, Delete',
   confirmDeleteNo: 'Cancel',
+  empty: 'Empty',
 
   yes: 'Yes',
 

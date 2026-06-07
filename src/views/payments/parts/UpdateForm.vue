@@ -10,15 +10,15 @@
       <div class="form-group">
         <label class="form-label required">{{ $t('payments.payment_methods') }}</label>
         <Select
-          v-model="formData.payment_method_id"
+          v-model="selectedPaymentMethod"
           :options="paymentMethods"
           :optionLabel="paymentMethodLabel"
-          optionValue="id"
           :placeholder="$t('common.select') + ' ' + $t('payments.payment_method')"
           :filter="true"
           :showClear="true"
           :filterPlaceholder="$t('common.search')"
           class="w-full"
+          @change="determinePaymentModule"
         />
         <small v-if="errors.payment_method_id" class="error-message">{{
           errors.payment_method_id
@@ -26,24 +26,13 @@
       </div>
 
       <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="form-group">
-            <label class="form-label required">{{ $t('payments.from') }}</label>
-            <select v-model="module" @change="determinePaymentModule" class="select">
-              <option :value="1">{{ $t('payments.cashBox') }}</option>
-              <option :value="2">{{ $t('payments.bankAccount') }}</option>
-              <option :value="3">{{ $t('payments.wallet') }}</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6" v-if="selectedPaymentMethod">
           <div class="form-group">
             <label class="form-label required">{{ modulePlaceholderLabel }}</label>
             <Select
               v-model="module_id"
               :options="moduleOptions"
-              :optionLabel="paymentOptionLabel"
+              :optionLabel="moduleOptionLabel"
               optionValue="id"
               :placeholder="$t('common.select') + ' ' + modulePlaceholderLabel"
               :filter="true"
@@ -53,6 +42,29 @@
               @change="assignValueToModule"
             />
             <small v-if="errors.module_id" class="error-message">{{ errors.module_id }}</small>
+          </div>
+        </div>
+
+        <div
+          class="col-12 col-md-6"
+          v-if="selectedPaymentMethod && selectedPaymentMethod?.prefix === 'CASH'"
+        >
+          <div class="form-group">
+            <label class="form-label required">{{ $t('payments.cash_box_shifts') }}</label>
+            <Select
+              v-model="formData.cash_box_shift_id"
+              :options="cashBoxShifts"
+              :optionLabel="cashBoxShiftLabel"
+              optionValue="id"
+              :placeholder="$t('common.select') + ' ' + $t('payments.cash_box_shift')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+            <small v-if="errors.cash_box_shift_id" class="error-message">{{
+              errors.cash_box_shift_id
+            }}</small>
           </div>
         </div>
       </div>
@@ -105,22 +117,32 @@ export default {
       immediate: true,
       deep: true,
       handler(selectedItem) {
+        this.loadPaymentMethods()
         if (selectedItem && selectedItem.id) {
           this.populateForm(selectedItem)
         }
       },
+    },
+    '$route.params.company_id': {
+      handler(newVal) {
+        if (newVal && newVal !== 'undefined') {
+          this.company_id = newVal
+        }
+      },
+      immediate: true,
     },
   },
 
   data() {
     return {
       apiUrl: API_ROUTES.PAYMENT.BASE,
-      module: '',
+      selectedPaymentMethod: null,
+      company_id: '',
       module_id: '',
       formData: {
-        id: '',
         payment_method_id: '',
         cash_box_id: '',
+        cash_box_shift_id: '',
         bank_account_id: '',
         wallet_id: '',
         amount: '',
@@ -135,25 +157,62 @@ export default {
       return localStorage.getItem('language') || 'en'
     },
 
+    branchLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+    },
+
     paymentMethodLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
 
-    paymentOptionLabel() {
+    accountGuideLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+    },
+
+    cashBoxShiftLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+    },
+
+    moduleOptionLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
 
     moduleOptions() {
-      if (this.module === 1) return this.cashBoxes
-      if (this.module === 2) return this.bankAccounts
-      if (this.module === 3) return this.wallets
+      if (this.selectedPaymentMethod?.prefix === 'CASH') {
+        return this.cashBoxes
+      }
+
+      if (
+        this.selectedPaymentMethod?.prefix === 'BANK_ACCOUNT' ||
+        this.selectedPaymentMethod?.prefix === 'CHECK' ||
+        this.selectedPaymentMethod?.prefix === 'CARD'
+      ) {
+        return this.bankAccounts
+      }
+
+      if (this.selectedPaymentMethod?.prefix === 'MOBILE_WALLET') {
+        return this.wallets
+      }
       return []
     },
 
     modulePlaceholderLabel() {
-      if (this.from === 1) return this.$t('payments.selectCashBox')
-      if (this.from === 2) return this.$t('payments.selectBankAccount')
-      if (this.from === 3) return this.$t('payments.selectWallet')
+      if (
+        this.selectedPaymentMethod?.prefix === 'BANK_ACCOUNT' ||
+        this.selectedPaymentMethod?.prefix === 'CHECK' ||
+        this.selectedPaymentMethod?.prefix === 'CARD'
+      ) {
+        return this.$t('payments.bank_accounts')
+      }
+
+      if (this.selectedPaymentMethod?.prefix === 'CASH') {
+        return this.$t('payments.cash_boxes')
+      }
+
+      if (this.selectedPaymentMethod?.prefix === 'MOBILE_WALLET') {
+        return this.$t('payments.wallets')
+      }
+
       return []
     },
   },
@@ -162,65 +221,91 @@ export default {
     populateForm(selectedItem) {
       this.formData = {
         id: selectedItem.id || '',
-        payment_method_id: selectedItem.payment_method_id || '',
-        cash_box_id: selectedItem.cash_box_id || '',
-        bank_account_id: selectedItem.bank_account_id || '',
-        wallet_id: selectedItem.wallet_id || '',
+        payment_method_id: selectedItem.payment_method?.id || '',
+        cash_box_id: selectedItem.cash_box?.id || '',
+        bank_account_id: selectedItem.bank_account?.id || '',
+        wallet_id: selectedItem.wallet?.id || '',
         amount: selectedItem.amount || '',
       }
 
-      if (this.formData.cash_box_id) {
-        this.module_id = this.formData.cash_box_id
-        this.module = 1
-      }
+      // Set module_id (only one value)
+      this.module_id =
+        this.formData.cash_box_id ||
+        this.formData.bank_account_id ||
+        this.formData.wallet_id ||
+        null
 
-      if (this.formData.bank_account_id) {
-        this.module_id = this.formData.bank_account_id
-        this.module = 2
-      }
+      this.$nextTick(() => {
+        this.selectedPaymentMethod = this.paymentMethods.find(
+          (method) => method.id === this.formData.payment_method_id
+        )
 
-      if (this.formData.wallet_id) {
-        this.module_id = this.formData.wallet_id
-        this.module = 3
-      }
+        if (!this.selectedPaymentMethod) return
 
-      this.determinePaymentModule()
-      this.assignValueToModule()
+        const prefix = this.selectedPaymentMethod.prefix
+
+        if (prefix === 'BANK_ACCOUNT' || prefix === 'CHECK' || prefix === 'CARD') {
+          this.loadBankAccounts(this.company_id)
+        } else if (prefix === 'CASH') {
+          this.loadCashBoxes(this.company_id)
+        } else if (prefix === 'MOBILE_WALLET') {
+          this.loadWallets(this.company_id)
+        }
+      })
     },
 
     openModal() {
       this.formVisible = true
-      this.loadPaymentMethods()
+    },
+
+    closeFormModal() {
+      this.formVisible = false
+      this.formLoading = false
+      this.formErrors = {}
+      this.selectedPaymentMethod = null
+      this.module_id = ''
+      this.formData = {}
     },
 
     determinePaymentModule() {
       this.formData.cash_box_id = ''
+      this.formData.cash_box_shift_id = ''
       this.formData.bank_account_id = ''
       this.formData.wallet_id = ''
+      this.formData.payment_method_id = this.selectedPaymentMethod?.id
 
-      if (this.module === 1) {
-        this.loadCashBoxes(this.formData.company_id)
+      if (
+        this.selectedPaymentMethod?.prefix === 'BANK_ACCOUNT' ||
+        this.selectedPaymentMethod?.prefix === 'CHECK' ||
+        this.selectedPaymentMethod?.prefix === 'CARD'
+      ) {
+        this.loadBankAccounts(this.company_id)
       }
 
-      if (this.module === 2) {
-        this.loadBankAccounts(this.formData.company_id)
+      if (this.selectedPaymentMethod?.prefix === 'CASH') {
+        this.loadCashBoxes(this.company_id)
       }
 
-      if (this.module === 3) {
-        this.loadWallets(this.formData.company_id)
+      if (this.selectedPaymentMethod?.prefix === 'MOBILE_WALLET') {
+        this.loadWallets(this.company_id)
       }
     },
 
     assignValueToModule() {
-      if (this.module === 1) {
-        this.formData.cash_box_id = this.module_id
-      }
-
-      if (this.module === 2) {
+      if (
+        this.selectedPaymentMethod?.prefix === 'BANK_ACCOUNT' ||
+        this.selectedPaymentMethod?.prefix === 'CHECK' ||
+        this.selectedPaymentMethod?.prefix === 'CARD'
+      ) {
         this.formData.bank_account_id = this.module_id
       }
 
-      if (this.module === 3) {
+      if (this.selectedPaymentMethod?.prefix === 'CASH') {
+        this.formData.cash_box_id = this.module_id
+        this.loadCashBoxShifts(this.company_id, this.formData.cash_box_id)
+      }
+
+      if (this.selectedPaymentMethod?.prefix === 'MOBILE_WALLET') {
         this.formData.wallet_id = this.module_id
       }
     },

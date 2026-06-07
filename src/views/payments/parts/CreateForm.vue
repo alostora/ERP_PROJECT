@@ -13,6 +13,17 @@
       </div>
 
       <div class="form-group">
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <label class="form-label">{{ $t('payments.is_opening_balance') }}</label>
+            <div class="flex align-center">
+              <ToggleSwitch v-model="formData.is_opening_balance" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
         <label class="form-label required">{{ $t('payments.branches') }}</label>
         <Select
           v-model="formData.branch_id"
@@ -165,6 +176,7 @@ export default {
       formData: {
         company_id: '',
         branch_id: '',
+        is_opening_balance: '',
         payment_method_id: '',
         cash_box_id: '',
         cash_box_shift_id: '',
@@ -251,6 +263,15 @@ export default {
       this.loadAccountGuides(this.company_id)
     },
 
+    closeFormModal() {
+      this.formVisible = false
+      this.formLoading = false
+      this.formErrors = {}
+      this.selectedPaymentMethod = null
+      this.module_id = ''
+      this.formData = {}
+    },
+
     determinePaymentModule() {
       this.formData.cash_box_id = ''
       this.formData.cash_box_shift_id = ''
@@ -295,7 +316,6 @@ export default {
     },
 
     async handleSubmit() {
-      console.log(this.formData)
       if (!this.validateCreateForm(this.formData)) {
         return
       }

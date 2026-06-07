@@ -152,7 +152,7 @@
           </template>
         </Column>
 
-        <Column :header="$t('payments.is_opening_balance')">
+        <Column :header="$t('payments.is_opening_balance')" class="col-1">
           <template #body="{ data }">
             <div v-if="data.is_opening_balance" class="badge badge-success">
               {{ $t('common.yes') }}
@@ -163,7 +163,7 @@
           </template>
         </Column>
 
-        <Column :header="$t('payments.status')">
+        <Column :header="$t('payments.status')" class="col-1">
           <template #body="{ data }">
             <div class="badge badge-info">
               {{ currentLanguage == 'ar' ? data.status.name_ar : data.status.name }}
@@ -171,7 +171,7 @@
           </template>
         </Column>
 
-        <Column :header="$t('payments.payment_method')">
+        <Column :header="$t('payments.payment_method')" class="col-1">
           <template #body="{ data }">
             <div class="badge badge-info">
               {{
@@ -181,17 +181,55 @@
           </template>
         </Column>
 
-        <Column field="amount" :header="$t('payments.amount')" class="col-2" />
+        <Column :header="$t('payments.cash_box')" class="col-1">
+          <template #body="{ data }">
+            <div class="badge badge-info" v-if="data.cash_box">
+              {{ currentLanguage == 'ar' ? data.cash_box?.name_ar : data.cash_box?.name }}
+            </div>
+            <div class="badge badge-warning" v-else>
+              {{ $t('common.empty') }}
+            </div>
+          </template>
+        </Column>
+
+        <Column :header="$t('payments.bank_account')" class="col-1">
+          <template #body="{ data }">
+            <div class="badge badge-info" v-if="data.bank_account">
+              {{ currentLanguage == 'ar' ? data.bank_account?.name_ar : data.cash_box?.name }}
+            </div>
+            <div class="badge badge-warning" v-else>
+              {{ $t('common.empty') }}
+            </div>
+          </template>
+        </Column>
+
+        <Column :header="$t('payments.wallet')" class="col-1">
+          <template #body="{ data }">
+            <div class="badge badge-info" v-if="data.wallet">
+              {{ currentLanguage == 'ar' ? data.wallet?.name_ar : data.cash_box?.name }}
+            </div>
+            <div class="badge badge-warning" v-else>
+              {{ $t('common.empty') }}
+            </div>
+          </template>
+        </Column>
+
+        <Column field="amount" :header="$t('payments.amount')" class="col-1" />
 
         <Column field="payment_date" :header="$t('payments.payment_date')" class="col-2" />
-
-        <Column field="created_at" :header="$t('payments.createdAt')" class="col-2" />
 
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
             <div class="actions-cell">
               <button class="btn-icon" @click="openUpdateModal(data)" :title="$t('common.edit')">
                 <i class="pi pi-pen-to-square text-success"></i>
+              </button>
+              <button
+                class="btn-icon"
+                @click="openUpdateStatusModal(data)"
+                :title="$t('payments.updateStatus')"
+              >
+                <i class="pi pi-step-forward-alt text-success"></i>
               </button>
               <button
                 class="btn-icon text-danger"
@@ -208,6 +246,7 @@
 
     <CreateForm ref="createModal" @created="fetchData" :company_id="company_id" />
     <UpdateForm ref="updateModal" :selected_item="selectedItem" @updated="fetchData" />
+    <UpdateStatusForm ref="updateStatusModal" :selected_item="selectedItem" @updated="fetchData" />
 
     <Toast />
     <ConfirmDialog />
@@ -221,6 +260,7 @@ import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
 import CreateForm from './CreateForm.vue'
 import UpdateForm from './UpdateForm.vue'
+import UpdateStatusForm from './UpdateStatusForm.vue'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
@@ -237,6 +277,7 @@ export default {
     ConfirmDialog,
     CreateForm,
     UpdateForm,
+    UpdateStatusForm,
     ToggleSwitch,
     Select,
   },
@@ -272,8 +313,8 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.TRANSFER_MONEY.SEARCH,
-      deleteUrl: API_ROUTES.TRANSFER_MONEY.BASE,
+      apiUrl: API_ROUTES.PAYMENT.SEARCH,
+      deleteUrl: API_ROUTES.PAYMENT.BASE,
       company_id: '',
       module_id: '',
       selectedPaymentMethod: null,
@@ -380,6 +421,13 @@ export default {
       this.selectedItem = { ...item }
       this.$nextTick(() => {
         this.$refs.updateModal.openModal()
+      })
+    },
+
+    openUpdateStatusModal(item) {
+      this.selectedItem = { ...item }
+      this.$nextTick(() => {
+        this.$refs.updateStatusModal.openModal()
       })
     },
 

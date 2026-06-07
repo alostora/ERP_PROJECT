@@ -35,6 +35,7 @@ export default {
   amount: 'Amount',
 
   status: 'Status',
+  updateStatus: 'Update Status',
 
   notes: 'Details',
   payment_date: 'Payment date',
@@ -47,5 +48,6 @@ export default {
     cashBoxIdRequired: 'Cash box is required',
     bankAccountIdRequired: 'Bank account is required',
     walletIdRequired: 'Wallet is required',
+    amountRequired: 'Amount is required',
   },
 }

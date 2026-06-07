@@ -26,6 +26,7 @@ export default {
   confirmDeleteMessage: 'هل أنت متأكد من حذف "{itemName}"؟',
   confirmDeleteYes: 'نعم، احذف',
   confirmDeleteNo: 'إلغاء',
+  empty: 'فارغ',
 
   yes: 'نعم',
   no: 'لا',

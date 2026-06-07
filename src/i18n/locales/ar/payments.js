@@ -35,6 +35,7 @@ export default {
   amount: 'المبلغ',
 
   status: 'الحالة',
+  updateStatus: 'تغيير الحالة',
 
   notes: 'التفاصيل',
 
@@ -49,5 +50,6 @@ export default {
     cashBoxIdRequired: 'صندوق النقدية مطلوب',
     bankAccountIdRequired: 'حساب البنك مطلوب',
     walletIdRequired: 'المحفظة مطلوب',
+    amountRequired: 'المبلغ مطلوب',
   },
 }
