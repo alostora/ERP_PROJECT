@@ -110,7 +110,12 @@ export default {
         return
       }
 
-      await this.submitCreateForm(this.apiUrl, this.formData, this.$t('common.createdSuccessfully'))
+      await this.submitCreateForm(
+        this.apiUrl,
+        this.formData,
+        this.$t('common.createdSuccessfully'),
+        true
+      )
     },
   },
 }

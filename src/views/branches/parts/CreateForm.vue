@@ -49,7 +49,7 @@
         <label class="form-label required">{{ $t('branches.phone') }}</label>
         <input
           v-model="formData.phone"
-          type="number"
+          type="text"
           class="input"
           :class="{ 'input-error': errors.phone }"
         />
@@ -58,7 +58,7 @@
 
       <div class="form-group">
         <label class="form-label required">{{ $t('branches.address') }}</label>
-        <textarea v-model="formData.address_ar" class="textarea" rows="3"></textarea>
+        <textarea v-model="formData.address" class="textarea" rows="3"></textarea>
         <small v-if="errors.address" class="error-message">{{ errors.address }}</small>
       </div>
 
@@ -130,7 +130,6 @@ export default {
     },
 
     async handleSubmit() {
-      console.log(this.formData)
       if (!this.validateCreateForm(this.formData)) {
         return
       }

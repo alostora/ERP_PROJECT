@@ -16,6 +16,7 @@ export const API_ROUTES = {
     TRANSFER_MONEY_STATUS: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.TRANSFER_MONEY_STATUS}`,
     PAYMENT_METHOD: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.PAYMENT_METHOD}`,
     PAYMENT_STATUS: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.PAYMENT_STATUS}`,
+    PAYMENT_TYPE: `${BASE_URL}/system-lookups/${LOOKUP_TYPES.LOOKUP_TYPES.PAYMENT_TYPE}`,
   },
   USER: {
     SEARCH: `${BASE_URL}/admin/users/search`,
@@ -192,5 +193,9 @@ export const API_ROUTES = {
     BASE: `${BASE_URL}/admin/company/payment`,
     SET_STATUS: `${BASE_URL}/admin/company/payment/set-status`,
     CREATE_INVOICE_PAYMENT: `${BASE_URL}/admin/company/invoice-payments`,
+  },
+  PURCHASES_INVOICE: {
+    SEARCH: `${BASE_URL}/admin/company/purchases/invoices/search`,
+    BASE: `${BASE_URL}/admin/company/purchases/invoice`,
   },
 }

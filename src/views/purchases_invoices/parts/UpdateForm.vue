@@ -1,14 +1,14 @@
 <template>
   <Dialog
     v-model:visible="formVisible"
-    :header="$t('common.updateTitle', { module: $t('contacts.title') })"
+    :header="$t('common.updateTitle', { module: $t('purchasesInvoices.title') })"
     :modal="true"
     :style="{ width: '500px' }"
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
-        <label class="form-label required">{{ $t('contacts.name') }}</label>
+        <label class="form-label required">{{ $t('purchasesInvoices.name') }}</label>
         <input
           v-model="formData.name"
           type="text"
@@ -16,27 +16,6 @@
           :class="{ 'input-error': errors.name }"
         />
         <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('contacts.email') }}</label>
-        <input
-          v-model="formData.email"
-          type="email"
-          class="input"
-          :class="{ 'input-error': errors.email }"
-        />
-        <small v-if="errors.email" class="error-message">{{ errors.email }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">{{ $t('contacts.phone') }}</label>
-        <input v-model="formData.phone" type="text" class="input" />
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">{{ $t('contacts.address') }}</label>
-        <textarea v-model="formData.address" class="textarea" rows="3"></textarea>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -84,13 +63,10 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.CONTACT.BASE,
+      apiUrl: API_ROUTES.PURCHASES_INVOICE.BASE,
       formData: {
         id: '',
         name: '',
-        email: '',
-        phone: '',
-        address: '',
       },
     }
   },
@@ -107,11 +83,7 @@ export default {
     populateForm(selectedItem) {
       this.formData = {
         id: selectedItem.id || '',
-        company_id: selectedItem.company_id || '',
         name: selectedItem.name || '',
-        email: selectedItem.email || '',
-        phone: selectedItem.phone || '',
-        address: selectedItem.address || '',
       }
     },
 
@@ -126,14 +98,12 @@ export default {
 
       const data = { ...this.formData }
       delete data.id
-      if (!data.password) delete data.password
 
       await this.submitUpdateForm(
         this.apiUrl,
         this.formData.id,
         data,
-        this.$t('common.updatedSuccessfully'),
-        true
+        this.$t('common.updatedSuccessfully')
       )
     },
   },

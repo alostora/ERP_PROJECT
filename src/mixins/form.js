@@ -25,11 +25,12 @@ export const formMixin = {
       this.formData = {}
     },
 
-    async submitCreateForm(url, data, successMsg) {
+    async submitCreateForm(url, data, successMsg, emitData = false) {
       this.formLoading = true
 
       try {
-        await API.post(url, data)
+        // await API.post(url, data)
+        const response = await API.post(url, data)
 
         this.$toast.add({
           severity: 'success',
@@ -38,7 +39,15 @@ export const formMixin = {
           life: this.life,
         })
 
-        this.$emit('created')
+        // Only emit data if requested
+        if (emitData) {
+          const createdData = response.data?.data || response.data
+          this.$emit('created', createdData)
+        } else {
+          this.$emit('created')
+        }
+
+        // this.$emit('created')
         this.closeFormModal()
       } catch (e) {
         this.formErrors = e.response?.data?.errors || {}
@@ -56,11 +65,12 @@ export const formMixin = {
       }
     },
 
-    async submitUpdateForm(url, id, data, successMsg) {
+    async submitUpdateForm(url, id, data, successMsg, emitData = false) {
       this.formLoading = true
 
       try {
-        await API.patch(`${url}/${id}`, data)
+        // await API.patch(`${url}/${id}`, data)
+        const response = await API.patch(`${url}/${id}`, data)
 
         this.$toast.add({
           severity: 'success',
@@ -69,7 +79,15 @@ export const formMixin = {
           life: this.life,
         })
 
-        this.$emit('updated')
+        // Only emit data if requested
+        if (emitData) {
+          const updatedData = response.data?.data || response.data
+          this.$emit('updated', updatedData)
+        } else {
+          this.$emit('updated')
+        }
+
+        // this.$emit('updated')
         this.closeFormModal()
       } catch (e) {
         this.formErrors = e.response?.data?.errors || {}

@@ -224,9 +224,23 @@ export const sidebarItems = {
                 },
               ],
             },
+
+            // Invoices Subgroup (3rd level)
+            {
+              label: 'common.menu.invoices',
+              icon: 'pi pi-money-bill',
+              items: [
+                {
+                  label: 'common.menu.purchaseInvoices',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/purchases-invoices/${this.company_id}`,
+                },
+              ],
+            },
           ],
         }
 
+        ///////////////////////////////////// BRANCHES /////////////////////////////////////
         //put company items inside its group
         if (companiesGroup) {
           companiesGroup.items.push(companyManagement)

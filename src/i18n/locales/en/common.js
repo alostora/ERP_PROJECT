@@ -144,6 +144,9 @@ export default {
     branchDetails: 'Branch Details',
     branchEmployees: 'Branch Employees',
     warehouses: 'Warehouses',
+    //////
+    invoices: 'الفواتير',
+    purchaseInvoices: 'فواتير المشتريات',
 
     //////
     //////

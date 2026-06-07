@@ -148,6 +148,10 @@ export default {
     warehouses: 'المستودعات',
 
     //////
+    invoices: 'الفواتير',
+    purchaseInvoices: 'فواتير المشتريات',
+
+    //////
     //////
     //////
     //////
@@ -159,7 +163,6 @@ export default {
 
     roles: 'الصلاحيات',
     permissions: 'الأذونات',
-    purchasesInvoices: 'فواتير المشتريات',
     backToList: 'العودة للقائمة',
 
     orders: 'الطلبات',

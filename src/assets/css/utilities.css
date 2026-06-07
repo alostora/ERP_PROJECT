@@ -173,6 +173,21 @@
 .w-full {
   width: 100%;
 }
+.h-48 {
+  height: 192px;
+}
+.h-56 {
+  height: 224px;
+}
+.h-64 {
+  height: 256px;
+}
+.object-cover {
+  object-fit: cover;
+}
+.rounded {
+  border-radius: var(--radius-md);
+}
 .w-auto {
   width: auto;
 }
@@ -397,4 +412,11 @@
 /* Background */
 .bg-hover {
   background: var(--surface-hover);
+}
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  display: block;
 }
