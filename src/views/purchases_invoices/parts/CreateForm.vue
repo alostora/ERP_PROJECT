@@ -13,7 +13,7 @@
       </div>
     </div>
     <div v-else>
-      <div class="row border">
+      <div class="row border mb-5">
         <!-- Products Grid -->
         <div class="col-12 col-lg-8">
           <div class="row">

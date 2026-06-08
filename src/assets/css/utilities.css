@@ -258,6 +258,9 @@
 .text-2xl {
   font-size: var(--font-size-2xl);
 }
+.text-3xl {
+  font-size: var(--font-size-3xl);
+}
 .font-light {
   font-weight: var(--font-light);
 }
@@ -356,31 +359,11 @@
   overflow-x: hidden;
 }
 
-/* Height */
-.h-200 {
-  height: 200px;
-}
-
 /* Margin negative */
 .mt-n-50 {
   margin-top: -50px;
 }
 
-/* Existing utilities... */
-
-/* Margin Top */
-.mt-1 {
-  margin-top: var(--spacing-1);
-}
-.mt-2 {
-  margin-top: var(--spacing-2);
-}
-.mt-3 {
-  margin-top: var(--spacing-3);
-}
-.mt-4 {
-  margin-top: var(--spacing-4);
-}
 /* ... other margin utilities */
 
 /* Divider */
@@ -400,15 +383,6 @@
   margin-top: -50px;
 }
 
-/* Text sizes */
-.text-2xl {
-  font-size: var(--font-size-2xl);
-}
-
-.text-3xl {
-  font-size: var(--font-size-3xl);
-}
-
 /* Background */
 .bg-hover {
   background: var(--surface-hover);
@@ -419,4 +393,11 @@
   white-space: nowrap;
   width: 100%;
   display: block;
+}
+
+.h-40 {
+  height: 160px;
+}
+.gap-2 {
+  gap: var(--spacing-2);
 }
