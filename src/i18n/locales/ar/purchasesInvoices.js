@@ -1,5 +1,3 @@
-import branches from './branches'
-
 export default {
   title: 'فواتير المشتريات',
   id: '#',
@@ -36,6 +34,13 @@ export default {
   warehouse: 'المخزن / المستودع',
   warehouses: 'المخازن / المستودعات',
   select_warehouse: 'اختر مخزن / مستودع',
+  /////////////////////////////
+  quantity: 'الكمية',
+  unit_price: 'السعر',
+  measurement_unit: 'وحدة القياس',
+  total_price: 'اجمالي السعر',
+  subtotal: 'المجموع الفرعي',
+
   /////////////////////////////
   stage: 'المرحلة',
   employee: 'الموظف',

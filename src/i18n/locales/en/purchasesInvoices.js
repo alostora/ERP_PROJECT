@@ -30,16 +30,21 @@ export default {
   select_contact: 'Select Supplier',
   /////////////////////////////
   payment_type: 'Payment Type',
-  payment_types: 'Payment Type',
+  payment_types: 'Payment Types',
   select_payment_type: 'Select Payment Type',
   /////////////////////////////
   warehouse: 'Warehouse / Store',
   warehouses: 'Warehouses / Stores',
   select_warehouse: 'Select Warehouse / Store',
   /////////////////////////////
+  quantity: 'Quantity',
+  unit_price: 'Unit Price',
+  measurement_unit: 'Measurement Unit',
+  total_price: 'Total Price',
+  subtotal: 'Subtotal',
+  /////////////////////////////
   stage: 'Stage',
   employee: 'Employee',
-  warehouse: 'Warehouse / Store',
   invoice_payment_status: 'Payment Status',
   payments: 'Payments',
   paid_amount: 'Paid Amount',
@@ -49,5 +54,7 @@ export default {
   createdAt: 'Created At',
   validation: {
     companyIdRequired: 'Company is required',
+    branchIdRequired: 'Branch is required',
+    warehouseIdRequired: 'Warehouse / Store is required',
   },
 }

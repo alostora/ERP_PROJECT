@@ -23,6 +23,9 @@ export const customFunctions = {
 
       paymentTypeUrl: API_ROUTES.LOOKUP.PAYMENT_TYPE,
       paymentTypes: [],
+
+      measurementUnitUrl: API_ROUTES.MEASUREMENT_UNIT.SEARCH,
+      measurementUnits: [],
     }
   },
 
@@ -95,6 +98,18 @@ export const customFunctions = {
         this.paymentTypes = response.data.data || []
       } catch (error) {
         console.error('Error loading payment types:', error)
+        this.formLoading = false
+      }
+      this.formLoading = false
+    },
+
+    async loadMeasurementUnits(companyId) {
+      try {
+        this.formLoading = true
+        const response = await API.get(`${this.measurementUnitUrl}/${companyId}`)
+        this.measurementUnits = response.data.data || []
+      } catch (error) {
+        console.error('Error loading measurement units:', error)
         this.formLoading = false
       }
       this.formLoading = false

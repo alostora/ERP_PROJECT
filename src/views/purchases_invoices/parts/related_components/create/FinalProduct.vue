@@ -1,5 +1,5 @@
 <template>
-  <div class="card col-12 col-lg-9">
+  <div class="card col-12 col-lg-8">
     <div v-if="formLoading" class="flex-center py-6">
       <div class="card flex justify-center">
         <ProgressSpinner />
@@ -18,13 +18,6 @@
                 :alt="product.name"
                 class="w-full h-48 object-cover rounded"
               />
-
-              <Tag
-                :value="product.total_company_stock_quantity ? 'In Stock' : 'Out Of Stock'"
-                :severity="product.total_company_stock_quantity ? 'success' : 'danger-1'"
-                class="absolute"
-                style="left: 5px; top: 5px"
-              />
             </div>
           </div>
 
@@ -33,7 +26,7 @@
             style="max-width: 100%"
             :title="product.name"
           >
-            {{ product.name + product.name }}
+            {{ product.name }}
           </div>
 
           <div class="flex justify-between items-center">
@@ -43,7 +36,11 @@
               </div>
               <div class="col-auto">
                 <Button icon="pi pi-heart" severity="secondary" variant="outlined" />
-                <Button icon="pi pi-shopping-cart" class="ml-2 mr-2" />
+                <Button
+                  icon="pi pi-shopping-cart"
+                  class="ml-2 mr-2"
+                  @click="emitAppendProductToCart(product)"
+                />
               </div>
             </div>
           </div>
@@ -65,6 +62,8 @@ export default {
   name: 'FinalProduct',
 
   mixins: [customFunctions, formMixin],
+
+  emits: ['appendProductToCart'],
 
   components: {
     Tag,
@@ -102,7 +101,15 @@ export default {
   },
 
   data() {
-    return {}
+    return {
+      final_product_details: {
+        final_product_id: '',
+        name: '',
+        grand_total_price: 0,
+        quantity: 0,
+      },
+      final_products: [],
+    }
   },
 
   computed: {
@@ -115,6 +122,29 @@ export default {
     this.loadFinalProducts(this.company_id)
   },
 
-  methods: {},
+  methods: {
+    emitAppendProductToCart(product) {
+      this.final_product_details = {
+        final_product_id: product.id,
+        name: product.name,
+        unit_price: product.grand_total_price,
+        quantity: 1,
+        measurement_unit_id: product.purchases_measurement_unit?.id,
+      }
+
+      // Check if product already exists
+      const existingProduct = this.final_products.find(
+        (p) => p.final_product_id === this.final_product_details.final_product_id
+      )
+
+      if (existingProduct) {
+        existingProduct.quantity += 1
+      } else {
+        this.final_products.push(this.final_product_details)
+      }
+
+      this.$emit('appendProductToCart', this.final_products)
+    },
+  },
 }
 </script>

@@ -20,6 +20,11 @@
   color: white;
 }
 
+.btn-success {
+  background: var(--color-success);
+  color: white;
+}
+
 .btn-danger {
   background: var(--color-danger);
   color: white;
@@ -27,6 +32,10 @@
 
 .btn-primary:hover {
   background: var(--color-primary-hover);
+}
+
+.btn-success:hover {
+  background: var(--color-success-hover);
 }
 
 .btn-outline {

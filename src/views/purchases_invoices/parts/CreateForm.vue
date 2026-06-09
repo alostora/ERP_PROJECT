@@ -13,16 +13,22 @@
         <div class="p-5">
           <div class="row">
             <!-- Products Grid -->
-            <FinalProduct :company_id="company_id" :branches="branches" />
+            <FinalProduct
+              :company_id="company_id"
+              :branches="branches"
+              @appendProductToCart="appendProductToCart"
+            />
             <!-- End Products Grid -->
 
             <!-- Cart Form -->
             <CartForm
               :company_id="company_id"
               :branches="branches"
+              :final_products="final_products"
               :errors="errors"
               @handelFormData="handelFormData"
               @submit="handleSubmit"
+              @deleteFinalProducts="deleteFinalProducts"
             />
             <!-- End Cart Form -->
           </div>
@@ -31,9 +37,6 @@
       <div class="flex justify-end gap-2 mt-4">
         <button type="button" class="btn btn-outline" @click="closeFormModal">
           {{ $t('common.cancel') }}
-        </button>
-        <button type="submit" class="btn btn-primary ml-2 mr-2" :disabled="formLoading">
-          {{ formLoading ? $t('common.loading') : $t('common.create') }}
         </button>
       </div>
     </Dialog>
@@ -105,9 +108,11 @@ export default {
   data() {
     return {
       apiUrl: API_ROUTES.PURCHASES_INVOICE.BASE,
+      final_products: [],
       formData: {
         company_id: this.company_id,
         branch_id: this.branch_id,
+        final_products: [],
       },
     }
   },
@@ -135,10 +140,25 @@ export default {
         contact_id: cartFormData.contact_id,
         payment_type_id: cartFormData.payment_type_id,
         name: cartFormData.name,
+        final_products: this.final_products,
       }
     },
 
+    appendProductToCart(finalProducts) {
+      this.final_products = finalProducts
+    },
+
+    deleteFinalProducts(product) {
+      product.quantity = 0
+
+      this.final_products = this.final_products.filter(
+        (p) => p.final_product_id !== product.final_product_id
+      )
+    },
+
     async handleSubmit() {
+      // console.log(this.formData)
+      // return
       if (!this.validateCreateForm(this.formData)) {
         return
       }

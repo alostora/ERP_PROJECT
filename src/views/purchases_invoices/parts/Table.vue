@@ -58,6 +58,14 @@
 
         <Column field="name" :header="$t('purchasesInvoices.name')" sortable />
 
+        <Column :header="$t('purchasesInvoices.stage')">
+          <template #body="{ data }">
+            <div class="badge badge-success">
+              {{ currentLanguage == 'ar' ? data.stage?.name_ar : data.stage?.name }}
+            </div>
+          </template>
+        </Column>
+
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
             <div class="actions-cell">
@@ -143,6 +151,11 @@ export default {
       filters: { query_string: '' },
       selectedItem: {},
     }
+  },
+  computed: {
+    currentLanguage() {
+      return localStorage.getItem('language') || 'en'
+    },
   },
 
   mounted() {
