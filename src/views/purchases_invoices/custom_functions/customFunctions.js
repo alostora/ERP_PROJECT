@@ -53,10 +53,13 @@ export const customFunctions = {
     },
 
     onBranchChange() {
+      const branchId = this.formData?.branch_id || this.localFormData?.branch_id
+      const companyId = this.formData?.company_id || this.localFormData?.company_id
+
       this.warehouses = []
 
-      if (this.formData.branch_id) {
-        this.loadWarehouses(this.formData.company_id, this.formData.branch_id)
+      if (branchId) {
+        this.loadWarehouses(companyId, branchId)
       }
     },
 

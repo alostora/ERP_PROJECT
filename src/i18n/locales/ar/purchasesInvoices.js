@@ -50,5 +50,7 @@ export default {
   createdAt: 'تاريخ الإنشاء',
   validation: {
     companyIdRequired: 'الشركة مطلوبة',
+    branchIdRequired: 'الفرع مطلوب',
+    warehouseIdRequired: 'المخزن / المستودع مطلوب',
   },
 }

@@ -9,15 +9,15 @@ export default {
       this.errors = {}
 
       if (!form.company_id?.trim()) {
-        this.errors.company_id = this.$t('categories.validation.companyIdRequired')
+        this.errors.company_id = this.$t('purchasesInvoices.validation.companyIdRequired')
       }
 
-      if (!form.name?.trim()) {
-        this.errors.name = this.$t('categories.validation.nameRequired')
+      if (!form.branch_id?.trim()) {
+        this.errors.branch_id = this.$t('purchasesInvoices.validation.branchIdRequired')
       }
 
-      if (!form.name_ar?.trim()) {
-        this.errors.name_ar = this.$t('categories.validation.nameArRequired')
+      if (!form.warehouse_id?.trim()) {
+        this.errors.warehouse_id = this.$t('purchasesInvoices.validation.warehouseIdRequired')
       }
 
       return Object.keys(this.errors).length === 0
@@ -25,14 +25,6 @@ export default {
 
     validateUpdateForm(form) {
       this.errors = {}
-
-      if (!form.name?.trim()) {
-        this.errors.name = this.$t('categories.validation.nameRequired')
-      }
-
-      if (!form.name_ar?.trim()) {
-        this.errors.name_ar = this.$t('categories.validation.nameArRequired')
-      }
 
       return Object.keys(this.errors).length === 0
     },
