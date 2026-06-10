@@ -6,6 +6,7 @@ export default {
   delete: 'Delete',
   save: 'Save',
   cancel: 'Cancel',
+  cancelled: 'Cancelled',
   search: 'Search',
   clear: 'Clear',
   filter: 'Filter',

@@ -1,5 +1,5 @@
 <template>
-  <div class="card col-12 col-lg-8">
+  <div class="card col-12 col-lg-7">
     <div v-if="formLoading" class="flex-center py-6">
       <div class="card flex justify-center">
         <ProgressSpinner />

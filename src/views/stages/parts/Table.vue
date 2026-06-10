@@ -32,8 +32,8 @@
               optionValue="id"
               :placeholder="$t('common.all') + ' ' + $t('stages.type')"
               :filter="true"
-              :showClear="true"
               :filterPlaceholder="$t('common.search')"
+              :showClear="true"
               class="w-full"
               @change="fetchData"
             />

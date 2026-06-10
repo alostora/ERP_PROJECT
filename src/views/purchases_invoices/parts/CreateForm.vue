@@ -141,6 +141,8 @@ export default {
         payment_type_id: cartFormData.payment_type_id,
         name: cartFormData.name,
         final_products: this.final_products,
+        additional_costs: cartFormData.additional_costs,
+        additional_discounts: cartFormData.additional_discounts,
       }
     },
 
@@ -157,8 +159,8 @@ export default {
     },
 
     async handleSubmit() {
-      // console.log(this.formData)
-      // return
+      console.log(this.formData)
+      return
       if (!this.validateCreateForm(this.formData)) {
         return
       }

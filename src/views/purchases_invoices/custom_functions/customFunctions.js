@@ -114,6 +114,32 @@ export const customFunctions = {
       }
       this.formLoading = false
     },
+
+    addAdditionalCostRow() {
+      if (this.localFormData.additional_costs.length < 10) {
+        this.localFormData.additional_costs.push({
+          name: '',
+          value: '',
+        })
+      }
+    },
+
+    deleteAdditionalCostRow(index) {
+      this.localFormData.additional_costs.splice(index, 1)
+    },
+
+    addAdditionalDiscountRow() {
+      if (this.localFormData.additional_discounts.length < 10) {
+        this.localFormData.additional_discounts.push({
+          name: '',
+          value: '',
+        })
+      }
+    },
+
+    deleteAdditionalDiscountRow(index) {
+      this.localFormData.additional_discounts.splice(index, 1)
+    },
   },
 }
 

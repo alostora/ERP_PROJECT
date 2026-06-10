@@ -8,6 +8,7 @@ export default {
   delete: 'حذف',
   save: 'حفظ',
   cancel: 'إلغاء',
+  cancelled: 'ملغي',
   search: 'بحث',
   clear: 'مسح',
   filter: 'فلتر',
