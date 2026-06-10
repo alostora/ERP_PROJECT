@@ -1,17 +1,86 @@
 .dark-mode {
+  /* Primary - Vibrant Blue */
   --color-primary: #60a5fa;
   --color-primary-hover: #3b82f6;
-  --color-primary-light: #1e293b;
+  --color-primary-light: #1e3a5f;
+
+  /* Success - Emerald Green */
   --color-success: #34d399;
-  --color-success-hover: #0bae2c;
-  --color-success-light: #1e3b2c;
-  --color-danger: #f87171;
+  --color-success-hover: #10b981;
+  --color-success-light: #064e3b;
+
+  /* Warning - Amber */
   --color-warning: #fbbf24;
+  --color-warning-hover: #f59e0b;
+  --color-warning-light: #78350f;
+
+  /* Danger - Red */
+  --color-danger: #f87171;
+  --color-danger-hover: #ef4444;
+  --color-danger-light: #7f1d1d;
+
+  /* Info - Cyan */
   --color-info: #22d3ee;
+  --color-info-hover: #06b6d4;
+  --color-info-light: #164e63;
+
+  /* Surfaces */
   --surface-card: #1e293b;
   --surface-ground: #0f172a;
   --surface-hover: #334155;
-  --border-color: #334155;
+  --surface-border: #334155;
+
+  /* Text */
   --text-color: #f1f5f9;
   --text-color-secondary: #94a3b8;
+
+  /* Border */
+  --border-color: #334155;
+}
+
+/* Dark mode specific background overrides */
+.dark-mode .bg-primary-50 {
+  background-color: #1e3a5f;
+}
+.dark-mode .bg-primary-100 {
+  background-color: #1e4a6f;
+}
+.dark-mode .bg-primary-200 {
+  background-color: #1e5a7f;
+}
+
+.dark-mode .bg-success-50 {
+  background-color: #064e3b;
+}
+.dark-mode .bg-warning-50 {
+  background-color: #78350f;
+}
+.dark-mode .bg-surface-50 {
+  background-color: #1e293b;
+}
+.dark-mode .bg-surface-100 {
+  background-color: #334155;
+}
+.dark-mode .bg-surface-200 {
+  background-color: #475569;
+}
+
+/* Border colors for dark mode */
+.dark-mode .border-primary-100 {
+  border-color: #1e4a6f;
+}
+.dark-mode .border-primary-200 {
+  border-color: #1e5a7f;
+}
+.dark-mode .border-success-200 {
+  border-color: #065f46;
+}
+.dark-mode .border-warning-200 {
+  border-color: #78350f;
+}
+
+/* Card background in dark mode */
+.dark-mode .card {
+  background: var(--surface-card);
+  border-color: var(--border-color);
 }

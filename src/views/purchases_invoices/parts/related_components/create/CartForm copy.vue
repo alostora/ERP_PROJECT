@@ -10,10 +10,8 @@
       <div class="row">
         <div class="col-12">
           <div class="form-group">
-            <label class="form-label text-primary font-semibold">{{
-              $t('purchasesInvoices.base_info')
-            }}</label>
-            <div class="card border-primary-100">
+            <label class="form-label">{{ $t('purchasesInvoices.base_info') }}</label>
+            <div class="card">
               <!-- Row 1: Name -->
               <div class="row">
                 <div class="col-6">
@@ -24,7 +22,6 @@
                           id="invoice_name"
                           v-model="localFormData.name"
                           autocomplete="off"
-                          class="w-full"
                         />
                         <label for="invoice_name">{{ $t('purchasesInvoices.name') }}</label>
                       </FloatLabel>
@@ -33,6 +30,7 @@
                   <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
                 </div>
               </div>
+              <!-- Row 1: Name -->
 
               <!-- Row 2: Warehouse & Branch -->
               <div class="row">
@@ -51,7 +49,7 @@
                       class="w-full"
                       @change="onBranchChange"
                     />
-                    <small v-if="errors.branch_id" class="error-message text-danger"
+                    <small v-if="errors.branch_id" class="error-message"
                       >{{ errors.branch_id }}
                     </small>
                   </div>
@@ -70,12 +68,13 @@
                       :filterPlaceholder="$t('common.search')"
                       class="w-full"
                     />
-                    <small v-if="errors.warehouse_id" class="error-message text-danger">
+                    <small v-if="errors.warehouse_id" class="error-message">
                       {{ errors.warehouse_id }}</small
                     >
                   </div>
                 </div>
               </div>
+              <!-- Row 2: Warehouse & Branch -->
 
               <!-- Row 3: Contact & Payment Type-->
               <div class="row">
@@ -100,23 +99,23 @@
                       </template>
 
                       <template #footer>
-                        <div class="p-2 border-t border-primary-100">
+                        <div class="p-2 border-t">
                           <button
                             type="button"
                             class="btn btn-sm btn-outline w-full"
                             @click="openAddContactModal"
                           >
-                            <i class="pi pi-plus text-success"></i>
+                            <i class="pi pi-plus"></i>
                             {{ $t('common.addNew') }}
                           </button>
                           <button
                             v-if="localFormData.contact_id"
                             type="button"
-                            class="btn btn-sm btn-outline w-full mt-1"
+                            class="btn btn-sm btn-outline w-full"
                             @click="openUpdateContactModal"
                             :disabled="!localFormData.contact_id"
                           >
-                            <i class="pi pi-pencil text-primary"></i>
+                            <i class="pi pi-pencil"></i>
                             {{ $t('common.edit') }}
                           </button>
                         </div>
@@ -140,55 +139,57 @@
                       :filterPlaceholder="$t('common.search')"
                       class="w-full"
                     />
-                    <small v-if="errors.payment_type_id" class="error-message text-danger">
+                    <small v-if="errors.payment_type_id" class="error-message">
                       {{ errors.payment_type_id }}</small
                     >
                   </div>
                 </div>
               </div>
+              <!-- Row 3: Contact & Payment Type-->
             </div>
           </div>
         </div>
       </div>
+      <!-- Base Information -->
 
       <!-- Final Products -->
       <div v-if="final_products.length" class="row">
         <div class="col-12">
           <div class="form-group">
-            <label class="form-label text-primary font-semibold">{{
-              $t('purchasesInvoices.final_products')
-            }}</label>
+            <label class="form-label">{{ $t('purchasesInvoices.final_products') }}</label>
             <ScrollPanel
               style="width: 100%; height: 700px"
               :dt="{
                 bar: {
-                  background: 'var(--color-primary)',
-                  size: '4px',
+                  background: 'var(--color-warning)',
+                  size: '3px',
                 },
               }"
             >
               <div
                 v-for="(product, index) in final_products"
                 :key="product.final_product_id"
-                class="card mb-2"
-                :class="index % 2 === 0 ? 'bg-surface-50' : 'bg-surface-100'"
+                class="card"
+                :class="index % 2 === 0 ? 'bg-surface-100' : 'bg-surface-200'"
               >
-                <div class="p-2">
-                  <!-- Remove Button -->
-                  <div class="flex justify-end mb-2">
+                <!-- Row 1: Remove -->
+                <div class="row align-center mb-4 mt-1">
+                  <div class="col-2 text-right">
                     <Button
                       icon="pi pi-times"
                       severity="danger"
-                      text
-                      rounded
+                      aria-label="Cancel"
                       @click="deleteProductRow(product)"
                       :title="$t('common.cancel')"
                       size="small"
                     />
                   </div>
+                </div>
+                <!-- Row 1: Remove -->
 
-                  <!-- Product Name -->
-                  <div class="mb-2">
+                <!-- Row 2: Product Name -->
+                <div class="row">
+                  <div class="col-12">
                     <Fluid>
                       <FloatLabel variant="on">
                         <InputText
@@ -196,334 +197,344 @@
                           v-model="product.name"
                           autocomplete="off"
                           readonly
-                          class="bg-surface"
                         />
                         <label for="product_name">{{ $t('purchasesInvoices.name') }}</label>
                       </FloatLabel>
                     </Fluid>
                   </div>
+                </div>
+                <!-- Row 2: Product Name -->
 
-                  <!-- Quantity, Measurement Unit, Price -->
-                  <div class="row g-2 mb-2">
-                    <div class="col-4">
-                      <Fluid>
-                        <InputGroup>
-                          <InputGroupAddon>
-                            <Button
-                              icon="pi pi-minus"
-                              severity="secondary"
-                              text
-                              @click="decrementQuantity(product)"
-                              :disabled="product.quantity == 1"
-                              size="small"
-                            />
-                          </InputGroupAddon>
-                          <FloatLabel variant="on">
-                            <InputNumber
-                              id="quantity"
-                              v-model="product.quantity"
-                              :min="1"
-                              :showButtons="false"
-                              class="text-center w-full"
-                            />
-                            <label for="quantity">{{ $t('purchasesInvoices.quantity') }}</label>
-                          </FloatLabel>
-                          <InputGroupAddon>
-                            <Button
-                              icon="pi pi-plus"
-                              severity="secondary"
-                              text
-                              @click="incrementQuantity(product)"
-                              size="small"
-                            />
-                          </InputGroupAddon>
-                        </InputGroup>
-                      </Fluid>
-                    </div>
-                    <div class="col-5">
-                      <Select
-                        id="measurement_unit_id"
-                        v-model="product.measurement_unit_id"
-                        :options="measurementUnits"
-                        optionValue="id"
-                        :placeholder="$t('purchasesInvoices.measurement_unit')"
-                        :filterPlaceholder="$t('common.search')"
-                        :filter="true"
-                        class="w-full"
-                      >
-                        <template #option="slotProps">
-                          <div class="flex justify-between">
-                            <span>{{
-                              currentLanguage === 'ar'
-                                ? slotProps.option.name_ar
-                                : slotProps.option.name
-                            }}</span>
-                            <span class="text-secondary text-sm"
-                              >({{ slotProps.option.factor_value }})</span
-                            >
-                          </div>
-                        </template>
-                        <template #value="slotProps">
-                          <span v-if="slotProps.value">
-                            {{ getMeasurementUnitDisplay(slotProps.value) }}
-                          </span>
-                          <span v-else>{{ $t('purchasesInvoices.measurement_unit') }}</span>
-                        </template>
-                      </Select>
-                    </div>
-                    <div class="col-3">
-                      <Fluid>
+                <!-- Row 3: Quantity, Measurement Unit Price -->
+                <div class="row align-center mt-3">
+                  <div class="col-4">
+                    <Fluid>
+                      <InputGroup>
+                        <InputGroupAddon>
+                          <Button
+                            icon="pi pi-minus"
+                            severity="secondary"
+                            text
+                            @click="decrementQuantity(product)"
+                            :disabled="product.quantity == 1"
+                          />
+                        </InputGroupAddon>
                         <FloatLabel variant="on">
                           <InputNumber
-                            id="unit_price"
-                            v-model="product.unit_price"
-                            class="text-center w-full"
-                            :step="0.01"
+                            id="quantity"
+                            v-model="product.quantity"
                             :min="1"
+                            :showButtons="false"
+                            class="text-center"
                           />
-                          <label for="unit_price">{{ $t('purchasesInvoices.unit_price') }}</label>
+                          <label for="quantity">{{ $t('purchasesInvoices.quantity') }}</label>
                         </FloatLabel>
-                      </Fluid>
-                    </div>
+                        <InputGroupAddon>
+                          <Button
+                            icon="pi pi-plus"
+                            severity="secondary"
+                            text
+                            @click="incrementQuantity(product)"
+                          />
+                        </InputGroupAddon>
+                      </InputGroup>
+                    </Fluid>
                   </div>
-
-                  <!-- Total Price -->
-                  <div class="border border-primary-200 rounded p-2 bg-primary-50">
-                    <div class="flex justify-between">
-                      <span class="text-primary font-medium"
-                        >{{ $t('purchasesInvoices.total_price') }}:</span
-                      >
-                      <span class="font-semibold text-primary">{{
-                        formatCurrency(
-                          product.quantity *
-                            product.unit_price *
-                            measurementUnitGroupFactorValue(product.measurement_unit_id)
-                        )
-                      }}</span>
-                    </div>
+                  <div class="col-5">
+                    <Select
+                      id="measurement_unit_id"
+                      v-model="product.measurement_unit_id"
+                      :options="measurementUnits"
+                      optionValue="id"
+                      :placeholder="$t('purchasesInvoices.measurement_unit')"
+                      :filterPlaceholder="$t('common.search')"
+                      :filter="true"
+                      class="w-full"
+                    >
+                      <template #option="slotProps">
+                        <div class="flex justify-between">
+                          <span>{{
+                            currentLanguage === 'ar'
+                              ? slotProps.option.name_ar
+                              : slotProps.option.name
+                          }}</span>
+                          <span class="text-secondary text-sm"
+                            >({{ slotProps.option.factor_value }})</span
+                          >
+                        </div>
+                      </template>
+                      <template #value="slotProps">
+                        <span v-if="slotProps.value">
+                          {{ getMeasurementUnitDisplay(slotProps.value) }}
+                        </span>
+                        <span v-else>{{ $t('purchasesInvoices.measurement_unit') }}</span>
+                      </template>
+                    </Select>
+                  </div>
+                  <div class="col-3">
+                    <Fluid>
+                      <FloatLabel variant="on">
+                        <InputNumber
+                          id="unit_price"
+                          v-model="product.unit_price"
+                          class="text-center w-full"
+                          :step="0.01"
+                          :min="1"
+                        />
+                        <label for="unit_price">{{ $t('purchasesInvoices.unit_price') }}</label>
+                      </FloatLabel>
+                    </Fluid>
                   </div>
                 </div>
+                <!-- Row 3: Quantity, Measurement Unit Price -->
+
+                <!-- Row 4: Total Price -->
+                <div class="border border-info rounded p-2 mt-2">
+                  <div class="flex justify-between mb-2">
+                    <span class="">{{ $t('purchasesInvoices.total_price') }}:</span>
+                    <span class="font-semibold">{{
+                      product.quantity *
+                      product.unit_price *
+                      measurementUnitGroupFactorValue(product.measurement_unit_id)
+                    }}</span>
+                  </div>
+                </div>
+                <!-- Row 4: Total Price -->
               </div>
             </ScrollPanel>
           </div>
         </div>
       </div>
+      <!-- Final Products -->
 
       <!-- Additional Costs -->
-      <div v-if="final_products.length" class="row mt-2">
+      <div v-if="final_products.length" class="row">
         <div class="col-12">
           <div class="form-group">
-            <label class="form-label text-warning font-semibold">{{
-              $t('purchasesInvoices.additional_costs')
-            }}</label>
-            <div class="card border-warning-200">
-              <div class="flex justify-end mb-2">
-                <Button
-                  icon="pi pi-plus"
-                  severity="success"
-                  text
-                  rounded
-                  @click="addAdditionalCostRow"
-                  :title="$t('common.addNew')"
-                  size="small"
-                />
+            <label class="form-label">{{ $t('purchasesInvoices.additional_costs') }}</label>
+            <div class="card">
+              <!-- Row 1: Append New Cost -->
+              <div class="row">
+                <div class="col-2 text-right">
+                  <Button
+                    icon="pi pi-plus"
+                    severity="success"
+                    aria-label="addNew"
+                    @click="addAdditionalCostRow"
+                    :title="$t('common.addNew')"
+                    size="small"
+                    class="mb-2"
+                  />
+                </div>
               </div>
+              <!-- Row 1: Append New Cost -->
 
+              <!-- Row 1: Name & Value & Delete Button -->
               <div
                 v-if="localFormData.additional_costs.length"
                 v-for="(cost, index) in localFormData.additional_costs"
-                class="row g-2 mb-2 align-center"
+                class="row"
               >
                 <div class="col-5">
-                  <Fluid>
-                    <FloatLabel variant="on">
-                      <InputText
-                        :inputId="'additional_cost_name_' + index"
-                        v-model="cost.name"
-                        autocomplete="off"
-                      />
-                      <label :for="'additional_cost_name_' + index">{{
-                        $t('purchasesInvoices.name')
-                      }}</label>
-                    </FloatLabel>
-                  </Fluid>
+                  <div class="form-group">
+                    <Fluid>
+                      <FloatLabel variant="on">
+                        <InputText
+                          :inputId="'additional_cost_name_' + index"
+                          v-model="cost.name"
+                          autocomplete="off"
+                        />
+                        <label :for="'additional_cost_name_' + index"
+                          >{{ $t('purchasesInvoices.name') }}
+                        </label>
+                      </FloatLabel>
+                    </Fluid>
+                  </div>
                 </div>
                 <div class="col-5">
-                  <Fluid>
-                    <FloatLabel variant="on">
-                      <InputNumber
-                        id="additional_cost_value"
-                        v-model="cost.value"
-                        autocomplete="off"
-                      />
-                      <label for="additional_cost_value">{{ $t('purchasesInvoices.value') }}</label>
-                    </FloatLabel>
-                  </Fluid>
+                  <div class="form-group">
+                    <Fluid>
+                      <FloatLabel variant="on">
+                        <InputNumber
+                          id="additional_cost_value"
+                          v-model="cost.value"
+                          autocomplete="off"
+                        />
+                        <label for="additional_cost_value"
+                          >{{ $t('purchasesInvoices.value') }}
+                        </label>
+                      </FloatLabel>
+                    </Fluid>
+                  </div>
                 </div>
                 <div class="col-2 text-right">
-                  <Button
-                    icon="pi pi-times"
-                    severity="danger"
-                    text
-                    rounded
-                    @click="deleteAdditionalCostRow(index)"
-                    size="small"
-                  />
+                  <div class="form-group">
+                    <Button
+                      icon="pi pi-times"
+                      severity="danger"
+                      aria-label="Cancel"
+                      @click="deleteAdditionalCostRow(index)"
+                      :title="$t('common.cancel')"
+                      size="small"
+                    />
+                  </div>
                 </div>
               </div>
+              <!-- Row 1: Name -->
 
-              <div class="border border-warning-200 rounded p-2 bg-warning-50">
-                <div class="flex justify-between">
-                  <span class="text-warning font-medium"
-                    >{{ $t('purchasesInvoices.total_additional_costs') }}:</span
-                  >
-                  <span class="font-semibold text-warning">{{
-                    formatCurrency(calculateAdditionalCosts())
-                  }}</span>
-                </div>
+              <div class="border rounded p-2">
+                <span class="">{{ $t('purchasesInvoices.total_additional_costs') }}:</span>
+                <span class="">{{ formatCurrency(calculateAdditionalCosts()) }}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- Additional Costs -->
 
       <!-- Additional Discounts -->
-      <div v-if="final_products.length" class="row mt-2">
+      <div v-if="final_products.length" class="row">
         <div class="col-12">
           <div class="form-group">
-            <label class="form-label text-success font-semibold">{{
-              $t('purchasesInvoices.additional_discounts')
-            }}</label>
-            <div class="card border-success-200">
-              <div class="flex justify-end mb-2">
-                <Button
-                  icon="pi pi-plus"
-                  severity="success"
-                  text
-                  rounded
-                  @click="addAdditionalDiscountRow"
-                  :title="$t('common.addNew')"
-                  size="small"
-                />
-              </div>
+            <label class="form-label">{{ $t('purchasesInvoices.additional_discounts') }}</label>
+            <div class="border rounded overflow-hidden">
+              <div class="p-2 border-bottom">
+                <!-- Row 1: Append New Discount -->
+                <div class="row">
+                  <div class="col-2 text-right">
+                    <Button
+                      icon="pi pi-plus"
+                      severity="success"
+                      aria-label="addNew"
+                      @click="addAdditionalDiscountRow"
+                      :title="$t('common.addNew')"
+                      size="small"
+                      class="mb-2"
+                    />
+                  </div>
+                </div>
+                <!-- Row 1: Append New Cost -->
 
-              <div
-                v-if="localFormData.additional_discounts.length"
-                v-for="(discount, index) in localFormData.additional_discounts"
-                class="row g-2 mb-2 align-center"
-              >
-                <div class="col-5">
-                  <Fluid>
-                    <FloatLabel variant="on">
-                      <InputText
-                        :inputId="'additional_discount_name_' + index"
-                        v-model="discount.name"
-                        autocomplete="off"
+                <!-- Row 1: Name & Value & Delete Button -->
+                <div
+                  v-if="localFormData.additional_discounts.length"
+                  v-for="(discount, index) in localFormData.additional_discounts"
+                  class="row"
+                >
+                  <div class="col-5">
+                    <div class="form-group">
+                      <Fluid>
+                        <FloatLabel variant="on">
+                          <InputText
+                            :inputId="'additional_discount_name_' + index"
+                            v-model="discount.name"
+                            autocomplete="off"
+                          />
+                          <label :for="'additional_discount_name_' + index"
+                            >{{ $t('purchasesInvoices.name') }}
+                          </label>
+                        </FloatLabel>
+                      </Fluid>
+                    </div>
+                  </div>
+                  <div class="col-5">
+                    <div class="form-group">
+                      <Fluid>
+                        <FloatLabel variant="on">
+                          <InputNumber
+                            id="additional_cost_value"
+                            v-model="discount.value"
+                            autocomplete="off"
+                          />
+                          <label for="additional_cost_value"
+                            >{{ $t('purchasesInvoices.value') }}
+                          </label>
+                        </FloatLabel>
+                      </Fluid>
+                    </div>
+                  </div>
+                  <div class="col-2 text-right">
+                    <div class="form-group">
+                      <Button
+                        icon="pi pi-times"
+                        severity="danger"
+                        aria-label="Cancel"
+                        @click="deleteAdditionalDiscountRow(index)"
+                        :title="$t('common.cancel')"
+                        size="small"
                       />
-                      <label :for="'additional_discount_name_' + index">{{
-                        $t('purchasesInvoices.name')
-                      }}</label>
-                    </FloatLabel>
-                  </Fluid>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-5">
-                  <Fluid>
-                    <FloatLabel variant="on">
-                      <InputNumber
-                        id="additional_cost_value"
-                        v-model="discount.value"
-                        autocomplete="off"
-                      />
-                      <label for="additional_cost_value">{{ $t('purchasesInvoices.value') }}</label>
-                    </FloatLabel>
-                  </Fluid>
-                </div>
-                <div class="col-2 text-right">
-                  <Button
-                    icon="pi pi-times"
-                    severity="danger"
-                    text
-                    rounded
-                    @click="deleteAdditionalDiscountRow(index)"
-                    size="small"
-                  />
-                </div>
-              </div>
+                <!-- Row 1: Name -->
 
-              <div class="border border-success-200 rounded p-2 bg-success-50">
-                <div class="flex justify-between">
-                  <span class="text-success font-medium"
-                    >{{ $t('purchasesInvoices.total_additional_discounts') }}:</span
-                  >
-                  <span class="font-semibold text-success">{{
-                    formatCurrency(calculateAdditionalDiscounts())
-                  }}</span>
+                <div class="border rounded p-2">
+                  <div class="flex justify-between mb-2">
+                    <span class="">{{ $t('purchasesInvoices.total_additional_discounts') }}:</span>
+                    <span class="">{{ formatCurrency(calculateAdditionalDiscounts()) }}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- Additional Discounts -->
 
       <!-- Total Summary -->
-      <div v-if="final_products.length" class="row mt-2">
+      <div v-if="final_products.length" class="row">
         <div class="col-12">
           <div class="form-group">
-            <label class="form-label text-primary font-bold">{{
-              $t('purchasesInvoices.total_summary')
-            }}</label>
-            <div class="card bg-primary-50 border-primary-200">
+            <label class="form-label">{{ $t('purchasesInvoices.total_summary') }}</label>
+            <div class="border rounded p-3">
               <div class="flex justify-between mb-2">
-                <span class="text-secondary">{{ $t('purchasesInvoices.subtotal') }}:</span>
-                <span class="font-medium">{{ formatCurrency(calculateSubtotal()) }}</span>
+                <span class="">{{ $t('purchasesInvoices.subtotal') }}&nbsp;:&nbsp;</span>
+                <span class="">{{ formatCurrency(calculateSubtotal()) }}</span>
               </div>
 
               <div class="flex justify-between mb-2">
-                <span class="text-secondary"
-                  >{{ $t('purchasesInvoices.total_additional_costs') }}:</span
+                <span class="text-sm"
+                  >{{ $t('purchasesInvoices.total_additional_costs') }}&nbsp;:&nbsp;</span
                 >
-                <span class="font-medium text-warning">{{
-                  formatCurrency(calculateAdditionalCosts())
-                }}</span>
+                <span class="text-sm">{{ formatCurrency(this.calculateAdditionalCosts()) }}</span>
               </div>
-
               <div class="flex justify-between mb-2">
-                <span class="text-secondary"
-                  >{{ $t('purchasesInvoices.total_additional_discounts') }}:</span
-                >
-                <span class="font-medium text-success">{{
-                  formatCurrency(calculateAdditionalDiscounts())
+                <span class="text-sm">
+                  {{ $t('purchasesInvoices.total_additional_discounts') }} &nbsp;:&nbsp;
+                </span>
+                <span class="text-sm">{{
+                  formatCurrency(this.calculateAdditionalDiscounts())
                 }}</span>
               </div>
-
-              <div class="flex justify-between pt-2 border-t border-primary-200">
-                <span class="font-bold text-primary"
-                  >{{ $t('purchasesInvoices.grand_total') }}:</span
-                >
-                <span class="font-bold text-primary text-xl">{{
-                  formatCurrency(calculateGrandTotal())
-                }}</span>
+              <div class="flex justify-between pt-2 border-t">
+                <span class="font-bold"
+                  >{{ $t('purchasesInvoices.grand_total') }} &nbsp;:&nbsp;
+                </span>
+                <span class="font-bold text-primary">
+                  {{ formatCurrency(calculateGrandTotal()) }}
+                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- Total Summary -->
 
       <div class="flex justify-end gap-2 mt-4">
-        <button type="submit" class="btn btn-primary" :disabled="formLoading">
-          <i class="pi pi-check mr-1"></i>
+        <button type="submit" class="btn btn-success ml-2 mr-2" :disabled="formLoading">
           {{ formLoading ? $t('common.loading') : $t('common.create') }}
         </button>
       </div>
     </form>
 
-    <!-- Contact Create Modal -->
+    <!-- Contact Create Modal  -->
     <CreateContactForm ref="contactModal" :company_id="company_id" @created="onContactCreated" />
     <UpdateForm
       ref="updateContactModal"
       :selected_item="selectedContact"
       @updated="onContactUpdated"
     />
+    <!-- Contact Create Modal -->
   </div>
 </template>
 

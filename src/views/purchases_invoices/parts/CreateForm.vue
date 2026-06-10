@@ -1,46 +1,42 @@
 <template>
-  <div class="page">
-    <Dialog
-      v-model:visible="formVisible"
-      :header="$t('common.createTitle', { module: $t('purchasesInvoices.title') })"
-      modal
-      maximizable
-      class="card"
-      :style="{ width: '80vw', minWidth: '800px' }"
-      @hide="closeFormModal"
-    >
-      <div class="card">
-        <div class="p-5">
-          <div class="row">
-            <!-- Products Grid -->
-            <FinalProduct
-              :company_id="company_id"
-              :branches="branches"
-              @appendProductToCart="appendProductToCart"
-            />
-            <!-- End Products Grid -->
+  <Dialog
+    v-model:visible="formVisible"
+    :header="$t('common.createTitle', { module: $t('purchasesInvoices.title') })"
+    modal
+    maximizable
+    :style="{ width: '80vw', minWidth: '800px' }"
+    @hide="closeFormModal"
+  >
+    <div class="card">
+      <div class="row">
+        <!-- Products Grid -->
+        <FinalProduct
+          :company_id="company_id"
+          :branches="branches"
+          :final_products="final_products"
+          @appendProductToCart="appendProductToCart"
+        />
+        <!-- End Products Grid -->
 
-            <!-- Cart Form -->
-            <CartForm
-              :company_id="company_id"
-              :branches="branches"
-              :final_products="final_products"
-              :errors="errors"
-              @handelFormData="handelFormData"
-              @submit="handleSubmit"
-              @deleteFinalProducts="deleteFinalProducts"
-            />
-            <!-- End Cart Form -->
-          </div>
-        </div>
+        <!-- Cart Form -->
+        <CartForm
+          :company_id="company_id"
+          :branches="branches"
+          :final_products="final_products"
+          :errors="errors"
+          @handelFormData="handelFormData"
+          @submit="handleSubmit"
+          @deleteFinalProducts="deleteFinalProducts"
+        />
+        <!-- End Cart Form -->
       </div>
-      <div class="flex justify-end gap-2 mt-4">
-        <button type="button" class="btn btn-outline" @click="closeFormModal">
-          {{ $t('common.cancel') }}
-        </button>
-      </div>
-    </Dialog>
-  </div>
+    </div>
+    <div class="flex justify-end gap-2 mt-4">
+      <button type="button" class="btn btn-outline" @click="closeFormModal">
+        {{ $t('common.cancel') }}
+      </button>
+    </div>
+  </Dialog>
 </template>
 
 <script>
@@ -151,8 +147,6 @@ export default {
     },
 
     deleteFinalProducts(product) {
-      product.quantity = 0
-
       this.final_products = this.final_products.filter(
         (p) => p.final_product_id !== product.final_product_id
       )

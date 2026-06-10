@@ -16,6 +16,7 @@
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.25rem;
   --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
 
   --font-light: 300;
   --font-normal: 400;
@@ -40,4 +41,29 @@
   --header-height: 64px;
   --sidebar-width: 280px;
   --sidebar-collapsed-width: 72px;
+
+  /* PrimeVue Surface Variables - Light Mode Default */
+  --surface-card: #ffffff;
+  --surface-ground: #f8fafc;
+  --surface-hover: #f1f5f9;
+  --surface-border: #e2e8f0;
+
+  /* PrimeVue Color Variables */
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-success: #10b981;
+  --color-success-hover: #059669;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #06b6d4;
+  --color-secondary: #64748b;
+
+  /* Border */
+  --border-color: #e2e8f0;
+
+  /* Text Colors */
+  --text-color: #0f172a;
+  --text-color-secondary: #64748b;
+
+  --line-normal: 1.5;
 }

@@ -2,16 +2,22 @@
   --color-primary: #3b82f6;
   --color-primary-hover: #2563eb;
   --color-primary-light: #eff6ff;
+
   --color-success: #10b981;
   --color-success-hover: #25eb8f;
   --color-success-light: #f2ffef;
+
   --color-danger: #ef4444;
   --color-warning: #f59e0b;
   --color-info: #06b6d4;
+
   --surface-card: #ffffff;
   --surface-ground: #f8fafc;
   --surface-hover: #f1f5f9;
+  --surface-border: #e2e8f0; /* ← Add this */
+
   --border-color: #e2e8f0;
+
   --text-color: #0f172a;
   --text-color-secondary: #64748b;
 }

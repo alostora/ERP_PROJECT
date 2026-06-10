@@ -87,6 +87,14 @@ export default {
       },
       immediate: true,
     },
+    final_products: {
+      handler(newVal) {
+        if (newVal) {
+          this.cart_final_products = newVal
+        }
+      },
+      immediate: true,
+    },
   },
 
   props: {
@@ -98,6 +106,7 @@ export default {
       type: String,
       required: false,
     },
+    final_products: { type: Array, default: () => [] },
   },
 
   data() {
@@ -108,7 +117,7 @@ export default {
         grand_total_price: 0,
         quantity: 0,
       },
-      final_products: [],
+      cart_final_products: [],
     }
   },
 
@@ -133,17 +142,17 @@ export default {
       }
 
       // Check if product already exists
-      const existingProduct = this.final_products.find(
+      const existingProduct = this.cart_final_products.find(
         (p) => p.final_product_id === this.final_product_details.final_product_id
       )
 
       if (existingProduct) {
         existingProduct.quantity += 1
       } else {
-        this.final_products.push(this.final_product_details)
+        this.cart_final_products.push(this.final_product_details)
       }
 
-      this.$emit('appendProductToCart', this.final_products)
+      this.$emit('appendProductToCart', this.cart_final_products)
     },
   },
 }
