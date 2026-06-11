@@ -150,6 +150,7 @@
           </div>
         </div>
       </div>
+      <!-- Base Information -->
 
       <!-- Final Products -->
       <div v-if="final_products.length" class="row">
@@ -298,11 +299,97 @@
                     }}</span>
                   </div>
                 </div>
+
+                <!-- Operations -->
+                <div class="row mt-2">
+                  <div class="col-12">
+                    <Panel :toggleable="true" :collapsed="true">
+                      <template #header>
+                        <span class="font-semibold text-warning">
+                          {{ $t('purchasesInvoices.operations') }}
+                          ({{ formatCurrency(calculateProductOperationCost(product)) }})
+                        </span>
+                      </template>
+
+                      <div class="card border-warning-200">
+                        <div class="flex justify-end mb-2">
+                          <Button
+                            icon="pi pi-plus"
+                            severity="success"
+                            text
+                            rounded
+                            @click="addProductOperationRow(product, index)"
+                            :title="$t('common.addNew')"
+                            size="small"
+                          />
+                        </div>
+
+                        <div
+                          v-if="product.operations.length"
+                          v-for="(operation, operationsIndex) in product.operations"
+                          class="row g-2 mb-2 align-center"
+                        >
+                          <div class="col-5">
+                            <Fluid>
+                              <FloatLabel variant="on">
+                                <InputText
+                                  :inputId="'product_operation_name_' + operationsIndex"
+                                  v-model="operation.name"
+                                  autocomplete="off"
+                                />
+                                <label :for="'product_operation__name_' + operationsIndex">{{
+                                  $t('purchasesInvoices.name')
+                                }}</label>
+                              </FloatLabel>
+                            </Fluid>
+                          </div>
+                          <div class="col-5">
+                            <Fluid>
+                              <FloatLabel variant="on">
+                                <InputNumber
+                                  :inputId="'product_operation_price_' + operationsIndex"
+                                  v-model="operation.price"
+                                  autocomplete="off"
+                                />
+                                <label :for="'product_operation_price_' + operationsIndex">{{
+                                  $t('purchasesInvoices.price')
+                                }}</label>
+                              </FloatLabel>
+                            </Fluid>
+                          </div>
+                          <div class="col-2 text-right">
+                            <Button
+                              icon="pi pi-times"
+                              severity="danger"
+                              text
+                              rounded
+                              @click="deleteProductOperationRow(product, operationsIndex)"
+                              size="small"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="border border-success-200 rounded p-2 bg-success-50">
+                          <div class="flex justify-between">
+                            <span class="text-success font-medium"
+                              >{{ $t('purchasesInvoices.total_operations_cost') }}:</span
+                            >
+                            <span class="font-semibold text-success">
+                              {{ formatCurrency(calculateProductOperationCost(product)) }}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </Panel>
+                  </div>
+                </div>
+                <!-- Operations -->
               </div>
             </ScrollPanel>
           </div>
         </div>
       </div>
+      <!-- Final Products -->
 
       <!-- Additional Costs -->
       <div v-if="final_products.length" class="row mt-2">
@@ -347,11 +434,13 @@
                   <Fluid>
                     <FloatLabel variant="on">
                       <InputNumber
-                        id="additional_cost_value"
+                        id="'additional_cost_value_' + index"
                         v-model="cost.value"
                         autocomplete="off"
                       />
-                      <label for="additional_cost_value">{{ $t('purchasesInvoices.value') }}</label>
+                      <label for="'additional_cost_value_' + index">{{
+                        $t('purchasesInvoices.value')
+                      }}</label>
                     </FloatLabel>
                   </Fluid>
                 </div>
@@ -381,6 +470,7 @@
           </div>
         </div>
       </div>
+      <!-- Additional Costs -->
 
       <!-- Additional Discounts -->
       <div v-if="final_products.length" class="row mt-2">
@@ -425,11 +515,13 @@
                   <Fluid>
                     <FloatLabel variant="on">
                       <InputNumber
-                        id="additional_cost_value"
+                        id="'additional_discount_value_' + index"
                         v-model="discount.value"
                         autocomplete="off"
                       />
-                      <label for="additional_cost_value">{{ $t('purchasesInvoices.value') }}</label>
+                      <label for="'additional_discount_value_' + index">{{
+                        $t('purchasesInvoices.value')
+                      }}</label>
                     </FloatLabel>
                   </Fluid>
                 </div>
@@ -459,18 +551,24 @@
           </div>
         </div>
       </div>
+      <!-- Additional Discounts -->
 
       <!-- Total Summary -->
       <div v-if="final_products.length" class="row mt-2">
         <div class="col-12">
           <div class="form-group">
-            <label class="form-label text-primary font-bold">{{
-              $t('purchasesInvoices.total_summary')
-            }}</label>
+            <label class="form-label text-primary font-bold"
+              >{{ $t('purchasesInvoices.total_summary') }}
+            </label>
             <div class="card bg-primary-50 border-primary-200">
               <div class="flex justify-between mb-2">
                 <span class="text-secondary">{{ $t('purchasesInvoices.subtotal') }}:</span>
                 <span class="font-medium">{{ formatCurrency(calculateSubtotal()) }}</span>
+              </div>
+
+              <div class="flex justify-between mb-2">
+                <span class="text-sm">{{ $t('purchasesInvoices.total_operations_cost') }}:</span>
+                <span class="text-sm">{{ formatCurrency(calculateTotalOperationsCost()) }}</span>
               </div>
 
               <div class="flex justify-between mb-2">
@@ -503,6 +601,7 @@
           </div>
         </div>
       </div>
+      <!-- Total Summary -->
 
       <div class="flex justify-end gap-2 mt-4">
         <button type="submit" class="btn btn-primary" :disabled="formLoading">
@@ -535,6 +634,7 @@ import InputGroupAddon from 'primevue/inputgroupaddon'
 import FloatLabel from 'primevue/floatlabel'
 import Fluid from 'primevue/fluid'
 import ScrollPanel from 'primevue/scrollpanel'
+import Panel from 'primevue/panel'
 
 import formMixin from '@/mixins/form'
 import customFunctions from '../../../custom_functions/customFunctions'
@@ -558,6 +658,7 @@ export default {
     FloatLabel,
     Fluid,
     ScrollPanel,
+    Panel,
   },
 
   emits: ['handelFormData', 'submit', 'deleteFinalProducts'],
@@ -576,6 +677,12 @@ export default {
         if (this.localFormData.branch_id) {
           this.loadWarehouses(this.localFormData.company_id, this.localFormData.branch_id)
         }
+      },
+      immediate: true,
+    },
+    final_products: {
+      handler(newVal) {
+        this.localFormData.final_products = newVal
       },
       immediate: true,
     },
@@ -745,6 +852,7 @@ export default {
     calculateGrandTotal() {
       return (
         this.calculateSubtotal() +
+        this.calculateTotalOperationsCost() +
         this.calculateAdditionalCosts() -
         this.calculateAdditionalDiscounts()
       )
@@ -769,6 +877,21 @@ export default {
       }).format(amount)
     },
     ///////////////////// Final Products Methods /////////////////////
+
+    ///////////////////// Final Products Operations Methods /////////////////////
+    calculateProductOperationCost(product) {
+      if (!product.operations || !product.operations.length) return 0
+
+      return product.operations.reduce((total, operation) => {
+        return total + (Number(operation.price) || 0)
+      }, 0)
+    },
+
+    calculateTotalOperationsCost() {
+      return this.final_products.reduce((total, product) => {
+        return total + this.calculateProductOperationCost(product)
+      }, 0)
+    },
   },
 }
 </script>

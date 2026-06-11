@@ -144,6 +144,7 @@ export default {
 
     appendProductToCart(finalProducts) {
       this.final_products = finalProducts
+      console.log(this.final_products)
     },
 
     deleteFinalProducts(product) {

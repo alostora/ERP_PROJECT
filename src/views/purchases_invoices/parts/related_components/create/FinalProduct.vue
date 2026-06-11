@@ -119,6 +119,7 @@ export default {
         name: '',
         grand_total_price: 0,
         quantity: 0,
+        operations: [],
       },
     }
   },
@@ -141,6 +142,7 @@ export default {
         unit_price: product.grand_total_price,
         quantity: 1,
         measurement_unit_id: product.purchases_measurement_unit?.id,
+        operations: [],
       }
 
       // Check if product already exists

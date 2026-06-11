@@ -64,6 +64,13 @@ export default {
   additional_discounts: 'Additional Discounts',
   total_additional_discounts: 'Total Additional Discounts',
   value: 'Value',
+
+  /////////////////////////////
+  operations: 'Product Operations',
+  price: 'Price',
+  details: 'Operation Details',
+  files: 'Operation Files',
+  total_operations_cost: 'Total Operations Cost',
   /////////////////////////////
 
   total_summary: 'Total Summary',

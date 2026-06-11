@@ -115,6 +115,21 @@ export const customFunctions = {
       this.formLoading = false
     },
 
+    //////////////////////Additional Costs & Discounts//////////////////////
+    addProductOperationRow(product, productIndex) {
+      if (product.quantity > product.operations.length) {
+        product.operations.push({
+          name: '',
+          price: '',
+        })
+      }
+    },
+
+    deleteProductOperationRow(product, operationIndex) {
+      console.log(product.operations)
+      product.operations.splice(operationIndex, 1)
+    },
+    //////////////////////Additional Costs & Discounts//////////////////////
     addAdditionalCostRow() {
       if (this.localFormData.additional_costs.length < 10) {
         this.localFormData.additional_costs.push({
