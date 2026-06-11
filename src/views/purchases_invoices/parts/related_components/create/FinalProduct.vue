@@ -1,5 +1,5 @@
 <template>
-  <div class="card col-12 col-lg-7">
+  <div class="card col-12 col-lg-8">
     <div v-if="formLoading" class="flex-center py-6">
       <div class="card flex justify-center">
         <ProgressSpinner />
@@ -21,26 +21,28 @@
             </div>
           </div>
 
-          <div
-            class="mb-4 font-medium truncate inline-block"
-            style="max-width: 100%"
-            :title="product.name"
-          >
-            {{ product.name }}
-          </div>
+          <div class="border border-primary-200 rounded p-2 bg-primary-50">
+            <div
+              class="mb-4 font-medium truncate inline-block"
+              style="max-width: 100%"
+              :title="product.name"
+            >
+              {{ product.name }}
+            </div>
 
-          <div class="flex justify-between items-center">
-            <div class="row justify-between align-center mt-2">
-              <div class="col-auto font-semibold text-xl">
-                {{ product.grand_total_price }}
-              </div>
-              <div class="col-auto">
-                <Button icon="pi pi-heart" severity="secondary" variant="outlined" />
-                <Button
-                  icon="pi pi-shopping-cart"
-                  class="ml-2 mr-2"
-                  @click="emitAppendProductToCart(product)"
-                />
+            <div class="flex justify-between items-center">
+              <div class="row justify-between align-center mt-2">
+                <div class="col-auto font-semibold text-xl">
+                  {{ product.grand_total_price }}
+                </div>
+                <div class="col-auto">
+                  <Button icon="pi pi-heart" severity="secondary" variant="outlined" />
+                  <Button
+                    icon="pi pi-shopping-cart"
+                    class="ml-2 mr-2"
+                    @click="emitAppendProductToCart(product)"
+                  />
+                </div>
               </div>
             </div>
           </div>

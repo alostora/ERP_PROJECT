@@ -1,5 +1,5 @@
 <template>
-  <div class="card col-12 col-lg-5">
+  <div class="card col-12 col-lg-4">
     <div v-if="formLoading" class="flex-center py-6">
       <div class="flex justify-center">
         <ProgressSpinner />
@@ -159,7 +159,7 @@
               $t('purchasesInvoices.final_products')
             }}</label>
             <ScrollPanel
-              style="width: 100%; height: 700px"
+              :style="{ width: '100%', height: final_products.length > 3 ? '700px' : 'auto' }"
               :dt="{
                 bar: {
                   background: 'var(--color-primary)',
@@ -173,134 +173,129 @@
                 class="card mb-2"
                 :class="index % 2 === 0 ? 'bg-surface-50' : 'bg-surface-100'"
               >
-                <div class="p-2">
-                  <!-- Remove Button -->
-                  <div class="flex justify-end mb-2">
-                    <Button
-                      icon="pi pi-times"
-                      severity="danger"
-                      text
-                      rounded
-                      @click="deleteProductRow(product)"
-                      :title="$t('common.cancel')"
-                      size="small"
-                    />
-                  </div>
+                <!-- Remove Button -->
+                <div class="flex justify-end mb-1">
+                  <Button
+                    icon="pi pi-times"
+                    severity="danger"
+                    text
+                    rounded
+                    @click="deleteProductRow(product)"
+                    :title="$t('common.cancel')"
+                    size="small"
+                  />
+                </div>
 
-                  <!-- Product Name -->
-                  <div class="mb-2">
+                <!-- Product Name -->
+                <div class="mb-2">
+                  <Fluid>
+                    <input
+                      v-model="product.name"
+                      type="text"
+                      class="input bg-surface"
+                      :class="{ 'input-error': errors.name }"
+                      readonly
+                    />
+                  </Fluid>
+                </div>
+
+                <!-- Quantity, Measurement Unit, Price -->
+                <div class="row g-2 mb-2">
+                  <div class="col-4">
+                    <Fluid>
+                      <InputGroup>
+                        <InputGroupAddon>
+                          <Button
+                            icon="pi pi-minus"
+                            severity="secondary"
+                            text
+                            @click="decrementQuantity(product)"
+                            :disabled="product.quantity == 1"
+                            size="small"
+                          />
+                        </InputGroupAddon>
+                        <FloatLabel variant="on">
+                          <InputNumber
+                            id="quantity"
+                            v-model="product.quantity"
+                            :min="1"
+                            :showButtons="false"
+                            class="text-center w-full"
+                          />
+                          <label for="quantity">{{ $t('purchasesInvoices.quantity') }}</label>
+                        </FloatLabel>
+                        <InputGroupAddon>
+                          <Button
+                            icon="pi pi-plus"
+                            severity="secondary"
+                            text
+                            @click="incrementQuantity(product)"
+                            size="small"
+                          />
+                        </InputGroupAddon>
+                      </InputGroup>
+                    </Fluid>
+                  </div>
+                  <div class="col-5">
+                    <Select
+                      id="measurement_unit_id"
+                      v-model="product.measurement_unit_id"
+                      :options="measurementUnits"
+                      optionValue="id"
+                      :placeholder="$t('purchasesInvoices.measurement_unit')"
+                      :filterPlaceholder="$t('common.search')"
+                      :filter="true"
+                      class="w-full"
+                    >
+                      <template #option="slotProps">
+                        <div class="flex justify-between">
+                          <span>{{
+                            currentLanguage === 'ar'
+                              ? slotProps.option.name_ar
+                              : slotProps.option.name
+                          }}</span>
+                          <span class="text-secondary text-sm"
+                            >({{ slotProps.option.factor_value }})</span
+                          >
+                        </div>
+                      </template>
+                      <template #value="slotProps">
+                        <span v-if="slotProps.value">
+                          {{ getMeasurementUnitDisplay(slotProps.value) }}
+                        </span>
+                        <span v-else>{{ $t('purchasesInvoices.measurement_unit') }}</span>
+                      </template>
+                    </Select>
+                  </div>
+                  <div class="col-3">
                     <Fluid>
                       <FloatLabel variant="on">
-                        <InputText
-                          id="product_name"
-                          v-model="product.name"
-                          autocomplete="off"
-                          readonly
-                          class="bg-surface"
+                        <InputNumber
+                          id="unit_price"
+                          v-model="product.unit_price"
+                          class="text-center w-full"
+                          :step="0.01"
+                          :min="1"
                         />
-                        <label for="product_name">{{ $t('purchasesInvoices.name') }}</label>
+                        <label for="unit_price">{{ $t('purchasesInvoices.unit_price') }}</label>
                       </FloatLabel>
                     </Fluid>
                   </div>
+                </div>
 
-                  <!-- Quantity, Measurement Unit, Price -->
-                  <div class="row g-2 mb-2">
-                    <div class="col-4">
-                      <Fluid>
-                        <InputGroup>
-                          <InputGroupAddon>
-                            <Button
-                              icon="pi pi-minus"
-                              severity="secondary"
-                              text
-                              @click="decrementQuantity(product)"
-                              :disabled="product.quantity == 1"
-                              size="small"
-                            />
-                          </InputGroupAddon>
-                          <FloatLabel variant="on">
-                            <InputNumber
-                              id="quantity"
-                              v-model="product.quantity"
-                              :min="1"
-                              :showButtons="false"
-                              class="text-center w-full"
-                            />
-                            <label for="quantity">{{ $t('purchasesInvoices.quantity') }}</label>
-                          </FloatLabel>
-                          <InputGroupAddon>
-                            <Button
-                              icon="pi pi-plus"
-                              severity="secondary"
-                              text
-                              @click="incrementQuantity(product)"
-                              size="small"
-                            />
-                          </InputGroupAddon>
-                        </InputGroup>
-                      </Fluid>
-                    </div>
-                    <div class="col-5">
-                      <Select
-                        id="measurement_unit_id"
-                        v-model="product.measurement_unit_id"
-                        :options="measurementUnits"
-                        optionValue="id"
-                        :placeholder="$t('purchasesInvoices.measurement_unit')"
-                        :filterPlaceholder="$t('common.search')"
-                        :filter="true"
-                        class="w-full"
-                      >
-                        <template #option="slotProps">
-                          <div class="flex justify-between">
-                            <span>{{
-                              currentLanguage === 'ar'
-                                ? slotProps.option.name_ar
-                                : slotProps.option.name
-                            }}</span>
-                            <span class="text-secondary text-sm"
-                              >({{ slotProps.option.factor_value }})</span
-                            >
-                          </div>
-                        </template>
-                        <template #value="slotProps">
-                          <span v-if="slotProps.value">
-                            {{ getMeasurementUnitDisplay(slotProps.value) }}
-                          </span>
-                          <span v-else>{{ $t('purchasesInvoices.measurement_unit') }}</span>
-                        </template>
-                      </Select>
-                    </div>
-                    <div class="col-3">
-                      <Fluid>
-                        <FloatLabel variant="on">
-                          <InputNumber
-                            id="unit_price"
-                            v-model="product.unit_price"
-                            class="text-center w-full"
-                            :step="0.01"
-                            :min="1"
-                          />
-                          <label for="unit_price">{{ $t('purchasesInvoices.unit_price') }}</label>
-                        </FloatLabel>
-                      </Fluid>
-                    </div>
-                  </div>
-
-                  <!-- Total Price -->
-                  <div class="border border-primary-200 rounded p-2 bg-primary-50">
-                    <div class="flex justify-between">
-                      <span class="text-primary font-medium"
-                        >{{ $t('purchasesInvoices.total_price') }}:</span
-                      >
-                      <span class="font-semibold text-primary">{{
-                        formatCurrency(
-                          product.quantity *
-                            product.unit_price *
-                            measurementUnitGroupFactorValue(product.measurement_unit_id)
-                        )
-                      }}</span>
-                    </div>
+                <!-- Total Price -->
+                <div class="border border-primary-200 rounded p-2 bg-primary-50">
+                  <div class="flex justify-between">
+                    <span class="text-primary font-medium"
+                      >{{ $t('purchasesInvoices.total_price') }}:</span
+                    >
+                    <span class="font-semibold text-primary">{{
+                      formatCurrency(
+                        product.quantity *
+                          product.unit_price *
+                          measurementUnitGroupFactorValue(product.measurement_unit_id)
+                      )
+                    }}</span>
                   </div>
                 </div>
               </div>
