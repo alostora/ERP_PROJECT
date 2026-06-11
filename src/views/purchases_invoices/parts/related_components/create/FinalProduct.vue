@@ -113,13 +113,13 @@ export default {
 
   data() {
     return {
+      cart_final_products: [],
       final_product_details: {
         final_product_id: '',
         name: '',
         grand_total_price: 0,
         quantity: 0,
       },
-      cart_final_products: [],
     }
   },
 
