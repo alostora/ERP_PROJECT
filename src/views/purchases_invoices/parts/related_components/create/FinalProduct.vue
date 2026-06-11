@@ -1,5 +1,5 @@
 <template>
-  <div class="card col-12 col-lg-8">
+  <div class="card col-12 col-md-12 col-lg-8">
     <div v-if="formLoading" class="flex-center py-6">
       <div class="card flex justify-center">
         <ProgressSpinner />
@@ -32,14 +32,13 @@
 
             <div class="flex justify-between items-center">
               <div class="row justify-between align-center mt-2">
-                <div class="col-auto font-semibold text-xl">
+                <div class="col-auto font-semibold text-sm">
                   {{ product.grand_total_price }}
                 </div>
                 <div class="col-auto">
-                  <Button icon="pi pi-heart" severity="secondary" variant="outlined" />
                   <Button
-                    icon="pi pi-shopping-cart"
-                    class="ml-2 mr-2"
+                    icon="pi pi-cart-plus"
+                    class="btn-lg"
                     @click="emitAppendProductToCart(product)"
                   />
                 </div>

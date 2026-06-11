@@ -47,6 +47,7 @@ export default {
   unit_price: 'Unit Price',
   measurement_unit: 'Measurement Unit',
   total_price: 'Total Price',
+  total_price_plus_operations: 'Total Price Plus Operations',
   subtotal: 'Subtotal',
   /////////////////////////////
 

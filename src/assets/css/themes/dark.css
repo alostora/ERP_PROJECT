@@ -1,86 +1,224 @@
 .dark-mode {
-  /* Primary - Vibrant Blue */
+  /* Colors - Dark Mode */
   --color-primary: #60a5fa;
   --color-primary-hover: #3b82f6;
   --color-primary-light: #1e3a5f;
 
-  /* Success - Emerald Green */
+  --color-secondary: #94a3b8;
   --color-success: #34d399;
   --color-success-hover: #10b981;
   --color-success-light: #064e3b;
 
-  /* Warning - Amber */
-  --color-warning: #fbbf24;
-  --color-warning-hover: #f59e0b;
-  --color-warning-light: #78350f;
-
-  /* Danger - Red */
   --color-danger: #f87171;
   --color-danger-hover: #ef4444;
   --color-danger-light: #7f1d1d;
 
-  /* Info - Cyan */
+  --color-warning: #fbbf24;
+  --color-warning-hover: #f59e0b;
+  --color-warning-light: #78350f;
+
   --color-info: #22d3ee;
   --color-info-hover: #06b6d4;
   --color-info-light: #164e63;
 
-  /* Surfaces */
+  /* Surface Colors - Dark Mode */
   --surface-card: #1e293b;
   --surface-ground: #0f172a;
   --surface-hover: #334155;
   --surface-border: #334155;
 
-  /* Text */
+  /* Surface Shades - Dark Mode */
+  --surface-50: #1e293b;
+  --surface-100: #334155;
+  --surface-200: #475569;
+  --surface-300: #64748b;
+  --surface-400: #94a3b8;
+  --surface-500: #cbd5e1;
+  --surface-600: #e2e8f0;
+  --surface-700: #f1f5f9;
+  --surface-800: #f8fafc;
+  --surface-900: #ffffff;
+
+  /* Primary Shades - Dark Mode */
+  --primary-50: #1e3a8a;
+  --primary-100: #1e40af;
+  --primary-200: #1d4ed8;
+  --primary-300: #2563eb;
+  --primary-400: #3b82f6;
+  --primary-500: #60a5fa;
+  --primary-600: #93c5fd;
+  --primary-700: #bfdbfe;
+  --primary-800: #dbeafe;
+  --primary-900: #eff6ff;
+
+  /* Primary Light Variants - Dark Mode */
+  --primary-light-50: #1e3a5f;
+  --primary-light-100: #1e4a6f;
+  --primary-light-200: #1e5a7f;
+
+  /* Success Shades - Dark Mode */
+  --success-50: #064e3b;
+  --success-100: #065f46;
+  --success-200: #047857;
+  --success-300: #059669;
+  --success-400: #10b981;
+  --success-500: #34d399;
+  --success-600: #6ee7b7;
+  --success-700: #a7f3d0;
+  --success-800: #d1fae5;
+  --success-900: #ecfdf5;
+
+  /* Danger Shades - Dark Mode */
+  --danger-50: #7f1d1d;
+  --danger-100: #991b1b;
+  --danger-200: #b91c1c;
+  --danger-300: #dc2626;
+  --danger-400: #ef4444;
+  --danger-500: #f87171;
+  --danger-600: #fca5a5;
+  --danger-700: #fecaca;
+  --danger-800: #fee2e2;
+  --danger-900: #fef2f2;
+
+  /* Warning Shades - Dark Mode */
+  --warning-50: #78350f;
+  --warning-100: #854d0e;
+  --warning-200: #92400e;
+  --warning-300: #b45309;
+  --warning-400: #d97706;
+  --warning-500: #f59e0b;
+  --warning-600: #fbbf24;
+  --warning-700: #fcd34d;
+  --warning-800: #fde68a;
+  --warning-900: #fffbeb;
+
+  /* Info Shades - Dark Mode */
+  --info-50: #164e63;
+  --info-100: #155e75;
+  --info-200: #0e7490;
+  --info-300: #0891b2;
+  --info-400: #06b6d4;
+  --info-500: #22d3ee;
+  --info-600: #67e8f9;
+  --info-700: #a5f3fc;
+  --info-800: #cffafe;
+  --info-900: #ecfeff;
+
+  /* Indigo Colors - Dark Mode */
+  --indigo: #818cf8;
+  --indigo-50: rgba(99, 102, 241, 0.2);
+  --indigo-100: #312e81;
+  --indigo-200: #4338ca;
+  --indigo-300: #4f46e5;
+  --indigo-400: #6366f1;
+  --indigo-500: #818cf8;
+  --indigo-600: #a5b4fc;
+  --indigo-700: #c7d2fe;
+  --indigo-800: #e0e7ff;
+  --indigo-900: #eef2ff;
+
+  /* Purple Colors - Dark Mode */
+  --purple: #c084fc;
+  --purple-50: #581c87;
+  --purple-100: #6b21a8;
+  --purple-200: #7e22ce;
+  --purple-300: #9333ea;
+  --purple-400: #a855f7;
+  --purple-500: #c084fc;
+  --purple-600: #d8b4fe;
+  --purple-700: #e9d5ff;
+  --purple-800: #f3e8ff;
+  --purple-900: #faf5ff;
+
+  /* Cyan Colors - Dark Mode (Distinct) */
+  --cyan: #48cae4;
+  --cyan-50: #005663;
+  --cyan-100: #006c7a;
+  --cyan-200: #008394;
+  --cyan-300: #0097b2;
+  --cyan-400: #00b4d8;
+  --cyan-500: #48cae4;
+  --cyan-600: #90e0ef;
+  --cyan-700: #ade8f4;
+  --cyan-800: #caf0f8;
+  --cyan-900: #e0f7fa;
+
+  /* Pink Colors - Dark Mode */
+  --pink: #f472b6;
+  --pink-50: #831843;
+  --pink-100: #9d174d;
+  --pink-200: #be185d;
+  --pink-300: #db2777;
+  --pink-400: #ec4899;
+  --pink-500: #f472b6;
+  --pink-600: #f9a8d4;
+  --pink-700: #fbcfe8;
+  --pink-800: #fce7f3;
+  --pink-900: #fdf2f8;
+
+  /* Orange Colors - Dark Mode */
+  --orange: #fb923c;
+  --orange-50: #7c2d12;
+  --orange-100: #9a3412;
+  --orange-200: #c2410c;
+  --orange-300: #ea580c;
+  --orange-400: #f97316;
+  --orange-500: #fb923c;
+  --orange-600: #fdba74;
+  --orange-700: #fed7aa;
+  --orange-800: #ffedd5;
+  --orange-900: #fff7ed;
+
+  /* Teal Colors - Dark Mode */
+  --teal: #2dd4bf;
+  --teal-50: #134e4a;
+  --teal-100: #115e59;
+  --teal-200: #0f766e;
+  --teal-300: #0d9488;
+  --teal-400: #14b8a6;
+  --teal-500: #2dd4bf;
+  --teal-600: #5eead4;
+  --teal-700: #99f6e4;
+  --teal-800: #ccfbf1;
+  --teal-900: #f0fdfa;
+
+  /* Gray Colors - Dark Mode */
+  --gray: #9ca3af;
+  --gray-50: #111827;
+  --gray-100: #1f2937;
+  --gray-200: #374151;
+  --gray-300: #4b5563;
+  --gray-400: #6b7280;
+  --gray-500: #9ca3af;
+  --gray-600: #d1d5db;
+  --gray-700: #e5e7eb;
+  --gray-800: #f3f4f6;
+  --gray-900: #f9fafb;
+
+  /* Text Colors - Dark Mode */
   --text-color: #f1f5f9;
   --text-color-secondary: #94a3b8;
 
-  /* Border */
+  /* Border Colors - Dark Mode */
   --border-color: #334155;
-}
+  /* Primary Borders */
+  --border-primary-100: #1e4a6f;
+  --border-primary-200: #1e5a7f;
+  --border-primary-300: #1e6a8f;
+  --border-primary-400: #1e7a9f;
+  --border-primary-500: #3b82f6;
 
-/* Dark mode specific background overrides */
-.dark-mode .bg-primary-50 {
-  background-color: #1e3a5f;
-}
-.dark-mode .bg-primary-100 {
-  background-color: #1e4a6f;
-}
-.dark-mode .bg-primary-200 {
-  background-color: #1e5a7f;
-}
+  /* Success Borders */
+  --border-success-100: #064e3b;
+  --border-success-200: #065f46;
+  --border-success-300: #047857;
+  --border-success-400: #059669;
+  --border-success-500: #10b981;
 
-.dark-mode .bg-success-50 {
-  background-color: #064e3b;
-}
-.dark-mode .bg-warning-50 {
-  background-color: #78350f;
-}
-.dark-mode .bg-surface-50 {
-  background-color: #1e293b;
-}
-.dark-mode .bg-surface-100 {
-  background-color: #334155;
-}
-.dark-mode .bg-surface-200 {
-  background-color: #475569;
-}
-
-/* Border colors for dark mode */
-.dark-mode .border-primary-100 {
-  border-color: #1e4a6f;
-}
-.dark-mode .border-primary-200 {
-  border-color: #1e5a7f;
-}
-.dark-mode .border-success-200 {
-  border-color: #065f46;
-}
-.dark-mode .border-warning-200 {
-  border-color: #78350f;
-}
-
-/* Card background in dark mode */
-.dark-mode .card {
-  background: var(--surface-card);
-  border-color: var(--border-color);
+  /* Warning Borders */
+  --border-warning-100: #78350f;
+  --border-warning-200: #854d0e;
+  --border-warning-300: #92400e;
+  --border-warning-400: #b45309;
+  --border-warning-500: #f59e0b;
 }

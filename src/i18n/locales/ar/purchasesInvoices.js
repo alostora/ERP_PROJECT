@@ -47,6 +47,7 @@ export default {
   unit_price: 'سعر الوحدة',
   measurement_unit: 'وحدة القياس',
   total_price: 'اجمالي السعر',
+  total_price_plus_operations: 'اجمالي السعر بالاضافة الي العمليات',
   subtotal: 'المجموع الفرعي',
 
   /////////////////////////////
