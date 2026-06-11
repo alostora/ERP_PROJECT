@@ -4,7 +4,8 @@
     :header="$t('common.createTitle', { module: $t('purchasesInvoices.title') })"
     modal
     maximizable
-    :style="{ width: '80vw', minWidth: '800px' }"
+    :style="{ width: '80vw', height: '100%' }"
+    :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
     @hide="closeFormModal"
   >
     <div class="card">

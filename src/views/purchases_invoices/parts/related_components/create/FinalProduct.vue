@@ -6,9 +6,13 @@
       </div>
     </div>
     <div v-else class="row">
-      <div class="col-3 col-md-3" v-for="product in finalProducts" :key="product.id">
-        <div class="border rounded m-2 p-3">
-          <div class="mb-4">
+      <div
+        class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+        v-for="product in finalProducts"
+        :key="product.id"
+      >
+        <div class="mb-2">
+          <div style="width: 100%">
             <div class="relative mx-auto">
               <img
                 :src="
@@ -19,28 +23,27 @@
                 class="w-full h-48 object-cover rounded"
               />
             </div>
-          </div>
+            <div class="rounded p-2 bg-primary-50">
+              <div
+                class="mb-4 font-medium truncate inline-block"
+                style="max-width: 100%"
+                :title="product.name"
+              >
+                {{ product.name }}
+              </div>
 
-          <div class="border border-primary-200 rounded p-2 bg-primary-50">
-            <div
-              class="mb-4 font-medium truncate inline-block"
-              style="max-width: 100%"
-              :title="product.name"
-            >
-              {{ product.name }}
-            </div>
-
-            <div class="flex justify-between items-center">
-              <div class="row justify-between align-center mt-2">
-                <div class="col-auto font-semibold text-sm">
-                  {{ product.grand_total_price }}
-                </div>
-                <div class="col-auto">
-                  <Button
-                    icon="pi pi-cart-plus"
-                    class="btn-lg"
-                    @click="emitAppendProductToCart(product)"
-                  />
+              <div class="flex justify-between items-center">
+                <div class="row justify-between align-center mt-2">
+                  <div class="col-auto font-semibold text-sm">
+                    {{ product.grand_total_price }}
+                  </div>
+                  <div class="col-auto">
+                    <Button
+                      icon="pi pi-cart-plus"
+                      class="btn-lg"
+                      @click="emitAppendProductToCart(product)"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

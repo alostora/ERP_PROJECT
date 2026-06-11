@@ -1,4 +1,6 @@
-/* Responsive Grid System - 12 Columns */
+/* ============================================ */
+/* RESPONSIVE GRID SYSTEM - 12 COLUMNS */
+/* ============================================ */
 
 /* Container */
 .container {
@@ -49,7 +51,7 @@
   width: auto;
 }
 
-/* Column Widths - 1 to 12 */
+/* Base Columns (Mobile First - Extra Small) */
 .col-1 {
   flex: 0 0 auto;
   width: 8.33333333%;
@@ -99,7 +101,59 @@
   width: 100%;
 }
 
-/* Small screens (640px and up) */
+/* Extra Small (xs) - 480px and up */
+@media (min-width: 480px) {
+  .col-xs-1 {
+    flex: 0 0 auto;
+    width: 8.33333333%;
+  }
+  .col-xs-2 {
+    flex: 0 0 auto;
+    width: 16.66666667%;
+  }
+  .col-xs-3 {
+    flex: 0 0 auto;
+    width: 25%;
+  }
+  .col-xs-4 {
+    flex: 0 0 auto;
+    width: 33.33333333%;
+  }
+  .col-xs-5 {
+    flex: 0 0 auto;
+    width: 41.66666667%;
+  }
+  .col-xs-6 {
+    flex: 0 0 auto;
+    width: 50%;
+  }
+  .col-xs-7 {
+    flex: 0 0 auto;
+    width: 58.33333333%;
+  }
+  .col-xs-8 {
+    flex: 0 0 auto;
+    width: 66.66666667%;
+  }
+  .col-xs-9 {
+    flex: 0 0 auto;
+    width: 75%;
+  }
+  .col-xs-10 {
+    flex: 0 0 auto;
+    width: 83.33333333%;
+  }
+  .col-xs-11 {
+    flex: 0 0 auto;
+    width: 91.66666667%;
+  }
+  .col-xs-12 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+/* Small (sm) - 640px and up */
 @media (min-width: 640px) {
   .col-sm-1 {
     flex: 0 0 auto;
@@ -151,7 +205,7 @@
   }
 }
 
-/* Medium screens (768px and up) */
+/* Medium (md) - 768px and up */
 @media (min-width: 768px) {
   .col-md-1 {
     flex: 0 0 auto;
@@ -203,7 +257,7 @@
   }
 }
 
-/* Large screens (1024px and up) */
+/* Large (lg) - 1024px and up */
 @media (min-width: 1024px) {
   .col-lg-1 {
     flex: 0 0 auto;
@@ -255,7 +309,7 @@
   }
 }
 
-/* Extra large screens (1280px and up) */
+/* Extra Large (xl) - 1280px and up */
 @media (min-width: 1280px) {
   .col-xl-1 {
     flex: 0 0 auto;
@@ -307,7 +361,7 @@
   }
 }
 
-/* Gap utilities */
+/* Gap Utilities */
 .gap-0 {
   gap: 0;
 }
@@ -332,6 +386,8 @@
 .gap-8 {
   gap: var(--spacing-8);
 }
+
+/* Flex Utilities */
 .flex-1 {
   flex: 1;
 }
