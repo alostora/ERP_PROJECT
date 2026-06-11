@@ -56,6 +56,8 @@
           </template>
         </Column>
 
+        <Column field="reference_code" :header="$t('purchasesInvoices.reference_code')" sortable />
+
         <Column field="name" :header="$t('purchasesInvoices.name')" sortable />
 
         <Column :header="$t('purchasesInvoices.stage')">

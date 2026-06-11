@@ -193,7 +193,7 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.CITY.BASE,
+      apiUrl: API_ROUTES.COMPANY.BASE,
       formData: {
         currency_id: '',
         client_id: '',

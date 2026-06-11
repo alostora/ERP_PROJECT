@@ -3,6 +3,7 @@ export default {
   base_info: 'المعلومات الاساسية',
   id: '#',
   name: 'الاسم',
+  reference_code: 'الرقم المرجعي',
   total_additional_taxes: 'اجمالي الضريبة',
   grand_total: 'اجمالي المبلغ شامل الضريبة',
   stage_updated_at: 'تاريخ تحديث المرحلة',

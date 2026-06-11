@@ -3,6 +3,7 @@ export default {
   base_info: 'Base Information',
   id: '#',
   name: 'Name',
+  reference_code: 'Reference Code',
   total_additional_taxes: 'Total Additional Taxes',
   grand_total: 'Grand Total (Including Tax)',
   stage_updated_at: 'Stage Updated At',
