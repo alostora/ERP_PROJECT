@@ -722,12 +722,13 @@
         <!-- General Error -->
 
         <div class="flex justify-end gap-2 mt-4">
-          <button type="submit" class="btn btn-primary ml-1 mr-1" :disabled="formLoading">
+          <button type="submit" class="btn btn-success ml-1 mr-1" :disabled="formLoading">
             <i class="pi pi-check mr-1"></i>
             {{ formLoading ? $t('common.loading') : $t('common.create') }}
           </button>
 
-          <button type="button" class="btn btn-outline" @click="emitCloseFormModal">
+          <button type="button" class="btn btn-danger" @click="emitCloseFormModal">
+            <i class="pi pi-times mr-1"></i>
             {{ $t('common.cancel') }}
           </button>
         </div>
