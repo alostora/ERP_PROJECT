@@ -35,7 +35,7 @@
               <div class="flex justify-between items-center">
                 <div class="row justify-between align-center mt-2">
                   <div class="col-auto font-semibold text-sm">
-                    {{ product.grand_total_price }}
+                    {{ product.price }}
                   </div>
                   <div class="col-auto">
                     <Button
@@ -119,7 +119,7 @@ export default {
       final_product_details: {
         final_product_id: '',
         name: '',
-        grand_total_price: 0,
+        price: 0,
         quantity: 0,
         operations: [],
       },
@@ -141,7 +141,7 @@ export default {
       this.final_product_details = {
         final_product_id: product.id,
         name: product.name,
-        unit_price: product.grand_total_price,
+        unit_price: product.price,
         quantity: 1,
         measurement_unit_id: product.purchases_measurement_unit?.id,
         operations: [],

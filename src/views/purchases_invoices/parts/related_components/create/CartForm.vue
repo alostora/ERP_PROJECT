@@ -280,7 +280,6 @@
                                 class="text-center w-full"
                                 :step="0.01"
                                 :min="1"
-                                readonly
                               />
                               <label for="unit_price">{{
                                 $t('purchasesInvoices.unit_price')
