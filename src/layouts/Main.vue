@@ -102,5 +102,13 @@ export default {
   .rtl .main-content {
     margin-right: 0;
   }
+
+  .main-content.sidebar-collapsed {
+    margin-left: 0;
+  }
+
+  .rtl .main-content.sidebar-collapsed {
+    margin-right: 0;
+  }
 }
 </style>

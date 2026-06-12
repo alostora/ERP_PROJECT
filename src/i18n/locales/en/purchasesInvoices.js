@@ -80,9 +80,23 @@ export default {
   createdAt: 'Created At',
   /////////////////////////////
 
+  // English
   validation: {
     companyIdRequired: 'Company is required',
     branchIdRequired: 'Branch is required',
-    warehouseIdRequired: 'Warehouse / Store is required',
+    warehouseIdRequired: 'Warehouse is required',
+    finalProductsRequired: 'At least one product is required',
+    duplicateFinalProducts: 'Duplicate products are not allowed',
+    finalProductIdRequired: 'Product ID is required',
+    unitPriceRequired: 'Unit price is required',
+    quantityRequired: 'Quantity is required',
+    operationsExceedQuantity: 'Operations cannot exceed quantity ({quantity})',
+    operationNameRequired: 'Operation name is required',
+    operationPriceRequired: 'Operation price is required',
+    operationDetailsRequired: 'Operation details is required',
+    additionalCostNameRequired: 'Cost name is required',
+    additionalCostValueRequired: 'Cost value is required',
+    additionalDiscountNameRequired: 'Discount name is required',
+    additionalDiscountValueRequired: 'Discount value is required',
   },
 }

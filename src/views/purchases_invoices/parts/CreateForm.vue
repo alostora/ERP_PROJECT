@@ -8,34 +8,36 @@
     :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
     @hide="closeFormModal"
   >
-    <div class="card">
-      <div class="row">
-        <!-- Products Grid -->
-        <FinalProduct
-          :company_id="company_id"
-          :branches="branches"
-          :final_products="final_products"
-          @appendProductToCart="appendProductToCart"
-        />
-        <!-- End Products Grid -->
+    <div class="">
+      <div class="card">
+        <div class="row">
+          <!-- Products Grid -->
+          <FinalProduct
+            :company_id="company_id"
+            :branches="branches"
+            :final_products="final_products"
+            @appendProductToCart="appendProductToCart"
+          />
+          <!-- End Products Grid -->
 
-        <!-- Cart Form -->
-        <CartForm
-          :company_id="company_id"
-          :branches="branches"
-          :final_products="final_products"
-          :errors="errors"
-          @handelFormData="handelFormData"
-          @submit="handleSubmit"
-          @deleteFinalProducts="deleteFinalProducts"
-        />
-        <!-- End Cart Form -->
+          <!-- Cart Form -->
+          <CartForm
+            :company_id="company_id"
+            :branches="branches"
+            :final_products="final_products"
+            :errors="errors"
+            @handelFormData="handelFormData"
+            @submit="handleSubmit"
+            @deleteFinalProducts="deleteFinalProducts"
+          />
+          <!-- End Cart Form -->
+        </div>
       </div>
-    </div>
-    <div class="flex justify-end gap-2 mt-4">
-      <button type="button" class="btn btn-outline" @click="closeFormModal">
-        {{ $t('common.cancel') }}
-      </button>
+      <div class="flex justify-end gap-2 mt-4">
+        <button type="button" class="btn btn-outline" @click="closeFormModal">
+          {{ $t('common.cancel') }}
+        </button>
+      </div>
     </div>
   </Dialog>
 </template>
@@ -102,6 +104,12 @@ export default {
     },
   },
 
+  computed: {
+    currentLanguage() {
+      return localStorage.getItem('language') || 'en'
+    },
+  },
+
   data() {
     return {
       apiUrl: API_ROUTES.PURCHASES_INVOICE.BASE,
@@ -112,12 +120,6 @@ export default {
         final_products: [],
       },
     }
-  },
-
-  computed: {
-    currentLanguage() {
-      return localStorage.getItem('language') || 'en'
-    },
   },
 
   methods: {
@@ -155,14 +157,30 @@ export default {
     },
 
     async handleSubmit() {
-      console.log(this.formData)
-      return
       if (!this.validateCreateForm(this.formData)) {
         return
       }
 
+      console.log(this.formData)
+
       await this.submitCreateForm(this.apiUrl, this.formData, this.$t('common.createdSuccessfully'))
+    },
+
+    closeFormModal() {
+      this.formVisible = false
+      this.formLoading = false
+      this.formErrors = {}
+      this.formData = {}
+      this.final_products = []
     },
   },
 }
 </script>
+
+<style scoped>
+.zoom-out {
+  transform: scale(0.9);
+  transform-origin: top center;
+  justify-content: center;
+}
+</style>

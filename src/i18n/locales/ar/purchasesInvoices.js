@@ -81,9 +81,23 @@ export default {
   createdAt: 'تاريخ الإنشاء',
 
   /////////////////////////////
+  // Arabic
   validation: {
     companyIdRequired: 'الشركة مطلوبة',
     branchIdRequired: 'الفرع مطلوب',
-    warehouseIdRequired: 'المخزن / المستودع مطلوب',
+    warehouseIdRequired: 'المخزن مطلوب',
+    finalProductsRequired: 'يجب إضافة منتج واحد على الأقل',
+    duplicateFinalProducts: 'لا يمكن إضافة نفس المنتج مرتين',
+    finalProductIdRequired: 'معرف المنتج مطلوب',
+    unitPriceRequired: 'سعر الوحدة مطلوب',
+    quantityRequired: 'الكمية مطلوبة',
+    operationsExceedQuantity: 'عدد العمليات لا يمكن أن يتجاوز الكمية ({quantity})',
+    operationNameRequired: 'اسم العملية مطلوب',
+    operationPriceRequired: 'سعر العملية مطلوب',
+    operationDetailsRequired: 'تفاصيل العملية مطلوب',
+    additionalCostNameRequired: 'اسم التكلفة مطلوب',
+    additionalCostValueRequired: 'قيمة التكلفة مطلوبة',
+    additionalDiscountNameRequired: 'اسم الخصم مطلوب',
+    additionalDiscountValueRequired: 'قيمة الخصم مطلوبة',
   },
 }
