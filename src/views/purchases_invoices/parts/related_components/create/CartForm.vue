@@ -720,9 +720,13 @@
         <!-- General Error -->
 
         <div class="flex justify-end gap-2 mt-4">
-          <button type="submit" class="btn btn-primary" :disabled="formLoading">
+          <button type="submit" class="btn btn-primary ml-1 mr-1" :disabled="formLoading">
             <i class="pi pi-check mr-1"></i>
             {{ formLoading ? $t('common.loading') : $t('common.create') }}
+          </button>
+
+          <button type="button" class="btn btn-outline" @click="emitCloseFormModal">
+            {{ $t('common.cancel') }}
           </button>
         </div>
       </div>
@@ -861,6 +865,10 @@ export default {
     emitSubmit() {
       this.$emit('handelFormData', this.localFormData)
       this.$emit('submit')
+    },
+
+    emitCloseFormModal() {
+      this.$emit('closeForm')
     },
 
     getMeasurementUnitDisplay(measurementUnitId) {
@@ -1016,7 +1024,7 @@ export default {
 
 <style scoped>
 .zoom-out {
-  transform: scale(0.8);
+  transform: scale(0.9);
   transform-origin: top center;
   justify-content: center;
 }

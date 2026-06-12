@@ -28,15 +28,11 @@
             :errors="errors"
             @handelFormData="handelFormData"
             @submit="handleSubmit"
+            @closeForm="closeFormModal"
             @deleteFinalProducts="deleteFinalProducts"
           />
           <!-- End Cart Form -->
         </div>
-      </div>
-      <div class="flex justify-end gap-2 mt-4">
-        <button type="button" class="btn btn-outline" @click="closeFormModal">
-          {{ $t('common.cancel') }}
-        </button>
       </div>
     </div>
   </Dialog>
@@ -176,11 +172,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.zoom-out {
-  transform: scale(0.9);
-  transform-origin: top center;
-  justify-content: center;
-}
-</style>
