@@ -411,7 +411,6 @@
                               >
                               </textarea>
                             </div>
-
                             <small
                               v-if="
                                 errors[
@@ -1009,6 +1008,7 @@ export default {
         return total + this.calculateProductOperationCost(product)
       }, 0)
     },
+    ///////////////////// Final Products Operations Methods /////////////////////
   },
 }
 </script>
