@@ -155,7 +155,7 @@ export default {
       if (existingProduct) {
         existingProduct.quantity += 1
       } else {
-        this.cart_final_products.push(this.final_product_details)
+        this.cart_final_products.unshift(this.final_product_details)
       }
 
       this.$emit('appendProductToCart', this.cart_final_products)
