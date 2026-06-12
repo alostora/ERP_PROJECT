@@ -130,6 +130,7 @@ export default {
     handelFormData(cartFormData) {
       this.formData = {
         ...this.formData,
+        id: cartFormData.id,
         company_id: cartFormData.company_id,
         branch_id: cartFormData.branch_id,
         warehouse_id: cartFormData.warehouse_id,
@@ -153,13 +154,19 @@ export default {
     },
 
     async handleSubmit() {
-      if (!this.validateCreateForm(this.formData)) {
+      if (!this.validateUpdateForm(this.formData)) {
         return
       }
 
-      console.log(this.formData)
+      const data = { ...this.formData }
+      delete data.id
 
-      await this.submitCreateForm(this.apiUrl, this.formData, this.$t('common.createdSuccessfully'))
+      await this.submitUpdateForm(
+        this.apiUrl,
+        this.formData.id,
+        data,
+        this.$t('common.updatedSuccessfully')
+      )
     },
 
     closeFormModal() {

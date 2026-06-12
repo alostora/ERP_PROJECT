@@ -894,6 +894,7 @@ export default {
       this.localFormData = {
         id: invoice.id || '',
         name: invoice.name || '',
+        company_id: invoice.company?.id || '',
         branch_id: invoice.branch?.id || '',
         warehouse_id: invoice.warehouse?.id || '',
         contact_id: invoice.contact?.id || '',
