@@ -7,7 +7,7 @@
     </div>
     <div v-else class="row">
       <div
-        class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+        class="col-xs-12 col-sm-12 col-md-3 col-lg-3"
         v-for="product in finalProducts"
         :key="product.id"
       >

@@ -155,7 +155,9 @@
         <div v-if="final_products.length" class="row">
           <div class="col-12">
             <div class="card-info">
-              <div class="card-header-info">{{ $t('purchasesInvoices.final_products') }}</div>
+              <div class="card-header-info">
+                {{ $t('purchasesInvoices.final_products') + '( ' + final_products.length + ')' }}
+              </div>
               <div class="card-body">
                 <div class="row">
                   <ScrollPanel

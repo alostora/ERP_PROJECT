@@ -8,32 +8,28 @@
     :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
     @hide="closeFormModal"
   >
-    <div class="">
-      <div class="card">
-        <div class="row">
-          <!-- Products Grid -->
-          <FinalProduct
-            :company_id="company_id"
-            :branches="branches"
-            :final_products="final_products"
-            @appendProductToCart="appendProductToCart"
-          />
-          <!-- End Products Grid -->
+    <div class="row">
+      <!-- Products Grid -->
+      <FinalProduct
+        :company_id="company_id"
+        :branches="branches"
+        :final_products="final_products"
+        @appendProductToCart="appendProductToCart"
+      />
+      <!-- End Products Grid -->
 
-          <!-- Cart Form -->
-          <CartForm
-            :company_id="company_id"
-            :branches="branches"
-            :final_products="final_products"
-            :errors="errors"
-            @handelFormData="handelFormData"
-            @submit="handleSubmit"
-            @closeForm="closeFormModal"
-            @deleteFinalProducts="deleteFinalProducts"
-          />
-          <!-- End Cart Form -->
-        </div>
-      </div>
+      <!-- Cart Form -->
+      <CartForm
+        :company_id="company_id"
+        :branches="branches"
+        :final_products="final_products"
+        :errors="errors"
+        @handelFormData="handelFormData"
+        @submit="handleSubmit"
+        @closeForm="closeFormModal"
+        @deleteFinalProducts="deleteFinalProducts"
+      />
+      <!-- End Cart Form -->
     </div>
   </Dialog>
 </template>
