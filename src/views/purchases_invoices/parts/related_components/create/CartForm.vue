@@ -713,16 +713,18 @@
         </div>
         <!-- Total Summary -->
 
+        <!-- General Error -->
+        <small v-if="errors.final_products" class="error-message">
+          {{ errors.final_products }}
+        </small>
+        <!-- General Error -->
+
         <div class="flex justify-end gap-2 mt-4">
           <button type="submit" class="btn btn-primary" :disabled="formLoading">
             <i class="pi pi-check mr-1"></i>
             {{ formLoading ? $t('common.loading') : $t('common.create') }}
           </button>
         </div>
-
-        <small v-if="errors.final_products" class="error-message">
-          {{ errors.final_products }}
-        </small>
       </div>
     </form>
 
