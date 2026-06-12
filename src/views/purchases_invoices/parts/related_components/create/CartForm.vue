@@ -154,8 +154,8 @@
         <!-- Final Products -->
         <div v-if="final_products.length" class="row">
           <div class="col-12">
-            <div class="card-info">
-              <div class="card-header-info">
+            <div class="card-indigo">
+              <div class="card-header-indigo">
                 {{ $t('purchasesInvoices.final_products') + '( ' + final_products.length + ')' }}
               </div>
               <div class="card-body">
@@ -173,7 +173,7 @@
                       v-for="(product, index) in final_products"
                       :key="product.final_product_id"
                       class="mb-5 rounded p-5"
-                      :class="index % 2 === 0 ? 'card-teal' : 'card-indigo'"
+                      :class="index % 2 === 0 ? 'card-teal' : 'card-info'"
                     >
                       <!-- Remove Button -->
                       <div class="flex justify-end mb-2">
