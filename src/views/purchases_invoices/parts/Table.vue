@@ -71,7 +71,7 @@
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
             <div class="actions-cell">
-              <button class="btn-icon" @click="openUpdateModal(data)" :title="$t('common.edit')">
+              <button class="btn-icon" @click="openUpdateModal(data.id)" :title="$t('common.edit')">
                 <i class="pi pi-pen-to-square text-success"></i>
               </button>
               <button
@@ -93,7 +93,14 @@
       :company_id="company_id"
       :branch_id="branch_id"
     />
-    <UpdateForm ref="updateModal" :selected_item="selectedItem" @updated="fetchData" />
+
+    <UpdateForm
+      ref="updateModal"
+      :company_id="company_id"
+      :branch_id="branch_id"
+      :invoice_id="invoice_id"
+      @updated="fetchData"
+    />
 
     <Toast />
     <ConfirmDialog />
@@ -151,7 +158,7 @@ export default {
       apiUrl: API_ROUTES.PURCHASES_INVOICE.SEARCH,
       deleteUrl: API_ROUTES.PURCHASES_INVOICE.BASE,
       filters: { query_string: '' },
-      selectedItem: {},
+      invoice_id: '',
     }
   },
   computed: {
@@ -169,8 +176,8 @@ export default {
       this.$refs.createModal.openModal()
     },
 
-    openUpdateModal(item) {
-      this.selectedItem = { ...item }
+    openUpdateModal(itemId) {
+      this.invoice_id = itemId
       this.$nextTick(() => {
         this.$refs.updateModal.openModal()
       })

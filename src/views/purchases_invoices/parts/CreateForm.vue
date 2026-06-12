@@ -12,7 +12,6 @@
       <!-- Products Grid -->
       <FinalProduct
         :company_id="company_id"
-        :branches="branches"
         :final_products="final_products"
         @appendProductToCart="appendProductToCart"
       />
@@ -21,7 +20,6 @@
       <!-- Cart Form -->
       <CartForm
         :company_id="company_id"
-        :branches="branches"
         :final_products="final_products"
         :errors="errors"
         @handelFormData="handelFormData"
@@ -47,7 +45,7 @@ import Select from 'primevue/select'
 import CreateContactForm from '@/views/contacts/parts/CreateForm.vue'
 import UpdateForm from '@/views/contacts/parts/UpdateForm.vue'
 import CartForm from './related_components/create/CartForm.vue'
-import FinalProduct from './related_components/create/FinalProduct.vue'
+import FinalProduct from './related_components/FinalProduct.vue'
 
 export default {
   name: 'CreateForm',

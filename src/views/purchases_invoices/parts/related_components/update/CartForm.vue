@@ -760,6 +760,7 @@ import Fluid from 'primevue/fluid'
 import ScrollPanel from 'primevue/scrollpanel'
 import Panel from 'primevue/panel'
 
+import { API_ROUTES } from '@/constants/apiRoutes'
 import formMixin from '@/mixins/form'
 import customFunctions from '../../../custom_functions/customFunctions'
 import measurementUnitGroups from '@/i18n/locales/en/measurementUnitGroups'
@@ -785,7 +786,7 @@ export default {
     Panel,
   },
 
-  emits: ['handelFormData', 'submit', 'deleteFinalProducts', 'closeForm'],
+  emits: ['handelFormData', 'submit', 'deleteFinalProducts', 'appendProductToCart', 'closeForm'],
 
   watch: {
     company_id: {
@@ -801,6 +802,16 @@ export default {
         if (this.localFormData.branch_id) {
           this.loadWarehouses(this.localFormData.company_id, this.localFormData.branch_id)
         }
+      },
+      immediate: true,
+    },
+    invoice_id: {
+      async handler(newVal) {
+        await this.loadInvoice(newVal)
+
+        this.$nextTick(() => {
+          this.populateForm(this.invoice)
+        })
       },
       immediate: true,
     },
@@ -821,11 +832,17 @@ export default {
     final_products: { type: Array, default: () => [] },
     company_id: { type: String, required: true },
     branch_id: { type: String, default: '' },
+    invoice_id: {
+      type: String,
+      required: false,
+    },
   },
 
   data() {
     return {
+      apiUrl: API_ROUTES.PURCHASES_INVOICE.BASE,
       localFormData: {
+        id: '',
         company_id: this.company_id,
         branch_id: this.branch_id,
         warehouse_id: '',
@@ -859,16 +876,57 @@ export default {
   },
 
   mounted() {
-    this.loadBranches(this.localFormData.company_id)
+    this.loadBranches(this.company_id)
 
-    this.loadContacts(this.localFormData.company_id)
+    this.loadContacts(this.company_id)
 
     this.loadPaymentTypes()
 
-    this.loadMeasurementUnits(this.localFormData.company_id)
+    this.loadMeasurementUnits(this.company_id)
   },
 
   methods: {
+    populateForm(invoice) {
+      if (invoice.branch?.id) {
+        this.loadWarehouses(this.company_id, invoice.branch?.id)
+      }
+
+      this.localFormData = {
+        id: invoice.id || '',
+        name: invoice.name || '',
+        branch_id: invoice.branch?.id || '',
+        warehouse_id: invoice.warehouse?.id || '',
+        contact_id: invoice.contact?.id || '',
+        payment_type_id: invoice.payment_type?.id || '',
+        final_products: this.populateFinalProducts(invoice),
+        additional_costs: invoice.additional_costs || [],
+        additional_discounts: invoice.additional_discounts || [],
+      }
+
+      this.$emit('appendProductToCart', this.localFormData.final_products)
+    },
+
+    populateFinalProducts(invoice) {
+      if (invoice.final_products?.length) {
+        return invoice.final_products.map((invoiceProduct, index) => {
+          return {
+            final_product_id: invoiceProduct.final_product.id,
+            name: invoiceProduct.final_product.name,
+            unit_price: invoiceProduct.unit_price,
+            quantity: invoiceProduct.quantity,
+            measurement_unit_id: invoiceProduct.measurement_unit?.id,
+            operations:
+              invoiceProduct.operations?.map((op) => ({
+                name: op.name,
+                price: op.price,
+                details: op.details,
+              })) || [],
+          }
+        })
+      }
+      return []
+    },
+
     emitSubmit() {
       this.$emit('handelFormData', this.localFormData)
       this.$emit('submit')

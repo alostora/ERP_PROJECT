@@ -1,77 +1,105 @@
 <template>
   <Dialog
     v-model:visible="formVisible"
-    :header="$t('common.updateTitle', { module: $t('purchasesInvoices.title') })"
-    :modal="true"
-    :style="{ width: '500px' }"
+    :header="$t('common.createTitle', { module: $t('purchasesInvoices.title') })"
+    modal
+    maximizable
+    :style="{ width: '80vw', height: '100%' }"
+    :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
     @hide="closeFormModal"
   >
-    <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label class="form-label required">{{ $t('purchasesInvoices.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
-      </div>
+    <div class="row">
+      <!-- Products Grid -->
+      <FinalProduct
+        :company_id="company_id"
+        :final_products="final_products"
+        @appendProductToCart="appendProductToCart"
+      />
+      <!-- End Products Grid -->
 
-      <div class="flex justify-end gap-2 mt-4">
-        <button type="button" class="btn btn-outline ml-2 mr-2" @click="closeFormModal">
-          {{ $t('common.cancel') }}
-        </button>
-        <button type="submit" class="btn btn-primary" :disabled="formLoading">
-          {{ formLoading ? $t('common.loading') : $t('common.update') }}
-        </button>
-      </div>
-    </form>
+      <!-- Cart Form -->
+      <CartForm
+        :company_id="company_id"
+        :branch_id="branch_id"
+        :invoice_id="invoice_id"
+        :final_products.sync="final_products"
+        :errors="errors"
+        @handelFormData="handelFormData"
+        @submit="handleSubmit"
+        @closeForm="closeFormModal"
+        @deleteFinalProducts="deleteFinalProducts"
+        @appendProductToCart="appendProductToCart"
+      />
+      <!-- End Cart Form -->
+    </div>
   </Dialog>
 </template>
 
 <script>
-import Dialog from 'primevue/dialog'
-import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
-import validationRequest from '../validation/validationRequest'
 import customFunctions from '../custom_functions/customFunctions'
+import formMixin from '@/mixins/form'
+import validationRequest from '../validation/validationRequest'
+
+import Dialog from 'primevue/dialog'
+import Tag from 'primevue/tag'
+import Button from 'primevue/button'
+import Select from 'primevue/select'
+import CreateContactForm from '@/views/contacts/parts/CreateForm.vue'
+import UpdateForm from '@/views/contacts/parts/UpdateForm.vue'
+import CartForm from './related_components/update/CartForm.vue'
+import FinalProduct from './related_components/FinalProduct.vue'
 
 export default {
   name: 'UpdateForm',
-  mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog },
 
-  props: {
-    selected_item: {
-      type: Object,
-      default: () => ({}),
-    },
+  mixins: [formMixin, customFunctions, validationRequest],
+
+  components: {
+    Dialog,
+    Tag,
+    Button,
+    Select,
+    CreateContactForm,
+    UpdateForm,
+    CartForm,
+    FinalProduct,
   },
 
   watch: {
-    selected_item: {
-      immediate: true,
-      deep: true,
-      handler(selectedItem) {
-        if (selectedItem && selectedItem.id) {
-          this.populateForm(selectedItem)
+    '$route.params.company_id': {
+      handler(newVal) {
+        if (newVal && newVal !== 'undefined') {
+          this.formData.company_id = newVal
         }
       },
+      immediate: true,
+    },
+
+    '$route.params.branch_id': {
+      handler(newVal) {
+        if (newVal && newVal !== 'undefined') {
+          this.formData.branch_id = newVal
+        }
+      },
+      immediate: true,
     },
   },
 
-  data() {
-    return {
-      apiUrl: API_ROUTES.PURCHASES_INVOICE.BASE,
-      formData: {
-        id: '',
-        name: '',
-      },
-    }
+  props: {
+    company_id: {
+      type: String,
+      required: true,
+    },
+    branch_id: {
+      type: String,
+      required: false,
+    },
+    invoice_id: {
+      type: String,
+      required: false,
+    },
   },
-
-  mounted() {},
 
   computed: {
     currentLanguage() {
@@ -79,32 +107,67 @@ export default {
     },
   },
 
+  data() {
+    return {
+      apiUrl: API_ROUTES.PURCHASES_INVOICE.BASE,
+      final_products: [],
+      formData: {
+        company_id: this.company_id,
+        branch_id: this.branch_id,
+        final_products: [],
+      },
+    }
+  },
+
   methods: {
-    populateForm(selectedItem) {
+    openModal() {
+      this.openFormModal()
+
+      this.formData.company_id = this.company_id || this.$route.params.company_id
+      this.formData.branch_id = this.branch_id || this.$route.params.branch_id
+    },
+
+    handelFormData(cartFormData) {
       this.formData = {
-        id: selectedItem.id || '',
-        name: selectedItem.name || '',
+        ...this.formData,
+        company_id: cartFormData.company_id,
+        branch_id: cartFormData.branch_id,
+        warehouse_id: cartFormData.warehouse_id,
+        contact_id: cartFormData.contact_id,
+        payment_type_id: cartFormData.payment_type_id,
+        name: cartFormData.name,
+        final_products: this.final_products,
+        additional_costs: cartFormData.additional_costs,
+        additional_discounts: cartFormData.additional_discounts,
       }
     },
 
-    openModal() {
-      this.formVisible = true
+    appendProductToCart(finalProducts) {
+      this.final_products = finalProducts
+    },
+
+    deleteFinalProducts(product) {
+      this.final_products = this.final_products.filter(
+        (p) => p.final_product_id !== product.final_product_id
+      )
     },
 
     async handleSubmit() {
-      if (!this.validateUpdateForm(this.formData)) {
+      if (!this.validateCreateForm(this.formData)) {
         return
       }
 
-      const data = { ...this.formData }
-      delete data.id
+      console.log(this.formData)
 
-      await this.submitUpdateForm(
-        this.apiUrl,
-        this.formData.id,
-        data,
-        this.$t('common.updatedSuccessfully')
-      )
+      await this.submitCreateForm(this.apiUrl, this.formData, this.$t('common.createdSuccessfully'))
+    },
+
+    closeFormModal() {
+      this.formVisible = false
+      this.formLoading = false
+      this.formErrors = {}
+      this.formData = {}
+      this.final_products = []
     },
   },
 }

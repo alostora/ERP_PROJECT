@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import customFunctions from '../../../custom_functions/customFunctions'
+import customFunctions from '../../custom_functions/customFunctions'
 import formMixin from '@/mixins/form'
 
 import Tag from 'primevue/tag'
