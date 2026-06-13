@@ -448,13 +448,7 @@
                             {{ $t('purchasesInvoices.total_price') }}:
                           </span>
                           <span class="font-semibold text-warning text-sm">
-                            {{
-                              formatCurrency(
-                                product.quantity *
-                                  product.unit_price *
-                                  measurementUnitGroupFactorValue(product.measurement_unit_id)
-                              )
-                            }}
+                            {{ formatCurrency(product.quantity * product.unit_price) }}
                           </span>
                         </div>
                       </div>
@@ -468,9 +462,7 @@
                           <span class="font-semibold text-warning text-base">
                             {{
                               formatCurrency(
-                                product.quantity *
-                                  product.unit_price *
-                                  measurementUnitGroupFactorValue(product.measurement_unit_id) +
+                                product.quantity * product.unit_price +
                                   calculateProductOperationCost(product)
                               )
                             }}
@@ -1023,18 +1015,17 @@ export default {
       }
     },
 
-    measurementUnitGroupFactorValue(measurementUnitId) {
+    /*  measurementUnitGroupFactorValue(measurementUnitId) {
       const measurementUnit = this.measurementUnits.find((unit) => unit.id === measurementUnitId)
       if (measurementUnit) {
         return measurementUnit.factor_value
       }
       return 1
-    },
+    }, */
 
     calculateSubtotal() {
       const subTotal = this.final_products.reduce((sum, product) => {
-        const factor = this.measurementUnitGroupFactorValue(product.measurement_unit_id)
-        return sum + product.quantity * product.unit_price * factor
+        return sum + product.quantity * product.unit_price
       }, 0)
 
       return subTotal
