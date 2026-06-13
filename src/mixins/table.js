@@ -136,6 +136,7 @@ export const tableMixin = {
         this.loading = false
       }
     },
+    
     formatDate(date) {
       if (!date) return ''
 
