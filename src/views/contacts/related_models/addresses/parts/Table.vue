@@ -75,8 +75,12 @@
             </div>
           </template>
         </Column>
-
-        <Column field="created_at" :header="$t('contacts.createdAt')" />
+        
+        <Column field="created_at" :header="$t('contacts.createdAt')" class="col-1">
+          <template #body="{ data }">
+            {{ formatDate(data.created_at) }}
+          </template>
+        </Column>
 
         <Column :header="$t('common.actions')">
           <template #body="{ data }">

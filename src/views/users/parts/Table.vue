@@ -75,7 +75,13 @@
         <Column field="email" :header="$t('users.email')" sortable />
         <Column field="phone" :header="$t('users.phone')" />
         <Column field="account_type.name" :header="$t('users.accountType')" />
-        <Column field="created_at" :header="$t('users.createdAt')" />
+
+        <Column field="created_at" :header="$t('users.createdAt')" class="col-1">
+          <template #body="{ data }">
+            {{ formatDate(data.created_at) }}
+          </template>
+        </Column>
+
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
             <div class="actions-cell">

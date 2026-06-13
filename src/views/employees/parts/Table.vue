@@ -91,7 +91,11 @@
 
         <Column field="phone" :header="$t('employees.phone')" />
 
-        <Column field="created_at" :header="$t('employees.createdAt')" />
+        <Column field="created_at" :header="$t('employees.createdAt')" class="col-1">
+          <template #body="{ data }">
+            {{ formatDate(data.created_at) }}
+          </template>
+        </Column>
 
         <Column :header="$t('common.actions')">
           <template #body="{ data }">

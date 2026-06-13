@@ -8,6 +8,11 @@ export default {
   grand_total: 'Grand Total (Including Tax)',
   stage_updated_at: 'Stage Updated At',
   is_closed: 'Is Closed?',
+  is_active: 'Is Active?',
+  date_from: 'Date from',
+  date_to: 'Date to',
+  net_amount: 'Net Amount',
+  net_amount_after_costs_and_discounts: 'Net Amount After Costs',
 
   /////////////////////////////
   company: 'Company',

@@ -1,7 +1,10 @@
 import API from '@/mixins/api'
 import { API_ROUTES } from '@/constants/apiRoutes'
+import LOOKUP_TYPES from '@/constants/lookupTypes'
+import tableMixin from '@/mixins/table'
 
 export const customFunctions = {
+  mixins: [tableMixin],
   data() {
     return {
       finalProductFilters: {
@@ -20,6 +23,9 @@ export const customFunctions = {
 
       contactUrl: API_ROUTES.CONTACT.SEARCH,
       contacts: [],
+
+      stageUrl: API_ROUTES.STAGE.SEARCH,
+      stages: [],
 
       paymentTypeUrl: API_ROUTES.LOOKUP.PAYMENT_TYPE,
       paymentTypes: [],
@@ -59,14 +65,18 @@ export const customFunctions = {
     },
 
     onBranchChange() {
-      const branchId = this.formData?.branch_id || this.localFormData?.branch_id
-      const companyId = this.formData?.company_id || this.localFormData?.company_id
+      const branchId =
+        this.formData?.branch_id || this.localFormData?.branch_id || this.filters?.branch_id
+
+      const companyId =
+        this.company_id || this.formData?.company_id || this.localFormData?.company_id
 
       this.warehouses = []
 
       if (branchId) {
         this.loadWarehouses(companyId, branchId)
       }
+      this.fetchData()
     },
 
     async loadWarehouses(companyId, branchId) {
@@ -89,6 +99,19 @@ export const customFunctions = {
         this.contacts = response.data.data || []
       } catch (error) {
         console.error('Error loading contacts:', error)
+        this.formLoading = false
+      }
+      this.formLoading = false
+    },
+
+    async loadStages(companyId) {
+      try {
+        this.formLoading = true
+        const params = { type_code: LOOKUP_TYPES.LOOKUP_TYPE_CODES.STAGE.INVOICE_PURCHASES }
+        const response = await API.get(`${this.stageUrl}/${companyId}`, { params })
+        this.stages = response.data.data || []
+      } catch (error) {
+        console.error('Error loading stages:', error)
         this.formLoading = false
       }
       this.formLoading = false

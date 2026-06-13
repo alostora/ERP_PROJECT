@@ -171,7 +171,11 @@
           </template>
         </Column>
 
-        <Column field="created_at" :header="$t('transferMoneys.createdAt')" class="col-2" />
+        <Column field="created_at" :header="$t('transferMoneys.createdAt')" class="col-1">
+          <template #body="{ data }">
+            {{ formatDate(data.created_at) }}
+          </template>
+        </Column>
 
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
