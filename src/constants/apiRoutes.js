@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL || 'https://www.ngcis.com/ERP/public/api'
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://www.back.ngcis.com/api'
 import LOOKUP_TYPES from '@/constants/lookupTypes'
 
 export const API_ROUTES = {
