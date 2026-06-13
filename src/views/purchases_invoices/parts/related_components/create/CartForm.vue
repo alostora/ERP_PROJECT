@@ -411,21 +411,21 @@
                                 :placeholder="$t('purchasesInvoices.details')"
                               >
                               </textarea>
+                              <small
+                                v-if="
+                                  errors[
+                                    `final_products.${index}.operations.${operationsIndex}.details`
+                                  ]
+                                "
+                                class="error-message"
+                              >
+                                {{
+                                  errors[
+                                    `final_products.${index}.operations.${operationsIndex}.details`
+                                  ]
+                                }}
+                              </small>
                             </div>
-                            <small
-                              v-if="
-                                errors[
-                                  `final_products.${index}.operations.${operationsIndex}.details`
-                                ]
-                              "
-                              class="error-message"
-                            >
-                              {{
-                                errors[
-                                  `final_products.${index}.operations.${operationsIndex}.details`
-                                ]
-                              }}
-                            </small>
                           </div>
 
                           <div class="bg-warning-50 border-l-4 border-warning rounded p-2 mt-3">
@@ -462,8 +462,7 @@
                           <span class="font-semibold text-warning text-base">
                             {{
                               formatCurrency(
-                                product.quantity *
-                                  product.unit_price +
+                                product.quantity * product.unit_price +
                                   calculateProductOperationCost(product)
                               )
                             }}
