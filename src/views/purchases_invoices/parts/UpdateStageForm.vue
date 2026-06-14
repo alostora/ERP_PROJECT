@@ -228,15 +228,11 @@ export default {
       if (parent == null) {
         if (stage.stage_sort > this.minStageSort) {
           const backStage = this.stages.find((s) => s.stage_sort === stage.stage_sort - 1)
-          // console.log(stage.stage_sort - 1)
-          // console.log('backStage', backStage.stage_sort)
           this.formData.stage_id = backStage.id
         }
 
         if (stage.stage_sort < this.maxStageSort) {
           const nextStage = this.stages.find((s) => s.stage_sort === stage.stage_sort + 1)
-          // console.log(stage.stage_sort + 1)
-          // console.log('nextStage', nextStage.stage_sort)
           this.formData.stage_id = nextStage.id
         }
       } else {
@@ -245,11 +241,6 @@ export default {
 
       this.handleSubmit()
     },
-    /* 
-    goToStage(stage) {
-      console.log('hosaaaaam', stage)
-      this.activeStep = String(stage.stage_sort)
-    }, */
 
     async handleSubmit() {
       console.log(this.formData)
