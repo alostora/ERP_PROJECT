@@ -13,7 +13,9 @@ export default {
   reset: 'Reset',
   close: 'Close',
   back: 'Back',
+  next: 'Next',
   addNew: 'Add New',
+  add: 'Add',
 
   confirm: 'Confirm',
   confirmYes: 'Yes',
@@ -28,6 +30,7 @@ export default {
   empty: 'Empty',
 
   yes: 'Yes',
+  no: 'No',
 
   default: 'Default',
 

@@ -57,6 +57,7 @@ export default {
   /////////////////////////////
 
   stage: 'Stage',
+  stage_comment: 'Stage Comment',
   employee: 'Employee',
   invoice_payment_status: 'Payment Status',
   payments: 'Payments',

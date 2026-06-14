@@ -35,7 +35,7 @@
                 :showClear="true"
                 :filterPlaceholder="$t('common.search')"
                 class="w-full"
-                @change="onBranchChange"
+                @change="(onBranchChange(), fetchData())"
               />
             </div>
           </div>
@@ -122,17 +122,34 @@
           </div>
         </div>
 
-        <div class="divider"></div>
-
         <div class="row mb-1">
           <div class="col-12 col-md-6 col-lg-3">
-            <label class="form-label">{{ $t('purchasesInvoices.date_from') }}</label>
-            <input type="date" v-model="filters.date_from" @input="fetchData" class="input" />
+            <FloatLabel variant="on">
+              <DatePicker
+                v-model="filters.date_from"
+                inputId="date_from"
+                showIcon
+                showButtonBar
+                iconDisplay="input"
+                class="w-full"
+                @update:modelValue="fetchData"
+              />
+              <label for="date_from">{{ $t('purchasesInvoices.date_from') }}</label>
+            </FloatLabel>
           </div>
-
           <div class="col-12 col-md-6 col-lg-3">
-            <label class="form-label">{{ $t('purchasesInvoices.date_to') }}</label>
-            <input type="date" v-model="filters.date_to" @input="fetchData" class="input" />
+            <FloatLabel variant="on">
+              <DatePicker
+                v-model="filters.date_to"
+                inputId="date_to"
+                showIcon
+                showButtonBar
+                iconDisplay="input"
+                class="w-full"
+                @update:modelValue="fetchData"
+              />
+              <label for="date_to">{{ $t('purchasesInvoices.date_to') }}</label>
+            </FloatLabel>
           </div>
         </div>
 
@@ -187,11 +204,23 @@
 
         <Column :header="$t('purchasesInvoices.stage')" class="col-1">
           <template #body="{ data }">
-            <div v-if="data.stage?.affects_stock" class="badge badge-success">
+            <div :class="data.stage?.affects_stock ? 'badge badge-success' : 'badge badge-warning'">
               {{ currentLanguage == 'ar' ? data.stage?.name_ar : data.stage?.name }}
-            </div>
-            <div v-else class="badge badge-warning">
-              {{ currentLanguage == 'ar' ? data.stage?.name_ar : data.stage?.name }}
+
+              <Button
+                :severity="data.stage?.affects_stock ? 'success' : 'warn'"
+                variant="outlined"
+                class="ml-1 mr-1 btn btn-sm"
+                :icon="currentLanguage == 'ar' ? 'pi pi-arrow-left' : 'pi pi-arrow-right'"
+                @click="openUpdateStageModal(data.id, data.stage.stage_sort)"
+                :title="
+                  $t('common.edit') +
+                  ' ' +
+                  (currentLanguage == 'ar' ? data.stage?.name_ar : data.stage?.name)
+                "
+                style="height: 20px"
+              >
+              </Button>
             </div>
           </template>
         </Column>
@@ -212,6 +241,7 @@
             {{ data.contact?.name || '-' }}
           </template>
         </Column>
+
         <Column
           field="net_amount_after_costs_and_discounts"
           :header="$t('purchasesInvoices.net_amount_after_costs_and_discounts')"
@@ -258,7 +288,17 @@
       @updated="fetchData"
     />
 
+    <UpdateStageForm
+      ref="updateStageModal"
+      :company_id="company_id"
+      :branch_id="branch_id"
+      :invoice_id="invoice_id"
+      :stage_sort="stage_sort"
+      @updated="fetchData"
+    />
+
     <Toast />
+
     <ConfirmDialog />
   </div>
 </template>
@@ -269,8 +309,12 @@ import Column from 'primevue/column'
 import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
 import Select from 'primevue/select'
+import FloatLabel from 'primevue/floatlabel'
+import DatePicker from 'primevue/datepicker'
+import Button from 'primevue/button'
 import CreateForm from './CreateForm.vue'
 import UpdateForm from './UpdateForm.vue'
+import UpdateStageForm from './UpdateStageForm.vue'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
@@ -278,7 +322,19 @@ import { API_ROUTES } from '@/constants/apiRoutes'
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: { DataTable, Column, Toast, ConfirmDialog, Select, CreateForm, UpdateForm },
+  components: {
+    DataTable,
+    Column,
+    Toast,
+    ConfirmDialog,
+    Select,
+    FloatLabel,
+    DatePicker,
+    Button,
+    CreateForm,
+    UpdateForm,
+    UpdateStageForm,
+  },
 
   watch: {
     '$route.params.company_id': {
@@ -317,6 +373,7 @@ export default {
       deleteUrl: API_ROUTES.PURCHASES_INVOICE.BASE,
       filters: { query_string: '' },
       invoice_id: '',
+      stage_sort: '',
       isColsedValues: [
         { name: this.$t('common.no'), value: '0' },
         { name: this.$t('common.yes'), value: '1' },
@@ -361,6 +418,14 @@ export default {
       this.invoice_id = itemId
       this.$nextTick(() => {
         this.$refs.updateModal.openModal()
+      })
+    },
+
+    openUpdateStageModal(itemId, stageSort) {
+      this.invoice_id = itemId
+      this.stage_sort = String(stageSort)
+      this.$nextTick(() => {
+        this.$refs.updateStageModal.openModal()
       })
     },
 

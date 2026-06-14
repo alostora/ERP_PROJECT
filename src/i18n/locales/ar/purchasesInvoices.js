@@ -57,6 +57,7 @@ export default {
 
   /////////////////////////////
   stage: 'المرحلة',
+  stage_comment: 'ملاحظلات علي المرحلة',
   employee: 'الموظف',
   invoice_payment_status: 'حالة الدفع',
   payments: 'المدفوعات',

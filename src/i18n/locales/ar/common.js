@@ -15,7 +15,9 @@ export default {
   reset: 'إعادة تعيين',
   close: 'إغلاق',
   back: 'رجوع',
+  next: 'التالي',
   addNew: 'إضافة جديد',
+  add: 'إضافة',
 
   confirm: 'تأكيد',
   confirmYes: 'نعم',

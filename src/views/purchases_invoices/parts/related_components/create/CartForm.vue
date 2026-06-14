@@ -11,9 +11,9 @@
         <div class="row mb-3">
           <div class="col-12">
             <div class="card-info">
-              <!-- Row 1: Name -->
               <div class="card-header-info">{{ $t('purchasesInvoices.base_info') }}</div>
               <div class="card-body">
+                <!-- Row 1: Name -->
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group">
@@ -33,7 +33,7 @@
                   </div>
                 </div>
 
-                <!-- Row 2: Warehouse & Branch -->
+                <!-- Row 2: Branch & Warehouse -->
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group">

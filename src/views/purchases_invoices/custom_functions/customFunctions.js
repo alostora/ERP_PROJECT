@@ -76,7 +76,6 @@ export const customFunctions = {
       if (branchId) {
         this.loadWarehouses(companyId, branchId)
       }
-      this.fetchData()
     },
 
     async loadWarehouses(companyId, branchId) {

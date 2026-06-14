@@ -197,5 +197,7 @@ export const API_ROUTES = {
   PURCHASES_INVOICE: {
     SEARCH: `${BASE_URL}/admin/company/purchases/invoices/search`,
     BASE: `${BASE_URL}/admin/company/purchases/invoice`,
+    UPDATE_STAGE: `${BASE_URL}/admin/company/purchases/invoice-stage`,
+    UPDATE_STAGE_ACTION: `${BASE_URL}/admin/company/purchases/invoice-stage-action`,
   },
 }
