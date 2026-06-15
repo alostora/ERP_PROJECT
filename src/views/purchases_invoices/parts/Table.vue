@@ -212,7 +212,7 @@
                 variant="outlined"
                 class="ml-1 mr-1 btn btn-sm"
                 :icon="currentLanguage == 'ar' ? 'pi pi-arrow-left' : 'pi pi-arrow-right'"
-                @click="openUpdateStageModal(data.id, data.stage.stage_sort)"
+                @click="openUpdateStageModal(data)"
                 :title="
                   $t('common.edit') +
                   ' ' +
@@ -292,8 +292,7 @@
       ref="updateStageModal"
       :company_id="company_id"
       :branch_id="branch_id"
-      :invoice_id="invoice_id"
-      :stage_sort="stage_sort"
+      :selected_item="selectedItem"
       @updated="fetchData"
     />
 
@@ -336,6 +335,17 @@ export default {
     UpdateStageForm,
   },
 
+  props: {
+    company_id: {
+      type: String,
+      required: true,
+    },
+    branch_id: {
+      type: String,
+      required: false,
+    },
+  },
+
   watch: {
     '$route.params.company_id': {
       handler(newVal) {
@@ -356,24 +366,13 @@ export default {
     },
   },
 
-  props: {
-    company_id: {
-      type: String,
-      required: true,
-    },
-    branch_id: {
-      type: String,
-      required: false,
-    },
-  },
-
   data() {
     return {
       apiUrl: API_ROUTES.PURCHASES_INVOICE.SEARCH,
       deleteUrl: API_ROUTES.PURCHASES_INVOICE.BASE,
       filters: { query_string: '' },
       invoice_id: '',
-      stage_sort: '',
+      selectedItem: {},
       isColsedValues: [
         { name: this.$t('common.no'), value: '0' },
         { name: this.$t('common.yes'), value: '1' },
@@ -421,9 +420,8 @@ export default {
       })
     },
 
-    openUpdateStageModal(itemId, stageSort) {
-      this.invoice_id = itemId
-      this.stage_sort = String(stageSort)
+    openUpdateStageModal(item) {
+      this.selectedItem = { ...item }
       this.$nextTick(() => {
         this.$refs.updateStageModal.openModal()
       })

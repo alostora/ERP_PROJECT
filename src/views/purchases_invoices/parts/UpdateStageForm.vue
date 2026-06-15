@@ -8,7 +8,7 @@
     @hide="closeFormModal"
   >
     <div class="card flex justify-center">
-      <Stepper :value="activeStep" :linear="activeStep == maxStageSort" class="basis-[50rem]">
+      <Stepper :value="activeStep" :linear="selected_item.is_closed" class="basis-[50rem]">
         <StepList>
           <Step
             v-for="(stage, index) in stages"
@@ -18,8 +18,7 @@
             :pt="{
               title: {
                 style: {
-                  color:
-                    activeStep == maxStageSort ? 'var(--color-success)' : 'var(--color-warning)',
+                  color: selected_item.is_closed ? 'var(--color-success)' : 'var(--color-warning)',
                   fontWeight: 'bold',
                 },
               },
@@ -41,17 +40,13 @@
               <template #title>
                 <div
                   class="border rounded p-1"
-                  :class="activeStep == maxStageSort ? 'bg-success-100' : 'bg-warning-100'"
+                  :class="selected_item.is_closed ? 'bg-success-100' : 'bg-warning-100'"
                 >
                   {{ currentLanguage == 'ar' ? stage.name_ar : stage.name }}
                 </div>
               </template>
               <template #content>
-                <form
-                  @submit.prevent="handleSubmit"
-                  @click.stop
-                  v-if="stage.stage_sort != maxStageSort"
-                >
+                <form @submit.prevent="handleSubmit" @click.stop v-if="!selected_item.is_closed">
                   <label class="form-label">{{ $t('purchasesInvoices.stage_comment') }}</label>
                   <textarea
                     v-model="formData.comment"
@@ -61,7 +56,7 @@
                     @click.stop
                   ></textarea>
                 </form>
-                <div class="flex gap-4" v-if="stage.stage_sort != maxStageSort">
+                <div class="flex gap-4" v-if="!selected_item.is_closed">
                   <Button
                     v-if="stage.stage_sort > minStageSort"
                     :label="$t('common.back')"
@@ -125,41 +120,6 @@ export default {
     Card,
   },
 
-  watch: {
-    '$route.params.company_id': {
-      handler(newVal) {
-        if (newVal && newVal !== 'undefined') {
-          this.formData.company_id = newVal
-        }
-      },
-      immediate: true,
-    },
-
-    '$route.params.branch_id': {
-      handler(newVal) {
-        if (newVal && newVal !== 'undefined') {
-          this.formData.branch_id = newVal
-        }
-      },
-      immediate: true,
-    },
-    invoice_id: {
-      handler(newVal) {
-        if (newVal && newVal !== 'undefined') {
-        }
-      },
-      immediate: true,
-    },
-    stage_sort: {
-      handler(newVal) {
-        if (newVal && newVal !== 'undefined') {
-          this.activeStep = String(newVal)
-        }
-      },
-      immediate: true,
-    },
-  },
-
   props: {
     company_id: {
       type: String,
@@ -169,13 +129,32 @@ export default {
       type: String,
       required: false,
     },
-    invoice_id: {
-      type: String,
-      required: false,
+    selected_item: {
+      type: Object,
+      default: () => ({}),
     },
-    stage_sort: {
-      type: String,
-      required: false,
+  },
+
+  watch: {
+    '$route.params.company_id': {
+      handler(newVal) {
+        if (newVal && newVal !== 'undefined') {
+        }
+      },
+      immediate: true,
+    },
+
+    '$route.params.branch_id': {
+      handler(newVal) {
+        if (newVal && newVal !== 'undefined') {
+        }
+      },
+      immediate: true,
+    },
+    selected_item: {
+      immediate: true,
+      deep: true,
+      handler(selectedItem) {},
     },
   },
 
@@ -197,9 +176,9 @@ export default {
     return {
       apiUrl: API_ROUTES.PURCHASES_INVOICE.UPDATE_STAGE,
       activeStep: String(this.stage_sort),
+      stage_sort: '',
       formData: {
-        id: this.invoice_id,
-        invoice_id: this.invoice_id,
+        id: '',
         company_id: this.company_id,
         branch_id: this.branch_id,
         stage_id: '',
@@ -209,19 +188,27 @@ export default {
   },
 
   methods: {
+    populateForm(selectedItem) {
+      this.stage_sort = selectedItem.stage?.stage_sort
+      this.activeStep = String(selectedItem.stage?.stage_sort)
+      this.formData = {
+        id: selectedItem.id || '',
+        stage_id: selectedItem.stage?.id || '',
+      }
+    },
+
     openModal() {
       this.openFormModal()
 
-      this.formData.company_id = this.company_id || this.$route.params.company_id
-      this.formData.branch_id = this.branch_id || this.$route.params.branch_id
-      this.formData.invoice_id = this.invoice_id || this.$route.params.invoice_id
-      this.formData.id = this.invoice_id || this.$route.params.invoice_id
+      if (this.selected_item?.id) {
+        this.populateForm(this.selected_item)
+      }
 
-      this.loadStages(this.formData.company_id)
+      this.loadStages(this.company_id)
     },
 
     goToStep(stage, parent = null) {
-      if (stage.stage_sort == this.maxStageSort) {
+      if (this.selected_item.is_closed) {
         return
       }
 
@@ -243,7 +230,6 @@ export default {
     },
 
     async handleSubmit() {
-      console.log(this.formData)
       if (!this.validateUpdateStageForm(this.formData)) {
         return
       }
