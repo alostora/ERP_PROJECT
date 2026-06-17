@@ -797,7 +797,7 @@ export default {
       },
       immediate: true,
     },
-    purchases_invoice_id: {
+    purchases_invoice_return_id: {
       async handler(newVal) {
         await this.loadInvoice(newVal)
 
@@ -824,7 +824,7 @@ export default {
     final_products: { type: Array, default: () => [] },
     company_id: { type: String, required: true },
     branch_id: { type: String, default: '' },
-    purchases_invoice_id: {
+    purchases_invoice_return_id: {
       type: String,
       required: false,
     },

@@ -31,6 +31,7 @@ import wallets from '@/views/wallets/routes/routes'
 import transferMoneys from '@/views/transfer_moneys/routes/routes'
 import payments from '@/views/payments/routes/routes'
 import purchasesInvoices from '@/views/purchases_invoices/routes/routes'
+import purchasesInvoicesReturns from '@/views/purchases_invoices_returns/routes/routes'
 
 const routes = [
   {
@@ -74,6 +75,7 @@ const routes = [
       ...transferMoneys,
       ...payments,
       ...purchasesInvoices,
+      ...purchasesInvoicesReturns,
     ],
   },
 ]

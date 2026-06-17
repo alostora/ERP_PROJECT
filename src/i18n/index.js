@@ -32,6 +32,7 @@ import enWallets from './locales/en/wallets'
 import enTransferMoneys from './locales/en/transferMoneys'
 import enPayments from './locales/en/payments'
 import enPurchasesInvoices from './locales/en/purchasesInvoices'
+import enPurchasesInvoicesReturns from './locales/en/purchasesInvoicesReturns'
 
 // Import Arabic translations
 import arCommon from './locales/ar/common'
@@ -65,6 +66,7 @@ import arWallets from './locales/ar/wallets'
 import arTransferMoneys from './locales/ar/transferMoneys'
 import arPayments from './locales/ar/payments'
 import arPurchasesInvoices from './locales/ar/purchasesInvoices'
+import arPurchasesInvoicesReturns from './locales/ar/purchasesInvoicesReturns'
 
 const messages = {
   en: {
@@ -99,6 +101,7 @@ const messages = {
     transferMoneys: enTransferMoneys,
     payments: enPayments,
     purchasesInvoices: enPurchasesInvoices,
+    purchasesInvoicesReturns: enPurchasesInvoicesReturns,
   },
 
   ar: {
@@ -133,6 +136,7 @@ const messages = {
     transferMoneys: arTransferMoneys,
     payments: arPayments,
     purchasesInvoices: arPurchasesInvoices,
+    purchasesInvoicesReturns: arPurchasesInvoicesReturns,
   },
 }
 

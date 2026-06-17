@@ -1,5 +1,5 @@
 export default {
-  title: 'Purchase Invoices',
+  title: 'Purchase Invoice Returns',
   base_info: 'Base Information',
   id: '#',
   name: 'Name',
@@ -13,7 +13,10 @@ export default {
   date_to: 'Date to',
   net_amount: 'Net Amount',
   net_amount_after_costs_and_discounts: 'Net Amount After Costs',
-  returns: 'Returns',
+  purchase_invoice: 'Purchase Invoice',
+  purchased_quantity: 'Purchased Quantity',
+  purchased_measurement_unit: 'Purchased Measurement Unit',
+  remaining_returnable_quantity: 'Remaining Returnable Quantity',
 
   /////////////////////////////
   company: 'Company',

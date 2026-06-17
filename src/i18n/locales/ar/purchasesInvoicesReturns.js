@@ -1,5 +1,5 @@
 export default {
-  title: 'فواتير المشتريات',
+  title: 'فواتير مرتجعات المشتريات',
   base_info: 'المعلومات الاساسية',
   id: '#',
   name: 'الاسم',
@@ -13,7 +13,10 @@ export default {
   date_to: 'تاريخ الي',
   net_amount: 'صافي المبلغ',
   net_amount_after_costs_and_discounts: 'المبلغ الاجمالي',
-  returns: 'المرتجعات',
+  purchase_invoice: 'فاتورة المشتريات',
+  purchased_quantity: 'الكمية المشتراة',
+  purchased_measurement_unit: 'وحدة القياس اثناء الشراء',
+  remaining_returnable_quantity: 'الكمية المتبقية القابلة للإرجاع',
 
   /////////////////////////////
   company: 'الشركة',

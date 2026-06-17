@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h1 class="page-title">{{ $t('purchasesInvoices.title') }}</h1>
+      <h1 class="page-title">{{ $t('purchasesInvoicesReturns.title') }}</h1>
       <button class="btn btn-primary" @click="openCreateModal">
         <i class="pi pi-plus"></i>
         {{ $t('common.addNew') }}
@@ -82,7 +82,7 @@
                 v-model="filters.reference_code"
                 @input="fetchData"
                 class="input"
-                :placeholder="$t('purchasesInvoices.reference_code')"
+                :placeholder="$t('purchasesInvoicesReturns.reference_code')"
               />
             </div>
           </div>
@@ -94,7 +94,7 @@
                 :options="isColsedValues"
                 optionLabel="name"
                 optionValue="value"
-                :placeholder="$t('common.all') + ' ' + $t('purchasesInvoices.is_closed')"
+                :placeholder="$t('common.all') + ' ' + $t('purchasesInvoicesReturns.is_closed')"
                 :filter="true"
                 :showClear="true"
                 :filterPlaceholder="$t('common.search')"
@@ -134,7 +134,7 @@
                 class="w-full"
                 @update:modelValue="fetchData"
               />
-              <label for="date_from">{{ $t('purchasesInvoices.date_from') }}</label>
+              <label for="date_from">{{ $t('purchasesInvoicesReturns.date_from') }}</label>
             </FloatLabel>
           </div>
           <div class="col-12 col-md-6 col-lg-3">
@@ -148,7 +148,7 @@
                 class="w-full"
                 @update:modelValue="fetchData"
               />
-              <label for="date_to">{{ $t('purchasesInvoices.date_to') }}</label>
+              <label for="date_to">{{ $t('purchasesInvoicesReturns.date_to') }}</label>
             </FloatLabel>
           </div>
         </div>
@@ -180,7 +180,7 @@
         resizableColumns
         showGridlines
       >
-        <Column field="id" :header="$t('purchasesInvoices.id')" class="col-1">
+        <Column field="id" :header="$t('purchasesInvoicesReturns.id')" class="col-1">
           <template #body="slotProps">
             <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
           </template>
@@ -188,13 +188,13 @@
 
         <Column
           field="reference_code"
-          :header="$t('purchasesInvoices.reference_code')"
+          :header="$t('purchasesInvoicesReturns.reference_code')"
           class="col-2"
         />
 
-        <Column field="name" :header="$t('purchasesInvoices.name')" class="col-2" />
+        <Column field="name" :header="$t('purchasesInvoicesReturns.name')" class="col-2" />
 
-        <Column :header="$t('purchasesInvoices.branch')" class="col-1">
+        <Column :header="$t('purchasesInvoicesReturns.branch')" class="col-1">
           <template #body="{ data }">
             <div class="badge badge-info">
               {{ currentLanguage == 'ar' ? data.branch?.name_ar : data.branch?.name }}
@@ -202,7 +202,7 @@
           </template>
         </Column>
 
-        <Column :header="$t('purchasesInvoices.stage')" class="col-1">
+        <Column :header="$t('purchasesInvoicesReturns.stage')" class="col-1">
           <template #body="{ data }">
             <div :class="data.stage?.affects_stock ? 'badge badge-success' : 'badge badge-warning'">
               {{ currentLanguage == 'ar' ? data.stage?.name_ar : data.stage?.name }}
@@ -225,7 +225,7 @@
           </template>
         </Column>
 
-        <Column :header="$t('purchasesInvoices.is_closed')" class="col-1">
+        <Column :header="$t('purchasesInvoicesReturns.is_closed')" class="col-1">
           <template #body="{ data }">
             <div v-if="data.is_closed" class="badge badge-success">
               {{ $t('common.yes') }}
@@ -236,7 +236,7 @@
           </template>
         </Column>
 
-        <Column :header="$t('purchasesInvoices.contact')" class="col-1">
+        <Column :header="$t('purchasesInvoicesReturns.contact')" class="col-1">
           <template #body="{ data }">
             {{ data.contact?.name || '-' }}
           </template>
@@ -244,32 +244,11 @@
 
         <Column
           field="net_amount_after_costs_and_discounts"
-          :header="$t('purchasesInvoices.net_amount_after_costs_and_discounts')"
+          :header="$t('purchasesInvoicesReturns.net_amount_after_costs_and_discounts')"
           class="col-1"
         />
 
-        <Column :header="$t('purchasesInvoices.returns')">
-          <template #body="{ data }">
-            <button
-              class="btn-sm btn-outline"
-              @click="
-                $router.push({
-                  name: 'purchases-invoices-returns',
-                  params: {
-                    purchases_invoice_id: data.id,
-                    company_id: company_id,
-                    branch_id: branch_id,
-                  },
-                })
-              "
-            >
-              <i class="pi pi-link text-primary"></i>
-              {{ $t('purchasesInvoices.returns') }}
-            </button>
-          </template>
-        </Column>
-
-        <Column field="created_at" :header="$t('purchasesInvoices.createdAt')" class="col-1">
+        <Column field="created_at" :header="$t('purchasesInvoicesReturns.createdAt')" class="col-1">
           <template #body="{ data }">
             {{ formatDate(data.created_at) }}
           </template>
@@ -295,17 +274,19 @@
     </div>
 
     <CreateForm
-      ref="createModal"
-      @created="fetchData"
+      :purchases_invoice_id="purchases_invoice_id"
       :company_id="company_id"
       :branch_id="branch_id"
+      ref="createModal"
+      @created="fetchData"
     />
 
     <UpdateForm
-      ref="updateModal"
+      :purchases_invoice_return_id="purchases_invoice_return_id"
+      :purchases_invoice_id="purchases_invoice_id"
       :company_id="company_id"
       :branch_id="branch_id"
-      :purchases_invoice_id="purchases_invoice_id"
+      ref="updateModal"
       @updated="fetchData"
     />
 
@@ -357,6 +338,10 @@ export default {
   },
 
   props: {
+    purchases_invoice_id: {
+      type: String,
+      required: false,
+    },
     company_id: {
       type: String,
       required: true,
@@ -368,15 +353,22 @@ export default {
   },
 
   watch: {
-    '$route.params.company_id': {
+    '$route.params.purchases_invoice_id': {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
-          this.apiUrl = `${API_ROUTES.PURCHASES_INVOICE.SEARCH}/${newVal}`
+          // this.filters.purchases_invoice_id = newVal
         }
       },
       immediate: true,
     },
-
+    '$route.params.company_id': {
+      handler(newVal) {
+        if (newVal && newVal !== 'undefined') {
+          this.apiUrl = `${API_ROUTES.PURCHASES_INVOICE_RETURN.SEARCH}/${newVal}`
+        }
+      },
+      immediate: true,
+    },
     '$route.params.branch_id': {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
@@ -389,10 +381,10 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.PURCHASES_INVOICE.SEARCH,
-      deleteUrl: API_ROUTES.PURCHASES_INVOICE.BASE,
+      apiUrl: API_ROUTES.PURCHASES_INVOICE_RETURN.SEARCH,
+      deleteUrl: API_ROUTES.PURCHASES_INVOICE_RETURN.BASE,
       filters: { query_string: '' },
-      purchases_invoice_id: '',
+      purchases_invoice_return_id: '',
       selectedItem: {},
       isColsedValues: [
         { name: this.$t('common.no'), value: '0' },
@@ -435,7 +427,7 @@ export default {
     },
 
     openUpdateModal(itemId) {
-      this.purchases_invoice_id = itemId
+      this.purchases_invoice_return_id = itemId
       this.$nextTick(() => {
         this.$refs.updateModal.openModal()
       })

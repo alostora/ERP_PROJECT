@@ -19,9 +19,10 @@
 
       <!-- Cart Form -->
       <CartForm
+        :purchases_invoice_return_id="purchases_invoice_return_id"
+        :purchases_invoice_id="purchases_invoice_id"
         :company_id="company_id"
         :branch_id="branch_id"
-        :purchases_invoice_id="purchases_invoice_id"
         :final_products.sync="final_products"
         :errors="errors"
         @handelFormData="handelFormData"
@@ -67,6 +68,14 @@ export default {
   },
 
   watch: {
+    '$route.params.purchases_invoice_id': {
+      handler(newVal) {
+        if (newVal && newVal !== 'undefined') {
+          this.formData.purchases_invoice_id = newVal
+        }
+      },
+      immediate: true,
+    },
     '$route.params.company_id': {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
@@ -87,15 +96,19 @@ export default {
   },
 
   props: {
+    purchases_invoice_return_id: {
+      type: String,
+      required: false,
+    },
+    purchases_invoice_id: {
+      type: String,
+      required: false,
+    },
     company_id: {
       type: String,
       required: true,
     },
     branch_id: {
-      type: String,
-      required: false,
-    },
-    purchases_invoice_id: {
       type: String,
       required: false,
     },
