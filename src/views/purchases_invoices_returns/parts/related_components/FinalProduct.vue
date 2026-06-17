@@ -109,7 +109,6 @@ import Button from 'primevue/button'
 import ProgressSpinner from 'primevue/progressspinner'
 import Message from 'primevue/message'
 import Badge from 'primevue/badge'
-import OverlayBadge from 'primevue/overlaybadge'
 
 export default {
   name: 'FinalProduct',
@@ -124,7 +123,6 @@ export default {
     ProgressSpinner,
     Message,
     Badge,
-    OverlayBadge,
   },
 
   watch: {
@@ -222,7 +220,11 @@ export default {
       )
 
       if (existingProduct) {
-        existingProduct.quantity += 1
+
+        console.log('sssssssssssssssssssssssssssssssssssssxxffff',existingProduct.quantity,existingProduct.remaining_returnable_quantity)
+        if (existingProduct.quantity < existingProduct.remaining_returnable_quantity) {
+          existingProduct.quantity += 1
+        }
       } else {
         this.cart_final_products.unshift(this.final_product_details)
       }

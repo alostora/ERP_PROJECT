@@ -1,7 +1,13 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h1 class="page-title">{{ $t('purchasesInvoicesReturns.title') }}</h1>
+      <h1 class="page-title">
+        {{ $t('purchasesInvoicesReturns.title') }}
+        <Message severity="info" size="small">
+          ({{ parentInvoice?.reference_code }})
+          <Badge size="small"> ({{ parentInvoice?.name }}) </Badge>
+        </Message>
+      </h1>
       <button class="btn btn-primary" @click="openCreateModal">
         <i class="pi pi-plus"></i>
         {{ $t('common.addNew') }}
@@ -313,6 +319,9 @@ import Select from 'primevue/select'
 import FloatLabel from 'primevue/floatlabel'
 import DatePicker from 'primevue/datepicker'
 import Button from 'primevue/button'
+import Message from 'primevue/message'
+import Badge from 'primevue/badge'
+
 import CreateForm from './CreateForm.vue'
 import UpdateForm from './UpdateForm.vue'
 import UpdateStageForm from './UpdateStageForm.vue'
@@ -332,6 +341,8 @@ export default {
     FloatLabel,
     DatePicker,
     Button,
+    Message,
+    Badge,
     CreateForm,
     UpdateForm,
     UpdateStageForm,
@@ -356,7 +367,8 @@ export default {
     '$route.params.purchases_invoice_id': {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
-          // this.filters.purchases_invoice_id = newVal
+          this.loadParentInvoice(newVal)
+          this.filters.purchases_invoice_id = newVal
         }
       },
       immediate: true,

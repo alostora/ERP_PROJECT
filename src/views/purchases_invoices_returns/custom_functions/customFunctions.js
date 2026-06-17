@@ -33,8 +33,11 @@ export const customFunctions = {
       measurementUnitUrl: API_ROUTES.MEASUREMENT_UNIT.SEARCH,
       measurementUnits: [],
 
-      invoiceUrl: API_ROUTES.PURCHASES_INVOICE.BASE,
+      invoiceUrl: API_ROUTES.PURCHASES_INVOICE_RETURN.BASE,
       invoice: {},
+
+      parentInvoiceUrl: API_ROUTES.PURCHASES_INVOICE.BASE,
+      parentInvoice: {},
     }
   },
 
@@ -179,6 +182,18 @@ export const customFunctions = {
         this.invoice = response.data?.data || response.data || []
       } catch (error) {
         console.error('Error loading invoice:', error)
+        this.formLoading = false
+      }
+      this.formLoading = false
+    },
+
+    async loadParentInvoice(invoiceId) {
+      try {
+        this.formLoading = true
+        const response = await API.get(`${this.parentInvoiceUrl}/${invoiceId}`)
+        this.parentInvoice = response.data?.data || response.data || []
+      } catch (error) {
+        console.error('Error loading parent invoice:', error)
         this.formLoading = false
       }
       this.formLoading = false

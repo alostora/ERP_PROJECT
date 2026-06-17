@@ -12,7 +12,7 @@
           <div class="col-12">
             <div class="card-info">
               <!-- Row 1: Name -->
-              <div class="card-header-info">{{ $t('purchasesInvoices.base_info') }}</div>
+              <div class="card-header-info">{{ $t('purchasesInvoicesReturns.base_info') }}</div>
               <div class="card-body">
                 <div class="row">
                   <div class="col-6">
@@ -25,7 +25,7 @@
                             autocomplete="off"
                             class="w-full"
                           />
-                          <label for="invoice_name">{{ $t('purchasesInvoices.name') }}</label>
+                          <label for="invoice_name">{{ $t('purchasesInvoicesReturns.name') }}</label>
                         </FloatLabel>
                       </Fluid>
                     </div>
@@ -45,7 +45,7 @@
                         optionValue="id"
                         :filter="true"
                         :showClear="true"
-                        :placeholder="$t('common.select') + ' ' + $t('purchasesInvoices.branch')"
+                        :placeholder="$t('common.select') + ' ' + $t('purchasesInvoicesReturns.branch')"
                         :filterPlaceholder="$t('common.search')"
                         class="w-full"
                         @change="onBranchChange"
@@ -65,7 +65,7 @@
                         optionValue="id"
                         :filter="true"
                         :showClear="true"
-                        :placeholder="$t('common.select') + ' ' + $t('purchasesInvoices.warehouse')"
+                        :placeholder="$t('common.select') + ' ' + $t('purchasesInvoicesReturns.warehouse')"
                         :filterPlaceholder="$t('common.search')"
                         class="w-full"
                       />
@@ -88,7 +88,7 @@
                         optionLabel="name"
                         :filter="true"
                         :showClear="true"
-                        :placeholder="$t('common.select') + ' ' + $t('purchasesInvoices.contact')"
+                        :placeholder="$t('common.select') + ' ' + $t('purchasesInvoicesReturns.contact')"
                         :filterPlaceholder="$t('common.search')"
                         class="w-full"
                       >
@@ -134,7 +134,7 @@
                         :filter="true"
                         :showClear="true"
                         :placeholder="
-                          $t('common.select') + ' ' + $t('purchasesInvoices.payment_types')
+                          $t('common.select') + ' ' + $t('purchasesInvoicesReturns.payment_types')
                         "
                         :filterPlaceholder="$t('common.search')"
                         class="w-full"
@@ -156,7 +156,7 @@
           <div class="col-12">
             <div class="card-indigo">
               <div class="card-header-indigo">
-                {{ $t('purchasesInvoices.final_products') + '( ' + final_products.length + ')' }}
+                {{ $t('purchasesInvoicesReturns.final_products') + '( ' + final_products.length + ')' }}
               </div>
               <div class="card-body">
                 <div class="row">
@@ -223,7 +223,7 @@
                                   :showButtons="true"
                                   class="text-center w-full"
                                 />
-                                <label for="quantity">{{ $t('purchasesInvoices.quantity') }}</label>
+                                <label for="quantity">{{ $t('purchasesInvoicesReturns.quantity') }}</label>
                               </FloatLabel>
                               <InputGroupAddon>
                                 <Button
@@ -249,7 +249,7 @@
                             v-model="product.measurement_unit_id"
                             :options="measurementUnits"
                             optionValue="id"
-                            :placeholder="$t('purchasesInvoices.measurement_unit')"
+                            :placeholder="$t('purchasesInvoicesReturns.measurement_unit')"
                             :filter="true"
                             class="w-full"
                           >
@@ -269,7 +269,7 @@
                               <span v-if="slotProps.value">
                                 {{ getMeasurementUnitDisplay(slotProps.value) }}
                               </span>
-                              <span v-else>{{ $t('purchasesInvoices.measurement_unit') }}</span>
+                              <span v-else>{{ $t('purchasesInvoicesReturns.measurement_unit') }}</span>
                             </template>
                           </Select>
                         </div>
@@ -284,7 +284,7 @@
                                 :min="1"
                               />
                               <label for="unit_price">{{
-                                $t('purchasesInvoices.unit_price')
+                                $t('purchasesInvoicesReturns.unit_price')
                               }}</label>
                             </FloatLabel>
                           </Fluid>
@@ -309,7 +309,7 @@
                           <div class="flex items-center gap-2">
                             <i class="pi pi-cog text-warning text-sm"></i>
                             <span class="font-medium text-warning text-sm">
-                              {{ $t('purchasesInvoices.operations') }}
+                              {{ $t('purchasesInvoicesReturns.operations') }}
                             </span>
                             <span
                               class="bg-warning-100 text-warning-700 text-xs px-2 py-1 rounded-full"
@@ -346,7 +346,7 @@
                                     autocomplete="off"
                                   />
                                   <label :for="'product_operation__name_' + operationsIndex">
-                                    {{ $t('purchasesInvoices.name') }}
+                                    {{ $t('purchasesInvoicesReturns.name') }}
                                   </label>
                                 </FloatLabel>
                                 <small
@@ -374,7 +374,7 @@
                                     autocomplete="off"
                                   />
                                   <label :for="'product_operation_price_' + operationsIndex">
-                                    {{ $t('purchasesInvoices.price') }}
+                                    {{ $t('purchasesInvoicesReturns.price') }}
                                   </label>
                                 </FloatLabel>
                                 <small
@@ -408,7 +408,7 @@
                                 v-model="operation.details"
                                 class="textarea"
                                 rows="3"
-                                :placeholder="$t('purchasesInvoices.details')"
+                                :placeholder="$t('purchasesInvoicesReturns.details')"
                               >
                               </textarea>
                               <small
@@ -431,7 +431,7 @@
                           <div class="bg-warning-50 border-l-4 border-warning rounded p-2 mt-3">
                             <div class="flex justify-between">
                               <span class="text-warning font-medium text-sm">
-                                {{ $t('purchasesInvoices.total_operations_cost') }}:
+                                {{ $t('purchasesInvoicesReturns.total_operations_cost') }}:
                               </span>
                               <span class="font-semibold text-warning text-sm">
                                 {{ formatCurrency(calculateProductOperationCost(product)) }}
@@ -445,7 +445,7 @@
                       <div class="bg-gray-50 border-l-4 border-gray rounded p-2 mb-3">
                         <div class="flex justify-between">
                           <span class="text-warning font-medium text-sm">
-                            {{ $t('purchasesInvoices.total_price') }}:
+                            {{ $t('purchasesInvoicesReturns.total_price') }}:
                           </span>
                           <span class="font-semibold text-warning text-sm">
                             {{ formatCurrency(product.quantity * product.unit_price) }}
@@ -457,7 +457,7 @@
                       <div class="bg-gray-50 border-l-4 border-gray rounded p-2">
                         <div class="flex justify-between">
                           <span class="text-warning font-medium text-sm">
-                            {{ $t('purchasesInvoices.total_price_plus_operations') }}:
+                            {{ $t('purchasesInvoicesReturns.total_price_plus_operations') }}:
                           </span>
                           <span class="font-semibold text-warning text-base">
                             {{
@@ -482,7 +482,7 @@
         <div v-if="final_products.length" class="row mt-2">
           <div class="col-12">
             <div class="card-info">
-              <div class="card-header-info">{{ $t('purchasesInvoices.additional_costs') }}</div>
+              <div class="card-header-info">{{ $t('purchasesInvoicesReturns.additional_costs') }}</div>
               <div class="card-body">
                 <div class="flex justify-end mb-2">
                   <Button
@@ -510,7 +510,7 @@
                           autocomplete="off"
                         />
                         <label :for="'additional_cost_name_' + index">{{
-                          $t('purchasesInvoices.name')
+                          $t('purchasesInvoicesReturns.name')
                         }}</label>
                       </FloatLabel>
                     </Fluid>
@@ -527,7 +527,7 @@
                           autocomplete="off"
                         />
                         <label for="'additional_cost_value_' + index">{{
-                          $t('purchasesInvoices.value')
+                          $t('purchasesInvoicesReturns.value')
                         }}</label>
                       </FloatLabel>
                     </Fluid>
@@ -550,7 +550,7 @@
                 <div class="border border-warning-200 rounded p-2 bg-warning-50">
                   <div class="flex justify-between">
                     <span class="text-warning font-medium"
-                      >{{ $t('purchasesInvoices.total_additional_costs') }}:</span
+                      >{{ $t('purchasesInvoicesReturns.total_additional_costs') }}:</span
                     >
                     <span class="font-semibold text-warning">{{
                       formatCurrency(calculateAdditionalCosts())
@@ -568,7 +568,7 @@
           <div class="col-12">
             <div class="card-success">
               <div class="card-header-success">
-                {{ $t('purchasesInvoices.additional_discounts') }}
+                {{ $t('purchasesInvoicesReturns.additional_discounts') }}
               </div>
 
               <div class="card-body">
@@ -598,7 +598,7 @@
                           autocomplete="off"
                         />
                         <label :for="'additional_discount_name_' + index">{{
-                          $t('purchasesInvoices.name')
+                          $t('purchasesInvoicesReturns.name')
                         }}</label>
                       </FloatLabel>
                     </Fluid>
@@ -618,7 +618,7 @@
                           autocomplete="off"
                         />
                         <label for="'additional_discount_value_' + index">{{
-                          $t('purchasesInvoices.value')
+                          $t('purchasesInvoicesReturns.value')
                         }}</label>
                       </FloatLabel>
                     </Fluid>
@@ -645,7 +645,7 @@
                 <div class="border border-warning-200 rounded p-2 bg-warning-50">
                   <div class="flex justify-between">
                     <span class="text-warning font-medium"
-                      >{{ $t('purchasesInvoices.total_additional_discounts') }}:</span
+                      >{{ $t('purchasesInvoicesReturns.total_additional_discounts') }}:</span
                     >
                     <span class="font-semibold text-warning">{{
                       formatCurrency(calculateAdditionalDiscounts())
@@ -662,22 +662,22 @@
         <div v-if="final_products.length" class="row mt-2">
           <div class="col-12">
             <div class="card-info">
-              <div class="card-header-info">{{ $t('purchasesInvoices.total_summary') }}</div>
+              <div class="card-header-info">{{ $t('purchasesInvoicesReturns.total_summary') }}</div>
 
               <div class="card-body">
                 <div class="flex justify-between mb-2">
-                  <span class="text-secondary">{{ $t('purchasesInvoices.subtotal') }}:</span>
+                  <span class="text-secondary">{{ $t('purchasesInvoicesReturns.subtotal') }}:</span>
                   <span class="font-medium">{{ formatCurrency(calculateSubtotal()) }}</span>
                 </div>
 
                 <div class="flex justify-between mb-2">
-                  <span class="text-sm">{{ $t('purchasesInvoices.total_operations_cost') }}:</span>
+                  <span class="text-sm">{{ $t('purchasesInvoicesReturns.total_operations_cost') }}:</span>
                   <span class="text-sm">{{ formatCurrency(calculateTotalOperationsCost()) }}</span>
                 </div>
 
                 <div class="flex justify-between mb-2">
                   <span class="text-secondary"
-                    >{{ $t('purchasesInvoices.total_additional_costs') }}:</span
+                    >{{ $t('purchasesInvoicesReturns.total_additional_costs') }}:</span
                   >
                   <span class="font-medium text-warning">{{
                     formatCurrency(calculateAdditionalCosts())
@@ -686,7 +686,7 @@
 
                 <div class="flex justify-between mb-2">
                   <span class="text-secondary"
-                    >{{ $t('purchasesInvoices.total_additional_discounts') }}:</span
+                    >{{ $t('purchasesInvoicesReturns.total_additional_discounts') }}:</span
                   >
                   <span class="font-medium text-success">{{
                     formatCurrency(calculateAdditionalDiscounts())
@@ -695,7 +695,7 @@
 
                 <div class="flex justify-between pt-2 border-t border-primary-200">
                   <span class="font-bold text-primary"
-                    >{{ $t('purchasesInvoices.grand_total') }}:</span
+                    >{{ $t('purchasesInvoicesReturns.grand_total') }}:</span
                   >
                   <span class="font-bold text-primary text-xl">{{
                     formatCurrency(calculateGrandTotal())
@@ -832,7 +832,7 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.PURCHASES_INVOICE.BASE,
+      apiUrl: API_ROUTES.PURCHASES_INVOICE_RETURN.BASE,
       localFormData: {
         id: '',
         company_id: this.company_id,
@@ -907,6 +907,7 @@ export default {
             name: invoiceProduct.final_product.name,
             unit_price: invoiceProduct.unit_price,
             quantity: invoiceProduct.quantity,
+            remaining_returnable_quantity: invoiceProduct.remaining_returnable_quantity,
             measurement_unit_id: invoiceProduct.measurement_unit?.id,
             operations:
               invoiceProduct.operations?.map((op) => ({

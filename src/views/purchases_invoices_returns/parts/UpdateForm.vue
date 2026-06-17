@@ -11,6 +11,7 @@
     <div class="row">
       <!-- Products Grid -->
       <FinalProduct
+        :purchases_invoice_id="purchases_invoice_id"
         :company_id="company_id"
         :final_products="final_products"
         @appendProductToCart="appendProductToCart"
@@ -98,7 +99,7 @@ export default {
   props: {
     purchases_invoice_return_id: {
       type: String,
-      required: false,
+      required: true,
     },
     purchases_invoice_id: {
       type: String,
@@ -122,7 +123,7 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.PURCHASES_INVOICE.BASE,
+      apiUrl: API_ROUTES.PURCHASES_INVOICE_RETURN.BASE,
       final_products: [],
       formData: {
         company_id: this.company_id,
