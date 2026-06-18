@@ -1,7 +1,7 @@
 <template>
   <Dialog
     v-model:visible="formVisible"
-    :header="$t('common.createTitle', { module: $t('purchasesInvoices.title') })"
+    :header="$t('common.createTitle', { module: $t('purchasesInvoicesReturns.title') })"
     modal
     :style="{ width: '50vw', height: '30vw' }"
     :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
@@ -24,7 +24,7 @@
               },
             }"
           >
-            {{ $t('purchasesInvoices.stage') }}
+            {{ $t('purchasesInvoicesReturns.stage') }}
             {{ currentLanguage == 'ar' ? stage.name_ar : stage.name }}
           </Step>
         </StepList>
@@ -47,12 +47,12 @@
               </template>
               <template #content>
                 <form @submit.prevent="handleSubmit" @click.stop v-if="!selected_item.is_closed">
-                  <label class="form-label">{{ $t('purchasesInvoices.stage_comment') }}</label>
+                  <label class="form-label">{{ $t('purchasesInvoicesReturns.stage_comment') }}</label>
                   <textarea
                     v-model="formData.comment"
                     class="textarea w-full h-full"
                     rows="3"
-                    :placeholder="$t('common.add') + ' ' + $t('purchasesInvoices.stage_comment')"
+                    :placeholder="$t('common.add') + ' ' + $t('purchasesInvoicesReturns.stage_comment')"
                     @click.stop
                   ></textarea>
                 </form>
@@ -174,7 +174,7 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.PURCHASES_INVOICE.UPDATE_STAGE,
+      apiUrl: API_ROUTES.PURCHASES_INVOICE_RETURN.UPDATE_STAGE,
       activeStep: String(this.stage_sort),
       stage_sort: '',
       formData: {

@@ -141,7 +141,7 @@ export const customFunctions = {
     async loadStages(companyId) {
       try {
         this.formLoading = true
-        const params = { type_code: LOOKUP_TYPES.LOOKUP_TYPE_CODES.STAGE.INVOICE_PURCHASES }
+        const params = { type_code: LOOKUP_TYPES.LOOKUP_TYPE_CODES.STAGE.INVOICE_PURCHASES_RETURN }
         const response = await API.get(`${this.stageUrl}/${companyId}`, { params })
         this.stages = response.data.data || []
       } catch (error) {
