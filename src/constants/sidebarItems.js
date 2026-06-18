@@ -231,9 +231,14 @@ export const sidebarItems = {
               icon: 'pi pi-money-bill',
               items: [
                 {
-                  label: 'common.menu.purchaseInvoices',
+                  label: 'common.menu.purchasesInvoices',
                   icon: 'pi pi-circle-fill',
                   path: `/company/purchases-invoices/${this.company_id}`,
+                },
+                {
+                  label: 'common.menu.salesInvoices',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/sales-invoices/${this.company_id}`,
                 },
               ],
             },

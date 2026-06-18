@@ -1,5 +1,5 @@
 export default {
-  title: 'Purchases Invoices',
+  title: 'Sales Invoices',
   base_info: 'Base Information',
   id: '#',
   name: 'Name',

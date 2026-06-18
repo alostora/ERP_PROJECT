@@ -33,6 +33,7 @@ import enTransferMoneys from './locales/en/transferMoneys'
 import enPayments from './locales/en/payments'
 import enPurchasesInvoices from './locales/en/purchasesInvoices'
 import enPurchasesInvoicesReturns from './locales/en/purchasesInvoicesReturns'
+import enSalesInvoices from './locales/en/salesInvoices'
 
 // Import Arabic translations
 import arCommon from './locales/ar/common'
@@ -67,6 +68,7 @@ import arTransferMoneys from './locales/ar/transferMoneys'
 import arPayments from './locales/ar/payments'
 import arPurchasesInvoices from './locales/ar/purchasesInvoices'
 import arPurchasesInvoicesReturns from './locales/ar/purchasesInvoicesReturns'
+import arSalesInvoices from './locales/ar/salesInvoices'
 
 const messages = {
   en: {
@@ -102,6 +104,7 @@ const messages = {
     payments: enPayments,
     purchasesInvoices: enPurchasesInvoices,
     purchasesInvoicesReturns: enPurchasesInvoicesReturns,
+    salesInvoices: enSalesInvoices,
   },
 
   ar: {
@@ -137,6 +140,7 @@ const messages = {
     payments: arPayments,
     purchasesInvoices: arPurchasesInvoices,
     purchasesInvoicesReturns: arPurchasesInvoicesReturns,
+    salesInvoices: arSalesInvoices,
   },
 }
 

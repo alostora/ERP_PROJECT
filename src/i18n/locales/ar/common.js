@@ -152,7 +152,8 @@ export default {
 
     //////
     invoices: 'الفواتير',
-    purchaseInvoices: 'فواتير المشتريات',
+    purchasesInvoices: 'فواتير المشتريات',
+    salesInvoices: 'فواتير المبيعات',
 
     //////
     //////

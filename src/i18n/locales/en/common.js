@@ -149,8 +149,9 @@ export default {
     branchEmployees: 'Branch Employees',
     warehouses: 'Warehouses',
     //////
-    invoices: 'الفواتير',
-    purchaseInvoices: 'فواتير المشتريات',
+    invoices: 'Invoices',
+    purchasesInvoices: 'Purchases Invoices',
+    salesInvoices: 'Sales Invoices',
 
     //////
     //////
@@ -165,11 +166,9 @@ export default {
     roles: 'Roles',
     permissions: 'Permissions',
 
-    purchasesInvoices: 'Purchase Invoices',
     backToList: 'Back to List',
 
     orders: 'Orders',
-    invoices: 'Invoices',
 
     salesReports: 'Sales Reports',
     inventoryReports: 'Inventory Reports',
