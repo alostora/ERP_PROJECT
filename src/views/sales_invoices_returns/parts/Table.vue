@@ -1,0 +1,460 @@
+<template>
+  <div class="page">
+    <div class="page-header">
+      <h1 class="page-title">
+        {{ $t('salesInvoicesReturns.title') }}
+        <Message severity="info" size="small">
+          ({{ parentInvoice?.reference_code }})
+          <Badge size="small"> ({{ parentInvoice?.name }}) </Badge>
+        </Message>
+      </h1>
+      <button class="btn btn-primary" @click="openCreateModal">
+        <i class="pi pi-plus"></i>
+        {{ $t('common.addNew') }}
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="filters-bar">
+        <div class="row mb-1">
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="search-wrapper">
+              <i class="pi pi-search search-icon"></i>
+              <input
+                type="text"
+                v-model="filters.query_string"
+                @input="fetchData"
+                class="input"
+                :placeholder="$t('common.search')"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="search-wrapper">
+              <Select
+                v-model="filters.branch_id"
+                :options="branches"
+                :optionLabel="branchLabel"
+                optionValue="id"
+                :placeholder="$t('common.all') + ' ' + $t('branches.title')"
+                :filter="true"
+                :showClear="true"
+                :filterPlaceholder="$t('common.search')"
+                class="w-full"
+                @change="(onBranchChange(), fetchData())"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="search-wrapper">
+              <Select
+                v-model="filters.warehouse_id"
+                :options="warehouses"
+                :optionLabel="warehouseLabel"
+                optionValue="id"
+                :placeholder="$t('common.all') + ' ' + $t('warehouses.title')"
+                :filter="true"
+                :showClear="true"
+                :filterPlaceholder="$t('common.search')"
+                class="w-full"
+                @change="fetchData"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="search-wrapper">
+              <Select
+                v-model="filters.stage_id"
+                :options="stages"
+                :optionLabel="stageLabel"
+                optionValue="id"
+                :placeholder="$t('common.all') + ' ' + $t('stages.title')"
+                :filter="true"
+                :showClear="true"
+                :filterPlaceholder="$t('common.search')"
+                class="w-full"
+                @change="fetchData"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-1">
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="search-wrapper">
+              <i class="pi pi-search search-icon"></i>
+              <input
+                type="text"
+                v-model="filters.reference_code"
+                @input="fetchData"
+                class="input"
+                :placeholder="$t('salesInvoicesReturns.reference_code')"
+              />
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="search-wrapper">
+              <Select
+                v-model="filters.is_closed"
+                :options="isColsedValues"
+                optionLabel="name"
+                optionValue="value"
+                :placeholder="$t('common.all') + ' ' + $t('salesInvoicesReturns.is_closed')"
+                :filter="true"
+                :showClear="true"
+                :filterPlaceholder="$t('common.search')"
+                class="w-full"
+                @change="fetchData"
+              />
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="search-wrapper">
+              <Select
+                v-model="filters.contact_id"
+                :options="contacts"
+                optionLabel="name"
+                optionValue="id"
+                :placeholder="$t('common.all') + ' ' + $t('contacts.title')"
+                :filter="true"
+                :showClear="true"
+                :filterPlaceholder="$t('common.search')"
+                class="w-full"
+                @change="fetchData"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-1">
+          <div class="col-12 col-md-6 col-lg-3">
+            <FloatLabel variant="on">
+              <DatePicker
+                v-model="filters.date_from"
+                inputId="date_from"
+                showIcon
+                showButtonBar
+                iconDisplay="input"
+                class="w-full"
+                @update:modelValue="fetchData"
+              />
+              <label for="date_from">{{ $t('salesInvoicesReturns.date_from') }}</label>
+            </FloatLabel>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <FloatLabel variant="on">
+              <DatePicker
+                v-model="filters.date_to"
+                inputId="date_to"
+                showIcon
+                showButtonBar
+                iconDisplay="input"
+                class="w-full"
+                @update:modelValue="fetchData"
+              />
+              <label for="date_to">{{ $t('salesInvoicesReturns.date_to') }}</label>
+            </FloatLabel>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6 col-md-3 col-lg-2">
+            <select v-model="perPage" @change="fetchData" class="select">
+              <option :value="5">5</option>
+              <option :value="10">10</option>
+              <option :value="25">25</option>
+              <option :value="50">50</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <DataTable
+        :value="items"
+        :paginator="true"
+        :rows="perPage"
+        :totalRecords="meta.total"
+        :rowsPerPageOptions="[5, 10, 25, 50]"
+        :loading="loading"
+        lazy
+        @page="onPageChange"
+        @sort="onSort"
+        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+        currentPageReportTemplate="{first} to {last} of {totalRecords}"
+        resizableColumns
+        showGridlines
+      >
+        <Column field="id" :header="$t('salesInvoicesReturns.id')" class="col-1">
+          <template #body="slotProps">
+            <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
+          </template>
+        </Column>
+
+        <Column
+          field="reference_code"
+          :header="$t('salesInvoicesReturns.reference_code')"
+          class="col-2"
+        />
+
+        <Column field="name" :header="$t('salesInvoicesReturns.name')" class="col-2" />
+
+        <Column :header="$t('salesInvoicesReturns.branch')" class="col-1">
+          <template #body="{ data }">
+            <div class="badge badge-info">
+              {{ currentLanguage == 'ar' ? data.branch?.name_ar : data.branch?.name }}
+            </div>
+          </template>
+        </Column>
+
+        <Column :header="$t('salesInvoicesReturns.stage')" class="col-1">
+          <template #body="{ data }">
+            <div :class="data.stage?.affects_stock ? 'badge badge-success' : 'badge badge-warning'">
+              {{ currentLanguage == 'ar' ? data.stage?.name_ar : data.stage?.name }}
+
+              <Button
+                :severity="data.stage?.affects_stock ? 'success' : 'warn'"
+                variant="outlined"
+                class="ml-1 mr-1 btn btn-sm"
+                :icon="currentLanguage == 'ar' ? 'pi pi-arrow-left' : 'pi pi-arrow-right'"
+                @click="openUpdateStageModal(data)"
+                :title="
+                  $t('common.edit') +
+                  ' ' +
+                  (currentLanguage == 'ar' ? data.stage?.name_ar : data.stage?.name)
+                "
+                style="height: 20px"
+              >
+              </Button>
+            </div>
+          </template>
+        </Column>
+
+        <Column :header="$t('salesInvoicesReturns.is_closed')" class="col-1">
+          <template #body="{ data }">
+            <div v-if="data.is_closed" class="badge badge-success">
+              {{ $t('common.yes') }}
+            </div>
+            <div v-else="data.is_closed" class="badge badge-warning">
+              {{ $t('common.no') }}
+            </div>
+          </template>
+        </Column>
+
+        <Column :header="$t('salesInvoicesReturns.contact')" class="col-1">
+          <template #body="{ data }">
+            {{ data.contact?.name || '-' }}
+          </template>
+        </Column>
+
+        <Column
+          field="net_amount_after_costs_and_discounts"
+          :header="$t('salesInvoicesReturns.net_amount_after_costs_and_discounts')"
+          class="col-1"
+        />
+
+        <Column field="created_at" :header="$t('salesInvoicesReturns.createdAt')" class="col-1">
+          <template #body="{ data }">
+            {{ formatDate(data.created_at) }}
+          </template>
+        </Column>
+
+        <Column :header="$t('common.actions')" class="col-1">
+          <template #body="{ data }">
+            <div class="actions-cell">
+              <button class="btn-icon" @click="openUpdateModal(data.id)" :title="$t('common.edit')">
+                <i class="pi pi-pen-to-square text-success"></i>
+              </button>
+              <button
+                class="btn-icon text-danger"
+                @click="deleteRow(data)"
+                :title="$t('common.delete')"
+              >
+                <i class="pi pi-trash"></i>
+              </button>
+            </div>
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+
+    <CreateForm
+      :sales_invoice_id="sales_invoice_id"
+      :company_id="company_id"
+      :branch_id="branch_id"
+      ref="createModal"
+      @created="fetchData"
+    />
+
+    <UpdateForm
+      :sales_invoice_return_id="sales_invoice_return_id"
+      :sales_invoice_id="sales_invoice_id"
+      :company_id="company_id"
+      :branch_id="branch_id"
+      ref="updateModal"
+      @updated="fetchData"
+    />
+
+    <UpdateStageForm
+      ref="updateStageModal"
+      :company_id="company_id"
+      :branch_id="branch_id"
+      :selected_item="selectedItem"
+      @updated="fetchData"
+    />
+
+    <Toast />
+
+    <ConfirmDialog />
+  </div>
+</template>
+
+<script>
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import Toast from 'primevue/toast'
+import ConfirmDialog from 'primevue/confirmdialog'
+import Select from 'primevue/select'
+import FloatLabel from 'primevue/floatlabel'
+import DatePicker from 'primevue/datepicker'
+import Button from 'primevue/button'
+import Message from 'primevue/message'
+import Badge from 'primevue/badge'
+
+import CreateForm from './CreateForm.vue'
+import UpdateForm from './UpdateForm.vue'
+import UpdateStageForm from './UpdateStageForm.vue'
+import { customFunctions } from '../custom_functions/customFunctions'
+import tableMixin from '@/mixins/table'
+import { API_ROUTES } from '@/constants/apiRoutes'
+
+export default {
+  name: 'Table',
+  mixins: [tableMixin, customFunctions],
+  components: {
+    DataTable,
+    Column,
+    Toast,
+    ConfirmDialog,
+    Select,
+    FloatLabel,
+    DatePicker,
+    Button,
+    Message,
+    Badge,
+    CreateForm,
+    UpdateForm,
+    UpdateStageForm,
+  },
+
+  props: {
+    sales_invoice_id: {
+      type: String,
+      required: false,
+    },
+    company_id: {
+      type: String,
+      required: true,
+    },
+    branch_id: {
+      type: String,
+      required: false,
+    },
+  },
+
+  watch: {
+    '$route.params.sales_invoice_id': {
+      handler(newVal) {
+        if (newVal && newVal !== 'undefined') {
+          this.loadParentInvoice(newVal)
+          this.filters.sales_invoice_id = newVal
+        }
+      },
+      immediate: true,
+    },
+    '$route.params.company_id': {
+      handler(newVal) {
+        if (newVal && newVal !== 'undefined') {
+          this.apiUrl = `${API_ROUTES.SALES_INVOICE_RETURN.SEARCH}/${newVal}`
+        }
+      },
+      immediate: true,
+    },
+    '$route.params.branch_id': {
+      handler(newVal) {
+        if (newVal && newVal !== 'undefined') {
+          this.filters.branch_id = newVal
+        }
+      },
+      immediate: true,
+    },
+  },
+
+  data() {
+    return {
+      apiUrl: API_ROUTES.SALES_INVOICE_RETURN.SEARCH,
+      deleteUrl: API_ROUTES.SALES_INVOICE_RETURN.BASE,
+      filters: { query_string: '' },
+      sales_invoice_return_id: '',
+      selectedItem: {},
+      isColsedValues: [
+        { name: this.$t('common.no'), value: '0' },
+        { name: this.$t('common.yes'), value: '1' },
+      ],
+      isActiveValues: [
+        { name: this.$t('common.no'), value: 'inactive' },
+        { name: this.$t('common.yes'), value: 'active' },
+      ],
+    }
+  },
+  computed: {
+    currentLanguage() {
+      return localStorage.getItem('language') || 'en'
+    },
+
+    branchLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+    },
+
+    warehouseLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+    },
+
+    stageLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+    },
+  },
+
+  mounted() {
+    this.fetchData()
+    this.loadBranches(this.company_id)
+    this.loadStages(this.company_id)
+    this.loadContacts(this.company_id)
+  },
+
+  methods: {
+    openCreateModal() {
+      this.$refs.createModal.openModal()
+    },
+
+    openUpdateModal(itemId) {
+      this.sales_invoice_return_id = itemId
+      this.$nextTick(() => {
+        this.$refs.updateModal.openModal()
+      })
+    },
+
+    openUpdateStageModal(item) {
+      this.selectedItem = { ...item }
+      this.$nextTick(() => {
+        this.$refs.updateStageModal.openModal()
+      })
+    },
+
+    deleteRow(item) {
+      this.deleteItem(this.deleteUrl, item.id, item.name)
+    },
+  },
+}
+</script>

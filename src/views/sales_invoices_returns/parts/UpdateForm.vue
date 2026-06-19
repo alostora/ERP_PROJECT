@@ -1,7 +1,7 @@
 <template>
   <Dialog
     v-model:visible="formVisible"
-    :header="$t('common.createTitle', { module: $t('purchasesInvoicesReturns.title') })"
+    :header="$t('common.createTitle', { module: $t('salesInvoices.title') })"
     modal
     maximizable
     :style="{ width: '80vw', height: '100%' }"
@@ -11,7 +11,7 @@
     <div class="row">
       <!-- Products Grid -->
       <FinalProduct
-        :purchases_invoice_id="purchases_invoice_id"
+        :sales_invoice_id="sales_invoice_id"
         :company_id="company_id"
         :final_products="final_products"
         @appendProductToCart="appendProductToCart"
@@ -20,14 +20,17 @@
 
       <!-- Cart Form -->
       <CartForm
-        :purchases_invoice_id="purchases_invoice_id"
+        :sales_invoice_return_id="sales_invoice_return_id"
+        :sales_invoice_id="sales_invoice_id"
         :company_id="company_id"
-        :final_products="final_products"
+        :branch_id="branch_id"
+        :final_products.sync="final_products"
         :errors="errors"
         @handelFormData="handelFormData"
         @submit="handleSubmit"
         @closeForm="closeFormModal"
         @deleteFinalProducts="deleteFinalProducts"
+        @appendProductToCart="appendProductToCart"
       />
       <!-- End Cart Form -->
     </div>
@@ -46,11 +49,11 @@ import Button from 'primevue/button'
 import Select from 'primevue/select'
 import CreateContactForm from '@/views/contacts/parts/CreateForm.vue'
 import UpdateForm from '@/views/contacts/parts/UpdateForm.vue'
-import CartForm from './related_components/create/CartForm.vue'
+import CartForm from './related_components/update/CartForm.vue'
 import FinalProduct from './related_components/FinalProduct.vue'
 
 export default {
-  name: 'CreateForm',
+  name: 'UpdateForm',
 
   mixins: [formMixin, customFunctions, validationRequest],
 
@@ -66,10 +69,10 @@ export default {
   },
 
   watch: {
-    '$route.params.purchases_invoice_id': {
+    '$route.params.sales_invoice_id': {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
-          this.formData.purchases_invoice_id = newVal
+          this.formData.sales_invoice_id = newVal
         }
       },
       immediate: true,
@@ -94,9 +97,13 @@ export default {
   },
 
   props: {
-    purchases_invoice_id: {
+    sales_invoice_return_id: {
       type: String,
       required: true,
+    },
+    sales_invoice_id: {
+      type: String,
+      required: false,
     },
     company_id: {
       type: String,
@@ -116,10 +123,9 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.PURCHASES_INVOICE_RETURN.BASE,
+      apiUrl: API_ROUTES.SALES_INVOICE_RETURN.BASE,
       final_products: [],
       formData: {
-        purchases_invoice_id: this.purchases_invoice_id,
         company_id: this.company_id,
         branch_id: this.branch_id,
         final_products: [],
@@ -131,8 +137,6 @@ export default {
     openModal() {
       this.openFormModal()
 
-      this.formData.purchases_invoice_id =
-        this.purchases_invoice_id || this.$route.params.purchases_invoice_id
       this.formData.company_id = this.company_id || this.$route.params.company_id
       this.formData.branch_id = this.branch_id || this.$route.params.branch_id
     },
@@ -140,7 +144,7 @@ export default {
     handelFormData(cartFormData) {
       this.formData = {
         ...this.formData,
-        // purchases_invoice_id: cartFormData.purchases_invoice_id,
+        id: cartFormData.id,
         company_id: cartFormData.company_id,
         branch_id: cartFormData.branch_id,
         warehouse_id: cartFormData.warehouse_id,
@@ -164,11 +168,19 @@ export default {
     },
 
     async handleSubmit() {
-      if (!this.validateCreateForm(this.formData)) {
+      if (!this.validateUpdateForm(this.formData)) {
         return
       }
 
-      await this.submitCreateForm(this.apiUrl, this.formData, this.$t('common.createdSuccessfully'))
+      const data = { ...this.formData }
+      delete data.id
+
+      await this.submitUpdateForm(
+        this.apiUrl,
+        this.formData.id,
+        data,
+        this.$t('common.updatedSuccessfully')
+      )
     },
 
     closeFormModal() {

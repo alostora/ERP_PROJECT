@@ -50,8 +50,6 @@ export const customFunctions = {
         const finalProducts = response.data.data || []
         if (finalProducts.length) {
           this.finalProducts = this.performFinalProducts(finalProducts)
-
-          console.log('xxxxxxxxxxxxxxxxxxx', this.finalProducts)
         }
       } catch (error) {
         console.error('Error loading final products:', error)
@@ -61,7 +59,6 @@ export const customFunctions = {
     },
 
     performFinalProducts(finalProducts) {
-      console.log('sssssssss', finalProducts)
       const final_products = finalProducts.map((invoiceFinalProduct) => {
         return {
           id: invoiceFinalProduct.final_product.id,
@@ -210,7 +207,6 @@ export const customFunctions = {
     },
 
     deleteProductOperationRow(product, operationIndex) {
-      console.log(product.operations)
       product.operations.splice(operationIndex, 1)
     },
     //////////////////////Additional Costs & Discounts//////////////////////

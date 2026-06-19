@@ -1,7 +1,7 @@
 <template>
   <Dialog
     v-model:visible="formVisible"
-    :header="$t('common.createTitle', { module: $t('purchasesInvoicesReturns.title') })"
+    :header="$t('common.createTitle', { module: $t('salesInvoicesReturns.title') })"
     modal
     maximizable
     :style="{ width: '80vw', height: '100%' }"
@@ -11,7 +11,7 @@
     <div class="row">
       <!-- Products Grid -->
       <FinalProduct
-        :purchases_invoice_id="purchases_invoice_id"
+        :sales_invoice_id="sales_invoice_id"
         :company_id="company_id"
         :final_products="final_products"
         @appendProductToCart="appendProductToCart"
@@ -20,7 +20,7 @@
 
       <!-- Cart Form -->
       <CartForm
-        :purchases_invoice_id="purchases_invoice_id"
+        :sales_invoice_id="sales_invoice_id"
         :company_id="company_id"
         :final_products="final_products"
         :errors="errors"
@@ -66,10 +66,10 @@ export default {
   },
 
   watch: {
-    '$route.params.purchases_invoice_id': {
+    '$route.params.sales_invoice_id': {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
-          this.formData.purchases_invoice_id = newVal
+          this.formData.sales_invoice_id = newVal
         }
       },
       immediate: true,
@@ -94,7 +94,7 @@ export default {
   },
 
   props: {
-    purchases_invoice_id: {
+    sales_invoice_id: {
       type: String,
       required: true,
     },
@@ -116,10 +116,10 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.PURCHASES_INVOICE_RETURN.BASE,
+      apiUrl: API_ROUTES.SALES_INVOICE_RETURN.BASE,
       final_products: [],
       formData: {
-        purchases_invoice_id: this.purchases_invoice_id,
+        sales_invoice_id: this.sales_invoice_id,
         company_id: this.company_id,
         branch_id: this.branch_id,
         final_products: [],
@@ -131,8 +131,7 @@ export default {
     openModal() {
       this.openFormModal()
 
-      this.formData.purchases_invoice_id =
-        this.purchases_invoice_id || this.$route.params.purchases_invoice_id
+      this.formData.sales_invoice_id = this.sales_invoice_id || this.$route.params.sales_invoice_id
       this.formData.company_id = this.company_id || this.$route.params.company_id
       this.formData.branch_id = this.branch_id || this.$route.params.branch_id
     },
@@ -140,7 +139,7 @@ export default {
     handelFormData(cartFormData) {
       this.formData = {
         ...this.formData,
-        // purchases_invoice_id: cartFormData.purchases_invoice_id,
+        // sales_invoice_id: cartFormData.sales_invoice_id,
         company_id: cartFormData.company_id,
         branch_id: cartFormData.branch_id,
         warehouse_id: cartFormData.warehouse_id,

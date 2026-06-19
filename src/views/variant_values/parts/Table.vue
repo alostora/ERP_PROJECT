@@ -145,7 +145,6 @@ export default {
   watch: {
     variant_id: {
       handler(newVal) {
-        console.log(newVal)
         if (newVal) {
           this.filters.variant_id = newVal
           this.apiUrl = `${API_ROUTES.VARIANT_VALUE.SEARCH}/${newVal}`

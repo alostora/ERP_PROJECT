@@ -75,7 +75,7 @@
             </div>
           </template>
         </Column>
-        
+
         <Column field="created_at" :header="$t('contacts.createdAt')" class="col-1">
           <template #body="{ data }">
             {{ formatDate(data.created_at) }}
@@ -147,7 +147,6 @@ export default {
       handler(newVal) {
         if (newVal) {
           this.apiUrl = `${API_ROUTES.CONTACT_ADDRESS.SEARCH}/${newVal}`
-          console.log('Updated API URL:', this.apiUrl)
         }
       },
       immediate: true,

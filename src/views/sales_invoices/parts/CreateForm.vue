@@ -137,7 +137,6 @@ export default {
 
     appendProductToCart(finalProducts) {
       this.final_products = finalProducts
-      console.log(this.final_products)
     },
 
     deleteFinalProducts(product) {
@@ -150,8 +149,6 @@ export default {
       if (!this.validateCreateForm(this.formData)) {
         return
       }
-
-      console.log(this.formData)
 
       await this.submitCreateForm(this.apiUrl, this.formData, this.$t('common.createdSuccessfully'))
     },

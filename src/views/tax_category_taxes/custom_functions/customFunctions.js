@@ -94,8 +94,6 @@ export const customFunctions = {
       const draggedItem = this.items[this.dragIndex]
       const newPosition = dropIndex + 1
 
-      console.log('Dragged Item:', draggedItem)
-
       try {
         await API.patch(
           `${this.taxCategoryTaxSetSorttUrl}/${draggedItem.tax_category.id}/${draggedItem.tax.id}`,

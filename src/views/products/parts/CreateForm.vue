@@ -114,7 +114,6 @@ export default {
     },
 
     async handleSubmit() {
-      console.log(this.formData)
       if (!this.validateCreateForm(this.formData)) {
         return
       }

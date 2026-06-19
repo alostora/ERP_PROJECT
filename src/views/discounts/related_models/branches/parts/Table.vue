@@ -140,7 +140,6 @@ export default {
       handler(newVal) {
         if (newVal) {
           this.apiUrl = `${API_ROUTES.DISCOUNT_BRANCH.SEARCH}/${newVal}`
-          console.log('Updated API URL:', this.apiUrl)
         }
       },
       immediate: true,

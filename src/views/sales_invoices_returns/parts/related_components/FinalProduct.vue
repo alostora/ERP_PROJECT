@@ -36,18 +36,18 @@
               </Message>
 
               <Message severity="secondary" size="small">
-                {{ $t('purchasesInvoicesReturns.purchased_quantity') }}
+                {{ $t('salesInvoicesReturns.sold_quantity') }}
                 <Badge size="small">
                   {{
-                    product.purchased_quantity +
+                    product.sold_quantity +
                     ' ' +
                     (currentLanguage == 'ar'
-                      ? product.purchased_measurement_unit.name_ar
-                      : product.purchased_measurement_unit.name)
+                      ? product.sold_measurement_unit.name_ar
+                      : product.sold_measurement_unit.name)
                   }}
 
                   ({{
-                    product.purchased_measurement_unit.factor_value +
+                    product.sold_measurement_unit.factor_value +
                     (currentLanguage == 'ar'
                       ? product.measurement_unit.name_ar
                       : product.measurement_unit.name)
@@ -57,7 +57,7 @@
 
               <Message severity="secondary" size="small">
                 <span class="text-xs p-1">
-                  {{ $t('purchasesInvoicesReturns.remaining_returnable_quantity') }}
+                  {{ $t('salesInvoicesReturns.remaining_returnable_quantity') }}
                 </span>
                 <Badge size="small">
                   {{ product.quantity + ' : ' }}
@@ -72,7 +72,7 @@
               <div class="row">
                 <div class="col-12 font-semibold">
                   <Message severity="secondary" size="small">
-                    {{ $t('purchasesInvoicesReturns.unit_price') }}
+                    {{ $t('salesInvoicesReturns.unit_price') }}
                     ({{
                       currentLanguage == 'ar'
                         ? product.measurement_unit.name_ar
@@ -126,7 +126,7 @@ export default {
   },
 
   watch: {
-    '$route.params.purchases_invoice_id': {
+    '$route.params.sales_invoice_id': {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
         }
@@ -159,7 +159,7 @@ export default {
   },
 
   props: {
-    purchases_invoice_id: {
+    sales_invoice_id: {
       type: String,
       required: true,
     },
@@ -194,7 +194,7 @@ export default {
   },
 
   mounted() {
-    this.loadFinalProducts(this.purchases_invoice_id)
+    this.loadFinalProducts(this.sales_invoice_id)
   },
 
   methods: {
@@ -209,9 +209,9 @@ export default {
         quantity: product.quantity,
         remaining_returnable_quantity: product.remaining_returnable_quantity,
         operations: product.operations,
-        purchases_invoice_id: product.purchases_invoice_id,
-        purchased_quantity: product.purchased_quantity,
-        purchased_measurement_unit: product.purchased_measurement_unit,
+        sales_invoice_id: product.sales_invoice_id,
+        sold_quantity: product.sold_quantity,
+        sold_measurement_unit: product.sold_measurement_unit,
       }
 
       // Check if product already exists

@@ -163,7 +163,6 @@ export const customFunctions = {
     },
 
     deleteProductOperationRow(product, operationIndex) {
-      console.log(product.operations)
       product.operations.splice(operationIndex, 1)
     },
     //////////////////////Additional Costs & Discounts//////////////////////

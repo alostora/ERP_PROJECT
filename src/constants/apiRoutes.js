@@ -214,4 +214,10 @@ export const API_ROUTES = {
     UPDATE_STAGE_ACTION: `${BASE_URL}/admin/company/sales/invoice-stage-action`,
     FINAL_PRODUCTS: `${BASE_URL}/admin/company/sales/invoice-final-products/search`,
   },
+  SALES_INVOICE_RETURN: {
+    SEARCH: `${BASE_URL}/admin/company/sales/invoice-returns/search`,
+    BASE: `${BASE_URL}/admin/company/sales/invoice-return`,
+    UPDATE_STAGE: `${BASE_URL}/admin/company/sales/invoice-return-stage`,
+    UPDATE_STAGE_ACTION: `${BASE_URL}/admin/company/sales/invoice-return-action`,
+  },
 }

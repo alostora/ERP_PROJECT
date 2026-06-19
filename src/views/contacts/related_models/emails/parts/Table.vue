@@ -146,7 +146,6 @@ export default {
       handler(newVal) {
         if (newVal) {
           this.apiUrl = `${API_ROUTES.CONTACT_EMAIL.SEARCH}/${newVal}`
-          console.log('Updated API URL:', this.apiUrl)
         }
       },
       immediate: true,

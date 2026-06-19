@@ -6,7 +6,6 @@ export default {
   },
   methods: {
     validateCreateForm(form) {
-      console.log(form)
       this.errors = {}
 
       if (!form.country_id?.trim()) {

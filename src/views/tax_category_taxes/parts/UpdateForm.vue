@@ -86,7 +86,6 @@ export default {
     },
 
     populateForm(selectedItem) {
-      console.log('Populating form with selected item:', `${this.tax_category_id}/${this.tax_id}`)
       this.formData = {
         fixed_amount_override: selectedItem.fixed_amount_override || null,
       }
