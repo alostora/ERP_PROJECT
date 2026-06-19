@@ -280,6 +280,7 @@
                                 class="text-center w-full"
                                 :step="0.01"
                                 :min="1"
+                                disabled
                               />
                               <label for="unit_price">{{ $t('salesInvoices.unit_price') }}</label>
                             </FloatLabel>
