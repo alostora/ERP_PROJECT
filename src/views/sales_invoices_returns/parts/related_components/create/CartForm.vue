@@ -767,7 +767,6 @@ import Panel from 'primevue/panel'
 
 import formMixin from '@/mixins/form'
 import customFunctions from '../../../custom_functions/customFunctions'
-import measurementUnitGroups from '@/i18n/locales/en/measurementUnitGroups'
 
 export default {
   name: 'CartForm',
