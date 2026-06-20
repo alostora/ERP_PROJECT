@@ -75,6 +75,10 @@ export const customFunctions = {
             payment.cashBoxs = this.cashBoxs
           })
         }
+      } else {
+        payment.bankAccounts = []
+        payment.wallets = []
+        payment.cashBoxs = []
       }
     },
 
