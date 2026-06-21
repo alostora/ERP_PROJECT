@@ -142,8 +142,6 @@ export default {
         additional_discounts: cartFormData.additional_discounts,
         payments: cartFormData.payments,
       }
-
-      console.log('handelFormData', this.formData)
     },
 
     appendProductToCart(finalProducts) {

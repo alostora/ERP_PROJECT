@@ -37,9 +37,7 @@ export const customFunctions = {
 
         const response = await API.get(`${this.taxUrl}/${companyId}`, { params })
         this.taxes = response.data.data || []
-      } catch (error) {
-        console.error('Error loading taxes:', error)
-      }
+      } catch (error) {}
     },
 
     addTaxRow() {

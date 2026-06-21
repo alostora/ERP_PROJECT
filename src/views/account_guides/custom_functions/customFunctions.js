@@ -17,18 +17,14 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.accountGuideTypeUrl}`)
         this.accountGuideTypes = response.data.data || []
-      } catch (error) {
-        console.error('Error loading account guide types:', error)
-      }
+      } catch (error) {}
     },
 
     async loadAccountGuideNatureTypes() {
       try {
         const response = await API.get(`${this.accountGuideNatureTypeUrl}`)
         this.accountGuideNatureTypes = response.data.data || []
-      } catch (error) {
-        console.error('Error loading account guide nature types:', error)
-      }
+      } catch (error) {}
     },
   },
 }

@@ -46,7 +46,6 @@ export const customFunctions = {
         const response = await API.get(`${this.finalProductUrl}/${companyId}`, { params })
         this.finalProducts = response.data.data || []
       } catch (error) {
-        console.error('Error loading final products:', error)
         this.formLoading = false
       }
       this.formLoading = false
@@ -58,7 +57,6 @@ export const customFunctions = {
         const response = await API.get(`${this.branchUrl}/${companyId}`)
         this.branches = response.data.data || []
       } catch (error) {
-        console.error('Error loading branches:', error)
         this.formLoading = false
       }
       this.formLoading = false
@@ -85,7 +83,6 @@ export const customFunctions = {
         const response = await API.get(`${this.warehouseUrl}/${companyId}`, { params })
         this.warehouses = response.data.data || []
       } catch (error) {
-        console.error('Error loading warehouses:', error)
         this.formLoading = false
       }
       this.formLoading = false
@@ -97,7 +94,6 @@ export const customFunctions = {
         const response = await API.get(`${this.contactUrl}/${companyId}`)
         this.contacts = response.data.data || []
       } catch (error) {
-        console.error('Error loading contacts:', error)
         this.formLoading = false
       }
       this.formLoading = false
@@ -110,7 +106,6 @@ export const customFunctions = {
         const response = await API.get(`${this.stageUrl}/${companyId}`, { params })
         this.stages = response.data.data || []
       } catch (error) {
-        console.error('Error loading stages:', error)
         this.formLoading = false
       }
       this.formLoading = false
@@ -122,7 +117,6 @@ export const customFunctions = {
         const response = await API.get(`${this.paymentTypeUrl}`)
         this.paymentTypes = response.data.data || []
       } catch (error) {
-        console.error('Error loading payment types:', error)
         this.formLoading = false
       }
       this.formLoading = false
@@ -134,7 +128,6 @@ export const customFunctions = {
         const response = await API.get(`${this.measurementUnitUrl}/${companyId}`)
         this.measurementUnits = response.data.data || []
       } catch (error) {
-        console.error('Error loading measurement units:', error)
         this.formLoading = false
       }
       this.formLoading = false
@@ -146,7 +139,6 @@ export const customFunctions = {
         const response = await API.get(`${this.invoiceUrl}/${invoiceId}`)
         this.invoice = response.data?.data || response.data || []
       } catch (error) {
-        console.error('Error loading invoice:', error)
         this.formLoading = false
       }
       this.formLoading = false

@@ -17,9 +17,7 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.taxTypeUrl}`)
         this.taxTypes = response.data.data || []
-      } catch (error) {
-        console.error('Error loading taxes types:', error)
-      }
+      } catch (error) {}
     },
 
     async setActiveTax(taxId) {

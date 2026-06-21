@@ -15,9 +15,7 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.countryUrl}`)
         this.countries = response.data.data || []
-      } catch (error) {
-        console.error('Error loading countries:', error)
-      }
+      } catch (error) {}
     },
 
     async loadGovernorates(countryId) {
@@ -30,9 +28,7 @@ export const customFunctions = {
         const params = { country_id: countryId }
         const response = await API.get(this.governorateUrl, { params })
         this.governorates = response.data.data || []
-      } catch (error) {
-        console.error('Error loading governorates:', error)
-      }
+      } catch (error) {}
     },
   },
 }

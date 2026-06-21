@@ -15,9 +15,7 @@ export const customFunctions = {
         const params = { discount_id: discountId }
         const response = await API.get(`${this.branchUrl}/${companyId}`, { params })
         this.branches = response.data.data || []
-      } catch (error) {
-        console.error('Error loading branches:', error)
-      }
+      } catch (error) {}
     },
   },
 }

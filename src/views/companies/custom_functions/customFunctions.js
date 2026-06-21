@@ -21,27 +21,21 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.clientUrl}`)
         this.clients = response.data.data || []
-      } catch (error) {
-        console.error('Error loading clients:', error)
-      }
+      } catch (error) {}
     },
 
     async loadCurrencies() {
       try {
         const response = await API.get(`${this.lookupUrl}`)
         this.currencies = response.data.data || []
-      } catch (error) {
-        console.error('Error loading account types:', error)
-      }
+      } catch (error) {}
     },
 
     async loadCountries() {
       try {
         const response = await API.get(`${this.countryUrl}`)
         this.countries = response.data.data || []
-      } catch (error) {
-        console.error('Error loading countries:', error)
-      }
+      } catch (error) {}
     },
 
     async loadGovernorates(countryId) {
@@ -54,9 +48,7 @@ export const customFunctions = {
         const params = { country_id: countryId }
         const response = await API.get(this.governorateUrl, { params })
         this.governorates = response.data.data || []
-      } catch (error) {
-        console.error('Error loading governorates:', error)
-      }
+      } catch (error) {}
     },
 
     async loadCities(governorateId) {
@@ -69,9 +61,7 @@ export const customFunctions = {
         const params = { governorate_id: governorateId }
         const response = await API.get(this.cityUrl, { params })
         this.cities = response.data.data || []
-      } catch (error) {
-        console.error('Error loading cities:', error)
-      }
+      } catch (error) {}
     },
   },
 }

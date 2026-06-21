@@ -50,7 +50,6 @@ export const tableMixin = {
         this.items = response.data.data || []
         this.meta = response.data.meta || { total: 0, current_page: 1 }
       } catch (error) {
-        console.error(error)
         // Show error message using i18n
         this.$toast.add({
           severity: 'error',
@@ -125,7 +124,6 @@ export const tableMixin = {
         const response = await API.get(`${url}/${id}`)
         this.itemData = response.data.data || {}
       } catch (error) {
-        console.error(error)
         this.$toast.add({
           severity: 'error',
           summary: 'Error',
@@ -136,7 +134,7 @@ export const tableMixin = {
         this.loading = false
       }
     },
-    
+
     formatDate(date) {
       if (!date) return ''
 

@@ -45,9 +45,7 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.categoryUrl}/${companyId}`)
         this.categories = response.data.data || []
-      } catch (error) {
-        console.error('Error loading categories:', error)
-      }
+      } catch (error) {}
     },
 
     async loadProducts(companyId, categoryId) {
@@ -55,18 +53,14 @@ export const customFunctions = {
         const params = { category_id: categoryId }
         const response = await API.get(`${this.productUrl}/${companyId}`, { params })
         this.products = response.data.data || []
-      } catch (error) {
-        console.error('Error loading products:', error)
-      }
+      } catch (error) {}
     },
 
     async loadMeasurementUnits(companyId) {
       try {
         const response = await API.get(`${this.measurementUnitUrl}/${companyId}`)
         this.measurementUnits = response.data.data || []
-      } catch (error) {
-        console.error('Error loading measurement units:', error)
-      }
+      } catch (error) {}
     },
 
     //////////////////////////////////////////////////////////////////////////////////
@@ -75,9 +69,7 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.variantUrl}/${companyId}`)
         this.variants = response.data.data || []
-      } catch (error) {
-        console.error('Error loading variants:', error)
-      }
+      } catch (error) {}
     },
 
     async loadVariantValues(variantId) {

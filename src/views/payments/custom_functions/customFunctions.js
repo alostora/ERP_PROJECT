@@ -35,45 +35,35 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.paymentMethodUrl}`)
         this.paymentMethods = response.data.data || []
-      } catch (error) {
-        console.error('Error loading payment methods:', error)
-      }
+      } catch (error) {}
     },
 
     async loadPaymentStatus() {
       try {
         const response = await API.get(`${this.paymentStatusUrl}`)
         this.paymentStatusList = response.data.data || []
-      } catch (error) {
-        console.error('Error loading payment methods:', error)
-      }
+      } catch (error) {}
     },
 
     async loadBranches(companyId) {
       try {
         const response = await API.get(`${this.branchUrl}/${companyId}`)
         this.branches = response.data.data || []
-      } catch (error) {
-        console.error('Error loading branches:', error)
-      }
+      } catch (error) {}
     },
 
     async loadAccountGuides(companyId) {
       try {
         const response = await API.get(`${this.accountGuideUrl}/${companyId}`)
         this.accountGuides = response.data.data || []
-      } catch (error) {
-        console.error('Error loading account guides:', error)
-      }
+      } catch (error) {}
     },
 
     async loadCashBoxes(companyId) {
       try {
         const response = await API.get(`${this.cashBoxeUrl}/${companyId}`)
         this.cashBoxes = response.data.data || []
-      } catch (error) {
-        console.error('Error loading cash boxes:', error)
-      }
+      } catch (error) {}
     },
 
     async loadCashBoxShifts(companyId, cashBoxId) {
@@ -81,27 +71,21 @@ export const customFunctions = {
         const params = { cash_box_id: cashBoxId }
         const response = await API.get(`${this.cashBoxeShiftUrl}/${companyId}`, { params })
         this.cashBoxShifts = response.data.data || []
-      } catch (error) {
-        console.error('Error loading cash box shifts:', error)
-      }
+      } catch (error) {}
     },
 
     async loadBankAccounts(companyId) {
       try {
         const response = await API.get(`${this.bankAccountUrl}/${companyId}`)
         this.bankAccounts = response.data.data || []
-      } catch (error) {
-        console.error('Error loading bank accouns:', error)
-      }
+      } catch (error) {}
     },
 
     async loadWallets(companyId) {
       try {
         const response = await API.get(`${this.walletUrl}/${companyId}`)
         this.wallets = response.data.data || []
-      } catch (error) {
-        console.error('Error loading wallets:', error)
-      }
+      } catch (error) {}
     },
   },
 }

@@ -124,7 +124,7 @@
             <div class="col-10 mt-1">
               <Fluid>
                 <FloatLabel variant="on">
-                  <InputNumber
+                  <InputText
                     :id="'check_number_' + index"
                     v-model="payment.check_number"
                     autocomplete="off"
@@ -296,7 +296,6 @@ export default {
       deep: true,
     },
 
-    
     localPayments: {
       handler(newVal) {
         if (this.isPopulating) return
@@ -341,7 +340,7 @@ export default {
         cash_box_id: payment.cash_box?.id || null,
         bank_account_id: payment.bank_account?.id || null,
         check_number: payment.check_number || null,
-        check_due_date: payment.check_due_date || null,
+        check_due_date: payment.check_due_date ? payment.check_due_date.split('T')[0] : null,
         wallet_id: payment.wallet?.id || null,
         mobile_number: payment.mobile_number || null,
         notes: payment.notes || '',

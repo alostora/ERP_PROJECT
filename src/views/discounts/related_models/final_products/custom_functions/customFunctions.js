@@ -15,9 +15,7 @@ export const customFunctions = {
         const params = { discount_id: discountId }
         const response = await API.get(`${this.finalProductUrl}/${companyId}`, { params })
         this.finalProducts = response.data.data || []
-      } catch (error) {
-        console.error('Error loading final products:', error)
-      }
+      } catch (error) {}
     },
   },
 }

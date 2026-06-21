@@ -13,9 +13,7 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.lookupUrl}`)
         this.accountTypes = response.data.data || []
-      } catch (error) {
-        console.error('Error loading account types:', error)
-      }
+      } catch (error) {}
     },
   },
 }

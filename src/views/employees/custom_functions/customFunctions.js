@@ -15,9 +15,7 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.branchUrl}/${companyId}`)
         this.branches = response.data.data || []
-      } catch (error) {
-        console.error('Error loading branches:', error)
-      }
+      } catch (error) {}
     },
 
     async loadWarehouses(warehouseId) {
@@ -29,9 +27,7 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.warehouseUrl}/${warehouseId}`)
         this.warehouses = response.data.data || []
-      } catch (error) {
-        console.error('Error loading warehouses:', error)
-      }
+      } catch (error) {}
     },
   },
 }

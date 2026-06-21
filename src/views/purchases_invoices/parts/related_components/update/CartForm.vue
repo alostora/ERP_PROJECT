@@ -936,9 +936,6 @@ export default {
     emitSubmit() {
       this.$emit('handelFormData', this.localFormData)
       this.$emit('submit')
-
-      
-      console.log('submitsubmitsubmitsubmit', this.localFormData)
     },
 
     emitCloseFormModal() {
@@ -950,7 +947,6 @@ export default {
         ...this.localFormData,
         payments: emitedPaymentsData,
       }
-      console.log('emitPaymentsData', this.localFormData)
     },
 
     getMeasurementUnitDisplay(measurementUnitId) {

@@ -18,27 +18,21 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.discountTypeUrl}`)
         this.discountTypes = response.data.data || []
-      } catch (error) {
-        console.error('Error loading discounts types:', error)
-      }
+      } catch (error) {}
     },
 
     async loadFinalProducts(companyId) {
       try {
         const response = await API.get(`${this.finalProductUrl}/${companyId}`)
         this.finalProducts = response.data.data || []
-      } catch (error) {
-        console.error('Error loading final products:', error)
-      }
+      } catch (error) {}
     },
 
     async loadBranches(companyId) {
       try {
         const response = await API.get(`${this.branchUrl}/${companyId}`)
         this.branches = response.data.data || []
-      } catch (error) {
-        console.error('Error loading branches:', error)
-      }
+      } catch (error) {}
     },
   },
 }

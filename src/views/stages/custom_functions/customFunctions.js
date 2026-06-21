@@ -26,9 +26,7 @@ export const customFunctions = {
             this.fetchData()
           }
         }
-      } catch (error) {
-        console.error('Error loading stage types:', error)
-      }
+      } catch (error) {}
     },
 
     async setDefaultSage(stageId) {

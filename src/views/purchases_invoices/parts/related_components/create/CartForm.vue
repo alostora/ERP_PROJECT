@@ -885,7 +885,6 @@ export default {
         ...this.localFormData,
         payments: emitedPaymentsData,
       }
-      console.log('localFormData', this.localFormData)
     },
 
     getMeasurementUnitDisplay(measurementUnitId) {

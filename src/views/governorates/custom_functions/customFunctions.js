@@ -13,9 +13,7 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.countryUrl}`)
         this.countries = response.data.data || []
-      } catch (error) {
-        console.error('Error loading countries:', error)
-      }
+      } catch (error) {}
     },
   },
 }

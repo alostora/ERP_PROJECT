@@ -17,9 +17,7 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.branchUrl}/${companyId}`)
         this.branches = response.data.data || []
-      } catch (error) {
-        console.error('Error loading branches:', error)
-      }
+      } catch (error) {}
     },
 
     async setDefaultBankAccount(bankAccountId) {

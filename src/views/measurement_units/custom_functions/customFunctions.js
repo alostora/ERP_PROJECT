@@ -13,9 +13,7 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.measurementUnitGroupUrl}/${companyId}`)
         this.measurementUnitGroups = response.data.data || []
-      } catch (error) {
-        console.error('Error loading measurement unit groups:', error)
-      }
+      } catch (error) {}
     },
   },
 }

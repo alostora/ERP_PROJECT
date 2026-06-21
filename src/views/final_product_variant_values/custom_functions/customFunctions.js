@@ -44,9 +44,7 @@ export const customFunctions = {
         const response = await API.get(`${this.variantUrl}/${companyId}`, params)
 
         this.variants = response.data.data || []
-      } catch (error) {
-        console.error('Error loading variants:', error)
-      }
+      } catch (error) {}
     },
 
     async loadVariantValues(variantId) {

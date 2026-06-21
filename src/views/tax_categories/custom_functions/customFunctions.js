@@ -18,9 +18,7 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.taxUrl}/${companyId}`)
         this.taxes = response.data.data || []
-      } catch (error) {
-        console.error('Error loading taxes:', error)
-      }
+      } catch (error) {}
     },
 
     async setDefaultTaxCategory(taxCategoryId) {

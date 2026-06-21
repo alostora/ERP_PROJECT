@@ -29,54 +29,42 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.statusListUrl}`)
         this.statusList = response.data.data || []
-      } catch (error) {
-        console.error('Error loading status list:', error)
-      }
+      } catch (error) {}
     },
 
     async loadBranches(companyId) {
       try {
         const response = await API.get(`${this.branchUrl}/${companyId}`)
         this.branches = response.data.data || []
-      } catch (error) {
-        console.error('Error loading branches:', error)
-      }
+      } catch (error) {}
     },
 
     async loadEmployees(companyId) {
       try {
         const response = await API.get(`${this.employeeUrl}/${companyId}`)
         this.employees = response.data.data || []
-      } catch (error) {
-        console.error('Error loading employees:', error)
-      }
+      } catch (error) {}
     },
 
     async loadCashBoxes(companyId) {
       try {
         const response = await API.get(`${this.cashBoxeUrl}/${companyId}`)
         this.cashBoxes = response.data.data || []
-      } catch (error) {
-        console.error('Error loading cash boxes:', error)
-      }
+      } catch (error) {}
     },
 
     async loadBankAccounts(companyId) {
       try {
         const response = await API.get(`${this.bankAccountUrl}/${companyId}`)
         this.bankAccounts = response.data.data || []
-      } catch (error) {
-        console.error('Error loading bank accouns:', error)
-      }
+      } catch (error) {}
     },
 
     async loadWallets(companyId) {
       try {
         const response = await API.get(`${this.walletUrl}/${companyId}`)
         this.wallets = response.data.data || []
-      } catch (error) {
-        console.error('Error loading wallets:', error)
-      }
+      } catch (error) {}
     },
   },
 }

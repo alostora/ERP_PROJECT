@@ -13,9 +13,7 @@ export const customFunctions = {
       try {
         const response = await API.get(`${this.categoryUrl}/${companyId}`)
         this.categories = response.data.data || []
-      } catch (error) {
-        console.error('Error loading categories:', error)
-      }
+      } catch (error) {}
     },
   },
 }
