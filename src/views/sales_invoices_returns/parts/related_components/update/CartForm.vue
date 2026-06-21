@@ -65,7 +65,9 @@
                         optionValue="id"
                         :filter="true"
                         :showClear="true"
-                        :placeholder="$t('common.select') + ' ' + $t('salesInvoicesReturns.warehouse')"
+                        :placeholder="
+                          $t('common.select') + ' ' + $t('salesInvoicesReturns.warehouse')
+                        "
                         :filterPlaceholder="$t('common.search')"
                         class="w-full"
                       />
@@ -88,7 +90,9 @@
                         optionLabel="name"
                         :filter="true"
                         :showClear="true"
-                        :placeholder="$t('common.select') + ' ' + $t('salesInvoicesReturns.contact')"
+                        :placeholder="
+                          $t('common.select') + ' ' + $t('salesInvoicesReturns.contact')
+                        "
                         :filterPlaceholder="$t('common.search')"
                         class="w-full"
                       >
@@ -223,7 +227,9 @@
                                   :showButtons="true"
                                   class="text-center w-full"
                                 />
-                                <label for="quantity">{{ $t('salesInvoicesReturns.quantity') }}</label>
+                                <label for="quantity">{{
+                                  $t('salesInvoicesReturns.quantity')
+                                }}</label>
                               </FloatLabel>
                               <InputGroupAddon>
                                 <Button
@@ -671,7 +677,9 @@
                 </div>
 
                 <div class="flex justify-between mb-2">
-                  <span class="text-sm">{{ $t('salesInvoicesReturns.total_operations_cost') }}:</span>
+                  <span class="text-sm"
+                    >{{ $t('salesInvoicesReturns.total_operations_cost') }}:</span
+                  >
                   <span class="text-sm">{{ formatCurrency(calculateTotalOperationsCost()) }}</span>
                 </div>
 
@@ -706,6 +714,16 @@
           </div>
         </div>
         <!-- Total Summary -->
+
+        <!-- Payments -->
+        <UpdateInvoicePaymentsComponent
+          :payments.sync="localFormData.payments"
+          :company_id="company_id"
+          :amount="calculateGrandTotal()"
+          @emitPaymentsData="emitPaymentsData"
+          :errors="errors"
+        />
+        <!-- Payments -->
 
         <!-- General Error -->
         <small v-if="errors.final_products" class="error-message">
@@ -751,6 +769,7 @@ import FloatLabel from 'primevue/floatlabel'
 import Fluid from 'primevue/fluid'
 import ScrollPanel from 'primevue/scrollpanel'
 import Panel from 'primevue/panel'
+import UpdateInvoicePaymentsComponent from '@/components/invoices_payments/UpdateInvoicePaymentsComponent.vue'
 
 import { API_ROUTES } from '@/constants/apiRoutes'
 import formMixin from '@/mixins/form'
@@ -775,6 +794,7 @@ export default {
     Fluid,
     ScrollPanel,
     Panel,
+    UpdateInvoicePaymentsComponent,
   },
 
   emits: ['handelFormData', 'submit', 'deleteFinalProducts', 'appendProductToCart', 'closeForm'],
@@ -843,6 +863,7 @@ export default {
         final_products: [],
         additional_costs: [],
         additional_discounts: [],
+        payments: [],
       },
       selectedContact: {},
     }
@@ -893,6 +914,7 @@ export default {
         final_products: this.populateFinalProducts(invoice),
         additional_costs: invoice.additional_costs || [],
         additional_discounts: invoice.additional_discounts || [],
+        payments: invoice.payments || [],
       }
 
       this.$emit('appendProductToCart', this.localFormData.final_products)
@@ -927,6 +949,13 @@ export default {
 
     emitCloseFormModal() {
       this.$emit('closeForm')
+    },
+
+    emitPaymentsData(emitedPaymentsData) {
+      this.localFormData = {
+        ...this.localFormData,
+        payments: emitedPaymentsData,
+      }
     },
 
     getMeasurementUnitDisplay(measurementUnitId) {

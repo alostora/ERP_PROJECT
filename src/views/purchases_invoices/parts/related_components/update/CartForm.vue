@@ -906,7 +906,7 @@ export default {
         final_products: this.populateFinalProducts(invoice),
         additional_costs: invoice.additional_costs || [],
         additional_discounts: invoice.additional_discounts || [],
-        payments: invoice.payments || [], // ← ADD THIS
+        payments: invoice.payments || [],
       }
 
       this.$emit('appendProductToCart', this.localFormData.final_products)

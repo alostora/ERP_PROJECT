@@ -720,6 +720,15 @@
         </div>
         <!-- Total Summary -->
 
+        <!-- Payments -->
+        <CreateInvoicePaymentsComponent
+          :company_id="company_id"
+          :branch_id="branch_id"
+          :amount="calculateGrandTotal()"
+          @emitPaymentsData="emitPaymentsData"
+        />
+        <!-- Payments -->
+
         <!-- General Error -->
         <small v-if="errors.final_products" class="error-message">
           {{ errors.final_products }}
@@ -764,6 +773,7 @@ import FloatLabel from 'primevue/floatlabel'
 import Fluid from 'primevue/fluid'
 import ScrollPanel from 'primevue/scrollpanel'
 import Panel from 'primevue/panel'
+import CreateInvoicePaymentsComponent from '@/components/invoices_payments/CreateInvoicePaymentsComponent.vue'
 
 import formMixin from '@/mixins/form'
 import customFunctions from '../../../custom_functions/customFunctions'
@@ -787,6 +797,7 @@ export default {
     Fluid,
     ScrollPanel,
     Panel,
+    CreateInvoicePaymentsComponent,
   },
 
   emits: ['handelFormData', 'submit', 'deleteFinalProducts', 'closeForm'],
@@ -887,6 +898,13 @@ export default {
 
     emitCloseFormModal() {
       this.$emit('closeForm')
+    },
+
+    emitPaymentsData(emitedPaymentsData) {
+      this.localFormData = {
+        ...this.localFormData,
+        payments: emitedPaymentsData,
+      }
     },
 
     getMeasurementUnitDisplay(measurementUnitId) {

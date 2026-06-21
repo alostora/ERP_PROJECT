@@ -25,7 +25,9 @@
                             autocomplete="off"
                             class="w-full"
                           />
-                          <label for="invoice_name">{{ $t('purchasesInvoicesReturns.name') }}</label>
+                          <label for="invoice_name">{{
+                            $t('purchasesInvoicesReturns.name')
+                          }}</label>
                         </FloatLabel>
                       </Fluid>
                     </div>
@@ -45,7 +47,9 @@
                         optionValue="id"
                         :filter="true"
                         :showClear="true"
-                        :placeholder="$t('common.select') + ' ' + $t('purchasesInvoicesReturns.branch')"
+                        :placeholder="
+                          $t('common.select') + ' ' + $t('purchasesInvoicesReturns.branch')
+                        "
                         :filterPlaceholder="$t('common.search')"
                         class="w-full"
                         @change="onBranchChange"
@@ -65,7 +69,9 @@
                         optionValue="id"
                         :filter="true"
                         :showClear="true"
-                        :placeholder="$t('common.select') + ' ' + $t('purchasesInvoicesReturns.warehouse')"
+                        :placeholder="
+                          $t('common.select') + ' ' + $t('purchasesInvoicesReturns.warehouse')
+                        "
                         :filterPlaceholder="$t('common.search')"
                         class="w-full"
                       />
@@ -88,7 +94,9 @@
                         optionLabel="name"
                         :filter="true"
                         :showClear="true"
-                        :placeholder="$t('common.select') + ' ' + $t('purchasesInvoicesReturns.contact')"
+                        :placeholder="
+                          $t('common.select') + ' ' + $t('purchasesInvoicesReturns.contact')
+                        "
                         :filterPlaceholder="$t('common.search')"
                         class="w-full"
                       >
@@ -156,7 +164,9 @@
           <div class="col-12">
             <div class="card-indigo">
               <div class="card-header-indigo">
-                {{ $t('purchasesInvoicesReturns.final_products') + '( ' + final_products.length + ')' }}
+                {{
+                  $t('purchasesInvoicesReturns.final_products') + '( ' + final_products.length + ')'
+                }}
               </div>
               <div class="card-body">
                 <div class="row">
@@ -223,7 +233,9 @@
                                   :showButtons="true"
                                   class="text-center w-full"
                                 />
-                                <label for="quantity">{{ $t('purchasesInvoicesReturns.quantity') }}</label>
+                                <label for="quantity">{{
+                                  $t('purchasesInvoicesReturns.quantity')
+                                }}</label>
                               </FloatLabel>
                               <InputGroupAddon>
                                 <Button
@@ -269,7 +281,9 @@
                               <span v-if="slotProps.value">
                                 {{ getMeasurementUnitDisplay(slotProps.value) }}
                               </span>
-                              <span v-else>{{ $t('purchasesInvoicesReturns.measurement_unit') }}</span>
+                              <span v-else>{{
+                                $t('purchasesInvoicesReturns.measurement_unit')
+                              }}</span>
                             </template>
                           </Select>
                         </div>
@@ -482,7 +496,9 @@
         <div v-if="final_products.length" class="row mt-2">
           <div class="col-12">
             <div class="card-info">
-              <div class="card-header-info">{{ $t('purchasesInvoicesReturns.additional_costs') }}</div>
+              <div class="card-header-info">
+                {{ $t('purchasesInvoicesReturns.additional_costs') }}
+              </div>
               <div class="card-body">
                 <div class="flex justify-end mb-2">
                   <Button
@@ -671,7 +687,9 @@
                 </div>
 
                 <div class="flex justify-between mb-2">
-                  <span class="text-sm">{{ $t('purchasesInvoicesReturns.total_operations_cost') }}:</span>
+                  <span class="text-sm"
+                    >{{ $t('purchasesInvoicesReturns.total_operations_cost') }}:</span
+                  >
                   <span class="text-sm">{{ formatCurrency(calculateTotalOperationsCost()) }}</span>
                 </div>
 
@@ -706,6 +724,16 @@
           </div>
         </div>
         <!-- Total Summary -->
+
+        <!-- Payments -->
+        <UpdateInvoicePaymentsComponent
+          :payments.sync="localFormData.payments"
+          :company_id="company_id"
+          :amount="calculateGrandTotal()"
+          @emitPaymentsData="emitPaymentsData"
+          :errors="errors"
+        />
+        <!-- Payments -->
 
         <!-- General Error -->
         <small v-if="errors.final_products" class="error-message">
@@ -751,6 +779,7 @@ import FloatLabel from 'primevue/floatlabel'
 import Fluid from 'primevue/fluid'
 import ScrollPanel from 'primevue/scrollpanel'
 import Panel from 'primevue/panel'
+import UpdateInvoicePaymentsComponent from '@/components/invoices_payments/UpdateInvoicePaymentsComponent.vue'
 
 import { API_ROUTES } from '@/constants/apiRoutes'
 import formMixin from '@/mixins/form'
@@ -775,6 +804,7 @@ export default {
     Fluid,
     ScrollPanel,
     Panel,
+    UpdateInvoicePaymentsComponent,
   },
 
   emits: ['handelFormData', 'submit', 'deleteFinalProducts', 'appendProductToCart', 'closeForm'],
@@ -843,6 +873,7 @@ export default {
         final_products: [],
         additional_costs: [],
         additional_discounts: [],
+        payments: [],
       },
       selectedContact: {},
     }
@@ -893,6 +924,7 @@ export default {
         final_products: this.populateFinalProducts(invoice),
         additional_costs: invoice.additional_costs || [],
         additional_discounts: invoice.additional_discounts || [],
+        payments: invoice.payments || [],
       }
 
       this.$emit('appendProductToCart', this.localFormData.final_products)
@@ -927,6 +959,13 @@ export default {
 
     emitCloseFormModal() {
       this.$emit('closeForm')
+    },
+
+    emitPaymentsData(emitedPaymentsData) {
+      this.localFormData = {
+        ...this.localFormData,
+        payments: emitedPaymentsData,
+      }
     },
 
     getMeasurementUnitDisplay(measurementUnitId) {
