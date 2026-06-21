@@ -130,7 +130,7 @@
         >
           <Fluid>
             <FloatLabel variant="on">
-              <InputNumber
+              <InputText
                 :inputId="'check_number + paymentIndex'"
                 v-model="payment.check_number"
                 autocomplete="off"

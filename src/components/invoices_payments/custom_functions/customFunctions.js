@@ -37,51 +37,60 @@ export const customFunctions = {
     },
 
     async determineMethod(payment) {
-      const selectedPaymentMethod = this.paymentMethods.find(
-        (paymentMethod) => paymentMethod.id === payment.payment_method_id
-      )
+      const selected = this.paymentMethods.find((m) => m.id === payment.payment_method_id)
+      if (!selected) {
+        payment.selectedPaymentMethod = null
+        payment.bankAccounts = []
+        payment.cashBoxs = []
+        payment.wallets = []
+        return
+      }
+      payment.selectedPaymentMethod = selected
 
-      if (selectedPaymentMethod) {
-        payment.selectedPaymentMethod = selectedPaymentMethod
+      // Save current selections before clearing
+      const currentBankAccountId = payment.bank_account_id
+      const currentCashBoxId = payment.cash_box_id
+      const currentWalletId = payment.wallet_id
+
+      // Clear arrays (but keep IDs for later)
+      payment.bank_account_id = null
+      payment.cash_box_id = null
+      payment.wallet_id = null
+
+      if (
+        selected.prefix === 'CARD' ||
+        selected.prefix === 'BANK_ACCOUNT' ||
+        selected.prefix === 'CHECK'
+      ) {
+        if (!this.bankAccounts.length) await this.loadBankAccounts()
+        payment.bankAccounts = [...this.bankAccounts]
+        payment.cashBoxs = []
+        payment.wallets = []
+        // Restore bank account selection if still valid
         if (
-          selectedPaymentMethod.prefix === 'CARD' ||
-          selectedPaymentMethod.prefix === 'BANK_ACCOUNT' ||
-          selectedPaymentMethod.prefix === 'CHECK'
+          currentBankAccountId &&
+          payment.bankAccounts.some((b) => b.id === currentBankAccountId)
         ) {
-          if (!this.bankAccounts.length) {
-            await this.loadBankAccounts()
-          }
-          this.$nextTick(() => {
-            payment.cashBoxs = []
-            payment.wallets = []
-            payment.bankAccounts = this.bankAccounts
-          })
-        } else if (selectedPaymentMethod.prefix === 'MOBILE_WALLET') {
-          if (!this.wallets.length) {
-            await this.loadWallets()
-          }
-          this.$nextTick(() => {
-            payment.bankAccounts = []
-            payment.cashBoxs = []
-            payment.wallets = this.wallets
-          })
-        } else if (selectedPaymentMethod.prefix === 'CASH') {
-          if (!this.cashBoxs.length) {
-            await this.loadCashBoxs()
-          }
-          this.$nextTick(() => {
-            payment.bankAccounts = []
-            payment.wallets = []
-            payment.cashBoxs = this.cashBoxs
-          })
+          payment.bank_account_id = currentBankAccountId
         }
-      } else {
+      } else if (selected.prefix === 'MOBILE_WALLET') {
+        if (!this.wallets.length) await this.loadWallets()
+        payment.wallets = [...this.wallets]
+        payment.bankAccounts = []
+        payment.cashBoxs = []
+        if (currentWalletId && payment.wallets.some((w) => w.id === currentWalletId)) {
+          payment.wallet_id = currentWalletId
+        }
+      } else if (selected.prefix === 'CASH') {
+        if (!this.cashBoxs.length) await this.loadCashBoxs()
+        payment.cashBoxs = [...this.cashBoxs]
         payment.bankAccounts = []
         payment.wallets = []
-        payment.cashBoxs = []
+        if (currentCashBoxId && payment.cashBoxs.some((c) => c.id === currentCashBoxId)) {
+          payment.cash_box_id = currentCashBoxId
+        }
       }
     },
-
     async loadBankAccounts() {
       try {
         this.formLoading = true
