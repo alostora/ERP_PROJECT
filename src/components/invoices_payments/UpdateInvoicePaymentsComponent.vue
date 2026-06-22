@@ -33,20 +33,24 @@
       <div v-if="localPayments.length">
         <div
           class="row g-2 mb-2 align-center"
-          v-for="(payment, index) in localPayments"
-          :key="index"
+          v-for="(payment, paymentIndex) in localPayments"
+          :key="paymentIndex"
         >
           <!-- Amount -->
           <div class="col-5">
             <Fluid>
               <FloatLabel variant="on">
-                <InputNumber :id="'amount_' + index" v-model="payment.amount" autocomplete="off" />
-                <label :for="'amount_' + index">
+                <InputNumber
+                  :id="'amount_' + paymentIndex"
+                  v-model="payment.amount"
+                  autocomplete="off"
+                />
+                <label :for="'amount_' + paymentIndex">
                   {{ $t('invoicePayments.amount') }}
                 </label>
               </FloatLabel>
-              <small v-if="errors.amount" class="error-message">
-                {{ errors.amount }}
+              <small v-if="errors[`payments.${paymentIndex}.amount`]" class="error-message">
+                {{ errors[`payments.${paymentIndex}.amount`] }}
               </small>
             </Fluid>
           </div>
@@ -64,8 +68,11 @@
               class="w-full"
               @change="determineMethod(payment)"
             />
-            <small v-if="errors.payment_method_id" class="error-message">
-              {{ errors.payment_method_id }}
+            <small
+              v-if="errors[`payments.${paymentIndex}.payment_method_id`]"
+              class="error-message"
+            >
+              {{ errors[`payments.${paymentIndex}.payment_method_id`] }}
             </small>
           </div>
 
@@ -76,7 +83,7 @@
               severity="danger"
               text
               rounded
-              @click="deleteInvoicePaymentRow(index)"
+              @click="deleteInvoicePaymentRow(paymentIndex)"
               size="small"
             />
           </div>
@@ -84,7 +91,7 @@
           <!-- Cash Box -->
           <div v-if="payment.cashBoxs && payment.cashBoxs.length" class="col-10 mt-1">
             <Select
-              :key="'cash_' + index + '_' + payment.cashBoxs.length"
+              :key="'cash_' + paymentIndex + '_' + payment.cashBoxs.length"
               v-model="payment.cash_box_id"
               :options="payment.cashBoxs"
               :optionLabel="cashBoxLabel"
@@ -94,15 +101,15 @@
               showClear
               class="w-full"
             />
-            <small v-if="errors.cash_box_id" class="error-message">
-              {{ errors.cash_box_id }}
+            <small v-if="errors[`payments.${paymentIndex}.cash_box_id`]" class="error-message">
+              {{ errors[`payments.${paymentIndex}.cash_box_id`] }}
             </small>
           </div>
 
           <!-- Bank Account -->
           <div v-if="payment.bankAccounts && payment.bankAccounts.length" class="col-10 mt-1">
             <Select
-              :key="'bank_' + index + '_' + payment.bankAccounts.length"
+              :key="'bank_' + paymentIndex + '_' + payment.bankAccounts.length"
               v-model="payment.bank_account_id"
               :options="payment.bankAccounts"
               :optionLabel="bankAccountLabel"
@@ -112,8 +119,8 @@
               showClear
               class="w-full"
             />
-            <small v-if="errors.bank_account_id" class="error-message">
-              {{ errors.bank_account_id }}
+            <small v-if="errors[`payments.${paymentIndex}.bank_account_id`]" class="error-message">
+              {{ errors[`payments.${paymentIndex}.bank_account_id`] }}
             </small>
           </div>
 
@@ -125,17 +132,14 @@
               <Fluid>
                 <FloatLabel variant="on">
                   <InputText
-                    :id="'check_number_' + index"
+                    :id="'check_number_' + paymentIndex"
                     v-model="payment.check_number"
                     autocomplete="off"
                   />
-                  <label :for="'check_number_' + index">
+                  <label :for="'check_number_' + paymentIndex">
                     {{ $t('invoicePayments.check_number') }}
                   </label>
                 </FloatLabel>
-                <small v-if="errors.check_number" class="error-message">
-                  {{ errors.check_number }}
-                </small>
               </Fluid>
             </div>
 
@@ -147,15 +151,12 @@
                     type="date"
                     class="input"
                     :class="{ 'input-error': errors.check_due_date }"
-                    :id="'check_due_date_' + index"
+                    :id="'check_due_date_' + paymentIndex"
                   />
-                  <label :for="'check_due_date_' + index" class="form-label required p-5">
+                  <label :for="'check_due_date_' + paymentIndex" class="form-label required p-5">
                     {{ $t('invoicePayments.check_due_date') }}
                   </label>
                 </FloatLabel>
-                <small v-if="errors.check_due_date" class="error-message">
-                  {{ errors.check_due_date }}
-                </small>
               </Fluid>
             </div>
           </template>
@@ -163,7 +164,7 @@
           <!-- Wallet -->
           <div v-if="payment.wallets && payment.wallets.length" class="col-10 mt-1">
             <Select
-              :key="'wallet_' + index + '_' + payment.wallets.length"
+              :key="'wallet_' + paymentIndex + '_' + payment.wallets.length"
               v-model="payment.wallet_id"
               :options="payment.wallets"
               :optionLabel="bankAccountLabel"
@@ -173,8 +174,8 @@
               showClear
               class="w-full"
             />
-            <small v-if="errors.wallet_id" class="error-message">
-              {{ errors.wallet_id }}
+            <small v-if="errors[`payments.${paymentIndex}.wallet_id`]" class="error-message">
+              {{ errors[`payments.${paymentIndex}.wallet_id`] }}
             </small>
           </div>
 
@@ -183,17 +184,14 @@
             <Fluid>
               <FloatLabel variant="on">
                 <InputText
-                  :id="'mobile_number_' + index"
+                  :id="'mobile_number_' + paymentIndex"
                   v-model="payment.mobile_number"
                   autocomplete="off"
                 />
-                <label :for="'mobile_number_' + index">
+                <label :for="'mobile_number_' + paymentIndex">
                   {{ $t('invoicePayments.mobile_number') }}
                 </label>
               </FloatLabel>
-              <small v-if="errors.mobile_number" class="error-message">
-                {{ errors.mobile_number }}
-              </small>
             </Fluid>
           </div>
 

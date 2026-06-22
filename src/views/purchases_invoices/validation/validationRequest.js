@@ -1,12 +1,26 @@
-// src/views/purchases_invoices/validation/validationRequest.js
+import API from '@/mixins/api'
+import { API_ROUTES } from '@/constants/apiRoutes'
 
 export default {
   data() {
     return {
       errors: {},
+      paymentMethods: [],
     }
   },
+  mounted() {
+    this.loadPaymentMethodsForValidation(this.company_id)
+  },
   methods: {
+    async loadPaymentMethodsForValidation(companyId) {
+      try {
+        const response = await API.get(API_ROUTES.LOOKUP.PAYMENT_METHOD)
+        this.paymentMethods = response.data.data || []
+      } catch (error) {
+        console.error('Error loading payment methods:', error)
+      }
+    },
+
     validateCreateForm(form) {
       this.errors = {}
 
@@ -128,6 +142,54 @@ export default {
             this.errors[`additional_discounts.${index}.value`] = this.$t(
               'purchasesInvoices.validation.additionalDiscountValueRequired'
             )
+          }
+        })
+      }
+
+      // Validate payments
+      if (form.payments?.length) {
+        form.payments.forEach((payment, index) => {
+          if (!payment.amount || payment.amount < 1) {
+            this.errors[`payments.${index}.amount`] = this.$t(
+              'purchasesInvoices.validation.amountRequired'
+            )
+          }
+
+          if (!payment.payment_method_id?.trim()) {
+            this.errors[`payments.${index}.payment_method_id`] = this.$t(
+              'purchasesInvoices.validation.paymentMethodIdRequired'
+            )
+          }
+
+          if (payment.payment_method_id?.trim() && form.company_id?.trim()) {
+            const selected = this.paymentMethods.find(
+              (paymentMethod) => paymentMethod.id === payment.payment_method_id
+            )
+
+            if (!selected) {
+              this.errors[`payments.${index}.payment_method_id`] = this.$t(
+                'purchasesInvoices.validation.paymentMethodIdRequired'
+              )
+            }
+
+            if (
+              (selected.prefix === 'CARD' ||
+                selected.prefix === 'BANK_ACCOUNT' ||
+                selected.prefix === 'CHECK') &&
+              !payment.bank_account_id?.trim()
+            ) {
+              this.errors[`payments.${index}.bank_account_id`] = this.$t(
+                'purchasesInvoices.validation.bankAccountIdRequired'
+              )
+            } else if (selected.prefix === 'CASH' && !payment.cash_box_id?.trim()) {
+              this.errors[`payments.${index}.cash_box_id`] = this.$t(
+                'purchasesInvoices.validation.cashBoxIdRequired'
+              )
+            } else if (selected.prefix === 'MOBILE_WALLET' && !payment.wallet_id?.trim()) {
+              this.errors[`payments.${index}.wallet_id`] = this.$t(
+                'purchasesInvoices.validation.walletIdRequired'
+              )
+            }
           }
         })
       }
@@ -256,6 +318,54 @@ export default {
             this.errors[`additional_discounts.${index}.value`] = this.$t(
               'purchasesInvoices.validation.additionalDiscountValueRequired'
             )
+          }
+        })
+      }
+
+      // Validate payments
+      if (form.payments?.length) {
+        form.payments.forEach((payment, index) => {
+          if (!payment.amount || payment.amount < 1) {
+            this.errors[`payments.${index}.amount`] = this.$t(
+              'purchasesInvoices.validation.amountRequired'
+            )
+          }
+
+          if (!payment.payment_method_id?.trim()) {
+            this.errors[`payments.${index}.payment_method_id`] = this.$t(
+              'purchasesInvoices.validation.paymentMethodIdRequired'
+            )
+          }
+
+          if (payment.payment_method_id?.trim() && form.company_id?.trim()) {
+            const selected = this.paymentMethods.find(
+              (paymentMethod) => paymentMethod.id === payment.payment_method_id
+            )
+
+            if (!selected) {
+              this.errors[`payments.${index}.payment_method_id`] = this.$t(
+                'purchasesInvoices.validation.paymentMethodIdRequired'
+              )
+            }
+
+            if (
+              (selected.prefix === 'CARD' ||
+                selected.prefix === 'BANK_ACCOUNT' ||
+                selected.prefix === 'CHECK') &&
+              !payment.bank_account_id?.trim()
+            ) {
+              this.errors[`payments.${index}.bank_account_id`] = this.$t(
+                'purchasesInvoices.validation.bankAccountIdRequired'
+              )
+            } else if (selected.prefix === 'CASH' && !payment.cash_box_id?.trim()) {
+              this.errors[`payments.${index}.cash_box_id`] = this.$t(
+                'purchasesInvoices.validation.cashBoxIdRequired'
+              )
+            } else if (selected.prefix === 'MOBILE_WALLET' && !payment.wallet_id?.trim()) {
+              this.errors[`payments.${index}.wallet_id`] = this.$t(
+                'purchasesInvoices.validation.walletIdRequired'
+              )
+            }
           }
         })
       }

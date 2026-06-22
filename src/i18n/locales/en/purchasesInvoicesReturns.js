@@ -108,5 +108,11 @@ export default {
     additionalCostValueRequired: 'Cost value is required',
     additionalDiscountNameRequired: 'Discount name is required',
     additionalDiscountValueRequired: 'Discount value is required',
+
+    amountRequired: 'Amount Required',
+    paymentMethodIdRequired: 'Payment method is required',
+    bankAccountIdRequired: 'Bank account is required',
+    cashBoxIdRequired: 'Cash box is required',
+    walletIdRequired: 'Wallet is required',
   },
 }

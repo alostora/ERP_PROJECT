@@ -729,9 +729,9 @@
         <UpdateInvoicePaymentsComponent
           :payments.sync="localFormData.payments"
           :company_id="company_id"
+          :errors="errors"
           :amount="calculateGrandTotal()"
           @emitPaymentsData="emitPaymentsData"
-          :errors="errors"
         />
         <!-- Payments -->
 

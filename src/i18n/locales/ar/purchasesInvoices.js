@@ -106,5 +106,10 @@ export default {
     additionalCostValueRequired: 'قيمة التكلفة مطلوبة',
     additionalDiscountNameRequired: 'اسم الخصم مطلوب',
     additionalDiscountValueRequired: 'قيمة الخصم مطلوبة',
+    amountRequired: 'المبلغ مطلوب',
+    paymentMethodIdRequired: 'وسيلة الدفع مطلوبة',
+    bankAccountIdRequired: 'حساب البنك مطلوب',
+    cashBoxIdRequired: 'صندوق النقدية / الخزينة مطلوب',
+    walletIdRequired: 'المحفظة مطلوبة',
   },
 }

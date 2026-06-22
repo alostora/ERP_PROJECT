@@ -37,7 +37,10 @@ export const customFunctions = {
     },
 
     async determineMethod(payment) {
-      const selected = this.paymentMethods.find((m) => m.id === payment.payment_method_id)
+      const selected = this.paymentMethods.find(
+        (paymentMethod) => paymentMethod.id === payment.payment_method_id
+      )
+
       if (!selected) {
         payment.selectedPaymentMethod = null
         payment.bankAccounts = []
@@ -91,6 +94,7 @@ export const customFunctions = {
         }
       }
     },
+
     async loadBankAccounts() {
       try {
         this.formLoading = true

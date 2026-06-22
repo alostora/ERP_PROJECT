@@ -720,8 +720,8 @@
           :payments.sync="localFormData.payments"
           :company_id="company_id"
           :amount="calculateGrandTotal()"
-          @emitPaymentsData="emitPaymentsData"
           :errors="errors"
+          @emitPaymentsData="emitPaymentsData"
         />
         <!-- Payments -->
 

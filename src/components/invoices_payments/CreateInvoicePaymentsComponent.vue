@@ -48,8 +48,8 @@
                 {{ $t('invoicePayments.amount') }}
               </label>
             </FloatLabel>
-            <small v-if="errors.amount" class="error-message">
-              {{ errors.amount }}
+            <small v-if="errors[`payments.${paymentIndex}.amount`]" class="error-message">
+              {{ errors[`payments.${paymentIndex}.amount`] }}
             </small>
           </Fluid>
         </div>
@@ -68,8 +68,8 @@
             class="w-full"
             @change="determineMethod(payment)"
           />
-          <small v-if="errors.payment_method_id" class="error-message">
-            {{ errors.payment_method_id }}
+          <small v-if="errors[`payments.${paymentIndex}.payment_method_id`]" class="error-message">
+            {{ errors[`payments.${paymentIndex}.payment_method_id`] }}
           </small>
         </div>
         <!-- Payment Method -->
@@ -98,8 +98,8 @@
             :showClear="true"
             class="w-full"
           />
-          <small v-if="errors.cash_box_id" class="error-message">
-            {{ errors.cash_box_id }}
+          <small v-if="errors[`payments.${paymentIndex}.cash_box_id`]" class="error-message">
+            {{ errors[`payments.${paymentIndex}.cash_box_id`] }}
           </small>
         </div>
         <!-- Cash Box -->
@@ -117,8 +117,8 @@
             :showClear="true"
             class="w-full"
           />
-          <small v-if="errors.bank_account_id" class="error-message">
-            {{ errors.bank_account_id }}
+          <small v-if="errors[`payments.${paymentIndex}.bank_account_id`]" class="error-message">
+            {{ errors[`payments.${paymentIndex}.bank_account_id`] }}
           </small>
         </div>
         <!-- Bank Account -->
@@ -139,9 +139,6 @@
                 {{ $t('invoicePayments.check_number') }}
               </label>
             </FloatLabel>
-            <small v-if="errors.check_number" class="error-message">
-              {{ errors.check_number }}
-            </small>
           </Fluid>
         </div>
         <!-- Bank Account Check Number -->
@@ -164,9 +161,6 @@
                 {{ $t('invoicePayments.check_due_date') }}</label
               >
             </FloatLabel>
-            <small v-if="errors.check_due_date" class="error-message">
-              {{ errors.check_due_date }}
-            </small>
           </Fluid>
         </div>
         <!-- Bank Account Check Due Date -->
@@ -184,8 +178,8 @@
             :showClear="true"
             class="w-full"
           />
-          <small v-if="errors.wallet_id" class="error-message">
-            {{ errors.wallet_id }}
+          <small v-if="errors[`payments.${paymentIndex}.wallet_id`]" class="error-message">
+            {{ errors[`payments.${paymentIndex}.wallet_id`] }}
           </small>
         </div>
         <!-- Wallet -->
@@ -203,9 +197,6 @@
                 {{ $t('invoicePayments.mobile_number') }}
               </label>
             </FloatLabel>
-            <small v-if="errors.mobile_number" class="error-message">
-              {{ errors.mobile_number }}
-            </small>
           </Fluid>
         </div>
         <!-- Wallet Mobile Number -->

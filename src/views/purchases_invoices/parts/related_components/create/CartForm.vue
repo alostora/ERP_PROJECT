@@ -711,6 +711,7 @@
         <CreateInvoicePaymentsComponent
           :company_id="company_id"
           :branch_id="branch_id"
+          :errors="errors"
           :amount="calculateGrandTotal()"
           @emitPaymentsData="emitPaymentsData"
         />
