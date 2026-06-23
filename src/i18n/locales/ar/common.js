@@ -1,3 +1,4 @@
+import stockingRequests from './stockingRequests'
 import transferMoneys from './transferMoneys'
 
 export default {
@@ -156,6 +157,8 @@ export default {
     salesInvoices: 'فواتير المبيعات',
 
     //////
+    stockManagement: 'إدارة المخزون',
+    stockingRequests: 'طلبات التوريد',
     //////
     //////
     //////

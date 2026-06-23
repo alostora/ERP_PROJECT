@@ -154,6 +154,8 @@ export default {
     salesInvoices: 'Sales Invoices',
 
     //////
+    stockManagement: 'Stock Management',
+    stockingRequests: 'Stocking Requests',
     //////
     //////
     //////

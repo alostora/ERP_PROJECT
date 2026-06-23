@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import MainLayout from '@/layouts/Main.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import Login from '@/views/Login.vue'
+
 import usersRoutes from '@/views/users/routes/routes'
 import countriesRoutes from '@/views/countries/routes/routes'
 import governoratesRoutes from '@/views/governorates/routes/routes'
@@ -34,6 +36,7 @@ import purchasesInvoices from '@/views/purchases_invoices/routes/routes'
 import purchasesInvoicesReturns from '@/views/purchases_invoices_returns/routes/routes'
 import salesInvoices from '@/views/sales_invoices/routes/routes'
 import salesInvoicesReturns from '@/views/sales_invoices_returns/routes/routes'
+import stockingRequests from '@/views/stocking_requests/routes/routes'
 
 const routes = [
   {
@@ -80,6 +83,7 @@ const routes = [
       ...purchasesInvoicesReturns,
       ...salesInvoices,
       ...salesInvoicesReturns,
+      ...stockingRequests,
     ],
   },
 ]

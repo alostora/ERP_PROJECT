@@ -242,6 +242,17 @@ export const sidebarItems = {
                 },
               ],
             },
+            {
+              label: 'common.menu.stockManagement',
+              icon: 'pi pi-money-bill',
+              items: [
+                {
+                  label: 'common.menu.stockingRequests',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/stocking-requests/${this.company_id}`,
+                },
+              ],
+            },
           ],
         }
 

@@ -220,4 +220,10 @@ export const API_ROUTES = {
     UPDATE_STAGE: `${BASE_URL}/admin/company/sales/invoice-return-stage`,
     UPDATE_STAGE_ACTION: `${BASE_URL}/admin/company/sales/invoice-return-action`,
   },
+  STOCKING_REQUEST: {
+    SEARCH: `${BASE_URL}/admin/company/stock-management/stocking-requests/search`,
+    BASE: `${BASE_URL}/admin/company/stock-management/stocking-request`,
+    UPDATE_STAGE: `${BASE_URL}/admin/company/stock-management/stocking-request-stage`,
+    UPDATE_STAGE_ACTION: `${BASE_URL}/admin/company/stock-management/stocking-request-stage-action`,
+  },
 }
