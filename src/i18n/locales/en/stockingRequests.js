@@ -21,6 +21,10 @@ export default {
   stage_comment: 'Stage Comment',
 
   /////////////////////////////
+  is_closed: 'is_closed?',
+  stage_updated_at: 'Stage Updated At',
+
+  /////////////////////////////
   createdAt: 'Created AT',
   validation: {
     stageIdRequired: 'Stage Is Required',

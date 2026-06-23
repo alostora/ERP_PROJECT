@@ -7,7 +7,7 @@ export default {
   total_additional_taxes: 'اجمالي الضريبة',
   grand_total: 'اجمالي المبلغ شامل الضريبة',
   stage_updated_at: 'تاريخ تحديث المرحلة',
-  is_closed: 'مغلقة',
+  is_closed: 'مغلقة؟',
   is_active: 'نشط؟',
   date_from: 'تاريخ من',
   date_to: 'تاريخ الي',

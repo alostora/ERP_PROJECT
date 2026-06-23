@@ -21,6 +21,9 @@ export default {
   stage_comment: 'تعليق المرحلة',
 
   /////////////////////////////
+  is_closed: 'مغلقة؟',
+  stage_updated_at: 'تاريخ تحديث المرحلة',
+  /////////////////////////////
   createdAt: 'تاريخ الإنشاء',
   validation: {
     stageIdRequired: 'المرحلة مطلوبة',

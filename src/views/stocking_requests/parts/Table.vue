@@ -102,9 +102,9 @@
           </template>
         </Column>
 
-        <Column field="name" :header="$t('stockingRequests.name')" class="col-2" />
+        <Column field="name" :header="$t('stockingRequests.name')" class="col-1" />
 
-        <Column :header="$t('salesInvoices.branch')" class="col-1">
+        <Column :header="$t('stockingRequests.branch')" class="col-1">
           <template #body="{ data }">
             <div class="badge badge-info">
               {{ currentLanguage == 'ar' ? data.branch?.name_ar : data.branch?.name }}
@@ -112,7 +112,7 @@
           </template>
         </Column>
 
-        <Column :header="$t('salesInvoices.warehouse')" class="col-1">
+        <Column :header="$t('stockingRequests.warehouse')" class="col-1">
           <template #body="{ data }">
             <div class="badge badge-info">
               {{ currentLanguage == 'ar' ? data.warehouse?.name_ar : data.warehouse?.name }}
@@ -120,7 +120,7 @@
           </template>
         </Column>
 
-        <Column :header="$t('salesInvoices.stage')" class="col-1">
+        <Column :header="$t('stockingRequests.stage')" class="col-1">
           <template #body="{ data }">
             <div :class="data.stage?.affects_stock ? 'badge badge-success' : 'badge badge-warning'">
               {{ currentLanguage == 'ar' ? data.stage?.name_ar : data.stage?.name }}
@@ -140,6 +140,23 @@
               >
               </Button>
             </div>
+          </template>
+        </Column>
+
+        <Column :header="$t('stockingRequests.is_closed')" class="col-1">
+          <template #body="{ data }">
+            <div v-if="data.is_closed" class="badge badge-success">
+              {{ $t('common.yes') }}
+            </div>
+            <div v-else="data.is_closed" class="badge badge-warning">
+              {{ $t('common.no') }}
+            </div>
+          </template>
+        </Column>
+
+        <Column field="created_at" :header="$t('stockingRequests.createdAt')" class="col-1">
+          <template #body="{ data }">
+            {{ formatDate(data.created_at) }}
           </template>
         </Column>
       </DataTable>
