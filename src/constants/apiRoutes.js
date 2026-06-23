@@ -226,4 +226,10 @@ export const API_ROUTES = {
     UPDATE_STAGE: `${BASE_URL}/admin/company/stock-management/stocking-request-stage`,
     UPDATE_STAGE_ACTION: `${BASE_URL}/admin/company/stock-management/stocking-request-stage-action`,
   },
+  ADJUSTMENT_STOCKING_REQUEST: {
+    SEARCH: `${BASE_URL}/admin/company/stock-management/adjustment-stocking-requests/search`,
+    BASE: `${BASE_URL}/admin/company/stock-management/adjustment-stocking-request`,
+    UPDATE_STAGE: `${BASE_URL}/admin/company/stock-management/adjustment-stocking-request-stage`,
+    UPDATE_STAGE_ACTION: `${BASE_URL}/admin/company/stock-management/adjustment-stocking-request-stage-action`,
+  },
 }

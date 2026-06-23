@@ -37,6 +37,7 @@ import enSalesInvoices from './locales/en/salesInvoices'
 import enSalesInvoicesReturns from './locales/en/salesInvoicesReturns'
 import enInvoicePayments from './locales/en/invoicePayments'
 import enStockingRequests from './locales/en/stockingRequests'
+import enAdjustmentStockingRequests from './locales/en/adjustmentStockingRequests'
 
 // Import Arabic translations
 import arCommon from './locales/ar/common'
@@ -75,7 +76,7 @@ import arSalesInvoices from './locales/ar/salesInvoices'
 import arSalesInvoicesReturns from './locales/ar/salesInvoicesReturns'
 import arInvoicePayments from './locales/ar/invoicePayments'
 import arStockingRequests from './locales/ar/stockingRequests'
-import stockingRequests from './locales/en/stockingRequests'
+import arAdjustmentStockingRequests from './locales/ar/adjustmentStockingRequests'
 
 const messages = {
   en: {
@@ -115,6 +116,7 @@ const messages = {
     salesInvoicesReturns: enSalesInvoicesReturns,
     invoicePayments: enInvoicePayments,
     stockingRequests: enStockingRequests,
+    adjustmentStockingRequests: enAdjustmentStockingRequests,
   },
 
   ar: {
@@ -154,6 +156,7 @@ const messages = {
     salesInvoicesReturns: arSalesInvoicesReturns,
     invoicePayments: arInvoicePayments,
     stockingRequests: arStockingRequests,
+    adjustmentStockingRequests: arAdjustmentStockingRequests,
   },
 }
 

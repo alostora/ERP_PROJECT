@@ -156,6 +156,7 @@ export default {
     //////
     stockManagement: 'Stock Management',
     stockingRequests: 'Stocking Requests',
+    adjustmentStockingRequests: 'Adjustment Stocking Requests',
     //////
     //////
     //////

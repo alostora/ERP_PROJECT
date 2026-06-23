@@ -159,6 +159,7 @@ export default {
     //////
     stockManagement: 'إدارة المخزون',
     stockingRequests: 'طلبات التوريد',
+    adjustmentStockingRequests: 'طلبات ضبط المخزون',
     //////
     //////
     //////
