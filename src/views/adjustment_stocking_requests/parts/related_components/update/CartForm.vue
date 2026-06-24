@@ -11,7 +11,7 @@
         <div class="row mb-3">
           <div class="col-12">
             <div class="card-info">
-              <!-- Row 1: Name -->
+              <!-- Row 1: Name & Type Code-->
               <div class="card-header-info">{{ $t('adjustmentStockingRequests.base_info') }}</div>
               <div class="card-body">
                 <div class="row">
@@ -30,6 +30,21 @@
                           }}</label>
                         </FloatLabel>
                       </Fluid>
+                    </div>
+                    <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <Select
+                        v-model="localFormData.type_code"
+                        :options="typeCodeValues"
+                        optionLabel="name"
+                        optionValue="value"
+                        :placeholder="$t('adjustmentStockingRequests.type_code')"
+                        :showClear="true"
+                        :filterPlaceholder="$t('common.search')"
+                        class="w-full"
+                      />
                     </div>
                     <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
                   </div>
@@ -360,12 +375,17 @@ export default {
   data() {
     return {
       apiUrl: API_ROUTES.ADJUSTMENT_STOCKING_REQUEST.BASE,
+      typeCodeValues: [
+        { name: this.$t('adjustmentStockingRequests.in'), value: 1 },
+        { name: this.$t('adjustmentStockingRequests.out'), value: 2 },
+      ],
       localFormData: {
         id: '',
         company_id: this.company_id,
         branch_id: this.branch_id,
         warehouse_id: '',
         name: '',
+        type_code: '',
         final_products: [],
       },
     }
@@ -397,9 +417,12 @@ export default {
         this.loadWarehouses(this.company_id, adjustmentRequest.branch?.id)
       }
 
+      console.log()
+
       this.localFormData = {
         id: adjustmentRequest.id || '',
         name: adjustmentRequest.name || '',
+        type_code: adjustmentRequest.type_code?.code || '',
         company_id: adjustmentRequest.company?.id || '',
         branch_id: adjustmentRequest.branch?.id || '',
         warehouse_id: adjustmentRequest.warehouse?.id || '',
@@ -413,6 +436,7 @@ export default {
       if (adjustmentRequest.final_products?.length) {
         return adjustmentRequest.final_products.map((adjustmentRequestProduct, index) => {
           return {
+            adjustment_request_final_product_id: adjustmentRequestProduct.id,
             final_product_id: adjustmentRequestProduct.final_product.id,
             name: adjustmentRequestProduct.final_product.name,
             unit_price: adjustmentRequestProduct.unit_price,
@@ -443,40 +467,6 @@ export default {
     },
 
     ///////////////////// Final Products Methods /////////////////////
-    deleteProductRow(finalProduct) {
-      this.$confirm.require({
-        message: this.$t('common.confirmDeleteMessage', { itemName: finalProduct.name }),
-        header: this.$t('common.confirmDeleteTitle'),
-        icon: 'pi pi-exclamation-triangle',
-        acceptClass: 'p-button-danger',
-        acceptLabel: this.$t('common.confirmDeleteYes'),
-        rejectLabel: this.$t('common.confirmDeleteNo'),
-        accept: () => {
-          const productToDelete = this.final_products.find(
-            (product) => product.final_product_id === finalProduct.final_product_id
-          )
-
-          if (productToDelete) {
-            this.$emit('deleteFinalProducts', productToDelete)
-
-            this.$toast.add({
-              severity: 'success',
-              summary: this.$t('common.success'),
-              detail: this.$t('common.deletedSuccessfully'),
-              life: 3000,
-            })
-          }
-        },
-        reject: () => {
-          this.$toast.add({
-            severity: 'info',
-            summary: this.$t('common.cancel'),
-            detail: this.$t('common.cancelled'),
-            life: 3000,
-          })
-        },
-      })
-    },
 
     incrementQuantity(product) {
       product.quantity = (product.quantity || 1) + 1

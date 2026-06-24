@@ -13,7 +13,7 @@
             <div class="card-info">
               <div class="card-header-info">{{ $t('adjustmentStockingRequests.base_info') }}</div>
               <div class="card-body">
-                <!-- Row 1: Name -->
+                <!-- Row 1: Name & Type Code-->
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group">
@@ -30,6 +30,21 @@
                           }}</label>
                         </FloatLabel>
                       </Fluid>
+                    </div>
+                    <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <Select
+                        v-model="localFormData.type_code"
+                        :options="typeCodeValues"
+                        optionLabel="name"
+                        optionValue="value"
+                        :placeholder="$t('adjustmentStockingRequests.type_code')"
+                        :showClear="true"
+                        :filterPlaceholder="$t('common.search')"
+                        class="w-full"
+                      />
                     </div>
                     <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
                   </div>
@@ -391,11 +406,16 @@ export default {
 
   data() {
     return {
+      typeCodeValues: [
+        { name: this.$t('adjustmentStockingRequests.in'), value: 1 },
+        { name: this.$t('adjustmentStockingRequests.out'), value: 2 },
+      ],
       localFormData: {
         company_id: this.company_id,
         branch_id: this.branch_id,
         warehouse_id: '',
         name: '',
+        type_code: '',
         final_products: [],
       },
     }

@@ -123,6 +123,7 @@ export default {
         branch_id: cartFormData.branch_id,
         warehouse_id: cartFormData.warehouse_id,
         name: cartFormData.name,
+        type_code: cartFormData.type_code,
         final_products: this.final_products,
       }
     },

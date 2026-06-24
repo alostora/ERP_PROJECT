@@ -79,10 +79,10 @@
               <i class="pi pi-search search-icon"></i>
               <input
                 type="text"
-                v-model="filters.reference_code"
+                v-model="filters.name"
                 @input="fetchData"
                 class="input"
-                :placeholder="$t('adjustmentStockingRequests.reference_code')"
+                :placeholder="$t('adjustmentStockingRequests.name')"
               />
             </div>
           </div>
@@ -170,8 +170,8 @@
         </Column>
 
         <Column
-          field="reference_code"
-          :header="$t('adjustmentStockingRequests.reference_code')"
+          field="name"
+          :header="$t('adjustmentStockingRequests.name')"
           class="col-2"
         />
 

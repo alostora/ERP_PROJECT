@@ -3,8 +3,6 @@ export default {
   base_info: 'المعلومات الاساسية',
   id: '#',
   name: 'الاسم',
-  reference_code: 'الرقم المرجعي',
-  total_additional_taxes: 'اجمالي الضريبة',
   grand_total: 'اجمالي المبلغ شامل الضريبة',
   stage_updated_at: 'تاريخ تحديث المرحلة',
   is_closed: 'مغلقة',
@@ -12,8 +10,6 @@ export default {
   date_from: 'تاريخ من',
   date_to: 'تاريخ الي',
   net_amount: 'صافي المبلغ',
-  net_amount_after_costs_and_discounts: 'المبلغ الاجمالي',
-  returns: 'المرتجعات',
 
   /////////////////////////////
   company: 'الشركة',
@@ -34,14 +30,10 @@ export default {
   select_branch: 'اختر الفرع',
 
   /////////////////////////////
-  contact: 'المورد',
-  contacts: 'الموردون',
-  select_contact: 'اختر المورد',
-
-  /////////////////////////////
-  payment_type: 'نوع الدفع',
-  payment_types: 'نوع الدفع',
-  select_payment_type: 'اختر نوع الدفع',
+  type_code: 'نوع العملية',
+  select_type_code: 'اختر نوع العملية',
+  in: 'دخول',
+  out: 'خروج',
 
   /////////////////////////////
   warehouse: 'المخزن / المستودع',
@@ -53,32 +45,12 @@ export default {
   unit_price: 'سعر الوحدة',
   measurement_unit: 'وحدة القياس',
   total_price: 'اجمالي السعر',
-  total_price_plus_operations: 'اجمالي السعر بالاضافة الي العمليات',
   subtotal: 'المجموع الفرعي',
 
   /////////////////////////////
   stage: 'المرحلة',
   stage_comment: 'ملاحظلات علي المرحلة',
   employee: 'الموظف',
-  invoice_payment_status: 'حالة الدفع',
-  payments: 'المدفوعات',
-  paid_amount: 'المبلغ المدفوع',
-  remaining_amount: 'المبلغ المتبقي',
-  paid_at: 'تاريخ اتمام الدفع',
-
-  /////////////////////////////
-  additional_costs: 'التكاليف الاضافية',
-  total_additional_costs: 'اجمالي التكاليف الاضافية',
-  additional_discounts: 'الخصومات الاضافية',
-  total_additional_discounts: 'اجمالي الخصومات الاضافية',
-  value: 'القيمة',
-
-  /////////////////////////////
-  operations: 'العمليات علي المنتج',
-  price: 'السعر',
-  details: 'تفاصيل العملية',
-  files: 'ملفات العملية',
-  total_operations_cost: 'اجمالي تكلفة العمليات',
 
   /////////////////////////////
   total_summary: 'الملخص الإجمالي',
@@ -98,18 +70,5 @@ export default {
     finalProductIdRequired: 'معرف المنتج مطلوب',
     unitPriceRequired: 'سعر الوحدة مطلوب',
     quantityRequired: 'الكمية مطلوبة',
-    operationsExceedQuantity: 'عدد العمليات لا يمكن أن يتجاوز الكمية ({quantity})',
-    operationNameRequired: 'اسم العملية مطلوب',
-    operationPriceRequired: 'سعر العملية مطلوب',
-    operationDetailsRequired: 'تفاصيل العملية مطلوب',
-    additionalCostNameRequired: 'اسم التكلفة مطلوب',
-    additionalCostValueRequired: 'قيمة التكلفة مطلوبة',
-    additionalDiscountNameRequired: 'اسم الخصم مطلوب',
-    additionalDiscountValueRequired: 'قيمة الخصم مطلوبة',
-    amountRequired: 'المبلغ مطلوب',
-    paymentMethodIdRequired: 'وسيلة الدفع مطلوبة',
-    bankAccountIdRequired: 'حساب البنك مطلوب',
-    cashBoxIdRequired: 'صندوق النقدية / الخزينة مطلوب',
-    walletIdRequired: 'المحفظة مطلوبة',
   },
 }

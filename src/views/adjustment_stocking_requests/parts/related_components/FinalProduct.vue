@@ -154,7 +154,7 @@ export default {
       )
 
       if (existingProduct) {
-        existingProduct.quantity += 1
+        existingProduct.quantity = Number(existingProduct.quantity) + 1
       } else {
         this.cart_final_products.unshift(this.final_product_details)
       }
