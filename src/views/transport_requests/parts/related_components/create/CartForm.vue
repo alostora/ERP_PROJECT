@@ -11,7 +11,7 @@
         <div class="row mb-3">
           <div class="col-12">
             <div class="card-info">
-              <div class="card-header-info">{{ $t('adjustmentStockingRequests.base_info') }}</div>
+              <div class="card-header-info">{{ $t('transportRequests.base_info') }}</div>
               <div class="card-body">
                 <!-- Row 1: Name & Type Code-->
                 <div class="row">
@@ -26,74 +26,96 @@
                             class="w-full"
                           />
                           <label for="invoice_name">
-                            {{ $t('adjustmentStockingRequests.name') }}
+                            {{ $t('transportRequests.name') }}
                           </label>
                         </FloatLabel>
                       </Fluid>
                     </div>
                     <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
                   </div>
-                  <div class="col-6">
-                    <div class="form-group">
-                      <Select
-                        v-model="localFormData.type_code"
-                        :options="typeCodeValues"
-                        optionLabel="name"
-                        optionValue="value"
-                        :placeholder="$t('adjustmentStockingRequests.type_code')"
-                        :showClear="true"
-                        :filterPlaceholder="$t('common.search')"
-                        class="w-full"
-                      />
-                    </div>
-                    <small v-if="errors.type_code" class="error-message">{{
-                      errors.type_code
-                    }}</small>
-                  </div>
                 </div>
 
-                <!-- Row 2: Branch & Warehouse -->
+                <!-- Row 2: Branch -->
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group">
                       <Select
-                        id="branch_id"
-                        v-model="localFormData.branch_id"
+                        id="from_branch_id"
+                        v-model="localFormData.from_branch_id"
                         :options="branches"
                         :optionLabel="branchLabel"
                         optionValue="id"
                         :filter="true"
                         :showClear="true"
-                        :placeholder="
-                          $t('common.select') + ' ' + $t('adjustmentStockingRequests.branch')
-                        "
+                        :placeholder="$t('common.select') + ' ' + $t('transportRequests.branch')"
                         :filterPlaceholder="$t('common.search')"
                         class="w-full"
-                        @change="onBranchChange"
+                        @change="onFromBranchChange"
                       />
-                      <small v-if="errors.branch_id" class="error-message text-danger"
-                        >{{ errors.branch_id }}
+                      <small v-if="errors.from_branch_id" class="error-message text-danger"
+                        >{{ errors.from_branch_id }}
                       </small>
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group">
                       <Select
-                        id="warehouse_id"
-                        v-model="localFormData.warehouse_id"
-                        :options="warehouses"
+                        id="to_branch_id"
+                        v-model="localFormData.to_branch_id"
+                        :options="branches"
+                        :optionLabel="branchLabel"
+                        optionValue="id"
+                        :filter="true"
+                        :showClear="true"
+                        :placeholder="$t('common.select') + ' ' + $t('transportRequests.branch')"
+                        :filterPlaceholder="$t('common.search')"
+                        class="w-full"
+                        @change="onToBranchChange"
+                      />
+                      <small v-if="errors.to_branch_id" class="error-message text-danger"
+                        >{{ errors.to_branch_id }}
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 3: Warehouse -->
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <Select
+                        id="from_warehouse_id"
+                        v-model="localFormData.from_warehouse_id"
+                        :options="fromWarehouses"
                         :optionLabel="warehouseLabel"
                         optionValue="id"
                         :filter="true"
                         :showClear="true"
-                        :placeholder="
-                          $t('common.select') + ' ' + $t('adjustmentStockingRequests.warehouse')
-                        "
+                        :placeholder="$t('transportRequests.warehouse')"
                         :filterPlaceholder="$t('common.search')"
                         class="w-full"
                       />
-                      <small v-if="errors.warehouse_id" class="error-message text-danger">
-                        {{ errors.warehouse_id }}</small
+                      <small v-if="errors.from_warehouse_id" class="error-message text-danger">
+                        {{ errors.from_warehouse_id }}</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <Select
+                        id="to_warehouse_id"
+                        v-model="localFormData.to_warehouse_id"
+                        :options="toWarehouses"
+                        :optionLabel="warehouseLabel"
+                        optionValue="id"
+                        :filter="true"
+                        :showClear="true"
+                        :placeholder="$t('transportRequests.warehouse')"
+                        :filterPlaceholder="$t('common.search')"
+                        class="w-full"
+                      />
+                      <small v-if="errors.to_warehouse_id" class="error-message text-danger">
+                        {{ errors.to_warehouse_id }}</small
                       >
                     </div>
                   </div>
@@ -109,12 +131,7 @@
           <div class="col-12">
             <div class="card-indigo">
               <div class="card-header-indigo">
-                {{
-                  $t('adjustmentStockingRequests.final_products') +
-                  '( ' +
-                  final_products.length +
-                  ')'
-                }}
+                {{ $t('transportRequests.final_products') + '( ' + final_products.length + ')' }}
               </div>
               <div class="card-body">
                 <div class="row">
@@ -181,9 +198,7 @@
                                   :showButtons="true"
                                   class="text-center w-full"
                                 />
-                                <label for="quantity">{{
-                                  $t('adjustmentStockingRequests.quantity')
-                                }}</label>
+                                <label for="quantity">{{ $t('transportRequests.quantity') }}</label>
                               </FloatLabel>
                               <InputGroupAddon>
                                 <Button
@@ -209,7 +224,7 @@
                             v-model="product.measurement_unit_id"
                             :options="measurementUnits"
                             optionValue="id"
-                            :placeholder="$t('adjustmentStockingRequests.measurement_unit')"
+                            :placeholder="$t('transportRequests.measurement_unit')"
                             :filter="true"
                             class="w-full"
                           >
@@ -229,9 +244,7 @@
                               <span v-if="slotProps.value">
                                 {{ getMeasurementUnitDisplay(slotProps.value) }}
                               </span>
-                              <span v-else>{{
-                                $t('adjustmentStockingRequests.measurement_unit')
-                              }}</span>
+                              <span v-else>{{ $t('transportRequests.measurement_unit') }}</span>
                             </template>
                           </Select>
                         </div>
@@ -247,7 +260,7 @@
                                 disabled
                               />
                               <label for="unit_price">{{
-                                $t('adjustmentStockingRequests.unit_price')
+                                $t('transportRequests.unit_price')
                               }}</label>
                             </FloatLabel>
                           </Fluid>
@@ -265,7 +278,7 @@
                       <div class="bg-gray-50 border-l-4 border-gray rounded p-2 mb-3">
                         <div class="flex justify-between">
                           <span class="text-warning font-medium text-sm">
-                            {{ $t('adjustmentStockingRequests.total_price') }}:
+                            {{ $t('transportRequests.total_price') }}:
                           </span>
                           <span class="font-semibold text-warning text-sm">
                             {{ formatCurrency(calculateProductTotalPrice(product)) }}
@@ -286,20 +299,18 @@
           <div class="col-12">
             <div class="card-info">
               <div class="card-header-info">
-                {{ $t('adjustmentStockingRequests.total_summary') }}
+                {{ $t('transportRequests.total_summary') }}
               </div>
 
               <div class="card-body">
                 <div class="flex justify-between mb-2">
-                  <span class="text-secondary"
-                    >{{ $t('adjustmentStockingRequests.subtotal') }}:</span
-                  >
+                  <span class="text-secondary">{{ $t('transportRequests.subtotal') }}:</span>
                   <span class="font-medium">{{ formatCurrency(calculateSubtotal()) }}</span>
                 </div>
 
                 <div class="flex justify-between pt-2 border-t border-primary-200">
                   <span class="font-bold text-primary"
-                    >{{ $t('adjustmentStockingRequests.grand_total') }}:</span
+                    >{{ $t('transportRequests.grand_total') }}:</span
                   >
                   <span class="font-bold text-primary text-xl">{{
                     formatCurrency(calculateGrandTotal())
@@ -408,16 +419,13 @@ export default {
 
   data() {
     return {
-      typeCodeValues: [
-        { name: this.$t('adjustmentStockingRequests.in'), value: 1 },
-        { name: this.$t('adjustmentStockingRequests.out'), value: 2 },
-      ],
       localFormData: {
         company_id: this.company_id,
-        branch_id: this.branch_id,
-        warehouse_id: '',
+        from_branch_id: '',
+        to_branch_id: '',
+        from_warehouse_id: '',
+        to_warehouse_id: '',
         name: '',
-        type_code: '',
         final_products: [],
       },
     }

@@ -67,8 +67,10 @@ export default {
     warehouseIdRequired: 'المخزن مطلوب',
     finalProductsRequired: 'يجب إضافة منتج واحد على الأقل',
     duplicateFinalProducts: 'لا يمكن إضافة نفس المنتج مرتين',
-    finalProductIdRequired: 'معرف المنتج مطلوب',
+    finalProductIdRequired: 'المنتج مطلوب',
     unitPriceRequired: 'سعر الوحدة مطلوب',
     quantityRequired: 'الكمية مطلوبة',
+    nameRequired: 'الاسم مطلوبة',
+    typeCodeRequired: 'نوع العملية مطلوب',
   },
 }

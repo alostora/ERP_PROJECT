@@ -68,5 +68,7 @@ export default {
     finalProductIdRequired: 'Product ID is required',
     unitPriceRequired: 'Unit price is required',
     quantityRequired: 'Quantity is required',
+    nameRequired: 'Name Is Required',
+    typeCodeRequired: 'Operation Type Is Required',
   },
 }

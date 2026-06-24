@@ -11,9 +11,9 @@
         <div class="row mb-3">
           <div class="col-12">
             <div class="card-info">
-              <div class="card-header-info">{{ $t('adjustmentStockingRequests.base_info') }}</div>
+              <div class="card-header-info">{{ $t('transportRequests.base_info') }}</div>
               <div class="card-body">
-                <!-- Row 1: Name & Type Code-->
+                <!-- Row 1: Name -->
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group">
@@ -25,75 +25,95 @@
                             autocomplete="off"
                             class="w-full"
                           />
-                          <label for="invoice_name">
-                            {{ $t('adjustmentStockingRequests.name') }}
-                          </label>
+                          <label for="invoice_name">{{ $t('transportRequests.name') }}</label>
                         </FloatLabel>
                       </Fluid>
                     </div>
                     <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
                   </div>
-                  <div class="col-6">
-                    <div class="form-group">
-                      <Select
-                        v-model="localFormData.type_code"
-                        :options="typeCodeValues"
-                        optionLabel="name"
-                        optionValue="value"
-                        :placeholder="$t('adjustmentStockingRequests.type_code')"
-                        :showClear="true"
-                        :filterPlaceholder="$t('common.search')"
-                        class="w-full"
-                      />
-                    </div>
-                    <small v-if="errors.type_code" class="error-message">{{
-                      errors.type_code
-                    }}</small>
-                  </div>
                 </div>
 
-                <!-- Row 2: Branch & Warehouse -->
+                <!-- Row 2: Branch -->
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group">
                       <Select
-                        id="branch_id"
-                        v-model="localFormData.branch_id"
+                        id="from_branch_id"
+                        v-model="localFormData.from_branch_id"
                         :options="branches"
                         :optionLabel="branchLabel"
                         optionValue="id"
                         :filter="true"
                         :showClear="true"
-                        :placeholder="
-                          $t('common.select') + ' ' + $t('adjustmentStockingRequests.branch')
-                        "
+                        :placeholder="$t('common.select') + ' ' + $t('transportRequests.branch')"
                         :filterPlaceholder="$t('common.search')"
                         class="w-full"
-                        @change="onBranchChange"
+                        @change="onFromBranchChange"
                       />
-                      <small v-if="errors.branch_id" class="error-message text-danger"
-                        >{{ errors.branch_id }}
+                      <small v-if="errors.from_branch_id" class="error-message text-danger"
+                        >{{ errors.from_branch_id }}
                       </small>
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group">
                       <Select
-                        id="warehouse_id"
-                        v-model="localFormData.warehouse_id"
-                        :options="warehouses"
+                        id="to_branch_id"
+                        v-model="localFormData.to_branch_id"
+                        :options="branches"
+                        :optionLabel="branchLabel"
+                        optionValue="id"
+                        :filter="true"
+                        :showClear="true"
+                        :placeholder="$t('common.select') + ' ' + $t('transportRequests.branch')"
+                        :filterPlaceholder="$t('common.search')"
+                        class="w-full"
+                        @change="onToBranchChange"
+                      />
+                      <small v-if="errors.to_branch_id" class="error-message text-danger"
+                        >{{ errors.to_branch_id }}
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Row 3: Warehouse -->
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <Select
+                        id="from_warehouse_id"
+                        v-model="localFormData.from_warehouse_id"
+                        :options="fromWarehouses"
                         :optionLabel="warehouseLabel"
                         optionValue="id"
                         :filter="true"
                         :showClear="true"
-                        :placeholder="
-                          $t('common.select') + ' ' + $t('adjustmentStockingRequests.warehouse')
-                        "
+                        :placeholder="$t('transportRequests.warehouse')"
                         :filterPlaceholder="$t('common.search')"
                         class="w-full"
                       />
-                      <small v-if="errors.warehouse_id" class="error-message text-danger">
-                        {{ errors.warehouse_id }}</small
+                      <small v-if="errors.from_warehouse_id" class="error-message text-danger">
+                        {{ errors.from_warehouse_id }}</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <Select
+                        id="to_warehouse_id"
+                        v-model="localFormData.to_warehouse_id"
+                        :options="toWarehouses"
+                        :optionLabel="warehouseLabel"
+                        optionValue="id"
+                        :filter="true"
+                        :showClear="true"
+                        :placeholder="$t('transportRequests.warehouse')"
+                        :filterPlaceholder="$t('common.search')"
+                        class="w-full"
+                      />
+                      <small v-if="errors.to_warehouse_id" class="error-message text-danger">
+                        {{ errors.to_warehouse_id }}</small
                       >
                     </div>
                   </div>
@@ -109,12 +129,7 @@
           <div class="col-12">
             <div class="card-indigo">
               <div class="card-header-indigo">
-                {{
-                  $t('adjustmentStockingRequests.final_products') +
-                  '( ' +
-                  final_products.length +
-                  ')'
-                }}
+                {{ $t('transportRequests.final_products') + '( ' + final_products.length + ')' }}
               </div>
               <div class="card-body">
                 <div class="row">
@@ -181,9 +196,7 @@
                                   :showButtons="true"
                                   class="text-center w-full"
                                 />
-                                <label for="quantity">{{
-                                  $t('adjustmentStockingRequests.quantity')
-                                }}</label>
+                                <label for="quantity">{{ $t('transportRequests.quantity') }}</label>
                               </FloatLabel>
                               <InputGroupAddon>
                                 <Button
@@ -209,7 +222,7 @@
                             v-model="product.measurement_unit_id"
                             :options="measurementUnits"
                             optionValue="id"
-                            :placeholder="$t('adjustmentStockingRequests.measurement_unit')"
+                            :placeholder="$t('transportRequests.measurement_unit')"
                             :filter="true"
                             class="w-full"
                           >
@@ -229,9 +242,7 @@
                               <span v-if="slotProps.value">
                                 {{ getMeasurementUnitDisplay(slotProps.value) }}
                               </span>
-                              <span v-else>{{
-                                $t('adjustmentStockingRequests.measurement_unit')
-                              }}</span>
+                              <span v-else>{{ $t('transportRequests.measurement_unit') }}</span>
                             </template>
                           </Select>
                         </div>
@@ -247,7 +258,7 @@
                                 disabled
                               />
                               <label for="unit_price">{{
-                                $t('adjustmentStockingRequests.unit_price')
+                                $t('transportRequests.unit_price')
                               }}</label>
                             </FloatLabel>
                           </Fluid>
@@ -265,7 +276,7 @@
                       <div class="bg-gray-50 border-l-4 border-gray rounded p-2 mb-3">
                         <div class="flex justify-between">
                           <span class="text-warning font-medium text-sm">
-                            {{ $t('adjustmentStockingRequests.total_price') }}:
+                            {{ $t('transportRequests.total_price') }}:
                           </span>
                           <span class="font-semibold text-warning text-sm">
                             {{ formatCurrency(calculateProductTotalPrice(product)) }}
@@ -286,20 +297,18 @@
           <div class="col-12">
             <div class="card-info">
               <div class="card-header-info">
-                {{ $t('adjustmentStockingRequests.total_summary') }}
+                {{ $t('transportRequests.total_summary') }}
               </div>
 
               <div class="card-body">
                 <div class="flex justify-between mb-2">
-                  <span class="text-secondary"
-                    >{{ $t('adjustmentStockingRequests.subtotal') }}:</span
-                  >
+                  <span class="text-secondary">{{ $t('transportRequests.subtotal') }}:</span>
                   <span class="font-medium">{{ formatCurrency(calculateSubtotal()) }}</span>
                 </div>
 
                 <div class="flex justify-between pt-2 border-t border-primary-200">
                   <span class="font-bold text-primary"
-                    >{{ $t('adjustmentStockingRequests.grand_total') }}:</span
+                    >{{ $t('transportRequests.grand_total') }}:</span
                   >
                   <span class="font-bold text-primary text-xl">{{
                     formatCurrency(calculateGrandTotal())
@@ -346,6 +355,7 @@ import Fluid from 'primevue/fluid'
 import ScrollPanel from 'primevue/scrollpanel'
 import Panel from 'primevue/panel'
 
+import { API_ROUTES } from '@/constants/apiRoutes'
 import formMixin from '@/mixins/form'
 import customFunctions from '../../../custom_functions/customFunctions'
 
@@ -368,7 +378,7 @@ export default {
     Panel,
   },
 
-  emits: ['handelFormData', 'submit', 'deleteFinalProducts', 'closeForm'],
+  emits: ['handelFormData', 'submit', 'deleteFinalProducts', 'appendProductToCart', 'closeForm'],
 
   watch: {
     company_id: {
@@ -384,6 +394,16 @@ export default {
         if (this.localFormData.branch_id) {
           this.loadWarehouses(this.localFormData.company_id, this.localFormData.branch_id)
         }
+      },
+      immediate: true,
+    },
+    transport_request_id: {
+      async handler(newVal) {
+        await this.loadTransportRequest(newVal)
+
+        this.$nextTick(() => {
+          this.populateForm(this.transportRequest)
+        })
       },
       immediate: true,
     },
@@ -404,20 +424,23 @@ export default {
     final_products: { type: Array, default: () => [] },
     company_id: { type: String, required: true },
     branch_id: { type: String, default: '' },
+    transport_request_id: {
+      type: String,
+      required: false,
+    },
   },
 
   data() {
     return {
-      typeCodeValues: [
-        { name: this.$t('adjustmentStockingRequests.in'), value: 1 },
-        { name: this.$t('adjustmentStockingRequests.out'), value: 2 },
-      ],
+      apiUrl: API_ROUTES.TRANSPORT_REQUEST.BASE,
       localFormData: {
+        id: '',
         company_id: this.company_id,
-        branch_id: this.branch_id,
-        warehouse_id: '',
+        from_branch_id: '',
+        to_branch_id: '',
+        from_warehouse_id: '',
+        to_warehouse_id: '',
         name: '',
-        type_code: '',
         final_products: [],
       },
     }
@@ -438,12 +461,49 @@ export default {
   },
 
   mounted() {
-    this.loadBranches(this.localFormData.company_id)
+    this.loadBranches(this.company_id)
 
-    this.loadMeasurementUnits(this.localFormData.company_id)
+    this.loadMeasurementUnits(this.company_id)
   },
 
   methods: {
+    populateForm(transportRequest) {
+      if (transportRequest.branch?.id) {
+        this.loadWarehouses(this.company_id, transportRequest.branch?.id)
+      }
+
+      console.log()
+
+      this.localFormData = {
+        id: transportRequest.id || '',
+        name: transportRequest.name || '',
+        company_id: transportRequest.company?.id || '',
+        from_branch_id: transportRequest.from_branch?.id || '',
+        to_branch_id: transportRequest.to_branch?.id || '',
+        from_warehouse_id: transportRequest.from_warehouse?.id || '',
+        to_warehouse_id: transportRequest.to_warehouse?.id || '',
+        final_products: this.populateFinalProducts(transportRequest),
+      }
+
+      this.$emit('appendProductToCart', this.localFormData.final_products)
+    },
+
+    populateFinalProducts(transportRequest) {
+      if (transportRequest.final_products?.length) {
+        return transportRequest.final_products.map((transportRequestProduct, index) => {
+          return {
+            transport_request_final_product_id: transportRequestProduct.id,
+            final_product_id: transportRequestProduct.final_product.id,
+            name: transportRequestProduct.final_product.name,
+            unit_price: transportRequestProduct.unit_price,
+            quantity: transportRequestProduct.quantity,
+            measurement_unit_id: transportRequestProduct.measurement_unit?.id,
+          }
+        })
+      }
+      return []
+    },
+
     emitSubmit() {
       this.$emit('handelFormData', this.localFormData)
       this.$emit('submit')
@@ -463,40 +523,6 @@ export default {
     },
 
     ///////////////////// Final Products Methods /////////////////////
-    deleteProductRow(finalProduct) {
-      this.$confirm.require({
-        message: this.$t('common.confirmDeleteMessage', { itemName: finalProduct.name }),
-        header: this.$t('common.confirmDeleteTitle'),
-        icon: 'pi pi-exclamation-triangle',
-        acceptClass: 'p-button-danger',
-        acceptLabel: this.$t('common.confirmDeleteYes'),
-        rejectLabel: this.$t('common.confirmDeleteNo'),
-        accept: () => {
-          const productToDelete = this.final_products.find(
-            (product) => product.final_product_id === finalProduct.final_product_id
-          )
-
-          if (productToDelete) {
-            this.$emit('deleteFinalProducts', productToDelete)
-
-            this.$toast.add({
-              severity: 'success',
-              summary: this.$t('common.success'),
-              detail: this.$t('common.deletedSuccessfully'),
-              life: 3000,
-            })
-          }
-        },
-        reject: () => {
-          this.$toast.add({
-            severity: 'info',
-            summary: this.$t('common.cancel'),
-            detail: this.$t('common.cancelled'),
-            life: 3000,
-          })
-        },
-      })
-    },
 
     incrementQuantity(product) {
       product.quantity = (product.quantity || 1) + 1

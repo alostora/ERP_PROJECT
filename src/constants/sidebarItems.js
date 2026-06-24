@@ -256,6 +256,11 @@ export const sidebarItems = {
                   icon: 'pi pi-circle-fill',
                   path: `/company/adjustment-stocking-requests/${this.company_id}`,
                 },
+                {
+                  label: 'common.menu.transportRequests',
+                  icon: 'pi pi-circle-fill',
+                  path: `/company/transport-requests/${this.company_id}`,
+                },
               ],
             },
           ],

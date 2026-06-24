@@ -236,4 +236,16 @@ export const API_ROUTES = {
     SEARCH: `${BASE_URL}/admin/company/stock-management/adjustment-stocking-request-final-products/search`,
     BASE: `${BASE_URL}/admin/company/stock-management/adjustment-stocking-request-final-product`,
   },
+  TRANSPORT_REQUEST: {
+    SEARCH: `${BASE_URL}/admin/company/stock-management/transport-requests/search`,
+    BASE: `${BASE_URL}/admin/company/stock-management/transport-request`,
+    UPDATE_STAGE_FROM_WAREHOUSE: `${BASE_URL}/admin/company/stock-management/transport-request-from-warehouse-stage`,
+    UPDATE_STAGE_ACTION_FROM_WAREHOUSE: `${BASE_URL}/admin/company/stock-management/transport-request-from-warehouse-stage-action`,
+    UPDATE_STAGE_TO_WAREHOUSE: `${BASE_URL}/admin/company/stock-management/transport-request-to-warehouse-stage`,
+    UPDATE_STAGE_ACTION_TO_WAREHOUSE: `${BASE_URL}/admin/company/stock-management/transport-request-to-warehouse-stage-action`,
+  },
+  TRANSPORT_REQUEST_FINAL_PRODUCT: {
+    SEARCH: `${BASE_URL}/admin/company/stock-management/transport-request-final-products/search`,
+    BASE: `${BASE_URL}/admin/company/stock-management/transport-request-final-product`,
+  },
 }

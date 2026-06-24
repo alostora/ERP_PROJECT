@@ -46,7 +46,9 @@
                         class="w-full"
                       />
                     </div>
-                    <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+                    <small v-if="errors.type_code" class="error-message">
+                      {{ errors.type_code }}
+                    </small>
                   </div>
                 </div>
               </div>
