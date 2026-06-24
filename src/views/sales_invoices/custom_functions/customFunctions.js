@@ -51,6 +51,41 @@ export const customFunctions = {
       this.formLoading = false
     },
 
+    deleteProductRow(finalProduct) {
+      this.$confirm.require({
+        message: this.$t('common.confirmDeleteMessage', { itemName: finalProduct.name }),
+        header: this.$t('common.confirmDeleteTitle'),
+        icon: 'pi pi-exclamation-triangle',
+        acceptClass: 'p-button-danger',
+        acceptLabel: this.$t('common.confirmDeleteYes'),
+        rejectLabel: this.$t('common.confirmDeleteNo'),
+        accept: () => {
+          const productToDelete = this.final_products.find(
+            (product) => product.final_product_id === finalProduct.final_product_id
+          )
+
+          if (productToDelete) {
+            this.$emit('deleteFinalProducts', productToDelete)
+
+            this.$toast.add({
+              severity: 'success',
+              summary: this.$t('common.success'),
+              detail: this.$t('common.deletedSuccessfully'),
+              life: 3000,
+            })
+          }
+        },
+        reject: () => {
+          this.$toast.add({
+            severity: 'info',
+            summary: this.$t('common.cancel'),
+            detail: this.$t('common.cancelled'),
+            life: 3000,
+          })
+        },
+      })
+    },
+
     async loadBranches(companyId) {
       try {
         this.formLoading = true
