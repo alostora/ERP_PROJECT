@@ -140,7 +140,6 @@ export default {
         governorate_id: '',
         city_id: '',
       },
-      selectedItem: {},
     }
   },
 

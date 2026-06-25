@@ -181,14 +181,6 @@ export default {
     },
   },
 
-  watch: {
-    item_id: {
-      immediate: true,
-      deep: true,
-      handler(newVal) {},
-    },
-  },
-
   data() {
     return {
       apiUrl: API_ROUTES.COMPANY.BASE,

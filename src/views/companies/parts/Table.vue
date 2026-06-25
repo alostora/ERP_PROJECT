@@ -84,7 +84,7 @@
     </div>
 
     <CreateForm ref="createModal" @created="fetchData" />
-    <UpdateForm ref="updateModal" :item_id="itemId" @updated="fetchData" />
+    <UpdateForm ref="updateModal" :item_id="item_id" @updated="fetchData" />
     <Toast />
     <ConfirmDialog />
   </div>
@@ -121,7 +121,7 @@ export default {
     return {
       apiUrl: API_ROUTES.COMPANY.SEARCH,
       deleteUrl: API_ROUTES.COMPANY.BASE,
-      itemId: '',
+      item_id: '',
     }
   },
 
@@ -142,7 +142,7 @@ export default {
     },
 
     openUpdateModal(itemId) {
-      this.itemId = itemId
+      this.item_id = itemId
       this.$nextTick(() => {
         this.$refs.updateModal.openModal()
       })

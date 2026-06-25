@@ -7,72 +7,103 @@
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label class="form-label required">{{ $t('users.accountType') }}</label>
-        <select
-          v-model="formData.user_account_type_id"
-          class="select"
-          :class="{ 'input-error': errors.user_account_type_id }"
-        >
-          <option value="">{{ $t('common.select') }} {{ $t('users.accountType') }}</option>
-          <option v-for="type in accountTypes" :key="type.id" :value="type.id">
-            {{ currentLanguage === 'ar' ? type.name_ar : type.name }}
-          </option>
-        </select>
-        <small v-if="errors.user_account_type_id" class="error-message">{{
-          errors.user_account_type_id
-        }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <Select
+              id="user_account_type_id"
+              v-model="formData.user_account_type_id"
+              :options="accountTypes"
+              :optionLabel="accountTypeLabel"
+              optionValue="id"
+              :filter="true"
+              :showClear="true"
+              :placeholder="$t('common.select') + ' ' + $t('users.accountType')"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+            <small v-if="errors.user_account_type_id" class="error-message">
+              {{ errors.user_account_type_id }}
+            </small>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name" v-model="formData.name" autocomplete="on" class="w-full" />
+              <label for="name">{{ $t('users.name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('users.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="email" v-model="formData.email" autocomplete="on" class="w-full" />
+              <label for="email">{{ $t('users.email') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.email" class="error-message">{{ errors.email }}</small>
+        </div>
+
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="phone" v-model="formData.phone" autocomplete="on" class="w-full" />
+              <label for="phone">{{ $t('users.phone') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.phone" class="error-message">{{ errors.phone }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('users.email') }}</label>
-        <input
-          v-model="formData.email"
-          type="email"
-          class="input"
-          :class="{ 'input-error': errors.email }"
-        />
-        <small v-if="errors.email" class="error-message">{{ errors.email }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <Password id="password" v-model="formData.password" toggleMask />
+              <label for="password">{{ $t('users.password') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.password" class="error-message">{{ errors.password }}</small>
+        </div>
+
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <Password
+                id="password_confirmation"
+                v-model="formData.password_confirmation"
+                toggleMask
+              />
+              <label for="password_confirmation">{{ $t('users.confirmPassword') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.password_confirmation" class="error-message">{{
+            errors.password_confirmation
+          }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('users.password') }}</label>
-        <input
-          v-model="formData.password"
-          type="password"
-          class="input"
-          :class="{ 'input-error': errors.password }"
-        />
-        <small v-if="errors.password" class="error-message">{{ errors.password }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('users.confirmPassword') }}</label>
-        <input v-model="formData.password_confirmation" type="password" class="input" />
-        <small v-if="errors.password_confirmation" class="error-message">{{
-          errors.password_confirmation
-        }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">{{ $t('users.phone') }}</label>
-        <input v-model="formData.phone" type="text" class="input" />
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">{{ $t('users.address') }}</label>
-        <textarea v-model="formData.address" class="textarea" rows="3"></textarea>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <Textarea
+                id="address"
+                v-model="formData.address"
+                rows="2"
+                style="resize: none"
+                fluid
+              />
+              <label for="address">{{ $t('users.address') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.address" class="error-message">{{ errors.address }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -80,7 +111,7 @@
           {{ $t('common.cancel') }}
         </button>
         <button type="submit" class="btn btn-primary" :disabled="formLoading">
-          {{ formLoading ? $t('common.loading') : $t('common.create') }}
+          {{ formLoading ? $t('common.loading') : $t('common.update') }}
         </button>
       </div>
     </form>
@@ -89,6 +120,12 @@
 
 <script>
 import Dialog from 'primevue/dialog'
+import Select from 'primevue/select'
+import InputText from 'primevue/inputtext'
+import FloatLabel from 'primevue/floatlabel'
+import Password from 'primevue/password'
+import Textarea from 'primevue/textarea'
+
 import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
@@ -97,7 +134,7 @@ import customFunctions from '../custom_functions/customFunctions'
 export default {
   name: 'CreateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog },
+  components: { Dialog, Select, InputText, FloatLabel, Password, Textarea },
   data() {
     return {
       apiUrl: API_ROUTES.USER.BASE,
@@ -112,11 +149,17 @@ export default {
       },
     }
   },
+
   computed: {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
+
+    accountTypeLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+    },
   },
+
   methods: {
     openModal() {
       this.openFormModal()
