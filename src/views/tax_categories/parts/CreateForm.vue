@@ -31,66 +31,84 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('taxCategories.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('taxCategories.name_ar') }}</label>
-        <input
-          v-model="formData.name_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name_ar }"
-        />
-        <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">{{ $t('taxCategories.details') }}</label>
-        <input
-          v-model="formData.details"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.details }"
-        />
-        <small v-if="errors.details" class="error-message">{{ errors.details }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">{{ $t('taxCategories.details_ar') }}</label>
-        <input
-          v-model="formData.details_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.details_ar }"
-        />
-        <small v-if="errors.details_ar" class="error-message">{{ errors.details_ar }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name" v-model="formData.name" autocomplete="on" class="w-full" />
+              <label for="name">{{ $t('taxCategories.name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name_ar" v-model="formData.name_ar" autocomplete="on" class="w-full" />
+              <label for="name_ar">{{ $t('taxCategories.name_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+        </div>
       </div>
 
       <!-- Multi-Select for Taxes using PrimeVue MultiSelect -->
-      <div class="form-group">
-        <label class="form-label required">{{ $t('taxCategories.taxes') }}</label>
-        <MultiSelect
-          v-model="formData.tax_ids"
-          :options="taxes"
-          display="chip"
-          optionLabel="name"
-          optionValue="id"
-          :placeholder="$t('common.select') + ' ' + $t('taxCategories.taxes')"
-          :filter="true"
-          :maxSelectedLabels="10"
-          class="w-full"
-        />
-        <small v-if="errors.tax_ids" class="error-message">{{ errors.tax_ids }}</small>
-        <small v-if="errors['tax_ids.*']" class="error-message">{{ errors['tax_ids.*'] }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <MultiSelect
+              v-model="formData.tax_ids"
+              :options="taxes"
+              display="chip"
+              optionLabel="name"
+              optionValue="id"
+              :placeholder="$t('common.select') + ' ' + $t('taxCategories.taxes')"
+              :filter="true"
+              :maxSelectedLabels="10"
+              class="w-full"
+            />
+            <small v-if="errors.tax_ids" class="error-message">{{ errors.tax_ids }}</small>
+            <small v-if="errors['tax_ids.*']" class="error-message">{{
+              errors['tax_ids.*']
+            }}</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <Textarea
+                id="details"
+                v-model="formData.details"
+                rows="2"
+                style="resize: none"
+                fluid
+              />
+              <label for="details">{{ $t('taxCategories.details') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.details" class="error-message">{{ errors.details }}</small>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <Textarea
+                id="details_ar"
+                v-model="formData.details_ar"
+                rows="2"
+                style="resize: none"
+                fluid
+              />
+              <label for="details_ar">{{ $t('taxCategories.details_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.details_ar" class="error-message">{{ errors.details_ar }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">

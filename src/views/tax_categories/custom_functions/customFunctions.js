@@ -130,6 +130,18 @@ export const customFunctions = {
         },
       })
     },
+
+    toggleActive(item) {
+      if (item.is_active == false) {
+        this.setInactiveTaxCategory(item.id)
+      } else {
+        this.setActiveTaxCategory(item.id)
+      }
+    },
+
+    setDefault(taxCategoryId) {
+      this.setDefaultTaxCategory(taxCategoryId)
+    },
   },
 }
 
