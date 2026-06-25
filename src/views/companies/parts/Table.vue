@@ -8,7 +8,7 @@
       </button>
     </div>
 
-    <div class="card mt-2">
+    <div class="card">
       <div class="filters-bar">
         <Filter @emiFetchData="emiFetchData" />
       </div>

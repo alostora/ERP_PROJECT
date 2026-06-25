@@ -10,7 +10,9 @@
 
     <main class="main-content" :class="{ 'sidebar-collapsed': sidebarCollapsed }">
       <div class="content-wrapper">
-        <router-view />
+        <div class="card">
+          <router-view />
+        </div>
       </div>
     </main>
   </div>
