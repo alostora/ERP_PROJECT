@@ -119,18 +119,17 @@
 </template>
 
 <script>
-import Dialog from 'primevue/dialog'
+import ToggleSwitch from 'primevue/toggleswitch'
+
 import formMixin from '@/mixins/form'
-import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
 import customFunctions from '../custom_functions/customFunctions'
-import Select from 'primevue/select'
-import ToggleSwitch from 'primevue/toggleswitch'
+import { API_ROUTES } from '@/constants/apiRoutes'
 
 export default {
   name: 'UpdateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog, Select, ToggleSwitch },
+  components: { ToggleSwitch },
 
   props: {
     selected_item: {

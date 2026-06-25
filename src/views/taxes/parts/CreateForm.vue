@@ -124,24 +124,23 @@
 </template>
 
 <script>
-import Dialog from 'primevue/dialog'
 import customFunctions from '../custom_functions/customFunctions'
 import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
-import Select from 'primevue/select'
 import ToggleSwitch from 'primevue/toggleswitch'
 
 export default {
   name: 'CreateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog, Select, ToggleSwitch },
+  components: { ToggleSwitch },
 
   props: {
     company_id: {
       type: String,
       required: true,
     },
+
     type_id: {
       type: String,
       required: false,
