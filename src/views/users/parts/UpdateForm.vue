@@ -63,6 +63,7 @@
       <div class="row">
         <div class="col-6">
           <div class="form-group">
+            <label class="form-label">{{ $t('users.passwordLeaveBlank') }}</label>
             <FloatLabel variant="on">
               <Password id="password" v-model="formData.password" toggleMask />
               <label for="password">{{ $t('users.password') }}</label>

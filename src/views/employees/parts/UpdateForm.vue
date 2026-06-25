@@ -7,76 +7,105 @@
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label class="form-label required">{{ $t('employees.branch') }}</label>
+      <div class="row">
         <div class="col-12">
-          <Select
-            v-model="formData.branch_id"
-            :options="branches"
-            :optionLabel="branchLabel"
-            optionValue="id"
-            :placeholder="$t('employees.branch')"
-            :filter="true"
-            :showClear="true"
-            :filterPlaceholder="$t('common.search')"
-            class="w-full"
-            @change="onBranchChange"
-          />
+          <div class="form-group">
+            <Select
+              v-model="formData.branch_id"
+              :options="branches"
+              :optionLabel="branchLabel"
+              optionValue="id"
+              :placeholder="$t('employees.branch')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="onBranchChange"
+            />
+          </div>
         </div>
       </div>
 
-      <div class="form-group" v-if="this.formData.branch_id && warehouses.length">
-        <label class="form-label required">{{ $t('employees.warehouse') }}</label>
+      <div class="row">
         <div class="col-12">
-          <Select
-            v-model="formData.warehouse_id"
-            :options="warehouses"
-            :optionLabel="warehouseLabel"
-            optionValue="id"
-            :placeholder="$t('employees.warehouse')"
-            :filter="true"
-            :showClear="true"
-            :filterPlaceholder="$t('common.search')"
-            class="w-full"
-          />
+          <div class="form-group" v-if="this.formData.branch_id && warehouses.length">
+            <Select
+              v-model="formData.warehouse_id"
+              :options="warehouses"
+              :optionLabel="warehouseLabel"
+              optionValue="id"
+              :placeholder="$t('employees.warehouse')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('employees.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name" v-model="formData.name" autocomplete="on" class="w-full" />
+              <label for="name">{{ $t('employees.name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="email" v-model="formData.email" autocomplete="on" class="w-full" />
+              <label for="email">{{ $t('employees.email') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.email" class="error-message">{{ errors.email }}</small>
+        </div>
+
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="phone" v-model="formData.phone" autocomplete="on" class="w-full" />
+              <label for="phone">{{ $t('employees.phone') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.phone" class="error-message">{{ errors.phone }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('employees.email') }}</label>
-        <input
-          v-model="formData.email"
-          type="email"
-          class="input"
-          :class="{ 'input-error': errors.email }"
-        />
-        <small v-if="errors.email" class="error-message">{{ errors.email }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label class="form-label">{{ $t('employees.passwordLeaveBlank') }}</label>
+            <FloatLabel variant="on">
+              <Password id="password" v-model="formData.password" toggleMask />
+              <label for="password">{{ $t('employees.password') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.password" class="error-message">{{ errors.password }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">{{ $t('employees.phone') }}</label>
-        <input v-model="formData.phone" type="text" class="input" />
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">{{ $t('employees.passwordLeaveBlank') }}</label>
-        <input v-model="formData.password" type="password" class="input" />
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">{{ $t('employees.address') }}</label>
-        <textarea v-model="formData.address" class="textarea" rows="3"></textarea>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <Textarea
+                id="address"
+                v-model="formData.address"
+                rows="2"
+                style="resize: none"
+                fluid
+              />
+              <label for="address">{{ $t('employees.address') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.address" class="error-message">{{ errors.address }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -92,17 +121,16 @@
 </template>
 
 <script>
-import Dialog from 'primevue/dialog'
+import Password from 'primevue/password'
 import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
 import customFunctions from '../custom_functions/customFunctions'
-import Select from 'primevue/select'
 
 export default {
   name: 'UpdateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog, Select },
+  components: { Password },
 
   props: {
     selected_item: {
@@ -174,7 +202,7 @@ export default {
     },
 
     async onBranchChange() {
-      await this.loadWarehouses(this.formData.branch_id)
+      await this.loadWarehouses(this.formData.company_id, this.formData.branch_id)
 
       this.formData.warehouse_id = ''
     },

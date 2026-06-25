@@ -18,14 +18,15 @@ export const customFunctions = {
       } catch (error) {}
     },
 
-    async loadWarehouses(warehouseId) {
-      if (!warehouseId) {
+    async loadWarehouses(companyId, branchId) {
+      if (!branchId) {
         this.warehouses = []
         return
       }
 
       try {
-        const response = await API.get(`${this.warehouseUrl}/${warehouseId}`)
+        const params = { branch_id: branchId }
+        const response = await API.get(`${this.warehouseUrl}/${companyId}`, { params })
         this.warehouses = response.data.data || []
       } catch (error) {}
     },
