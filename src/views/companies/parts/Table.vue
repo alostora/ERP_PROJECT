@@ -8,93 +8,8 @@
       </button>
     </div>
 
-    <div class="card">
-      <div class="filters-bar">
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="search-wrapper">
-              <i class="pi pi-search search-icon"></i>
-              <input
-                type="text"
-                v-model="filters.query_string"
-                @input="fetchData"
-                class="input"
-                :placeholder="$t('common.search')"
-              />
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-3">
-            <Select
-              v-model="filters.client_id"
-              :options="clients"
-              optionLabel="name"
-              optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('clients.title')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="fetchData"
-            />
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-3 mt-2 mt-md-0">
-            <Select
-              v-model="filters.country_id"
-              :options="countries"
-              :optionLabel="countryLabel"
-              optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('countries.title')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="onCountryChange"
-            />
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-3 mt-2 mt-md-0" v-if="filters.country_id">
-            <Select
-              v-model="filters.governorate_id"
-              :options="governorates"
-              :optionLabel="governorateLabel"
-              optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('governorates.title')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="onGovernorateChange"
-            />
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-3 mt-2 mt-md-0" v-if="filters.governorate_id">
-            <Select
-              v-model="filters.city_id"
-              :options="cities"
-              :optionLabel="cityLabel"
-              optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('cities.title')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="fetchData"
-            />
-          </div>
-
-          <div class="col-6 col-md-3 col-lg-2 mt-2 mt-md-0">
-            <select v-model="perPage" @change="fetchData" class="select">
-              <option :value="5">5</option>
-              <option :value="10">10</option>
-              <option :value="25">25</option>
-              <option :value="50">50</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
+    <div class="card mt-2">
+      <Filter @emiFetchData="emiFetchData" />
       <DataTable
         :value="items"
         :paginator="true"
@@ -143,7 +58,7 @@
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
             <div class="actions-cell">
-              <button class="btn-icon" @click="openUpdateModal(data)" :title="$t('common.edit')">
+              <button class="btn-icon" @click="openUpdateModal(data.id)" :title="$t('common.edit')">
                 <i class="pi pi-pen-to-square text-success"></i>
               </button>
               <button
@@ -167,7 +82,7 @@
     </div>
 
     <CreateForm ref="createModal" @created="fetchData" />
-    <UpdateForm ref="updateModal" :selected_item="selectedItem" @updated="fetchData" />
+    <UpdateForm ref="updateModal" :item_id="itemId" @updated="fetchData" />
 
     <Toast />
     <ConfirmDialog />
@@ -184,8 +99,8 @@ import UpdateForm from './UpdateForm.vue'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
-import Select from 'primevue/select'
 import Image from 'primevue/image'
+import Filter from './Filter.vue'
 
 export default {
   name: 'Table',
@@ -197,77 +112,27 @@ export default {
     ConfirmDialog,
     CreateForm,
     UpdateForm,
-    Select,
     Image,
+    Filter,
   },
 
   data() {
     return {
       apiUrl: API_ROUTES.COMPANY.SEARCH,
       deleteUrl: API_ROUTES.COMPANY.BASE,
-      filters: {
-        query_string: '',
-        client_id: '',
-        country_id: '',
-        governorate_id: '',
-        city_id: '',
-      },
-      selectedItem: {},
+      itemId: '',
     }
   },
 
-  computed: {
-    currentLanguage() {
-      return localStorage.getItem('language') || 'en'
-    },
-
-    countryLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    governorateLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    cityLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-  },
+  computed: {},
 
   mounted() {
-    const countryId = this.$route.query.country_id
-
-    if (countryId) {
-      this.filters.country_id = countryId
-      this.loadGovernorates(countryId)
-    }
-
-    const governorateId = this.$route.query.governorate_id
-
-    if (governorateId) {
-      this.filters.governorate_id = governorateId
-    }
-
     this.fetchData()
-    this.loadClients()
-    this.loadCountries()
   },
 
   methods: {
-    async onCountryChange() {
-      this.filters.governorate_id = ''
-      this.filters.city_id = ''
-
-      await this.loadGovernorates(this.filters.country_id)
-
-      this.fetchData()
-    },
-
-    async onGovernorateChange() {
-      this.filters.city_id = ''
-
-      await this.loadCities(this.filters.governorate_id)
-
+    emiFetchData(emitedData) {
+      this.filters = emitedData
       this.fetchData()
     },
 
@@ -275,8 +140,8 @@ export default {
       this.$refs.createModal.openModal()
     },
 
-    openUpdateModal(item) {
-      this.selectedItem = { ...item }
+    openUpdateModal(itemId) {
+      this.itemId = itemId
       this.$nextTick(() => {
         this.$refs.updateModal.openModal()
       })

@@ -13,6 +13,7 @@ export default {
   passwordLeaveBlank: 'كلمة المرور (اتركها فارغة للإبقاء على نفسها)',
   selectAccountType: 'اختر نوع الحساب',
   allAccountTypes: 'كل أنواع الحسابات',
+  avatar: 'الصورة الشخصية',
 
   // Validation messages
   validation: {

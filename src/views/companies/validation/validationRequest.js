@@ -20,13 +20,13 @@ export default {
         this.errors.country_id = this.$t('companies.validation.countryIdRequired')
       }
 
-      if (!form.governorate_id?.trim()) {
-        this.errors.governorate_id = this.$t('companies.validation.governorateIdRequired')
-      }
+      // if (!form.governorate_id?.trim()) {
+      //   this.errors.governorate_id = this.$t('companies.validation.governorateIdRequired')
+      // }
 
-      if (!form.city_id?.trim()) {
-        this.errors.city_id = this.$t('companies.validation.cityIdRequired')
-      }
+      // if (!form.city_id?.trim()) {
+      //   this.errors.city_id = this.$t('companies.validation.cityIdRequired')
+      // }
 
       if (!form.name?.trim()) {
         this.errors.name = this.$t('companies.validation.nameRequired')
@@ -60,13 +60,13 @@ export default {
         this.errors.country_id = this.$t('companies.validation.countryIdRequired')
       }
 
-      if (!form.governorate_id?.trim()) {
-        this.errors.governorate_id = this.$t('companies.validation.governorateIdRequired')
-      }
+      // if (!form.governorate_id?.trim()) {
+      //   this.errors.governorate_id = this.$t('companies.validation.governorateIdRequired')
+      // }
 
-      if (!form.city_id?.trim()) {
-        this.errors.city_id = this.$t('companies.validation.cityIdRequired')
-      }
+      // if (!form.city_id?.trim()) {
+      //   this.errors.city_id = this.$t('companies.validation.cityIdRequired')
+      // }
 
       if (!form.name?.trim()) {
         this.errors.name = this.$t('companies.validation.nameRequired')

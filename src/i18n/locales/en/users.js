@@ -13,6 +13,7 @@ export default {
   passwordLeaveBlank: 'Password (leave blank to keep same)',
   selectAccountType: 'Select Account Type',
   allAccountTypes: 'All Account Types',
+  avatar: 'profile logo',
 
   // Validation messages
   validation: {

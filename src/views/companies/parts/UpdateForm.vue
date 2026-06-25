@@ -163,6 +163,7 @@
 <script>
 import Dialog from 'primevue/dialog'
 import formMixin from '@/mixins/form'
+import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
 import customFunctions from '../custom_functions/customFunctions'
@@ -170,25 +171,21 @@ import Select from 'primevue/select'
 
 export default {
   name: 'UpdateForm',
-  mixins: [formMixin, customFunctions, validationRequest],
+  mixins: [formMixin, tableMixin, customFunctions, validationRequest],
   components: { Dialog, Select },
 
   props: {
-    selected_item: {
-      type: Object,
-      default: () => ({}),
+    item_id: {
+      type: String,
+      required: true,
     },
   },
 
   watch: {
-    selected_item: {
+    item_id: {
       immediate: true,
       deep: true,
-      handler(selectedItem) {
-        if (selectedItem && selectedItem.id) {
-          this.populateForm(selectedItem)
-        }
-      },
+      handler(newVal) {},
     },
   },
 
@@ -238,18 +235,18 @@ export default {
   },
 
   methods: {
-    populateForm(selectedItem) {
+    populateForm() {
       this.formData = {
-        id: selectedItem.id || '',
-        currency_id: selectedItem.currency?.id || '',
-        country_id: selectedItem.country?.id || '',
-        governorate_id: selectedItem.governorate?.id || '',
-        city_id: selectedItem.city?.id || '',
-        name: selectedItem.name || '',
-        name_ar: selectedItem.name_ar || '',
-        phone: selectedItem.phone || '',
-        email: selectedItem.email || '',
-        address: selectedItem.address || '',
+        id: this.itemData.id || '',
+        currency_id: this.itemData.currency?.id || '',
+        country_id: this.itemData.country?.id || '',
+        governorate_id: this.itemData.governorate?.id || '',
+        city_id: this.itemData.city?.id || '',
+        name: this.itemData.name || '',
+        name_ar: this.itemData.name_ar || '',
+        phone: this.itemData.phone || '',
+        email: this.itemData.email || '',
+        address: this.itemData.address || '',
       }
 
       if (this.formData.country_id) {
@@ -272,8 +269,12 @@ export default {
 
       this.formData.city_id = ''
     },
-    openModal() {
+
+    async openModal() {
       this.formVisible = true
+
+      await this.showItem(this.apiUrl, this.item_id)
+      this.populateForm()
     },
 
     async handleSubmit() {

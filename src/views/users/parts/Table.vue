@@ -65,18 +65,34 @@
         resizableColumns
         showGridlines
       >
-        <Column field="id" :header="$t('users.id')" class="col-1">
+        <Column field="id" :header="$t('users.id')">
           <template #body="slotProps">
             <span class="font-mono text-sm">{{ slotProps.index + 1 }}</span>
           </template>
         </Column>
 
-        <Column field="name" :header="$t('users.name')" sortable />
-        <Column field="email" :header="$t('users.email')" sortable />
+        <Column field="logo" :header="$t('users.avatar')">
+          <template #body="slotProps">
+            <div class="flex-center">
+              <img
+                v-if="slotProps.data.avatar"
+                :src="slotProps.data.avatar.file_path"
+                :alt="slotProps.data.name"
+                class="table-image-sm"
+              />
+              <div v-else class="image-placeholder">
+                <i class="pi pi-image"></i>
+              </div>
+            </div>
+          </template>
+        </Column>
+
+        <Column field="name" :header="$t('users.name')" />
+        <Column field="email" :header="$t('users.email')" />
         <Column field="phone" :header="$t('users.phone')" />
         <Column field="account_type.name" :header="$t('users.accountType')" />
 
-        <Column field="created_at" :header="$t('users.createdAt')" class="col-1">
+        <Column field="created_at" :header="$t('users.createdAt')">
           <template #body="{ data }">
             {{ formatDate(data.created_at) }}
           </template>
