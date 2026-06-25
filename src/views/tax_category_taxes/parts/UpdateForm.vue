@@ -7,22 +7,29 @@
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label class="form-label">{{ $t('taxCategoryTaxes.fixedAmountOverride') }}</label>
-        <input
-          v-model="formData.fixed_amount_override"
-          type="number"
-          step="any"
-          class="input"
-          :class="{ 'input-error': errors.fixed_amount_override }"
-        />
-        <small v-if="errors.fixed_amount_override" class="error-message">{{
-          errors.fixed_amount_override
-        }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputNumber
+                id="fixed_amount_override"
+                v-model="formData.fixed_amount_override"
+                autocomplete="on"
+                class="w-full"
+              />
+              <label for="fixed_amount_override">{{
+                $t('taxCategoryTaxes.fixedAmountOverride')
+              }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.fixed_amount_override" class="error-message">
+            {{ errors.fixed_amount_override }}
+          </small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
-        <button type="button" class="btn btn-outline" @click="closeFormModal">
+        <button type="button" class="btn btn-outline ml-2 mr-2" @click="closeFormModal">
           {{ $t('common.cancel') }}
         </button>
         <button type="submit" class="btn btn-primary" :disabled="formLoading">

@@ -25,17 +25,16 @@
 
         <!-- Tax Rows -->
         <div v-for="(taxRow, index) in taxRows" :key="index" class="card mb-3 p-3">
-          <div class="row gap-3">
+          <div class="row">
             <!-- Tax Selection -->
             <div class="col-5">
               <div class="form-group">
-                <label class="form-label text-sm">{{ $t('taxCategoryTaxes.tax.tax') }}</label>
                 <Select
                   v-model="taxRow.tax_id"
                   :options="availableTaxesForRow(index)"
                   optionLabel="name"
                   optionValue="id"
-                  :placeholder="$t('common.select')"
+                  :placeholder="$t('common.select') + ' ' + $t('taxCategoryTaxes.tax.tax')"
                   class="w-full"
                   @change="onTaxChange(index, $event)"
                 />
@@ -43,18 +42,20 @@
             </div>
 
             <!-- Fixed Amount Override -->
-            <div class="col-4">
+            <div class="col-5">
               <div class="form-group">
-                <label class="form-label text-sm">{{
-                  $t('taxCategoryTaxes.fixedAmountOverride')
-                }}</label>
-                <input
-                  v-model="taxRow.fixed_amount_override"
-                  type="number"
-                  step="any"
-                  class="input"
-                  @input="onFixedAmountChange(index, $event)"
-                />
+                <FloatLabel variant="on">
+                  <InputNumber
+                    id="fixed_amount_override"
+                    v-model="taxRow.fixed_amount_override"
+                    autocomplete="on"
+                    class="w-full"
+                    @input="onFixedAmountChange(index, $event)"
+                  />
+                  <label for="fixed_amount_override">{{
+                    $t('taxCategoryTaxes.fixedAmountOverride')
+                  }}</label>
+                </FloatLabel>
               </div>
             </div>
 
