@@ -69,7 +69,6 @@
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Toast from 'primevue/toast'
-import Select from 'primevue/select'
 import Filter from './Filter.vue'
 
 import ConfirmDialog from 'primevue/confirmdialog'
@@ -90,7 +89,6 @@ export default {
     ConfirmDialog,
     CreateForm,
     UpdateForm,
-    Select,
     Filter,
   },
 

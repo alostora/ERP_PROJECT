@@ -76,11 +76,6 @@
 </template>
 
 <script>
-import Dialog from 'primevue/dialog'
-import Select from 'primevue/select'
-import InputText from 'primevue/inputtext'
-import FloatLabel from 'primevue/floatlabel'
-
 import customFunctions from '../custom_functions/customFunctions'
 import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
@@ -89,7 +84,7 @@ import validationRequest from '../validation/validationRequest'
 export default {
   name: 'CreateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog, Select, InputText, FloatLabel },
+  components: {},
 
   data() {
     return {

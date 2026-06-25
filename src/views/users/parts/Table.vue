@@ -98,13 +98,12 @@ import UpdateForm from './UpdateForm.vue'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
-import Select from 'primevue/select'
 import Filter from './Filter.vue'
 
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm, Select, Filter },
+  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm, Filter },
 
   data() {
     return {

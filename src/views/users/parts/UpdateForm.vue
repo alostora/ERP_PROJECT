@@ -103,12 +103,7 @@
 </template>
 
 <script>
-import Dialog from 'primevue/dialog'
-import Select from 'primevue/select'
-import InputText from 'primevue/inputtext'
-import FloatLabel from 'primevue/floatlabel'
 import Password from 'primevue/password'
-import Textarea from 'primevue/textarea'
 
 import formMixin from '@/mixins/form'
 import tableMixin from '@/mixins/table'
@@ -119,7 +114,7 @@ import customFunctions from '../custom_functions/customFunctions'
 export default {
   name: 'UpdateForm',
   mixins: [formMixin, tableMixin, customFunctions, validationRequest],
-  components: { Dialog, Select, InputText, FloatLabel, Password, Textarea },
+  components: { Password },
 
   props: {
     item_id: {

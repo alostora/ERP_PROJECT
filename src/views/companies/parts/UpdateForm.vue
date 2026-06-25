@@ -160,12 +160,6 @@
 </template>
 
 <script>
-import Dialog from 'primevue/dialog'
-import Select from 'primevue/select'
-import InputText from 'primevue/inputtext'
-import FloatLabel from 'primevue/floatlabel'
-import Textarea from 'primevue/textarea'
-
 import formMixin from '@/mixins/form'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
@@ -175,7 +169,7 @@ import customFunctions from '../custom_functions/customFunctions'
 export default {
   name: 'UpdateForm',
   mixins: [formMixin, tableMixin, customFunctions, validationRequest],
-  components: { Dialog, Select, InputText, FloatLabel, Textarea },
+  components: {},
 
   props: {
     item_id: {

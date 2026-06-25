@@ -41,10 +41,6 @@
 </template>
 
 <script>
-import Dialog from 'primevue/dialog'
-import InputText from 'primevue/inputtext'
-import FloatLabel from 'primevue/floatlabel'
-
 import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
@@ -53,7 +49,7 @@ import customFunctions from '../custom_functions/customFunctions'
 export default {
   name: 'UpdateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog, InputText, FloatLabel },
+  components: {},
 
   props: {
     selected_item: {

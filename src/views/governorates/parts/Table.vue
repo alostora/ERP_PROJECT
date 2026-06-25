@@ -91,8 +91,6 @@ import CreateForm from './CreateForm.vue'
 import UpdateForm from './UpdateForm.vue'
 import Filter from './Filter.vue'
 
-import Select from 'primevue/select'
-
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
@@ -108,7 +106,6 @@ export default {
     CreateForm,
     UpdateForm,
     Filter,
-    Select,
   },
 
   props: {

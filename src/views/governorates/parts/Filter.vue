@@ -59,18 +59,11 @@
 <script>
 import tableMixin from '@/mixins/table'
 import { customFunctions } from '../custom_functions/customFunctions'
-import Select from 'primevue/select'
-import InputText from 'primevue/inputtext'
-import Panel from 'primevue/panel'
 
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: {
-    Select,
-    InputText,
-    Panel,
-  },
+  components: {},
 
   emits: ['emiFetchData'],
 

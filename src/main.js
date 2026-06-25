@@ -12,6 +12,15 @@ import i18n from './i18n'
 import App from './App.vue'
 import router from './router'
 
+// PrimeVue components
+import Dialog from 'primevue/dialog'
+import Panel from 'primevue/panel'
+import Select from 'primevue/select'
+import InputText from 'primevue/inputtext'
+import InputNumber from 'primevue/inputnumber'
+import FloatLabel from 'primevue/floatlabel'
+import Textarea from 'primevue/textarea'
+
 const app = createApp(App)
 
 app.use(createPinia())
@@ -27,5 +36,13 @@ app.use(PrimeVue, {
 })
 app.use(ToastService)
 app.use(ConfirmationService)
+
+app.component('Dialog', Dialog)
+app.component('Panel', Panel)
+app.component('Select', Select)
+app.component('InputText', InputText)
+app.component('InputNumber', InputNumber)
+app.component('FloatLabel', FloatLabel)
+app.component('Textarea', Textarea)
 
 app.mount('#app')
