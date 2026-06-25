@@ -9,7 +9,9 @@
     </div>
 
     <div class="card mt-2">
-      <Filter @emiFetchData="emiFetchData" />
+      <div class="filters-bar">
+        <Filter @emiFetchData="emiFetchData" />
+      </div>
       <DataTable
         :value="items"
         :paginator="true"
@@ -83,7 +85,6 @@
 
     <CreateForm ref="createModal" @created="fetchData" />
     <UpdateForm ref="updateModal" :item_id="itemId" @updated="fetchData" />
-
     <Toast />
     <ConfirmDialog />
   </div>
