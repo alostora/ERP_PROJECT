@@ -19,7 +19,7 @@
           :options="measurementUnitGroups"
           :optionLabel="measurementUnitGroupLabel"
           optionValue="id"
-          :placeholder="$t('common.all') + ' ' + $t('measurementUnitGroups.title')"
+          :placeholder="$t('measurementUnitGroups.title')"
           :filter="true"
           :showClear="true"
           :filterPlaceholder="$t('common.search')"

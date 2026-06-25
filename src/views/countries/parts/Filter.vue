@@ -23,23 +23,6 @@
             />
           </div>
         </div>
-
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="search-wrapper">
-            <Select
-              v-model="filters.user_account_type_id"
-              :options="accountTypes"
-              :optionLabel="accountTypeLabel"
-              optionValue="id"
-              :placeholder="$t('users.accountType')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="emiFetchData"
-            />
-          </div>
-        </div>
       </div>
 
       <div class="row">
@@ -87,7 +70,6 @@ export default {
       filters: {
         per_page: 10,
         query_string: '',
-        user_account_type_id: '',
       },
     }
   },
@@ -96,15 +78,9 @@ export default {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
-
-    accountTypeLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
   },
 
-  mounted() {
-    this.loadAccountTypes()
-  },
+  mounted() {},
 
   methods: {
     emiFetchData() {

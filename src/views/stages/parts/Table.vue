@@ -30,7 +30,7 @@
               :options="stageTypes"
               :optionLabel="stageTypeLabel"
               optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('stages.type')"
+              :placeholder="$t('stages.type')"
               :filter="true"
               :filterPlaceholder="$t('common.search')"
               :showClear="true"

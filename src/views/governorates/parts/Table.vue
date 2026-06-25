@@ -10,44 +10,7 @@
 
     <div class="card">
       <div class="filters-bar">
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="search-wrapper">
-              <i class="pi pi-search search-icon"></i>
-              <input
-                type="text"
-                v-model="filters.query_string"
-                @input="fetchData"
-                class="input"
-                :placeholder="$t('common.search')"
-              />
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-3">
-            <Select
-              v-model="filters.country_id"
-              :options="countries"
-              :optionLabel="countryLabel"
-              optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('countries.title')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="fetchData"
-            />
-          </div>
-
-          <div class="col-6 col-md-3 col-lg-2 mt-2 mt-md-0">
-            <select v-model="perPage" @change="fetchData" class="select">
-              <option :value="5">5</option>
-              <option :value="10">10</option>
-              <option :value="25">25</option>
-              <option :value="50">50</option>
-            </select>
-          </div>
-        </div>
+        <Filter @emiFetchData="emiFetchData" />
       </div>
 
       <DataTable
@@ -75,10 +38,27 @@
 
         <Column field="name_ar" :header="$t('governorates.name_ar')" sortable />
 
+        <Column :header="$t('cities.title')">
+          <template #body="{ data }">
+            <button
+              class="btn-sm btn-outline"
+              @click="
+                $router.push({
+                  name: 'cities',
+                  params: { governorate_id: data.id, country_id: data.country_id },
+                })
+              "
+            >
+              <i class="pi pi-map-marker text-primary"></i>
+              {{ $t('cities.title') }}
+            </button>
+          </template>
+        </Column>
+
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
             <div class="actions-cell">
-              <button class="btn-icon" @click="openUpdateModal(data)" :title="$t('common.edit')">
+              <button class="btn-icon" @click="openUpdateModal(data.id)" :title="$t('common.edit')">
                 <i class="pi pi-pen-to-square text-success"></i>
               </button>
               <button
@@ -95,7 +75,7 @@
     </div>
 
     <CreateForm ref="createModal" @created="fetchData" />
-    <UpdateForm ref="updateModal" :selected_item="selectedItem" @updated="fetchData" />
+    <UpdateForm ref="updateModal" :item_id="item_id" @updated="fetchData" />
 
     <Toast />
     <ConfirmDialog />
@@ -109,10 +89,13 @@ import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
 import CreateForm from './CreateForm.vue'
 import UpdateForm from './UpdateForm.vue'
+import Filter from './Filter.vue'
+
+import Select from 'primevue/select'
+
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
-import Select from 'primevue/select'
 
 export default {
   name: 'Table',
@@ -124,20 +107,19 @@ export default {
     ConfirmDialog,
     CreateForm,
     UpdateForm,
+    Filter,
     Select,
   },
 
-  data() {
-    return {
-      apiUrl: API_ROUTES.GOVERNORATE.SEARCH,
-      deleteUrl: API_ROUTES.GOVERNORATE.BASE,
-      filters: { query_string: '', country_id: '' },
-      selectedItem: {},
-    }
+  props: {
+    country_id: {
+      type: String,
+      required: false,
+    },
   },
 
   watch: {
-    '$route.query.country_id': {
+    country_id: {
       handler(newVal) {
         if (newVal) {
           this.filters.country_id = newVal
@@ -148,34 +130,33 @@ export default {
     },
   },
 
-  computed: {
-    currentLanguage() {
-      return localStorage.getItem('language') || 'en'
-    },
-
-    countryLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
+  data() {
+    return {
+      apiUrl: API_ROUTES.GOVERNORATE.SEARCH,
+      deleteUrl: API_ROUTES.GOVERNORATE.BASE,
+      filters: { query_string: '', country_id: this.country_id },
+      item_id: '',
+    }
   },
 
   mounted() {
-    const countryId = this.$route.query.country_id
-
-    if (countryId) {
-      this.filters.country_id = countryId
-    }
+    this.filters.country_id = this.country_id
 
     this.fetchData()
-    this.loadCountries()
   },
 
   methods: {
+    emiFetchData(emitedData) {
+      this.filters = emitedData
+      this.fetchData()
+    },
+
     openCreateModal() {
       this.$refs.createModal.openModal()
     },
 
-    openUpdateModal(item) {
-      this.selectedItem = { ...item }
+    openUpdateModal(itemId) {
+      this.item_id = itemId
       this.$nextTick(() => {
         this.$refs.updateModal.openModal()
       })

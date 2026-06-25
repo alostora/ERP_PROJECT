@@ -25,20 +25,32 @@
         </div>
 
         <div class="col-12 col-md-6 col-lg-4">
-          <div class="search-wrapper">
-            <Select
-              v-model="filters.user_account_type_id"
-              :options="accountTypes"
-              :optionLabel="accountTypeLabel"
-              optionValue="id"
-              :placeholder="$t('users.accountType')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="emiFetchData"
-            />
-          </div>
+          <Select
+            v-model="filters.country_id"
+            :options="countries"
+            :optionLabel="countryLabel"
+            optionValue="id"
+            :placeholder="$t('countries.title')"
+            :filter="true"
+            :showClear="true"
+            :filterPlaceholder="$t('common.search')"
+            class="w-full"
+            @change="onCountryChange"
+          />
+        </div>
+        <div class="col-12 col-md-6 col-lg-4" v-if="filters.country_id">
+          <Select
+            v-model="filters.governorate_id"
+            :options="governorates"
+            :optionLabel="governorateLabel"
+            optionValue="id"
+            :placeholder="$t('governorates.title')"
+            :filter="true"
+            :showClear="true"
+            :filterPlaceholder="$t('common.search')"
+            class="w-full"
+            @change="emiFetchData"
+          />
         </div>
       </div>
 
@@ -76,6 +88,25 @@ export default {
 
   emits: ['emiFetchData'],
 
+  watch: {
+    '$route.params.country_id': {
+      handler(newVal) {
+        if (newVal) {
+          this.filters.country_id = newVal
+        }
+      },
+      immediate: true,
+    },
+    '$route.params.governorate_id': {
+      handler(newVal) {
+        if (newVal) {
+          this.filters.governorate_id = newVal
+        }
+      },
+      immediate: true,
+    },
+  },
+
   data() {
     return {
       perPageValues: [
@@ -87,7 +118,8 @@ export default {
       filters: {
         per_page: 10,
         query_string: '',
-        user_account_type_id: '',
+        country_id: this.$route.params.country_id || '',
+        governorate_id: this.$route.params.governorate_id || '',
       },
     }
   },
@@ -97,18 +129,43 @@ export default {
       return localStorage.getItem('language') || 'en'
     },
 
-    accountTypeLabel() {
+    countryLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+    },
+
+    governorateLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
   },
 
   mounted() {
-    this.loadAccountTypes()
+    const countryId = this.$route.params.country_id
+
+    if (countryId) {
+      this.filters.country_id = countryId
+      this.loadGovernorates(countryId)
+    }
+
+    const governorateId = this.$route.params.governorate_id
+
+    if (governorateId) {
+      this.filters.governorate_id = governorateId
+    }
+
+    this.loadCountries()
   },
 
   methods: {
     emiFetchData() {
       this.$emit('emiFetchData', this.filters)
+    },
+
+    async onCountryChange() {
+      await this.loadGovernorates(this.filters.country_id)
+
+      this.filters.governorate_id = ''
+
+      this.emiFetchData()
     },
   },
 }

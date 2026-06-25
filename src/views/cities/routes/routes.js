@@ -2,7 +2,7 @@ import Table from '../parts/Table.vue'
 
 const routes = [
   {
-    path: '/cities/:country_id?/:governorate_id?',
+    path: '/cities/:governorate_id?/:country_id?',
     name: 'cities',
     component: Table,
     props: (route) => ({

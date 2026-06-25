@@ -10,59 +10,7 @@
 
     <div class="card">
       <div class="filters-bar">
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="search-wrapper">
-              <i class="pi pi-search search-icon"></i>
-              <input
-                type="text"
-                v-model="filters.query_string"
-                @input="fetchData"
-                class="input"
-                :placeholder="$t('common.search')"
-              />
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-3">
-            <Select
-              v-model="filters.country_id"
-              :options="countries"
-              :optionLabel="countryLabel"
-              optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('countries.title')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="onCountryChange"
-            />
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-3 mt-2 mt-md-0" v-if="filters.country_id">
-            <Select
-              v-model="filters.governorate_id"
-              :options="governorates"
-              :optionLabel="governorateLabel"
-              optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('governorates.title')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="fetchData"
-            />
-          </div>
-
-          <div class="col-6 col-md-3 col-lg-2 mt-2 mt-md-0">
-            <select v-model="perPage" @change="fetchData" class="select">
-              <option :value="5">5</option>
-              <option :value="10">10</option>
-              <option :value="25">25</option>
-              <option :value="50">50</option>
-            </select>
-          </div>
-        </div>
+        <Filter @emiFetchData="emiFetchData" />
       </div>
 
       <DataTable
@@ -121,13 +69,16 @@
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Toast from 'primevue/toast'
+import Select from 'primevue/select'
+import Filter from './Filter.vue'
+
 import ConfirmDialog from 'primevue/confirmdialog'
 import CreateForm from './CreateForm.vue'
 import UpdateForm from './UpdateForm.vue'
+
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
-import Select from 'primevue/select'
 
 export default {
   name: 'Table',
@@ -140,6 +91,7 @@ export default {
     CreateForm,
     UpdateForm,
     Select,
+    Filter,
   },
 
   data() {
@@ -152,7 +104,7 @@ export default {
   },
 
   watch: {
-    '$route.query.country_id': {
+    '$route.params.country_id': {
       handler(newVal) {
         if (newVal) {
           this.filters.country_id = newVal
@@ -161,7 +113,7 @@ export default {
       },
       immediate: true,
     },
-    '$route.query.governorate_id': {
+    '$route.params.governorate_id': {
       handler(newVal) {
         if (newVal) {
           this.filters.governorate_id = newVal
@@ -172,44 +124,13 @@ export default {
     },
   },
 
-  computed: {
-    currentLanguage() {
-      return localStorage.getItem('language') || 'en'
-    },
-
-    countryLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    governorateLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-  },
-
   mounted() {
-    const countryId = this.$route.query.country_id
-
-    if (countryId) {
-      this.filters.country_id = countryId
-      this.loadGovernorates(countryId)
-    }
-
-    const governorateId = this.$route.query.governorate_id
-
-    if (governorateId) {
-      this.filters.governorate_id = governorateId
-    }
-
     this.fetchData()
-    this.loadCountries()
   },
 
   methods: {
-    async onCountryChange() {
-      await this.loadGovernorates(this.filters.country_id)
-
-      this.filters.governorate_id = ''
-
+    emiFetchData(emitedData) {
+      this.filters = emitedData
       this.fetchData()
     },
 

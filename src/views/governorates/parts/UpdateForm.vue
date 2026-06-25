@@ -7,26 +7,25 @@
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label class="form-label required">{{ $t('governorates.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('governorates.name_ar') }}</label>
-        <input
-          v-model="formData.name_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name_ar }"
-        />
-        <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name" v-model="formData.name" autocomplete="on" class="w-full" />
+              <label for="name">{{ $t('governorates.name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name_ar" v-model="formData.name_ar" autocomplete="on" class="w-full" />
+              <label for="name_ar">{{ $t('governorates.name_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -43,32 +42,25 @@
 
 <script>
 import Dialog from 'primevue/dialog'
+import InputText from 'primevue/inputtext'
+import FloatLabel from 'primevue/floatlabel'
+
 import formMixin from '@/mixins/form'
+import tableMixin from '@/mixins/table'
+
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
 import customFunctions from '../custom_functions/customFunctions'
 
 export default {
   name: 'UpdateForm',
-  mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog },
+  mixins: [formMixin, tableMixin, customFunctions, validationRequest],
+  components: { Dialog, InputText, FloatLabel },
 
   props: {
-    selected_item: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
-
-  watch: {
-    selected_item: {
-      immediate: true,
-      deep: true,
-      handler(selectedItem) {
-        if (selectedItem && selectedItem.id) {
-          this.populateForm(selectedItem)
-        }
-      },
+    item_id: {
+      type: String,
+      reuired: true,
     },
   },
 
@@ -85,16 +77,19 @@ export default {
   },
 
   methods: {
-    populateForm(selectedItem) {
+    populateForm() {
       this.formData = {
-        id: selectedItem.id || '',
-        name: selectedItem.name || '',
-        name_ar: selectedItem.name_ar || '',
+        id: this.itemData.id || '',
+        name: this.itemData.name || '',
+        name_ar: this.itemData.name_ar || '',
       }
     },
 
-    openModal() {
+    async openModal() {
       this.formVisible = true
+
+      await this.showItem(this.apiUrl, this.item_id)
+      this.populateForm()
     },
 
     async handleSubmit() {

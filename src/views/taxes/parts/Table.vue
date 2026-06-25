@@ -30,7 +30,7 @@
               :options="taxTypes"
               :optionLabel="taxTypeLabel"
               optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('taxes.type')"
+              :placeholder="$t('taxes.type')"
               :filter="true"
               :showClear="true"
               :filterPlaceholder="$t('common.search')"

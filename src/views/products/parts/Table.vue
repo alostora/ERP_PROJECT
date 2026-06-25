@@ -30,7 +30,7 @@
               :options="categories"
               :optionLabel="categoryLabel"
               optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('categories.title')"
+              :placeholder="$t('categories.title')"
               :filter="true"
               :showClear="true"
               :filterPlaceholder="$t('common.search')"

@@ -30,7 +30,7 @@
               :options="discountTypes"
               :optionLabel="discountTypeLabel"
               optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('discounts.type')"
+              :placeholder="$t('discounts.type')"
               :filter="true"
               :showClear="true"
               :filterPlaceholder="$t('common.search')"

@@ -37,7 +37,7 @@
               :options="variants"
               :optionLabel="variantLabel"
               optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('variants.title')"
+              :placeholder="$t('variants.title')"
               :filter="true"
               :showClear="true"
               :filterPlaceholder="$t('common.search')"

@@ -7,48 +7,51 @@
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label class="form-label required">{{ $t('countries.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name" v-model="formData.name" autocomplete="on" class="w-full" />
+              <label for="name">{{ $t('countries.name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name_ar" v-model="formData.name_ar" autocomplete="on" class="w-full" />
+              <label for="name_ar">{{ $t('countries.name_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('countries.name_ar') }}</label>
-        <input
-          v-model="formData.name_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name_ar }"
-        />
-        <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('countries.phone_code') }}</label>
-        <input
-          v-model="formData.phone_code"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.phone_code }"
-        />
-        <small v-if="errors.phone_code" class="error-message">{{ errors.phone_code }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('countries.prefix') }}</label>
-        <input
-          v-model="formData.prefix"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.prefix }"
-        />
-        <small v-if="errors.prefix" class="error-message">{{ errors.prefix }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText
+                id="phone_code"
+                v-model="formData.phone_code"
+                autocomplete="on"
+                class="w-full"
+              />
+              <label for="phone_code">{{ $t('countries.phone_code') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.phone_code" class="error-message">{{ errors.phone_code }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="prefix" v-model="formData.prefix" autocomplete="on" class="w-full" />
+              <label for="prefix">{{ $t('countries.prefix') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.prefix" class="error-message">{{ errors.prefix }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -65,6 +68,9 @@
 
 <script>
 import Dialog from 'primevue/dialog'
+import InputText from 'primevue/inputtext'
+import FloatLabel from 'primevue/floatlabel'
+
 import customFunctions from '../custom_functions/customFunctions'
 import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
@@ -73,7 +79,7 @@ import validationRequest from '../validation/validationRequest'
 export default {
   name: 'CreateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog },
+  components: { Dialog, InputText, FloatLabel },
   data() {
     return {
       apiUrl: API_ROUTES.COUNTRY.BASE,

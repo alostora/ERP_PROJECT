@@ -30,7 +30,7 @@
               :options="clients"
               optionLabel="name"
               optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('clients.title')"
+              :placeholder="$t('clients.title')"
               :filter="true"
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
@@ -48,7 +48,7 @@
               :options="countries"
               :optionLabel="countryLabel"
               optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('countries.title')"
+              :placeholder="$t('countries.title')"
               :filter="true"
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
@@ -65,7 +65,7 @@
               :options="governorates"
               :optionLabel="governorateLabel"
               optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('governorates.title')"
+              :placeholder="$t('governorates.title')"
               :filter="true"
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
@@ -81,7 +81,7 @@
             :options="cities"
             :optionLabel="cityLabel"
             optionValue="id"
-            :placeholder="$t('common.all') + ' ' + $t('cities.title')"
+            :placeholder="$t('cities.title')"
             :filter="true"
             :showClear="true"
             :filterPlaceholder="$t('common.search')"
@@ -91,7 +91,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-6 col-md-3 col-lg-2 mt-2 mt-md-0">
+        <div class="col-6 col-md-3 col-lg-2 mt-2">
           <Select
             v-model="filters.per_page"
             :options="perPageValues"

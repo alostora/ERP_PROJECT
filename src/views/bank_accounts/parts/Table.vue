@@ -30,7 +30,7 @@
               :options="branches"
               :optionLabel="branchLabel"
               optionValue="id"
-              :placeholder="$t('common.all') + ' ' + $t('bankAccounts.branches')"
+              :placeholder="$t('bankAccounts.branches')"
               :filter="true"
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
