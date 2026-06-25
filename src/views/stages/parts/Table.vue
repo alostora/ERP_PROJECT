@@ -10,44 +10,7 @@
 
     <div class="card">
       <div class="filters-bar">
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-4 mb-1">
-            <div class="search-wrapper">
-              <i class="pi pi-search search-icon"></i>
-              <input
-                type="text"
-                v-model="filters.query_string"
-                @input="fetchData"
-                class="input"
-                :placeholder="$t('common.search')"
-              />
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4 mb-1">
-            <Select
-              v-model="filters.type_id"
-              :options="stageTypes"
-              :optionLabel="stageTypeLabel"
-              optionValue="id"
-              :placeholder="$t('stages.type')"
-              :filter="true"
-              :filterPlaceholder="$t('common.search')"
-              :showClear="true"
-              class="w-full"
-              @change="fetchData"
-            />
-          </div>
-
-          <div class="col-6 col-md-3 col-lg-2">
-            <select v-model="perPage" @change="fetchData" class="select">
-              <option :value="5">5</option>
-              <option :value="10">10</option>
-              <option :value="25">25</option>
-              <option :value="50">50</option>
-            </select>
-          </div>
-        </div>
+        <Filter @emiFetchData="emiFetchData" />
       </div>
 
       <DataTable
@@ -113,7 +76,7 @@
               {{ $t('common.yes') }}
             </div>
             <div v-else-if="!data.is_default">
-              <ToggleSwitch v-model="data.is_default" @change="setDefaultSage(data.id)" />
+              <ToggleSwitch v-model="data.is_default" @change="setDefaultStage(data.id)" />
             </div>
           </template>
         </Column>
@@ -155,13 +118,14 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
+import ToggleSwitch from 'primevue/toggleswitch'
 import CreateForm from './CreateForm.vue'
 import UpdateForm from './UpdateForm.vue'
+import Filter from './Filter.vue'
+
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
-import Select from 'primevue/select'
-import ToggleSwitch from 'primevue/toggleswitch'
 
 export default {
   name: 'Table',
@@ -171,10 +135,10 @@ export default {
     Column,
     Toast,
     ConfirmDialog,
+    ToggleSwitch,
     CreateForm,
     UpdateForm,
-    Select,
-    ToggleSwitch,
+    Filter,
   },
 
   watch: {
@@ -203,18 +167,18 @@ export default {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
-
-    stageTypeLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
   },
 
   mounted() {
     this.fetchData()
-    this.loadStageTypes()
   },
 
   methods: {
+    emiFetchData(emitedData) {
+      this.filters = emitedData
+      this.fetchData()
+    },
+
     openCreateModal() {
       this.$refs.createModal.openModal()
     },

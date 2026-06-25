@@ -12,66 +12,73 @@
         <small v-if="errors.company_id" class="error-message">{{ errors.company_id }}</small>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('measurementUnits.group') }}</label>
-        <Select
-          v-model="formData.measurement_unit_group_id"
-          :options="measurementUnitGroups"
-          :optionLabel="measurementUnitGroupLabel"
-          optionValue="id"
-          :placeholder="$t('measurementUnitGroups.title')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-        />
-        <small v-if="errors.measurement_unit_group_id" class="error-message">{{
-          errors.measurement_unit_group_id
-        }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <Select
+              v-model="formData.measurement_unit_group_id"
+              :options="measurementUnitGroups"
+              :optionLabel="measurementUnitGroupLabel"
+              optionValue="id"
+              :placeholder="$t('measurementUnits.title')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+            <small v-if="errors.measurement_unit_group_id" class="error-message">{{
+              errors.measurement_unit_group_id
+            }}</small>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('measurementUnits.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name" v-model="formData.name" autocomplete="on" class="w-full" />
+              <label for="name">{{ $t('measurementUnits.name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name_ar" v-model="formData.name_ar" autocomplete="on" class="w-full" />
+              <label for="name_ar">{{ $t('measurementUnits.name_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('measurementUnits.name_ar') }}</label>
-        <input
-          v-model="formData.name_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name_ar }"
-        />
-        <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
-      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="symbol" v-model="formData.symbol" autocomplete="on" class="w-full" />
+              <label for="symbol">{{ $t('measurementUnits.symbol') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.symbol" class="error-message">{{ errors.symbol }}</small>
+        </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('measurementUnits.symbol') }}</label>
-        <input
-          v-model="formData.symbol"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.symbol }"
-        />
-        <small v-if="errors.symbol" class="error-message">{{ errors.symbol }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('measurementUnits.factor_value') }}</label>
-        <input
-          v-model="formData.factor_value"
-          type="number"
-          class="input"
-          :class="{ 'input-error': errors.factor_value }"
-        />
-        <small v-if="errors.factor_value" class="error-message">{{ errors.factor_value }}</small>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputNumber
+                id="factor_value"
+                v-model="formData.factor_value"
+                autocomplete="on"
+                class="w-full"
+              />
+              <label for="factor_value">{{ $t('measurementUnits.factor_value') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.factor_value" class="error-message">{{ errors.factor_value }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">

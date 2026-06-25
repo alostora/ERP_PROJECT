@@ -23,13 +23,13 @@ export const customFunctions = {
         if (this.filters) {
           if (this.stageTypes.length > 0 && !this.filters.type_id) {
             this.filters.type_id = this.stageTypes[0].id
-            this.fetchData()
+            this.emiFetchData()
           }
         }
       } catch (error) {}
     },
 
-    async setDefaultSage(stageId) {
+    async setDefaultStage(stageId) {
       this.$confirm.require({
         message: this.$t('common.confirmSetDefault'),
         header: this.$t('common.confirmSetDefault'),

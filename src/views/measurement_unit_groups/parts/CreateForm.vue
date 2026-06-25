@@ -32,6 +32,7 @@
           <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
         </div>
       </div>
+
       <div class="row">
         <div class="col-12">
           <div class="form-group">
