@@ -99,6 +99,7 @@ export default {
     userManagement: 'User Management',
     users: 'Users',
     allUsers: 'All Users',
+    allClients: 'All Clients',
 
     //////
     locations: 'Locations',

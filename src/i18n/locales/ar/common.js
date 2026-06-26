@@ -101,6 +101,7 @@ export default {
     userManagement: 'إدارة المستخدمين',
     users: 'المستخدمين',
     allUsers: 'جميع المستخدمين',
+    allClients: 'جميع العملاء',
 
     //////
     locations: 'المواقع',

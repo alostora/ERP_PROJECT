@@ -5,6 +5,7 @@ import Dashboard from '@/views/Dashboard.vue'
 import Login from '@/views/Login.vue'
 
 import usersRoutes from '@/views/users/routes/routes'
+import clientsRoutes from '@/views/clients/routes/routes'
 import countriesRoutes from '@/views/countries/routes/routes'
 import governoratesRoutes from '@/views/governorates/routes/routes'
 import citiesRoutes from '@/views/cities/routes/routes'
@@ -54,6 +55,7 @@ const routes = [
     children: [
       { path: '', name: 'dashboard', component: Dashboard },
       ...usersRoutes,
+      ...clientsRoutes,
       ...countriesRoutes,
       ...governoratesRoutes,
       ...citiesRoutes,

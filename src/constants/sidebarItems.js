@@ -19,6 +19,7 @@ export const sidebarItems = {
           icon: 'pi pi-users',
           items: [
             { label: 'common.menu.allUsers', icon: 'pi pi-circle-fill', path: '/users' },
+            { label: 'common.menu.allClients', icon: 'pi pi-circle-fill', path: '/clients' },
             // { label: 'common.menu.roles', icon: 'pi pi-circle-fill', path: '/roles' },
             // { label: 'common.menu.permissions', icon: 'pi pi-circle-fill', path: '/permissions' },
           ],
