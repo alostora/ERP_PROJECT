@@ -18,11 +18,11 @@ export default {
   from_warehouse: 'من مستودع',
   to_warehouse: 'إلى مستودع',
 
-  from_warehouse_stage: 'مرحلة المستودع المصدر',
-  to_warehouse_stage: 'مرحلة المستودع الوجهة',
+  from_warehouse_stage: 'مرحلة المصدر',
+  to_warehouse_stage: 'مرحلة الوجهة',
 
-  from_warehouse_is_closed: 'مرحلة المستودع المصدر مكتملة؟',
-  to_warehouse_is_closed: 'مرحلة المستودع الوجهة مكتملة؟',
+  from_warehouse_is_closed: 'مرحلة المصدر مكتملة؟',
+  to_warehouse_is_closed: 'مرحلة الوجهة مكتملة؟',
 
   from: 'نقل من',
   to: 'نقل إلى',

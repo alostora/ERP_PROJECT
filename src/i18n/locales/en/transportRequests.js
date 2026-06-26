@@ -18,11 +18,11 @@ export default {
   from_warehouse: 'From Warehouse',
   to_warehouse: 'To Warehouse',
 
-  from_warehouse_stage: 'From WarehouseStage',
-  to_warehouse_stage: 'To WarehouseStage',
+  from_warehouse_stage: 'From Stage',
+  to_warehouse_stage: 'To Stage',
 
-  from_warehouse_is_closed: 'From Warehouse Stage Is Closed?',
-  to_warehouse_is_closed: 'To Warehouse Is Stage Closed?',
+  from_warehouse_is_closed: 'From Stage Is Closed?',
+  to_warehouse_is_closed: 'To Is Stage Closed?',
 
   from: 'Transport From',
   to: 'Transport To',

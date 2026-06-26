@@ -8,7 +8,7 @@
   >
     <form @submit.prevent="handleSubmit">
       <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-12">
           <div class="form-group">
             <label class="form-label">{{ $t('branches.is_default') }}</label>
             <div class="flex align-center">
@@ -18,48 +18,73 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('branches.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name" v-model="formData.name" autocomplete="on" class="w-full" />
+              <label for="name">{{ $t('branches.name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name_ar" v-model="formData.name_ar" autocomplete="on" class="w-full" />
+              <label for="name_ar">{{ $t('branches.name_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('branches.name_ar') }}</label>
-        <input
-          v-model="formData.name_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name_ar }"
-        />
-        <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="phone" v-model="formData.phone" autocomplete="on" class="w-full" />
+              <label for="phone">{{ $t('branches.phone') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.phone" class="error-message">{{ errors.phone }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('branches.address') }}</label>
-        <input
-          v-model="formData.address"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.address }"
-        />
-        <small v-if="errors.address" class="error-message">{{ errors.address }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <Textarea
+                id="address"
+                v-model="formData.address"
+                rows="2"
+                style="resize: none"
+                fluid
+              />
+              <label for="address">{{ $t('branches.address') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.address" class="error-message">{{ errors.address }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('branches.address_ar') }}</label>
-        <input
-          v-model="formData.address_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.address_ar }"
-        />
-        <small v-if="errors.address_ar" class="error-message">{{ errors.address_ar }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <Textarea
+                id="address_ar"
+                v-model="formData.address_ar"
+                rows="2"
+                style="resize: none"
+                fluid
+              />
+              <label for="address_ar">{{ $t('branches.address_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.address_ar" class="error-message">{{ errors.address_ar }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -113,6 +138,7 @@ export default {
         id: '',
         name: '',
         name_ar: '',
+        phone: '',
         address: '',
         address_ar: '',
         is_default: '',
@@ -134,6 +160,7 @@ export default {
         id: selectedItem.id || '',
         name: selectedItem.name || '',
         name_ar: selectedItem.name_ar || '',
+        phone: selectedItem.phone || '',
         address: selectedItem.address || '',
         address_ar: selectedItem.address_ar || '',
         is_default: selectedItem.is_default || '',

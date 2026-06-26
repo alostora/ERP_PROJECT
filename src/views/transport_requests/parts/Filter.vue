@@ -46,26 +46,6 @@
         <div class="col-12 col-md-6 col-lg-6">
           <div class="search-wrapper">
             <Select
-              v-model="filters.to_branch_id"
-              :options="branches"
-              :optionLabel="branchLabel"
-              optionValue="id"
-              :placeholder="$t('transportRequests.to_branch')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="(onToBranchChange(), emitFetchData())"
-            />
-          </div>
-        </div>
-      </div>
-
-      <!-- Warehouses -->
-      <div class="row mt-2">
-        <div class="col-12 col-md-6 col-lg-6">
-          <div class="search-wrapper">
-            <Select
               v-model="filters.from_warehouse_id"
               :options="fromWarehouses"
               :optionLabel="warehouseLabel"
@@ -76,6 +56,26 @@
               :filterPlaceholder="$t('common.search')"
               class="w-full"
               @change="emitFetchData()"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Warehouses -->
+      <div class="row mt-2">
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="search-wrapper">
+            <Select
+              v-model="filters.to_branch_id"
+              :options="branches"
+              :optionLabel="branchLabel"
+              optionValue="id"
+              :placeholder="$t('transportRequests.to_branch')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="(onToBranchChange(), emitFetchData())"
             />
           </div>
         </div>

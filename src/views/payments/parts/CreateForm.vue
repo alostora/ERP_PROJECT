@@ -154,12 +154,11 @@ import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
 import ToggleSwitch from 'primevue/toggleswitch'
-import Select from 'primevue/select'
 
 export default {
   name: 'CreateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog, ToggleSwitch, Select },
+  components: { Dialog, ToggleSwitch },
 
   props: {
     company_id: {

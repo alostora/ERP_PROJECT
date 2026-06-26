@@ -76,12 +76,11 @@ import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
 import customFunctions from '../custom_functions/customFunctions'
-import Select from 'primevue/select'
 
 export default {
   name: 'UpdateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog, Select },
+  components: { Dialog },
 
   props: {
     selected_item: {
