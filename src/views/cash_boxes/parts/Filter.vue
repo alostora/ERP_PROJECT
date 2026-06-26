@@ -10,7 +10,7 @@
     </template>
     <div class="card-gray">
       <div class="row">
-        <div class="col-12 col-md-6 col-lg-4">
+        <div class="col-12 col-md-6 col-lg-6">
           <div class="search-wrapper">
             <i class="pi pi-search search-icon"></i>
             <InputText
@@ -23,35 +23,17 @@
             />
           </div>
         </div>
-      </div>
 
-      <div class="row mt-2">
-        <div class="col-12 col-md-6 col-lg-4">
+        <div class="col-12 col-md-6 col-lg-6">
           <div class="search-wrapper">
             <Select
-              v-model="filters.category_id"
-              :options="categories"
-              :optionLabel="categoryLabel"
+              v-model="filters.branch_id"
+              :options="branches"
+              :optionLabel="branchLabel"
               optionValue="id"
-              :placeholder="$t('categories.title')"
               :filter="true"
               :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="onCategoryChange"
-            />
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4" v-if="this.filters.category_id">
-          <div class="search-wrapper">
-            <Select
-              v-model="filters.product_id"
-              :options="products"
-              :optionLabel="productLabel"
-              optionValue="id"
-              :placeholder="$t('products.title')"
-              :filter="true"
-              :showClear="true"
+              :placeholder="$t('cashBoxes.branches')"
               :filterPlaceholder="$t('common.search')"
               class="w-full"
               @change="emitFetchData"
@@ -60,8 +42,37 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-6 col-md-3 col-lg-2 mt-2">
+      <div class="row mt-2">
+        <div class="col-12 col-md-6 col-lg-6">
+          <Select
+            v-model="filters.is_active"
+            :options="statusValues"
+            optionLabel="name"
+            optionValue="value"
+            :showClear="true"
+            :placeholder="$t('cashBoxes.is_active')"
+            :filterPlaceholder="$t('common.search')"
+            class="w-full"
+            @change="emitFetchData"
+          />
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+          <Select
+            v-model="filters.level_code"
+            :options="levelCodeValues"
+            optionLabel="name"
+            optionValue="value"
+            :showClear="true"
+            :placeholder="$t('cashBoxes.level_code')"
+            :filterPlaceholder="$t('common.search')"
+            class="w-full"
+            @change="emitFetchData"
+          />
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-6 col-md-3 col-lg-2">
           <Select
             v-model="filters.per_page"
             :options="perPageValues"
@@ -92,10 +103,21 @@ export default {
       type: String,
       required: true,
     },
+    branch_id: {
+      type: String,
+      required: false,
+    },
   },
-
   data() {
     return {
+      statusValues: [
+        { name: this.$t('common.yes'), value: 1 },
+        { name: this.$t('common.no'), value: 0 },
+      ],
+      levelCodeValues: [
+        { name: this.$t('cashBoxes.company'), value: 1 },
+        { name: this.$t('cashBoxes.branch'), value: 2 },
+      ],
       perPageValues: [
         { name: 5, value: 5 },
         { name: 10, value: 10 },
@@ -114,30 +136,18 @@ export default {
       return localStorage.getItem('language') || 'en'
     },
 
-    categoryLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    productLabel() {
+    branchLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
   },
 
   mounted() {
-    this.loadCategories(this.company_id)
+    this.loadBranches(this.company_id)
   },
 
   methods: {
     emitFetchData() {
       this.$emit('emitFetchData', this.filters)
-    },
-
-    async onCategoryChange() {
-      await this.loadProducts(this.company_id, this.filters.category_id)
-
-      this.filters.product_id = ''
-
-      this.emitFetchData()
     },
   },
 }

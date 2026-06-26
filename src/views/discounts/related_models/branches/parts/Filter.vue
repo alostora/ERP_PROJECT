@@ -25,41 +25,6 @@
         </div>
       </div>
 
-      <div class="row mt-2">
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="search-wrapper">
-            <Select
-              v-model="filters.category_id"
-              :options="categories"
-              :optionLabel="categoryLabel"
-              optionValue="id"
-              :placeholder="$t('categories.title')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="onCategoryChange"
-            />
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4" v-if="this.filters.category_id">
-          <div class="search-wrapper">
-            <Select
-              v-model="filters.product_id"
-              :options="products"
-              :optionLabel="productLabel"
-              optionValue="id"
-              :placeholder="$t('products.title')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="emitFetchData"
-            />
-          </div>
-        </div>
-      </div>
-
       <div class="row">
         <div class="col-6 col-md-3 col-lg-2 mt-2">
           <Select
@@ -87,13 +52,6 @@ export default {
 
   emits: ['emitFetchData'],
 
-  props: {
-    company_id: {
-      type: String,
-      required: true,
-    },
-  },
-
   data() {
     return {
       perPageValues: [
@@ -113,31 +71,13 @@ export default {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
-
-    categoryLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    productLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
   },
 
-  mounted() {
-    this.loadCategories(this.company_id)
-  },
+  mounted() {},
 
   methods: {
     emitFetchData() {
       this.$emit('emitFetchData', this.filters)
-    },
-
-    async onCategoryChange() {
-      await this.loadProducts(this.company_id, this.filters.category_id)
-
-      this.filters.product_id = ''
-
-      this.emitFetchData()
     },
   },
 }

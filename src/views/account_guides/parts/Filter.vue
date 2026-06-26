@@ -29,27 +29,27 @@
         <div class="col-12 col-md-6 col-lg-4">
           <div class="search-wrapper">
             <Select
-              v-model="filters.category_id"
-              :options="categories"
-              :optionLabel="categoryLabel"
+              v-model="filters.account_guide_type_id"
+              :options="accountGuideTypes"
+              :optionLabel="accountGuideTypeLabel"
               optionValue="id"
-              :placeholder="$t('categories.title')"
+              :placeholder="$t('accountGuides.account_guide_type')"
               :filter="true"
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
               class="w-full"
-              @change="onCategoryChange"
+              @change="emitFetchData"
             />
           </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-4" v-if="this.filters.category_id">
+        <div class="col-12 col-md-6 col-lg-4">
           <div class="search-wrapper">
             <Select
-              v-model="filters.product_id"
-              :options="products"
-              :optionLabel="productLabel"
+              v-model="filters.account_nature_type_id"
+              :options="accountGuideNatureTypes"
+              :optionLabel="accountGuideNatureTypeLabel"
               optionValue="id"
-              :placeholder="$t('products.title')"
+              :placeholder="$t('accountGuides.account_nature_type_id')"
               :filter="true"
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
@@ -87,13 +87,6 @@ export default {
 
   emits: ['emitFetchData'],
 
-  props: {
-    company_id: {
-      type: String,
-      required: true,
-    },
-  },
-
   data() {
     return {
       perPageValues: [
@@ -114,30 +107,23 @@ export default {
       return localStorage.getItem('language') || 'en'
     },
 
-    categoryLabel() {
+    accountGuideTypeLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
 
-    productLabel() {
+    accountGuideNatureTypeLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
   },
 
   mounted() {
-    this.loadCategories(this.company_id)
+    this.loadAccountGuideTypes()
+    this.loadAccountGuideNatureTypes()
   },
 
   methods: {
     emitFetchData() {
       this.$emit('emitFetchData', this.filters)
-    },
-
-    async onCategoryChange() {
-      await this.loadProducts(this.company_id, this.filters.category_id)
-
-      this.filters.product_id = ''
-
-      this.emitFetchData()
     },
   },
 }

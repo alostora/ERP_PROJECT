@@ -23,50 +23,59 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('cashBoxes.level_code') }}</label>
-        <select v-model="formData.level_code" @change="determineLevelCode" class="select">
-          <option :value="1">{{ $t('cashBoxes.company') }}</option>
-          <option :value="2">{{ $t('cashBoxes.branch') }}</option>
-        </select>
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="form-group">
+            <Select
+              v-model="formData.level_code"
+              :options="levelCodeValues"
+              optionLabel="name"
+              optionValue="value"
+              :showClear="true"
+              :placeholder="$t('cashBoxes.level_code')"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="determineLevelCode"
+            />
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="form-group" v-if="this.formData.level_code === 2">
+            <Select
+              v-model="formData.branch_id"
+              :options="branches"
+              :optionLabel="branchLabel"
+              optionValue="id"
+              :placeholder="$t('common.select') + ' ' + $t('cashBoxes.branch')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
+          <small v-if="errors.branch_id" class="error-message">{{ errors.branch_id }}</small>
+        </div>
       </div>
 
-      <div class="form-group" v-if="this.formData.level_code === 2">
-        <label class="form-label required">{{ $t('cashBoxes.branches') }}</label>
-        <Select
-          v-model="formData.branch_id"
-          :options="branches"
-          :optionLabel="branchLabel"
-          optionValue="id"
-          :placeholder="$t('common.select') + ' ' + $t('cashBoxes.branch')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-        />
-        <small v-if="errors.branch_id" class="error-message">{{ errors.branch_id }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('cashBoxes.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('cashBoxes.name_ar') }}</label>
-        <input
-          v-model="formData.name_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name_ar }"
-        />
-        <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name" v-model="formData.name" autocomplete="on" class="w-full" />
+              <label for="name">{{ $t('cashBoxes.name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name_ar" v-model="formData.name_ar" autocomplete="on" class="w-full" />
+              <label for="name_ar">{{ $t('cashBoxes.name_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -83,17 +92,17 @@
 
 <script>
 import Dialog from 'primevue/dialog'
-import customFunctions from '../custom_functions/customFunctions'
-import formMixin from '@/mixins/form'
-import { API_ROUTES } from '@/constants/apiRoutes'
-import validationRequest from '../validation/validationRequest'
 import ToggleSwitch from 'primevue/toggleswitch'
-import Select from 'primevue/select'
+
+import { API_ROUTES } from '@/constants/apiRoutes'
+import formMixin from '@/mixins/form'
+import customFunctions from '../custom_functions/customFunctions'
+import validationRequest from '../validation/validationRequest'
 
 export default {
   name: 'CreateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog, ToggleSwitch, Select },
+  components: { Dialog, ToggleSwitch },
 
   props: {
     company_id: {
@@ -110,6 +119,12 @@ export default {
   data() {
     return {
       apiUrl: API_ROUTES.CASH_BOX.BASE,
+
+      levelCodeValues: [
+        { name: this.$t('cashBoxes.company'), value: 1 },
+        { name: this.$t('cashBoxes.branch'), value: 2 },
+      ],
+
       formData: {
         company_id: '',
         branch_id: '',

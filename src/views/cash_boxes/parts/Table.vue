@@ -10,72 +10,7 @@
 
     <div class="card">
       <div class="filters-bar">
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="search-wrapper">
-              <i class="pi pi-search search-icon"></i>
-              <input
-                type="text"
-                v-model="filters.query_string"
-                @input="fetchData"
-                class="input"
-                :placeholder="$t('common.search')"
-              />
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4 mb-1">
-            <Select
-              v-model="filters.branch_id"
-              :options="branches"
-              :optionLabel="branchLabel"
-              optionValue="id"
-              :placeholder="$t('cashBoxes.branches')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="fetchData"
-            />
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4 mb-1">
-            <select v-model="filters.is_active" @change="fetchData" class="select">
-              <option :value="null">
-                {{ $t('cashBoxes.is_active') + ' ' + $t('common.all') }}
-              </option>
-              <option :value="1">
-                {{ $t('cashBoxes.is_active') + ' ' + $t('common.yes') }}
-              </option>
-              <option :value="0">
-                {{ $t('cashBoxes.is_active') + ' ' + $t('common.no') }}
-              </option>
-            </select>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4 mb-1">
-            <select v-model="filters.level_code" @change="fetchData" class="select">
-              <option :value="null">
-                {{ $t('cashBoxes.level_code') + ' ' + $t('common.all') }}
-              </option>
-              <option :value="1">
-                {{ $t('cashBoxes.level_code') + ' ' + $t('cashBoxes.company') }}
-              </option>
-              <option :value="2">
-                {{ $t('cashBoxes.level_code') + ' ' + $t('cashBoxes.branch') }}
-              </option>
-            </select>
-          </div>
-
-          <div class="col-6 col-md-3 col-lg-2">
-            <select v-model="perPage" @change="fetchData" class="select">
-              <option :value="5">5</option>
-              <option :value="10">10</option>
-              <option :value="25">25</option>
-              <option :value="50">50</option>
-            </select>
-          </div>
-        </div>
+        <Filter @emitFetchData="emitFetchData" :company_id="company_id" />
       </div>
 
       <DataTable
@@ -163,13 +98,14 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
+import ToggleSwitch from 'primevue/toggleswitch'
 import CreateForm from './CreateForm.vue'
 import UpdateForm from './UpdateForm.vue'
+import Filter from './Filter.vue'
+
+import { API_ROUTES } from '@/constants/apiRoutes'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
-import { API_ROUTES } from '@/constants/apiRoutes'
-import ToggleSwitch from 'primevue/toggleswitch'
-import Select from 'primevue/select'
 
 export default {
   name: 'Table',
@@ -179,10 +115,10 @@ export default {
     Column,
     Toast,
     ConfirmDialog,
+    ToggleSwitch,
     CreateForm,
     UpdateForm,
-    ToggleSwitch,
-    Select,
+    Filter,
   },
 
   watch: {
@@ -218,18 +154,18 @@ export default {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
-
-    branchLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
   },
 
   mounted() {
     this.fetchData()
-    this.loadBranches(this.company_id)
   },
 
   methods: {
+    emitFetchData(emitedData) {
+      this.filters = emitedData
+      this.fetchData()
+    },
+
     openCreateModal() {
       this.$refs.createModal.openModal()
     },

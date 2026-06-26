@@ -10,7 +10,7 @@
     </template>
     <div class="card-gray">
       <div class="row">
-        <div class="col-12 col-md-6 col-lg-4">
+        <div class="col-6 col-md-6 col-lg-6">
           <div class="search-wrapper">
             <i class="pi pi-search search-icon"></i>
             <InputText
@@ -23,39 +23,55 @@
             />
           </div>
         </div>
-      </div>
-
-      <div class="row mt-2">
-        <div class="col-12 col-md-6 col-lg-4">
+        <div class="col-6 col-md-6 col-lg-6">
           <div class="search-wrapper">
             <Select
-              v-model="filters.category_id"
-              :options="categories"
-              :optionLabel="categoryLabel"
+              v-model="filters.type_id"
+              :options="discountTypes"
+              :optionLabel="discountTypeLabel"
               optionValue="id"
-              :placeholder="$t('categories.title')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="onCategoryChange"
-            />
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4" v-if="this.filters.category_id">
-          <div class="search-wrapper">
-            <Select
-              v-model="filters.product_id"
-              :options="products"
-              :optionLabel="productLabel"
-              optionValue="id"
-              :placeholder="$t('products.title')"
+              :placeholder="$t('discounts.type')"
               :filter="true"
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
               class="w-full"
               @change="emitFetchData"
             />
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="search-wrapper">
+            <FloatLabel variant="on">
+              <DatePicker
+                v-model="filters.date_from"
+                inputId="date_from"
+                showIcon
+                showButtonBar
+                iconDisplay="input"
+                class="w-full"
+                @update:modelValue="emitFetchData"
+              />
+              <label for="date_from">{{ $t('discounts.date_from') }}</label>
+            </FloatLabel>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="search-wrapper">
+            <FloatLabel variant="on">
+              <DatePicker
+                v-model="filters.date_to"
+                inputId="date_to"
+                showIcon
+                showButtonBar
+                iconDisplay="input"
+                class="w-full"
+                @update:modelValue="emitFetchData"
+              />
+              <label for="date_to">{{ $t('discounts.date_to') }}</label>
+            </FloatLabel>
           </div>
         </div>
       </div>
@@ -77,22 +93,17 @@
 </template>
 
 <script>
+import DatePicker from 'primevue/datepicker'
+
 import tableMixin from '@/mixins/table'
 import { customFunctions } from '../custom_functions/customFunctions'
 
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: {},
+  components: { DatePicker },
 
   emits: ['emitFetchData'],
-
-  props: {
-    company_id: {
-      type: String,
-      required: true,
-    },
-  },
 
   data() {
     return {
@@ -114,30 +125,36 @@ export default {
       return localStorage.getItem('language') || 'en'
     },
 
-    categoryLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    productLabel() {
+    discountTypeLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
   },
 
   mounted() {
-    this.loadCategories(this.company_id)
+    this.loadDiscountTypes()
   },
 
   methods: {
     emitFetchData() {
-      this.$emit('emitFetchData', this.filters)
+      const filtersToEmit = { ...this.filters }
+
+      if (filtersToEmit.date_from) {
+        filtersToEmit.date_from = this.formatDate(filtersToEmit.date_from)
+      }
+      if (filtersToEmit.date_to) {
+        filtersToEmit.date_to = this.formatDate(filtersToEmit.date_to)
+      }
+
+      this.$emit('emitFetchData', filtersToEmit)
     },
 
-    async onCategoryChange() {
-      await this.loadProducts(this.company_id, this.filters.category_id)
-
-      this.filters.product_id = ''
-
-      this.emitFetchData()
+    formatDate(date) {
+      if (!date) return ''
+      const d = new Date(date)
+      const year = d.getFullYear()
+      const month = String(d.getMonth() + 1).padStart(2, '0')
+      const day = String(d.getDate()).padStart(2, '0')
+      return `${year}-${month}-${day}`
     },
   },
 }

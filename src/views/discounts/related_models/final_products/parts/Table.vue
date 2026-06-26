@@ -17,29 +17,7 @@
       </div>
 
       <div class="filters-bar">
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="search-wrapper">
-              <i class="pi pi-search search-icon"></i>
-              <input
-                type="text"
-                v-model="filters.query_string"
-                @input="fetchData"
-                class="input"
-                :placeholder="$t('common.search')"
-              />
-            </div>
-          </div>
-
-          <div class="col-6 col-md-3 col-lg-2">
-            <select v-model="perPage" @change="fetchData" class="select">
-              <option :value="5">5</option>
-              <option :value="10">10</option>
-              <option :value="25">25</option>
-              <option :value="50">50</option>
-            </select>
-          </div>
-        </div>
+        <Filter @emitFetchData="emitFetchData" />
       </div>
 
       <DataTable
@@ -115,14 +93,16 @@ import Column from 'primevue/column'
 import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
 import CreateForm from './CreateForm.vue'
+import Filter from './Filter.vue'
+
 import { customFunctions } from '../custom_functions/customFunctions'
-import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
+import tableMixin from '@/mixins/table'
 
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm },
+  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, Filter },
 
   props: {
     company_id: {
@@ -166,6 +146,11 @@ export default {
   },
 
   methods: {
+    emitFetchData(emitedData) {
+      this.filters = emitedData
+      this.fetchData()
+    },
+
     openCreateModal() {
       this.$refs.createModal.openModal()
     },

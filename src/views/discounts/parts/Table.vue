@@ -10,57 +10,7 @@
 
     <div class="card">
       <div class="filters-bar">
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="search-wrapper">
-              <i class="pi pi-search search-icon"></i>
-              <input
-                type="text"
-                v-model="filters.query_string"
-                @input="fetchData"
-                class="input"
-                :placeholder="$t('common.search')"
-              />
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4 mb-1">
-            <Select
-              v-model="filters.type_id"
-              :options="discountTypes"
-              :optionLabel="discountTypeLabel"
-              optionValue="id"
-              :placeholder="$t('discounts.type')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="fetchData"
-            />
-          </div>
-
-          <div class="col-12 col-md-6">
-            <div class="form-group">
-              <label class="form-label required">{{ $t('discounts.date_from') }}</label>
-              <input v-model="filters.date_from" type="date" class="input" @change="fetchData" />
-            </div>
-          </div>
-          <div class="col-12 col-md-6">
-            <div class="form-group">
-              <label class="form-label required">{{ $t('discounts.date_to') }}</label>
-              <input v-model="filters.date_to" type="date" class="input" @change="fetchData" />
-            </div>
-          </div>
-
-          <div class="col-6 col-md-3 col-lg-2">
-            <select v-model="perPage" @change="fetchData" class="select">
-              <option :value="5">5</option>
-              <option :value="10">10</option>
-              <option :value="25">25</option>
-              <option :value="50">50</option>
-            </select>
-          </div>
-        </div>
+        <Filter @emitFetchData="emitFetchData" />
       </div>
 
       <DataTable
@@ -88,9 +38,13 @@
 
         <Column field="name_ar" :header="$t('discounts.name_ar')" sortable />
 
-        <Column field="date_from" :header="$t('discounts.date_from')" sortable />
+        <Column :header="$t('discounts.date_from')">
+          <template #body="{ data }"> {{ formatDate(data.date_from) }} </template>
+        </Column>
 
-        <Column field="date_to" :header="$t('discounts.date_to')" sortable />
+        <Column :header="$t('discounts.date_to')">
+          <template #body="{ data }"> {{ formatDate(data.date_to) }} </template>
+        </Column>
 
         <Column field="value" :header="$t('discounts.value')" sortable />
 
@@ -101,10 +55,6 @@
             </div>
           </template>
         </Column>
-
-        <Column field="details" :header="$t('discounts.details')" sortable />
-
-        <Column field="details_ar" :header="$t('discounts.details_ar')" sortable />
 
         <Column :header="$t('discounts.relatedModels')">
           <template #body="{ data }">
@@ -157,15 +107,16 @@ import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
 import CreateForm from './CreateForm.vue'
 import UpdateForm from './UpdateForm.vue'
+import Filter from './Filter.vue'
+
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
-import Select from 'primevue/select'
 
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm, Select },
+  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm, Filter },
 
   watch: {
     '$route.params.company_id': {
@@ -205,6 +156,11 @@ export default {
   },
 
   methods: {
+    emitFetchData(emitedData) {
+      this.filters = emitedData
+      this.fetchData()
+    },
+
     openCreateModal() {
       this.$refs.createModal.openModal()
     },
@@ -218,6 +174,15 @@ export default {
 
     deleteRow(item) {
       this.deleteItem(this.deleteUrl, item.id, item.name)
+    },
+
+    formatDate(date) {
+      if (!date) return ''
+      const d = new Date(date)
+      const year = d.getFullYear()
+      const month = String(d.getMonth() + 1).padStart(2, '0')
+      const day = String(d.getDate()).padStart(2, '0')
+      return `${year}-${month}-${day}`
     },
   },
 }

@@ -10,59 +10,7 @@
 
     <div class="card">
       <div class="filters-bar">
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="search-wrapper">
-              <i class="pi pi-search search-icon"></i>
-              <input
-                type="text"
-                v-model="filters.query_string"
-                @input="fetchData"
-                class="input"
-                :placeholder="$t('common.search')"
-              />
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4 mb-1">
-            <Select
-              v-model="filters.account_guide_type_id"
-              :options="accountGuideTypes"
-              :optionLabel="accountGuideTypeLabel"
-              optionValue="id"
-              :placeholder="$t('accountGuides.account_guide_type')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="fetchData"
-            />
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4 mb-1">
-            <Select
-              v-model="filters.account_nature_type_id"
-              :options="accountGuideNatureTypes"
-              :optionLabel="accountGuideNatureTypeLabel"
-              optionValue="id"
-              :placeholder="$t('accountGuides.account_nature_type_id')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="fetchData"
-            />
-          </div>
-
-          <div class="col-6 col-md-3 col-lg-2">
-            <select v-model="perPage" @change="fetchData" class="select">
-              <option :value="5">5</option>
-              <option :value="10">10</option>
-              <option :value="25">25</option>
-              <option :value="50">50</option>
-            </select>
-          </div>
-        </div>
+        <Filter @emitFetchData="emitFetchData" :company_id="company_id" />
       </div>
 
       <DataTable
@@ -148,15 +96,16 @@ import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
 import CreateForm from './CreateForm.vue'
 import UpdateForm from './UpdateForm.vue'
+import Filter from './Filter.vue'
+
+import { API_ROUTES } from '@/constants/apiRoutes'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
-import { API_ROUTES } from '@/constants/apiRoutes'
-import Select from 'primevue/select'
 
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm, Select },
+  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm, Filter },
 
   watch: {
     '$route.params.company_id': {
@@ -180,27 +129,22 @@ export default {
     }
   },
 
+  mounted() {
+    this.fetchData()
+  },
+
   computed: {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
-
-    accountGuideTypeLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    accountGuideNatureTypeLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-  },
-
-  mounted() {
-    this.fetchData()
-    this.loadAccountGuideTypes()
-    this.loadAccountGuideNatureTypes()
   },
 
   methods: {
+    emitFetchData(emitedData) {
+      this.filters = emitedData
+      this.fetchData()
+    },
+
     openCreateModal() {
       this.$refs.createModal.openModal()
     },
