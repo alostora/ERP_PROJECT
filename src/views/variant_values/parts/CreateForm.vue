@@ -12,42 +12,49 @@
         <small v-if="errors.company_id" class="error-message">{{ errors.company_id }}</small>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('variantValues.variant') }}</label>
-        <Select
-          v-model="formData.variant_id"
-          :options="variants"
-          :optionLabel="variantLabel"
-          optionValue="id"
-          :placeholder="$t('variants.title')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-        />
-        <small v-if="errors.variant_id" class="error-message">{{ errors.variant_id }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <Select
+              v-model="formData.variant_id"
+              :options="variants"
+              :optionLabel="variantLabel"
+              optionValue="id"
+              :placeholder="$t('variants.title')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+            <small v-if="errors.variant_id" class="error-message">{{ errors.variant_id }}</small>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('variantValues.value') }}</label>
-        <input
-          v-model="formData.value"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.value }"
-        />
-        <small v-if="errors.value" class="error-message">{{ errors.value }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('variantValues.value_ar') }}</label>
-        <input
-          v-model="formData.value_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.value_ar }"
-        />
-        <small v-if="errors.value_ar" class="error-message">{{ errors.value_ar }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="value" v-model="formData.value" autocomplete="on" class="w-full" />
+              <label for="value">{{ $t('variantValues.value') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.value" class="error-message">{{ errors.value }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText
+                id="value_ar"
+                v-model="formData.value_ar"
+                autocomplete="on"
+                class="w-full"
+              />
+              <label for="value_ar">{{ $t('variantValues.value_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.value_ar" class="error-message">{{ errors.value_ar }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">

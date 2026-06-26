@@ -20,7 +20,7 @@
       </div>
 
       <div class="filters-bar">
-        <Filter @emiFetchData="emiFetchData" :company_id="company_id" />
+        <Filter @emitFetchData="emitFetchData" :company_id="company_id" />
       </div>
 
       <DataTable
@@ -148,7 +148,7 @@ export default {
   },
 
   methods: {
-    emiFetchData(emitedData) {
+    emitFetchData(emitedData) {
       this.filters = emitedData
       this.fetchData()
     },

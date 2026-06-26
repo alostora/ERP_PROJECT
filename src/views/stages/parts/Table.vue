@@ -10,7 +10,7 @@
 
     <div class="card">
       <div class="filters-bar">
-        <Filter @emiFetchData="emiFetchData" />
+        <Filter @emitFetchData="emitFetchData" />
       </div>
 
       <DataTable
@@ -174,7 +174,7 @@ export default {
   },
 
   methods: {
-    emiFetchData(emitedData) {
+    emitFetchData(emitedData) {
       this.filters = emitedData
       this.fetchData()
     },

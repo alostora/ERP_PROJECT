@@ -12,42 +12,44 @@
         <small v-if="errors.company_id" class="error-message">{{ errors.company_id }}</small>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('categories.title') }}</label>
-        <Select
-          v-model="formData.category_id"
-          :options="categories"
-          :optionLabel="categoryLabel"
-          optionValue="id"
-          :placeholder="$t('categories.title')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-        />
-        <small v-if="errors.category_id" class="error-message">{{ errors.category_id }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <Select
+              v-model="formData.category_id"
+              :options="categories"
+              :optionLabel="categoryLabel"
+              optionValue="id"
+              :placeholder="$t('categories.title')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+            <small v-if="errors.category_id" class="error-message">{{ errors.category_id }}</small>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('products.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('products.name_ar') }}</label>
-        <input
-          v-model="formData.name_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name_ar }"
-        />
-        <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name" v-model="formData.name" autocomplete="on" class="w-full" />
+              <label for="name">{{ $t('products.name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name_ar" v-model="formData.name_ar" autocomplete="on" class="w-full" />
+              <label for="name_ar">{{ $t('products.name_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">

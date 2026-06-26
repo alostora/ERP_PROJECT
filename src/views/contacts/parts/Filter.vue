@@ -23,34 +23,46 @@
             />
           </div>
         </div>
-
+      </div>
+      <div class="row mt-2">
         <div class="col-12 col-md-6 col-lg-4">
-          <Select
-            v-model="filters.branch_id"
-            :options="branches"
-            :optionLabel="branchLabel"
-            optionValue="id"
-            :placeholder="$t('employees.branch')"
-            :filter="true"
-            :showClear="true"
-            :filterPlaceholder="$t('common.search')"
-            class="w-full"
-            @change="onBranchChange"
-          />
+          <div class="search-wrapper">
+            <i class="pi pi-search search-icon"></i>
+            <InputText
+              id="invoice_name"
+              v-model="filters.phone"
+              @input="emitFetchData"
+              autocomplete="off"
+              class="input"
+              :placeholder="$t('contacts.phone')"
+            />
+          </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-4" v-if="filters.branch_id && warehouses.length">
-          <Select
-            v-model="filters.warehouse_id"
-            :options="warehouses"
-            :optionLabel="warehouseLabel"
-            optionValue="id"
-            :placeholder="$t('employees.warehouse')"
-            :filter="true"
-            :showClear="true"
-            :filterPlaceholder="$t('common.search')"
-            class="w-full"
-            @change="emitFetchData"
-          />
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="search-wrapper">
+            <i class="pi pi-search search-icon"></i>
+            <InputText
+              id="invoice_name"
+              v-model="filters.email"
+              @input="emitFetchData"
+              autocomplete="off"
+              class="input"
+              :placeholder="$t('contacts.email')"
+            />
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="search-wrapper">
+            <i class="pi pi-search search-icon"></i>
+            <InputText
+              id="invoice_name"
+              v-model="filters.address"
+              @input="emitFetchData"
+              autocomplete="off"
+              class="input"
+              :placeholder="$t('contacts.address')"
+            />
+          </div>
         </div>
       </div>
 
@@ -81,13 +93,6 @@ export default {
 
   emits: ['emitFetchData'],
 
-  props: {
-    company_id: {
-      type: String,
-      required: false,
-    },
-  },
-
   data() {
     return {
       perPageValues: [
@@ -107,31 +112,13 @@ export default {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
-
-    branchLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    warehouseLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
   },
 
-  mounted() {
-    this.loadBranches(this.company_id)
-  },
+  mounted() {},
 
   methods: {
     emitFetchData() {
       this.$emit('emitFetchData', this.filters)
-    },
-
-    async onBranchChange() {
-      await this.loadWarehouses(this.company_id, this.filters.branch_id)
-
-      this.filters.warehouse_id = ''
-
-      this.emitFetchData()
     },
   },
 }

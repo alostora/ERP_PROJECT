@@ -7,95 +7,112 @@
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label class="form-label">{{ $t('finalProducts.purchasesMeasurementUnit') }}</label>
-        <Select
-          v-model="formData.purchases_measurement_unit_id"
-          :options="measurementUnits"
-          :optionLabel="measurementUnitLabel"
-          optionValue="id"
-          :placeholder="$t('measurementUnits.title')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-        />
-        <small v-if="errors.purchases_measurement_unit_id" class="error-message">{{
-          errors.purchases_measurement_unit_id
-        }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <Select
+              v-model="formData.purchases_measurement_unit_id"
+              :options="measurementUnits"
+              :optionLabel="measurementUnitLabel"
+              optionValue="id"
+              :placeholder="$t('finalProducts.purchasesMeasurementUnit')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
+          <small v-if="errors.purchases_measurement_unit_id" class="error-message">
+            {{ errors.purchases_measurement_unit_id }}
+          </small>
+        </div>
+
+        <div class="col-6">
+          <div class="form-group">
+            <Select
+              v-model="formData.sales_measurement_unit_id"
+              :options="measurementUnits"
+              :optionLabel="measurementUnitLabel"
+              optionValue="id"
+              :placeholder="$t('finalProducts.salesMeasurementUnit')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
+          <small v-if="errors.sales_measurement_unit_id" class="error-message">
+            {{ errors.sales_measurement_unit_id }}
+          </small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">{{ $t('finalProducts.salesMeasurementUnit') }}</label>
-        <Select
-          v-model="formData.sales_measurement_unit_id"
-          :options="measurementUnits"
-          :optionLabel="measurementUnitLabel"
-          optionValue="id"
-          :placeholder="$t('measurementUnits.title')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-        />
-        <small v-if="errors.sales_measurement_unit_id" class="error-message">{{
-          errors.sales_measurement_unit_id
-        }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name" v-model="formData.name" autocomplete="on" class="w-full" />
+              <label for="name">{{ $t('finalProducts.name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name_ar" v-model="formData.name_ar" autocomplete="on" class="w-full" />
+              <label for="name_ar">{{ $t('finalProducts.name_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputNumber id="price" v-model="formData.price" autocomplete="on" class="w-full" />
+              <label for="price">{{ $t('finalProducts.price') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.price" class="error-message">{{ errors.price }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('finalProducts.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <Textarea
+                id="details"
+                v-model="formData.details"
+                rows="2"
+                style="resize: none"
+                fluid
+              />
+              <label for="details">{{ $t('finalProducts.details') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.details" class="error-message">{{ errors.details }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('finalProducts.name_ar') }}</label>
-        <input
-          v-model="formData.name_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name_ar }"
-        />
-        <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('finalProducts.price') }}</label>
-        <input
-          v-model="formData.price"
-          type="number"
-          class="input"
-          :class="{ 'input-error': errors.price }"
-        />
-        <small v-if="errors.price" class="error-message">{{ errors.price }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">{{ $t('finalProducts.details') }}</label>
-        <input
-          v-model="formData.details"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.details }"
-        />
-        <small v-if="errors.details" class="error-message">{{ errors.details }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">{{ $t('finalProducts.details_ar') }}</label>
-        <input
-          v-model="formData.details_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.details_ar }"
-        />
-        <small v-if="errors.details_ar" class="error-message">{{ errors.details_ar }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <Textarea
+                id="details_ar"
+                v-model="formData.details_ar"
+                rows="2"
+                style="resize: none"
+                fluid
+              />
+              <label for="details_ar">{{ $t('finalProducts.details_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.details_ar" class="error-message">{{ errors.details_ar }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -113,15 +130,15 @@
 <script>
 import Dialog from 'primevue/dialog'
 import formMixin from '@/mixins/form'
+
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
 import customFunctions from '../custom_functions/customFunctions'
-import Select from 'primevue/select'
 
 export default {
   name: 'UpdateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog, Select },
+  components: { Dialog },
 
   props: {
     selected_item: {

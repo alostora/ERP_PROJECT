@@ -7,36 +7,56 @@
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label class="form-label required">{{ $t('contacts.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name" v-model="formData.name" autocomplete="on" class="w-full" />
+              <label for="name">{{ $t('contacts.name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('contacts.email') }}</label>
-        <input
-          v-model="formData.email"
-          type="email"
-          class="input"
-          :class="{ 'input-error': errors.email }"
-        />
-        <small v-if="errors.email" class="error-message">{{ errors.email }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="email" v-model="formData.email" autocomplete="on" class="w-full" />
+              <label for="email">{{ $t('contacts.email') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.email" class="error-message">{{ errors.email }}</small>
+        </div>
+
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="phone" v-model="formData.phone" autocomplete="on" class="w-full" />
+              <label for="phone">{{ $t('contacts.phone') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.phone" class="error-message">{{ errors.phone }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">{{ $t('contacts.phone') }}</label>
-        <input v-model="formData.phone" type="text" class="input" />
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">{{ $t('contacts.address') }}</label>
-        <textarea v-model="formData.address" class="textarea" rows="3"></textarea>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <Textarea
+                id="address"
+                v-model="formData.address"
+                rows="2"
+                style="resize: none"
+                fluid
+              />
+              <label for="address">{{ $t('contacts.address') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.address" class="error-message">{{ errors.address }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">

@@ -17,44 +17,12 @@
       </div>
 
       <div class="filters-bar">
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-4 mb-1">
-            <div class="search-wrapper">
-              <i class="pi pi-search search-icon"></i>
-              <input
-                type="text"
-                v-model="filters.query_string"
-                @input="fetchData"
-                class="input"
-                :placeholder="$t('common.search')"
-              />
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4 mb-1">
-            <Select
-              v-model="filters.variant_id"
-              :options="variants"
-              :optionLabel="variantLabel"
-              optionValue="id"
-              :placeholder="$t('variants.title')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="operrideApiUrl"
-            />
-          </div>
-
-          <div class="col-12 col-md-3 col-lg-2">
-            <select v-model="perPage" @change="fetchData" class="select">
-              <option :value="5">5</option>
-              <option :value="10">10</option>
-              <option :value="25">25</option>
-              <option :value="50">50</option>
-            </select>
-          </div>
-        </div>
+        <Filter
+          :company_id="company_id"
+          :variant_id="variant_id"
+          @emitFetchData="emitFetchData"
+          @emitOverrideApiUrl="emitOverrideApiUrl"
+        />
       </div>
 
       <DataTable
@@ -119,17 +87,19 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
+
 import CreateForm from './CreateForm.vue'
 import UpdateForm from './UpdateForm.vue'
+import Filter from './Filter.vue'
+
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
 import { API_ROUTES } from '@/constants/apiRoutes'
-import Select from 'primevue/select'
 
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
-  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm, Select },
+  components: { DataTable, Column, Toast, ConfirmDialog, CreateForm, UpdateForm, Filter },
 
   props: {
     company_id: {
@@ -179,7 +149,13 @@ export default {
   },
 
   methods: {
-    operrideApiUrl() {
+    emitFetchData(emitedData) {
+      this.filters = emitedData
+      this.fetchData()
+    },
+
+    emitOverrideApiUrl(emitedData) {
+      this.filters = emitedData
       this.apiUrl = `${API_ROUTES.VARIANT_VALUE.SEARCH}/${this.filters.variant_id}`
       this.fetchData()
     },

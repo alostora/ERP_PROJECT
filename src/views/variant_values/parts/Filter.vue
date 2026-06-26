@@ -23,34 +23,20 @@
             />
           </div>
         </div>
-
         <div class="col-12 col-md-6 col-lg-4">
-          <Select
-            v-model="filters.branch_id"
-            :options="branches"
-            :optionLabel="branchLabel"
-            optionValue="id"
-            :placeholder="$t('employees.branch')"
-            :filter="true"
-            :showClear="true"
-            :filterPlaceholder="$t('common.search')"
-            class="w-full"
-            @change="onBranchChange"
-          />
-        </div>
-        <div class="col-12 col-md-6 col-lg-4" v-if="filters.branch_id && warehouses.length">
-          <Select
-            v-model="filters.warehouse_id"
-            :options="warehouses"
-            :optionLabel="warehouseLabel"
-            optionValue="id"
-            :placeholder="$t('employees.warehouse')"
-            :filter="true"
-            :showClear="true"
-            :filterPlaceholder="$t('common.search')"
-            class="w-full"
-            @change="emitFetchData"
-          />
+          <div class="search-wrapper">
+            <Select
+              v-model="filters.variant_id"
+              :options="variants"
+              :optionLabel="variantLabel"
+              optionValue="id"
+              :placeholder="$t('variants.title')"
+              :filter="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="emitOverrideApiUrl"
+            />
+          </div>
         </div>
       </div>
 
@@ -73,18 +59,34 @@
 <script>
 import tableMixin from '@/mixins/table'
 import { customFunctions } from '../custom_functions/customFunctions'
+import { API_ROUTES } from '@/constants/apiRoutes'
 
 export default {
   name: 'Table',
   mixins: [tableMixin, customFunctions],
   components: {},
 
-  emits: ['emitFetchData'],
+  emits: ['emitFetchData', 'emitOverrideApiUrl'],
 
   props: {
     company_id: {
       type: String,
-      required: false,
+      default: '',
+    },
+    variant_id: {
+      type: String,
+      default: '',
+    },
+  },
+
+  watch: {
+    variant_id: {
+      handler(newVal) {
+        if (newVal) {
+          this.filters.variant_id = newVal
+        }
+      },
+      immediate: true,
     },
   },
 
@@ -108,30 +110,21 @@ export default {
       return localStorage.getItem('language') || 'en'
     },
 
-    branchLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    warehouseLabel() {
+    variantLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
   },
 
   mounted() {
-    this.loadBranches(this.company_id)
+    this.loadVariants(this.company_id)
   },
 
   methods: {
     emitFetchData() {
       this.$emit('emitFetchData', this.filters)
     },
-
-    async onBranchChange() {
-      await this.loadWarehouses(this.company_id, this.filters.branch_id)
-
-      this.filters.warehouse_id = ''
-
-      this.emitFetchData()
+    emitOverrideApiUrl() {
+      this.$emit('emitOverrideApiUrl', this.filters)
     },
   },
 }

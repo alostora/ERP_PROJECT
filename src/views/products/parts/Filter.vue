@@ -24,33 +24,21 @@
           </div>
         </div>
 
-        <div class="col-12 col-md-6 col-lg-4">
-          <Select
-            v-model="filters.branch_id"
-            :options="branches"
-            :optionLabel="branchLabel"
-            optionValue="id"
-            :placeholder="$t('employees.branch')"
-            :filter="true"
-            :showClear="true"
-            :filterPlaceholder="$t('common.search')"
-            class="w-full"
-            @change="onBranchChange"
-          />
-        </div>
-        <div class="col-12 col-md-6 col-lg-4" v-if="filters.branch_id && warehouses.length">
-          <Select
-            v-model="filters.warehouse_id"
-            :options="warehouses"
-            :optionLabel="warehouseLabel"
-            optionValue="id"
-            :placeholder="$t('employees.warehouse')"
-            :filter="true"
-            :showClear="true"
-            :filterPlaceholder="$t('common.search')"
-            class="w-full"
-            @change="emitFetchData"
-          />
+        <div class="col-12 col-md-6 col-lg-4 mb-1">
+          <div class="search-wrapper">
+            <Select
+              v-model="filters.category_id"
+              :options="categories"
+              :optionLabel="categoryLabel"
+              optionValue="id"
+              :placeholder="$t('categories.title')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="emitFetchData"
+            />
+          </div>
         </div>
       </div>
 
@@ -84,7 +72,7 @@ export default {
   props: {
     company_id: {
       type: String,
-      required: false,
+      required: true,
     },
   },
 
@@ -108,30 +96,18 @@ export default {
       return localStorage.getItem('language') || 'en'
     },
 
-    branchLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    warehouseLabel() {
+    categoryLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
   },
 
   mounted() {
-    this.loadBranches(this.company_id)
+    this.loadCategories(this.company_id)
   },
 
   methods: {
     emitFetchData() {
       this.$emit('emitFetchData', this.filters)
-    },
-
-    async onBranchChange() {
-      await this.loadWarehouses(this.company_id, this.filters.branch_id)
-
-      this.filters.warehouse_id = ''
-
-      this.emitFetchData()
     },
   },
 }

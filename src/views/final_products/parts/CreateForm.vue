@@ -12,128 +12,149 @@
         <small v-if="errors.company_id" class="error-message">{{ errors.company_id }}</small>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('categories.title') }}</label>
-        <Select
-          v-model="formData.category_id"
-          :options="categories"
-          :optionLabel="categoryLabel"
-          optionValue="id"
-          :placeholder="$t('categories.title')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-          @change="onCategoryChange"
-        />
-        <small v-if="errors.category_id" class="error-message">{{ errors.category_id }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <Select
+              v-model="formData.category_id"
+              :options="categories"
+              :optionLabel="categoryLabel"
+              optionValue="id"
+              :placeholder="$t('categories.title')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="onCategoryChange"
+            />
+          </div>
+          <small v-if="errors.category_id" class="error-message">{{ errors.category_id }}</small>
+        </div>
+
+        <div class="col-6">
+          <div class="form-group" v-if="formData.category_id">
+            <Select
+              v-model="formData.product_id"
+              :options="products"
+              :optionLabel="productLabel"
+              optionValue="id"
+              :placeholder="$t('products.title')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
+          <small v-if="errors.product_id" class="error-message">{{ errors.product_id }}</small>
+        </div>
       </div>
 
-      <div class="form-group" v-if="formData.category_id">
-        <label class="form-label required">{{ $t('products.title') }}</label>
-        <Select
-          v-model="formData.product_id"
-          :options="products"
-          :optionLabel="productLabel"
-          optionValue="id"
-          :placeholder="$t('products.title')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-        />
-        <small v-if="errors.product_id" class="error-message">{{ errors.product_id }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <Select
+              v-model="formData.purchases_measurement_unit_id"
+              :options="measurementUnits"
+              :optionLabel="measurementUnitLabel"
+              optionValue="id"
+              :placeholder="$t('finalProducts.purchasesMeasurementUnit')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
+          <small v-if="errors.purchases_measurement_unit_id" class="error-message">
+            {{ errors.purchases_measurement_unit_id }}
+          </small>
+        </div>
+
+        <div class="col-6">
+          <div class="form-group">
+            <Select
+              v-model="formData.sales_measurement_unit_id"
+              :options="measurementUnits"
+              :optionLabel="measurementUnitLabel"
+              optionValue="id"
+              :placeholder="$t('finalProducts.salesMeasurementUnit')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
+          <small v-if="errors.sales_measurement_unit_id" class="error-message">
+            {{ errors.sales_measurement_unit_id }}
+          </small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">{{ $t('finalProducts.purchasesMeasurementUnit') }}</label>
-        <Select
-          v-model="formData.purchases_measurement_unit_id"
-          :options="measurementUnits"
-          :optionLabel="measurementUnitLabel"
-          optionValue="id"
-          :placeholder="$t('measurementUnits.title')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-        />
-        <small v-if="errors.purchases_measurement_unit_id" class="error-message">{{
-          errors.purchases_measurement_unit_id
-        }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name" v-model="formData.name" autocomplete="on" class="w-full" />
+              <label for="name">{{ $t('finalProducts.name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name_ar" v-model="formData.name_ar" autocomplete="on" class="w-full" />
+              <label for="name_ar">{{ $t('finalProducts.name_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputNumber id="price" v-model="formData.price" autocomplete="on" class="w-full" />
+              <label for="price">{{ $t('finalProducts.price') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.price" class="error-message">{{ errors.price }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">{{ $t('finalProducts.salesMeasurementUnit') }}</label>
-        <Select
-          v-model="formData.sales_measurement_unit_id"
-          :options="measurementUnits"
-          :optionLabel="measurementUnitLabel"
-          optionValue="id"
-          :placeholder="$t('measurementUnits.title')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-        />
-        <small v-if="errors.sales_measurement_unit_id" class="error-message">{{
-          errors.sales_measurement_unit_id
-        }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <Textarea
+                id="details"
+                v-model="formData.details"
+                rows="2"
+                style="resize: none"
+                fluid
+              />
+              <label for="details">{{ $t('finalProducts.details') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.details" class="error-message">{{ errors.details }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('finalProducts.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('finalProducts.name_ar') }}</label>
-        <input
-          v-model="formData.name_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name_ar }"
-        />
-        <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('finalProducts.price') }}</label>
-        <input
-          v-model="formData.price"
-          type="number"
-          class="input"
-          :class="{ 'input-error': errors.price }"
-        />
-        <small v-if="errors.price" class="error-message">{{ errors.price }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">{{ $t('finalProducts.details') }}</label>
-        <input
-          v-model="formData.details"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.details }"
-        />
-        <small v-if="errors.details" class="error-message">{{ errors.details }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">{{ $t('finalProducts.details_ar') }}</label>
-        <input
-          v-model="formData.details_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.details_ar }"
-        />
-        <small v-if="errors.details_ar" class="error-message">{{ errors.details_ar }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <Textarea
+                id="details_ar"
+                v-model="formData.details_ar"
+                rows="2"
+                style="resize: none"
+                fluid
+              />
+              <label for="details_ar">{{ $t('finalProducts.details_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.details_ar" class="error-message">{{ errors.details_ar }}</small>
+        </div>
       </div>
 
       <!-- /////////////////////////////////////////////////////////////////////////////// -->
@@ -149,17 +170,16 @@
 
         <!-- Variant Rows -->
         <div v-for="(variantRow, index) in variantRows" :key="index" class="card mb-3 p-3">
-          <div class="row gap-3">
+          <div class="row">
             <!-- Variant Selection -->
             <div class="col-5">
               <div class="form-group">
-                <label class="form-label text-sm">{{ $t('finalProducts.variant') }}</label>
                 <Select
                   v-model="variantRow.variant_id"
                   :options="availableVariantsForRow(index)"
                   optionLabel="name"
                   optionValue="id"
-                  :placeholder="$t('common.select')"
+                  :placeholder="$t('finalProducts.variant')"
                   class="w-full"
                   @change="onVariantChange(index, $event)"
                 />
@@ -167,18 +187,17 @@
             </div>
 
             <!-- Variant Value Selection -->
-            <div class="col-4">
+            <div class="col-5">
               <div class="form-group">
-                <label class="form-label text-sm">{{ $t('finalProducts.variantValue') }}</label>
                 <Select
                   v-model="variantRow.variant_value_id"
                   :options="getVariantValues(variantRow.variant_id)"
                   optionLabel="value"
                   optionValue="id"
-                  :placeholder="$t('common.select')"
+                  :placeholder="$t('finalProducts.variantValue')"
                   class="w-full"
                   :disabled="!variantRow.variant_id"
-                  :loading="loadingVariantValues"
+                  :loading="formLoading"
                   @change="onVariantValueChange(index, $event, variantRow.variant_id)"
                 />
               </div>
@@ -253,12 +272,11 @@ import customFunctions from '../custom_functions/customFunctions'
 import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
-import Select from 'primevue/select'
 
 export default {
   name: 'CreateForm',
   mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog, Select },
+  components: { Dialog },
 
   props: {
     company_id: {

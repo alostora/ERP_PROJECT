@@ -16,7 +16,7 @@
             <InputText
               id="invoice_name"
               v-model="filters.query_string"
-              @input="emiFetchData"
+              @input="emitFetchData"
               autocomplete="off"
               class="input"
               :placeholder="$t('common.search')"
@@ -36,7 +36,7 @@
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
               class="w-full"
-              @change="emiFetchData"
+              @change="emitFetchData"
             />
           </div>
         </div>
@@ -50,7 +50,7 @@
             optionLabel="name"
             optionValue="value"
             class="w-full"
-            @change="emiFetchData"
+            @change="emitFetchData"
           />
         </div>
       </div>
@@ -67,7 +67,7 @@ export default {
   mixins: [tableMixin, customFunctions],
   components: {},
 
-  emits: ['emiFetchData'],
+  emits: ['emitFetchData'],
 
   data() {
     return {
@@ -100,8 +100,8 @@ export default {
   },
 
   methods: {
-    emiFetchData() {
-      this.$emit('emiFetchData', this.filters)
+    emitFetchData() {
+      this.$emit('emitFetchData', this.filters)
     },
   },
 }

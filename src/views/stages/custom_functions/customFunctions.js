@@ -23,7 +23,7 @@ export const customFunctions = {
         if (this.filters) {
           if (this.stageTypes.length > 0 && !this.filters.type_id) {
             this.filters.type_id = this.stageTypes[0].id
-            this.emiFetchData()
+            this.emitFetchData()
           }
         }
       } catch (error) {}

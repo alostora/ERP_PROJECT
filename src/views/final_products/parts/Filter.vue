@@ -23,34 +23,40 @@
             />
           </div>
         </div>
+      </div>
 
-        <div class="col-12 col-md-6 col-lg-4">
-          <Select
-            v-model="filters.branch_id"
-            :options="branches"
-            :optionLabel="branchLabel"
-            optionValue="id"
-            :placeholder="$t('employees.branch')"
-            :filter="true"
-            :showClear="true"
-            :filterPlaceholder="$t('common.search')"
-            class="w-full"
-            @change="onBranchChange"
-          />
+      <div class="row mt-2">
+        <div class="col-12 col-md-6 col-lg-4 mb-1">
+          <div class="search-wrapper">
+            <Select
+              v-model="filters.category_id"
+              :options="categories"
+              :optionLabel="categoryLabel"
+              optionValue="id"
+              :placeholder="$t('categories.title')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="onCategoryChange"
+            />
+          </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-4" v-if="filters.branch_id && warehouses.length">
-          <Select
-            v-model="filters.warehouse_id"
-            :options="warehouses"
-            :optionLabel="warehouseLabel"
-            optionValue="id"
-            :placeholder="$t('employees.warehouse')"
-            :filter="true"
-            :showClear="true"
-            :filterPlaceholder="$t('common.search')"
-            class="w-full"
-            @change="emitFetchData"
-          />
+        <div class="col-12 col-md-6 col-lg-4 mb-1" v-if="this.filters.category_id">
+          <div class="search-wrapper">
+            <Select
+              v-model="filters.product_id"
+              :options="products"
+              :optionLabel="productLabel"
+              optionValue="id"
+              :placeholder="$t('products.title')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="emitFetchData"
+            />
+          </div>
         </div>
       </div>
 
@@ -84,7 +90,7 @@ export default {
   props: {
     company_id: {
       type: String,
-      required: false,
+      required: true,
     },
   },
 
@@ -108,17 +114,17 @@ export default {
       return localStorage.getItem('language') || 'en'
     },
 
-    branchLabel() {
+    categoryLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
 
-    warehouseLabel() {
+    productLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
   },
 
   mounted() {
-    this.loadBranches(this.company_id)
+    this.loadCategories(this.company_id)
   },
 
   methods: {
@@ -126,10 +132,10 @@ export default {
       this.$emit('emitFetchData', this.filters)
     },
 
-    async onBranchChange() {
-      await this.loadWarehouses(this.company_id, this.filters.branch_id)
+    async onCategoryChange() {
+      await this.loadProducts(this.company_id, this.filters.category_id)
 
-      this.filters.warehouse_id = ''
+      this.filters.product_id = ''
 
       this.emitFetchData()
     },
