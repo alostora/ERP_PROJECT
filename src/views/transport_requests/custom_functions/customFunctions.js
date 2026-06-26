@@ -145,8 +145,10 @@ export const customFunctions = {
         const params = { branch_id: branchId }
         const response = await API.get(`${this.warehouseUrl}/${companyId}`, { params })
         if (type == 'from') {
+          this.filters.from_warehouse_id = ''
           this.fromWarehouses = response.data.data || []
         } else {
+          this.filters.to_warehouse_id = ''
           this.toWarehouses = response.data.data || []
         }
       } catch (error) {

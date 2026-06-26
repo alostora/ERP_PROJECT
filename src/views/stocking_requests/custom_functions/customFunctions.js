@@ -42,6 +42,7 @@ export const customFunctions = {
       const companyId =
         this.company_id || this.formData?.company_id || this.localFormData?.company_id
 
+      this.filters.warehouse_id = ''
       this.warehouses = []
 
       if (branchId) {

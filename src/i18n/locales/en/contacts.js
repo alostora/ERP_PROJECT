@@ -1,5 +1,5 @@
 export default {
-  title: 'Employees',
+  title: 'Contacts',
   id: '#',
   name: 'Name',
   email: 'Email',

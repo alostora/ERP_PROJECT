@@ -10,211 +10,8 @@
 
     <div class="card">
       <div class="filters-bar">
-        <!-- Query String -->
-        <div class="row mb-1">
-          <div class="col-12 col-md-6 col-lg-12">
-            <div class="search-wrapper">
-              <i class="pi pi-search search-icon"></i>
-              <input
-                type="text"
-                v-model="filters.query_string"
-                @input="fetchData"
-                class="input"
-                :placeholder="$t('common.search')"
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- Branches -->
-        <div class="row mb-1">
-          <div class="col-12 col-md-6 col-lg-6">
-            <div class="search-wrapper">
-              <Select
-                v-model="filters.from_branch_id"
-                :options="branches"
-                :optionLabel="branchLabel"
-                optionValue="id"
-                :placeholder="$t('transportRequests.from_branch')"
-                :filter="true"
-                :showClear="true"
-                :filterPlaceholder="$t('common.search')"
-                class="w-full"
-                @change="(onFromBranchChange(), fetchData())"
-              />
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-6">
-            <div class="search-wrapper">
-              <Select
-                v-model="filters.to_branch_id"
-                :options="branches"
-                :optionLabel="branchLabel"
-                optionValue="id"
-                :placeholder="$t('transportRequests.to_branch')"
-                :filter="true"
-                :showClear="true"
-                :filterPlaceholder="$t('common.search')"
-                class="w-full"
-                @change="(onToBranchChange(), fetchData())"
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- Warehouses -->
-        <div class="row mb-1">
-          <div class="col-12 col-md-6 col-lg-6">
-            <div class="search-wrapper">
-              <Select
-                v-model="filters.from_warehouse_id"
-                :options="fromWarehouses"
-                :optionLabel="warehouseLabel"
-                optionValue="id"
-                :placeholder="$t('transportRequests.from_warehouse')"
-                :filter="true"
-                :showClear="true"
-                :filterPlaceholder="$t('common.search')"
-                class="w-full"
-                @change="fetchData()"
-              />
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-6">
-            <div class="search-wrapper">
-              <Select
-                v-model="filters.to_warehouse_id"
-                :options="toWarehouses"
-                :optionLabel="warehouseLabel"
-                optionValue="id"
-                :placeholder="$t('transportRequests.to_warehouse')"
-                :filter="true"
-                :showClear="true"
-                :filterPlaceholder="$t('common.search')"
-                class="w-full"
-                @change="fetchData()"
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- Stages -->
-        <div class="row mb-1">
-          <div class="col-12 col-md-6 col-lg-6">
-            <div class="search-wrapper">
-              <Select
-                v-model="filters.from_warehouse_stage_id"
-                :options="stages"
-                :optionLabel="stageLabel"
-                optionValue="id"
-                :placeholder="$t('transportRequests.from_warehouse_stage')"
-                :filter="true"
-                :showClear="true"
-                :filterPlaceholder="$t('common.search')"
-                class="w-full"
-                @change="fetchData"
-              />
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-6">
-            <div class="search-wrapper">
-              <Select
-                v-model="filters.to_warehouse_stage_id"
-                :options="stages"
-                :optionLabel="stageLabel"
-                optionValue="id"
-                :placeholder="$t('transportRequests.to_warehouse_stage')"
-                :filter="true"
-                :showClear="true"
-                :filterPlaceholder="$t('common.search')"
-                class="w-full"
-                @change="fetchData"
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- Is Colsed -->
-        <div class="row mb-1">
-          <div class="col-12 col-md-6 col-lg-6">
-            <div class="search-wrapper">
-              <Select
-                v-model="filters.from_warehouse_is_closed"
-                :options="isColsedValues"
-                optionLabel="name"
-                optionValue="value"
-                :placeholder="$t('transportRequests.from_warehouse_is_closed')"
-                :filter="true"
-                :showClear="true"
-                :filterPlaceholder="$t('common.search')"
-                class="w-full"
-                @change="fetchData"
-              />
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-6">
-            <div class="search-wrapper">
-              <Select
-                v-model="filters.to_warehouse_is_closed"
-                :options="isColsedValues"
-                optionLabel="name"
-                optionValue="value"
-                :placeholder="$t('transportRequests.to_warehouse_is_closed')"
-                :filter="true"
-                :showClear="true"
-                :filterPlaceholder="$t('common.search')"
-                class="w-full"
-                @change="fetchData"
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- Dates -->
-        <div class="row mb-1">
-          <div class="col-12 col-md-6 col-lg-6">
-            <FloatLabel variant="on">
-              <DatePicker
-                v-model="filters.date_from"
-                inputId="date_from"
-                showIcon
-                showButtonBar
-                iconDisplay="input"
-                class="w-full"
-                @update:modelValue="fetchData"
-              />
-              <label for="date_from">{{ $t('transportRequests.date_from') }}</label>
-            </FloatLabel>
-          </div>
-          <div class="col-12 col-md-6 col-lg-6">
-            <FloatLabel variant="on">
-              <DatePicker
-                v-model="filters.date_to"
-                inputId="date_to"
-                showIcon
-                showButtonBar
-                iconDisplay="input"
-                class="w-full"
-                @update:modelValue="fetchData"
-              />
-              <label for="date_to">{{ $t('transportRequests.date_to') }}</label>
-            </FloatLabel>
-          </div>
-        </div>
-
-        <!-- Per Page -->
-        <div class="row">
-          <div class="col-6 col-md-3 col-lg-2">
-            <select v-model="perPage" @change="fetchData" class="select">
-              <option :value="5">5</option>
-              <option :value="10">10</option>
-              <option :value="25">25</option>
-              <option :value="50">50</option>
-            </select>
-          </div>
-        </div>
+        <Filter @emitFetchData="emitFetchData" :company_id="company_id" :branch_id="branch_id" />
       </div>
-
       <DataTable
         :value="items"
         :paginator="true"
@@ -430,17 +227,17 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
-import Select from 'primevue/select'
-import FloatLabel from 'primevue/floatlabel'
-import DatePicker from 'primevue/datepicker'
 import Button from 'primevue/button'
+
 import CreateForm from './CreateForm.vue'
 import UpdateForm from './UpdateForm.vue'
 import UpdateFromWarehouseStageForm from './UpdateFromWarehouseStageForm.vue'
 import UpdateToWarehouseStageForm from './UpdateToWarehouseStageForm.vue'
+import Filter from './Filter.vue'
+
+import { API_ROUTES } from '@/constants/apiRoutes'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
-import { API_ROUTES } from '@/constants/apiRoutes'
 
 export default {
   name: 'Table',
@@ -450,14 +247,12 @@ export default {
     Column,
     Toast,
     ConfirmDialog,
-    Select,
-    FloatLabel,
-    DatePicker,
     Button,
     CreateForm,
     UpdateForm,
     UpdateFromWarehouseStageForm,
     UpdateToWarehouseStageForm,
+    Filter,
   },
 
   props: {
@@ -498,41 +293,24 @@ export default {
       filters: { query_string: '' },
       transport_request_id: '',
       selectedItem: {},
-      isColsedValues: [
-        { name: this.$t('common.no'), value: '0' },
-        { name: this.$t('common.yes'), value: '1' },
-      ],
-      isActiveValues: [
-        { name: this.$t('common.no'), value: 'inactive' },
-        { name: this.$t('common.yes'), value: 'active' },
-      ],
     }
   },
   computed: {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
-
-    branchLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    warehouseLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    stageLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
   },
 
   mounted() {
     this.fetchData()
-    this.loadBranches(this.company_id)
-    this.loadStages(this.company_id)
   },
 
   methods: {
+    emitFetchData(emitedData) {
+      this.filters = emitedData
+      this.fetchData()
+    },
+
     openCreateModal() {
       this.$refs.createModal.openModal()
     },
