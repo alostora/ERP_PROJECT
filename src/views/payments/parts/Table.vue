@@ -10,125 +10,7 @@
 
     <div class="card">
       <div class="filters-bar">
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="search-wrapper">
-              <i class="pi pi-search search-icon"></i>
-              <input
-                type="text"
-                v-model="filters.query_string"
-                @input="fetchData"
-                class="input"
-                :placeholder="$t('common.search')"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="row mt-1">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="form-group">
-              <Select
-                v-model="filters.branch_id"
-                :options="branches"
-                :optionLabel="branchLabel"
-                optionValue="id"
-                :placeholder="$t('common.select') + ' ' + $t('payments.branch')"
-                :filter="true"
-                :showClear="true"
-                :filterPlaceholder="$t('common.search')"
-                class="w-full"
-                @change="fetchData"
-              />
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="form-group">
-              <Select
-                v-model="filters.account_guide_id"
-                :options="accountGuides"
-                :optionLabel="accountGuideLabel"
-                optionValue="id"
-                :placeholder="$t('common.select') + ' ' + $t('payments.account_guide')"
-                :filter="true"
-                :showClear="true"
-                :filterPlaceholder="$t('common.search')"
-                class="w-full"
-                @change="fetchData"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="row mt-1">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="form-group">
-              <Select
-                v-model="selectedPaymentMethod"
-                :options="paymentMethods"
-                :optionLabel="paymentMethodLabel"
-                :placeholder="$t('common.select') + ' ' + $t('payments.payment_method')"
-                :filter="true"
-                :showClear="true"
-                :filterPlaceholder="$t('common.search')"
-                class="w-full"
-                @change="determinePaymentModule"
-              />
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="row">
-              <div class="col-12 col-md-6" v-if="selectedPaymentMethod">
-                <div class="form-group">
-                  <Select
-                    v-model="module_id"
-                    :options="moduleOptions"
-                    :optionLabel="moduleOptionLabel"
-                    optionValue="id"
-                    :placeholder="$t('common.select') + ' ' + modulePlaceholderLabel"
-                    :filter="true"
-                    :showClear="true"
-                    :filterPlaceholder="$t('common.search')"
-                    class="w-full"
-                    @change="assignValueToModule"
-                  />
-                </div>
-              </div>
-
-              <div
-                class="col-12 col-md-6"
-                v-if="selectedPaymentMethod && selectedPaymentMethod?.prefix === 'CASH'"
-              >
-                <div class="form-group">
-                  <Select
-                    v-model="filters.cash_box_shift_id"
-                    :options="cashBoxShifts"
-                    :optionLabel="cashBoxShiftLabel"
-                    optionValue="id"
-                    :placeholder="$t('common.select') + ' ' + $t('payments.cash_box_shift')"
-                    :filter="true"
-                    :showClear="true"
-                    :filterPlaceholder="$t('common.search')"
-                    class="w-full"
-                    @change="fetchData"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-6 col-md-3 col-lg-2">
-            <select v-model="perPage" @change="fetchData" class="select">
-              <option :value="5">5</option>
-              <option :value="10">10</option>
-              <option :value="25">25</option>
-              <option :value="50">50</option>
-            </select>
-          </div>
-        </div>
+        <Filter @emitFetchData="emitFetchData" :company_id="company_id" :branch_id="branch_id" />
       </div>
 
       <DataTable
@@ -258,14 +140,16 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
+import ToggleSwitch from 'primevue/toggleswitch'
+
 import CreateForm from './CreateForm.vue'
 import UpdateForm from './UpdateForm.vue'
 import UpdateStatusForm from './UpdateStatusForm.vue'
+import Filter from './Filter.vue'
+
+import { API_ROUTES } from '@/constants/apiRoutes'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
-import { API_ROUTES } from '@/constants/apiRoutes'
-import ToggleSwitch from 'primevue/toggleswitch'
-import Select from 'primevue/select'
 
 export default {
   name: 'Table',
@@ -279,7 +163,7 @@ export default {
     UpdateForm,
     UpdateStatusForm,
     ToggleSwitch,
-    Select,
+    Filter,
   },
 
   watch: {
@@ -316,8 +200,6 @@ export default {
       apiUrl: API_ROUTES.PAYMENT.SEARCH,
       deleteUrl: API_ROUTES.PAYMENT.BASE,
       company_id: '',
-      module_id: '',
-      selectedPaymentMethod: null,
       filters: {
         query_string: '',
         branch_id: '',
@@ -339,80 +221,18 @@ export default {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
-
-    statusLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    branchLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    paymentMethodLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    accountGuideLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    cashBoxShiftLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    moduleOptionLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    moduleOptions() {
-      if (this.selectedPaymentMethod?.prefix === 'CASH') {
-        return this.cashBoxes
-      }
-
-      if (
-        this.selectedPaymentMethod?.prefix === 'BANK_ACCOUNT' ||
-        this.selectedPaymentMethod?.prefix === 'CHECK' ||
-        this.selectedPaymentMethod?.prefix === 'CARD'
-      ) {
-        return this.bankAccounts
-      }
-
-      if (this.selectedPaymentMethod?.prefix === 'MOBILE_WALLET') {
-        return this.wallets
-      }
-      return []
-    },
-
-    modulePlaceholderLabel() {
-      if (
-        this.selectedPaymentMethod?.prefix === 'BANK_ACCOUNT' ||
-        this.selectedPaymentMethod?.prefix === 'CHECK' ||
-        this.selectedPaymentMethod?.prefix === 'CARD'
-      ) {
-        return this.$t('payments.bank_accounts')
-      }
-
-      if (this.selectedPaymentMethod?.prefix === 'CASH') {
-        return this.$t('payments.cash_boxes')
-      }
-
-      if (this.selectedPaymentMethod?.prefix === 'MOBILE_WALLET') {
-        return this.$t('payments.wallets')
-      }
-
-      return []
-    },
   },
 
   mounted() {
     this.fetchData()
-    this.loadPaymentStatus()
-    this.loadPaymentMethods()
-    this.loadBranches(this.company_id)
-    this.loadAccountGuides(this.company_id)
   },
 
   methods: {
+    emitFetchData(emitedData) {
+      this.filters = emitedData
+      this.fetchData()
+    },
+
     openCreateModal() {
       this.$refs.createModal.openModal()
     },
@@ -433,53 +253,6 @@ export default {
 
     deleteRow(item) {
       this.deleteItem(this.deleteUrl, item.id, item.name)
-    },
-
-    determinePaymentModule() {
-      this.filters.cash_box_id = ''
-      this.filters.cash_box_shift_id = ''
-      this.filters.bank_account_id = ''
-      this.filters.wallet_id = ''
-      this.filters.payment_method_id = this.selectedPaymentMethod?.id
-
-      if (
-        this.selectedPaymentMethod?.prefix === 'BANK_ACCOUNT' ||
-        this.selectedPaymentMethod?.prefix === 'CHECK' ||
-        this.selectedPaymentMethod?.prefix === 'CARD'
-      ) {
-        this.loadBankAccounts(this.company_id)
-      }
-
-      if (this.selectedPaymentMethod?.prefix === 'CASH') {
-        this.loadCashBoxes(this.company_id)
-      }
-
-      if (this.selectedPaymentMethod?.prefix === 'MOBILE_WALLET') {
-        this.loadWallets(this.company_id)
-      }
-
-      this.fetchData()
-    },
-
-    assignValueToModule() {
-      if (
-        this.selectedPaymentMethod?.prefix === 'BANK_ACCOUNT' ||
-        this.selectedPaymentMethod?.prefix === 'CHECK' ||
-        this.selectedPaymentMethod?.prefix === 'CARD'
-      ) {
-        this.filters.bank_account_id = this.module_id
-      }
-
-      if (this.selectedPaymentMethod?.prefix === 'CASH') {
-        this.filters.cash_box_id = this.module_id
-        this.loadCashBoxShifts(this.company_id, this.filters.cash_box_id)
-      }
-
-      if (this.selectedPaymentMethod?.prefix === 'MOBILE_WALLET') {
-        this.filters.wallet_id = this.module_id
-      }
-
-      this.fetchData()
     },
   },
 }

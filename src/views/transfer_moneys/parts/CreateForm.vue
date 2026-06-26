@@ -12,59 +12,66 @@
         <small v-if="errors.company_id" class="error-message">{{ errors.company_id }}</small>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('transferMoneys.branches') }}</label>
-        <Select
-          v-model="formData.branch_id"
-          :options="branches"
-          :optionLabel="branchLabel"
-          optionValue="id"
-          :placeholder="$t('common.select') + ' ' + $t('transferMoneys.branch')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-        />
-        <small v-if="errors.branch_id" class="error-message">{{ errors.branch_id }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('transferMoneys.employees') }}</label>
-        <Select
-          v-model="formData.employee_id"
-          :options="employees"
-          optionLabel="name"
-          optionValue="id"
-          :placeholder="$t('common.select') + ' ' + $t('transferMoneys.employee')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-        />
-        <small v-if="errors.employee_id" class="error-message">{{ errors.employee_id }}</small>
-      </div>
-
       <div class="row">
         <div class="col-12 col-md-6">
           <div class="form-group">
-            <label class="form-label required">{{ $t('transferMoneys.from') }}</label>
-            <select v-model="from" @change="determineTransferFrom" class="select">
-              <option :value="1">{{ $t('transferMoneys.cashBox') }}</option>
-              <option :value="2">{{ $t('transferMoneys.bankAccount') }}</option>
-              <option :value="3">{{ $t('transferMoneys.wallet') }}</option>
-            </select>
+            <Select
+              v-model="formData.branch_id"
+              :options="branches"
+              :optionLabel="branchLabel"
+              optionValue="id"
+              :placeholder="$t('common.select') + ' ' + $t('transferMoneys.branch')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
           </div>
+          <small v-if="errors.branch_id" class="error-message">{{ errors.branch_id }}</small>
         </div>
-
         <div class="col-12 col-md-6">
           <div class="form-group">
-            <label class="form-label required">{{ $t('transferMoneys.from') }}</label>
+            <Select
+              v-model="formData.employee_id"
+              :options="employees"
+              optionLabel="name"
+              optionValue="id"
+              :placeholder="$t('common.select') + ' ' + $t('transferMoneys.employee')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
+          <small v-if="errors.employee_id" class="error-message">{{ errors.employee_id }}</small>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6 col-md-6">
+          <div class="form-group">
+            <Select
+              v-model="from"
+              :options="transferModuleValues"
+              optionLabel="name"
+              optionValue="value"
+              :placeholder="$t('transferMoneys.from')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="determineTransferFrom"
+            />
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-group">
             <Select
               v-model="formData.from_id"
               :options="fromOptions"
               :optionLabel="transferMoneyOptionLabel"
               optionValue="id"
-              :placeholder="$t('common.select') + ' ' + fromPlaceholderLabel"
+              :placeholder="$t('transferMoneys.from') + ' ' + fromPlaceholderLabel"
               :filter="true"
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
@@ -76,43 +83,50 @@
       </div>
 
       <div class="row">
-        <div class="col-12 col-md-6">
-          <label class="form-label required">{{ $t('transferMoneys.to') }}</label>
-          <select v-model="to" @change="determineTransferTo" class="select">
-            <option :value="1">{{ $t('transferMoneys.cashBox') }}</option>
-            <option :value="2">{{ $t('transferMoneys.bankAccount') }}</option>
-            <option :value="3">{{ $t('transferMoneys.wallet') }}</option>
-          </select>
+        <div class="col-lg-6 col-md-6">
+          <div class="form-group">
+            <Select
+              v-model="to"
+              :options="transferModuleValues"
+              optionLabel="name"
+              optionValue="value"
+              :placeholder="$t('transferMoneys.to')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="determineTransferTo"
+            />
+          </div>
         </div>
-
         <div class="col-12 col-md-6">
           <div class="form-group">
-            <label class="form-label required">{{ $t('transferMoneys.to') }}</label>
             <Select
               v-model="formData.to_id"
               :options="toOptions"
               :optionLabel="transferMoneyOptionLabel"
               optionValue="id"
-              :placeholder="$t('common.select') + ' ' + toPlaceholderLabel"
+              :placeholder="$t('transferMoneys.to') + ' ' + toPlaceholderLabel"
               :filter="true"
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
               class="w-full"
             />
-            <small v-if="errors.to_id" class="error-message">{{ errors.to_id }}</small>
           </div>
+          <small v-if="errors.to_id" class="error-message">{{ errors.to_id }}</small>
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('transferMoneys.amount') }}</label>
-        <input
-          v-model="formData.amount"
-          type="number"
-          class="input"
-          :class="{ 'input-error': errors.amount }"
-        />
-        <small v-if="errors.amount" class="error-message">{{ errors.amount }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputNumber id="amount" v-model="formData.amount" autocomplete="on" class="w-full" />
+              <label for="amount">{{ $t('transferMoneys.amount') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.amount" class="error-message">{{ errors.amount }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -158,6 +172,11 @@ export default {
       apiUrl: API_ROUTES.TRANSFER_MONEY.BASE,
       from: '',
       to: '',
+      transferModuleValues: [
+        { name: this.$t('transferMoneys.cashBox'), value: 1 },
+        { name: this.$t('transferMoneys.bankAccount'), value: 2 },
+        { name: this.$t('transferMoneys.wallet'), value: 3 },
+      ],
       formData: {
         company_id: '',
         branch_id: '',

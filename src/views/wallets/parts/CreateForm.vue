@@ -23,83 +23,110 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('wallets.level_code') }}</label>
-        <select v-model="formData.level_code" @change="determineLevelCode" class="select">
-          <option :value="1">{{ $t('wallets.company') }}</option>
-          <option :value="2">{{ $t('wallets.branch') }}</option>
-        </select>
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="form-group">
+            <Select
+              v-model="formData.level_code"
+              :options="levelCodeValues"
+              optionLabel="name"
+              optionValue="value"
+              :showClear="true"
+              :placeholder="$t('wallets.level_code')"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="determineLevelCode"
+            />
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6" v-if="this.formData.level_code === 2">
+          <div class="form-group">
+            <Select
+              v-model="formData.branch_id"
+              :options="branches"
+              :optionLabel="branchLabel"
+              optionValue="id"
+              :placeholder="$t('wallets.branch')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
+          <small v-if="errors.branch_id" class="error-message">{{ errors.branch_id }}</small>
+        </div>
       </div>
 
-      <div class="form-group" v-if="this.formData.level_code === 2">
-        <label class="form-label required">{{ $t('wallets.branches') }}</label>
-        <Select
-          v-model="formData.branch_id"
-          :options="branches"
-          :optionLabel="branchLabel"
-          optionValue="id"
-          :placeholder="$t('common.select') + ' ' + $t('wallets.branch')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-        />
-        <small v-if="errors.branch_id" class="error-message">{{ errors.branch_id }}</small>
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-12">
+          <div class="form-group">
+            <Select
+              v-model="formData.provider_code"
+              :options="providerCodeValues"
+              optionLabel="name"
+              optionValue="value"
+              :showClear="true"
+              :placeholder="$t('wallets.provider')"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('wallets.provider') }}</label>
-        <select v-model="formData.provider_code" class="select">
-          <option :value="1">{{ $t('wallets.vodafone') }}</option>
-          <option :value="2">{{ $t('wallets.orange') }}</option>
-          <option :value="3">{{ $t('wallets.etisalat') }}</option>
-          <option :value="4">{{ $t('wallets.fawry') }}</option>
-          <option :value="4">{{ $t('wallets.other') }}</option>
-        </select>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name" v-model="formData.name" autocomplete="on" class="w-full" />
+              <label for="name">{{ $t('wallets.name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name_ar" v-model="formData.name_ar" autocomplete="on" class="w-full" />
+              <label for="name_ar">{{ $t('wallets.name_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('wallets.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('wallets.name_ar') }}</label>
-        <input
-          v-model="formData.name_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name_ar }"
-        />
-        <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('wallets.owner_name') }}</label>
-        <input
-          v-model="formData.owner_name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.owner_name }"
-        />
-        <small v-if="errors.owner_name" class="error-message">{{ errors.owner_name }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('wallets.mobile_number') }}</label>
-        <input
-          v-model="formData.mobile_number"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.mobile_number }"
-        />
-        <small v-if="errors.mobile_number" class="error-message">{{ errors.mobile_number }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText
+                id="owner_name"
+                v-model="formData.owner_name"
+                autocomplete="on"
+                class="w-full"
+              />
+              <label for="owner_name">{{ $t('wallets.owner_name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.owner_name" class="error-message">{{ errors.owner_name }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText
+                id="mobile_number"
+                v-model="formData.mobile_number"
+                autocomplete="on"
+                class="w-full"
+              />
+              <label for="mobile_number">{{ $t('wallets.mobile_number') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.mobile_number" class="error-message">{{
+            errors.mobile_number
+          }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -142,6 +169,19 @@ export default {
 
   data() {
     return {
+      levelCodeValues: [
+        { name: this.$t('wallets.company'), value: 1 },
+        { name: this.$t('wallets.branch'), value: 2 },
+      ],
+
+      providerCodeValues: [
+        { name: this.$t('wallets.vodafone'), value: 1 },
+        { name: this.$t('wallets.orange'), value: 2 },
+        { name: this.$t('wallets.etisalat'), value: 3 },
+        { name: this.$t('wallets.fawry'), value: 4 },
+        { name: this.$t('wallets.other'), value: 5 },
+      ],
+
       apiUrl: API_ROUTES.WALLET.BASE,
       formData: {
         company_id: '',

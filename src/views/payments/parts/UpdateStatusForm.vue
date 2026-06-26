@@ -7,31 +7,35 @@
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label class="form-label required">{{ $t('payments.status') }}</label>
-        <Select
-          v-model="formData.status_id"
-          :options="paymentStatusList"
-          :optionLabel="statusLabel"
-          optionValue="id"
-          :placeholder="$t('common.select') + ' ' + $t('payments.status')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-        />
-        <small v-if="errors.status_id" class="error-message">{{ errors.status_id }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <Select
+              v-model="formData.status_id"
+              :options="paymentStatusList"
+              :optionLabel="statusLabel"
+              optionValue="id"
+              :placeholder="$t('common.select') + ' ' + $t('payments.status')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
+          <small v-if="errors.status_id" class="error-message">{{ errors.status_id }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('payments.notes') }}</label>
-        <input
-          v-model="formData.notes"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.notes }"
-        />
-        <small v-if="errors.notes" class="error-message">{{ errors.notes }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <Textarea id="notes" v-model="formData.notes" rows="2" style="resize: none" fluid />
+              <label for="notes">{{ $t('payments.notes') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.notes" class="error-message">{{ errors.notes }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">

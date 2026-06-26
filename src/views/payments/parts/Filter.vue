@@ -1,34 +1,35 @@
 <template>
-  <Dialog
-    v-model:visible="formVisible"
-    :header="$t('common.createTitle', { module: $t('payments.title') })"
-    :modal="true"
-    :style="{ width: '500px' }"
-    @hide="closeFormModal"
-  >
-    <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <input type="hidden" v-model="formData.company_id" />
-        <small v-if="errors.company_id" class="error-message">{{ errors.company_id }}</small>
+  <Panel :toggleable="true" :collapsed="true" style="background-color: var(--surface-100)">
+    <template #header>
+      <div class="flex items-center gap-2">
+        <i class="pi pi-search text-warning p-1"></i>
+        <span class="font-medium text-warning">
+          {{ $t('common.search') }}
+        </span>
       </div>
-
+    </template>
+    <div class="card-gray">
       <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="form-group">
-            <div class="form-group">
-              <label class="form-label">{{ $t('payments.is_opening_balance') }}</label>
-              <div class="flex align-center"></div>
-              <ToggleSwitch v-model="formData.is_opening_balance" />
-            </div>
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="search-wrapper">
+            <i class="pi pi-search search-icon"></i>
+            <InputText
+              id="invoice_name"
+              v-model="filters.query_string"
+              @input="emitFetchData"
+              autocomplete="off"
+              class="input"
+              :placeholder="$t('common.search')"
+            />
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="form-group">
+      <div class="row mt-2">
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="search-wrapper">
             <Select
-              v-model="formData.branch_id"
+              v-model="filters.branch_id"
               :options="branches"
               :optionLabel="branchLabel"
               optionValue="id"
@@ -37,15 +38,14 @@
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
               class="w-full"
+              @change="emitFetchData"
             />
           </div>
-          <small v-if="errors.branch_id" class="error-message">{{ errors.branch_id }}</small>
         </div>
-
-        <div class="col-12 col-md-6">
-          <div class="form-group">
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="search-wrapper">
             <Select
-              v-model="formData.account_guide_id"
+              v-model="filters.account_guide_id"
               :options="accountGuides"
               :optionLabel="accountGuideLabel"
               optionValue="id"
@@ -54,17 +54,15 @@
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
               class="w-full"
+              @change="emitFetchData"
             />
           </div>
-          <small v-if="errors.account_guide_id" class="error-message">
-            {{ errors.account_guide_id }}
-          </small>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="form-group">
+      <div class="row mt-2">
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="search-wrapper">
             <Select
               v-model="selectedPaymentMethod"
               :options="paymentMethods"
@@ -76,14 +74,11 @@
               class="w-full"
               @change="determinePaymentModule"
             />
-            <small v-if="errors.payment_method_id" class="error-message">
-              {{ errors.payment_method_id }}
-            </small>
           </div>
         </div>
 
         <div class="col-12 col-md-6" v-if="selectedPaymentMethod">
-          <div class="form-group">
+          <div class="search-wrapper">
             <Select
               v-model="module_id"
               :options="moduleOptions"
@@ -96,17 +91,16 @@
               class="w-full"
               @change="assignValueToModule"
             />
-            <small v-if="errors.module_id" class="error-message">{{ errors.module_id }}</small>
           </div>
         </div>
 
         <div
-          class="col-12 col-md-12"
+          class="col-12 col-md-6 mt-2"
           v-if="selectedPaymentMethod && selectedPaymentMethod?.prefix === 'CASH'"
         >
-          <div class="form-group">
+          <div class="search-wrapper">
             <Select
-              v-model="formData.cash_box_shift_id"
+              v-model="filters.cash_box_shift_id"
               :options="cashBoxShifts"
               :optionLabel="cashBoxShiftLabel"
               optionValue="id"
@@ -115,58 +109,44 @@
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
               class="w-full"
+              @change="emitFetchData"
             />
           </div>
-          <small v-if="errors.cash_box_shift_id" class="error-message">
-            {{ errors.cash_box_shift_id }}
-          </small>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-12">
-          <div class="form-group">
-            <FloatLabel variant="on">
-              <InputNumber id="amount" v-model="formData.amount" autocomplete="on" class="w-full" />
-              <label for="amount">{{ $t('payments.amount') }}</label>
-            </FloatLabel>
-          </div>
-          <small v-if="errors.amount" class="error-message">{{ errors.amount }}</small>
+      <div class="row mt-2">
+        <div class="col-6 col-md-3 col-lg-2">
+          <Select
+            v-model="filters.per_page"
+            :options="perPageValues"
+            optionLabel="name"
+            optionValue="value"
+            class="w-full"
+            @change="emitFetchData"
+          />
         </div>
       </div>
-
-      <div class="flex justify-end gap-2 mt-4">
-        <button type="button" class="btn btn-outline ml-2 mr-2" @click="closeFormModal">
-          {{ $t('common.cancel') }}
-        </button>
-        <button type="submit" class="btn btn-primary" :disabled="formLoading">
-          {{ formLoading ? $t('common.loading') : $t('common.create') }}
-        </button>
-      </div>
-    </form>
-  </Dialog>
+    </div>
+  </Panel>
 </template>
 
 <script>
-import Dialog from 'primevue/dialog'
-import customFunctions from '../custom_functions/customFunctions'
-import formMixin from '@/mixins/form'
-import { API_ROUTES } from '@/constants/apiRoutes'
-import validationRequest from '../validation/validationRequest'
-import ToggleSwitch from 'primevue/toggleswitch'
-import Select from 'primevue/select'
+import tableMixin from '@/mixins/table'
+import { customFunctions } from '../custom_functions/customFunctions'
 
 export default {
-  name: 'CreateForm',
-  mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog, ToggleSwitch, Select },
+  name: 'Table',
+  mixins: [tableMixin, customFunctions],
+  components: {},
+
+  emits: ['emitFetchData'],
 
   props: {
     company_id: {
       type: String,
       required: true,
     },
-
     branch_id: {
       type: String,
       required: false,
@@ -175,19 +155,17 @@ export default {
 
   data() {
     return {
-      apiUrl: API_ROUTES.PAYMENT.BASE,
-      selectedPaymentMethod: null,
       module_id: '',
-      formData: {
-        company_id: '',
-        branch_id: '',
-        is_opening_balance: '',
-        payment_method_id: '',
-        cash_box_id: '',
-        cash_box_shift_id: '',
-        bank_account_id: '',
-        wallet_id: '',
-        amount: '',
+      selectedPaymentMethod: null,
+      perPageValues: [
+        { name: 5, value: 5 },
+        { name: 10, value: 10 },
+        { name: 25, value: 25 },
+        { name: 50, value: 50 },
+      ],
+      filters: {
+        per_page: 10,
+        query_string: '',
       },
     }
   },
@@ -195,6 +173,10 @@ export default {
   computed: {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
+    },
+
+    statusLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
 
     branchLabel() {
@@ -257,48 +239,42 @@ export default {
     },
   },
 
+  mounted() {
+    this.loadPaymentStatus()
+    this.loadPaymentMethods()
+    this.loadBranches(this.company_id)
+    this.loadAccountGuides(this.company_id)
+  },
+
   methods: {
-    openModal() {
-      this.openFormModal()
-      this.formData.company_id = this.company_id || this.$route.params.company_id
-      this.formData.branch_id = this.branch_id || this.$route.params.branch_id
-
-      this.loadPaymentMethods()
-      this.loadBranches(this.formData.company_id)
-      this.loadAccountGuides(this.company_id)
-    },
-
-    closeFormModal() {
-      this.formVisible = false
-      this.formLoading = false
-      this.formErrors = {}
-      this.selectedPaymentMethod = null
-      this.module_id = ''
-      this.formData = {}
+    emitFetchData() {
+      this.$emit('emitFetchData', this.filters)
     },
 
     determinePaymentModule() {
-      this.formData.cash_box_id = ''
-      this.formData.cash_box_shift_id = ''
-      this.formData.bank_account_id = ''
-      this.formData.wallet_id = ''
-      this.formData.payment_method_id = this.selectedPaymentMethod?.id
+      this.filters.cash_box_id = ''
+      this.filters.cash_box_shift_id = ''
+      this.filters.bank_account_id = ''
+      this.filters.wallet_id = ''
+      this.filters.payment_method_id = this.selectedPaymentMethod?.id
 
       if (
         this.selectedPaymentMethod?.prefix === 'BANK_ACCOUNT' ||
         this.selectedPaymentMethod?.prefix === 'CHECK' ||
         this.selectedPaymentMethod?.prefix === 'CARD'
       ) {
-        this.loadBankAccounts(this.formData.company_id)
+        this.loadBankAccounts(this.company_id)
       }
 
       if (this.selectedPaymentMethod?.prefix === 'CASH') {
-        this.loadCashBoxes(this.formData.company_id)
+        this.loadCashBoxes(this.company_id)
       }
 
       if (this.selectedPaymentMethod?.prefix === 'MOBILE_WALLET') {
-        this.loadWallets(this.formData.company_id)
+        this.loadWallets(this.company_id)
       }
+
+      this.emitFetchData()
     },
 
     assignValueToModule() {
@@ -307,25 +283,19 @@ export default {
         this.selectedPaymentMethod?.prefix === 'CHECK' ||
         this.selectedPaymentMethod?.prefix === 'CARD'
       ) {
-        this.formData.bank_account_id = this.module_id
+        this.filters.bank_account_id = this.module_id
       }
 
       if (this.selectedPaymentMethod?.prefix === 'CASH') {
-        this.formData.cash_box_id = this.module_id
-        this.loadCashBoxShifts(this.formData.company_id, this.formData.cash_box_id)
+        this.filters.cash_box_id = this.module_id
+        this.loadCashBoxShifts(this.company_id, this.filters.cash_box_id)
       }
 
       if (this.selectedPaymentMethod?.prefix === 'MOBILE_WALLET') {
-        this.formData.wallet_id = this.module_id
-      }
-    },
-
-    async handleSubmit() {
-      if (!this.validateCreateForm(this.formData)) {
-        return
+        this.filters.wallet_id = this.module_id
       }
 
-      await this.submitCreateForm(this.apiUrl, this.formData, this.$t('common.createdSuccessfully'))
+      this.emitFetchData()
     },
   },
 }

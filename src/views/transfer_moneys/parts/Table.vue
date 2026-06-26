@@ -10,122 +10,7 @@
 
     <div class="card">
       <div class="filters-bar">
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="search-wrapper">
-              <i class="pi pi-search search-icon"></i>
-              <input
-                type="text"
-                v-model="filters.query_string"
-                @input="fetchData"
-                class="input"
-                :placeholder="$t('common.search')"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-4 mt-1">
-            <Select
-              v-model="filters.branch_id"
-              :options="branches"
-              :optionLabel="branchLabel"
-              optionValue="id"
-              :placeholder="$t('transferMoneys.branches')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="fetchData"
-            />
-          </div>
-          <div class="col-12 col-md-6 col-lg-4 mt-1">
-            <Select
-              v-model="filters.status_id"
-              :options="statusList"
-              :optionLabel="statusLabel"
-              optionValue="id"
-              :placeholder="$t('transferMoneys.status')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-              @change="fetchData"
-            />
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-6 col-md-12 mt-1">
-            <div class="form-group">
-              <select v-model="from" @change="determineTransferFrom" class="select">
-                <option :value="null">{{ $t('common.select') }}</option>
-                <option :value="1">{{ $t('transferMoneys.cashBox') }}</option>
-                <option :value="2">{{ $t('transferMoneys.bankAccount') }}</option>
-                <option :value="3">{{ $t('transferMoneys.wallet') }}</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="col-lg-6 col-md-12 mt-1">
-            <div class="form-group">
-              <Select
-                v-model="filters.from_id"
-                :options="fromOptions"
-                :optionLabel="transferMoneyOptionLabel"
-                optionValue="id"
-                :placeholder="$t('common.select') + ' ' + fromPlaceholderLabel"
-                :filter="true"
-                :showClear="true"
-                :filterPlaceholder="$t('common.search')"
-                class="w-full"
-                @change="fetchData"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="form-group">
-              <select v-model="to" @change="determineTransferTo" class="select">
-                <option :value="null">{{ $t('common.select') }}</option>
-                <option :value="1">{{ $t('transferMoneys.cashBox') }}</option>
-                <option :value="2">{{ $t('transferMoneys.bankAccount') }}</option>
-                <option :value="3">{{ $t('transferMoneys.wallet') }}</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="form-group">
-              <Select
-                v-model="filters.to_id"
-                :options="toOptions"
-                :optionLabel="transferMoneyOptionLabel"
-                optionValue="id"
-                :placeholder="$t('common.select') + ' ' + toPlaceholderLabel"
-                :filter="true"
-                :showClear="true"
-                :filterPlaceholder="$t('common.search')"
-                class="w-full"
-                @change="fetchData"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-6 col-md-3 col-lg-2">
-            <select v-model="perPage" @change="fetchData" class="select">
-              <option :value="5">5</option>
-              <option :value="10">10</option>
-              <option :value="25">25</option>
-              <option :value="50">50</option>
-            </select>
-          </div>
-        </div>
+        <Filter @emitFetchData="emitFetchData" :company_id="company_id" :branch_id="branch_id" />
       </div>
 
       <DataTable
@@ -209,13 +94,15 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
+import ToggleSwitch from 'primevue/toggleswitch'
+
 import CreateForm from './CreateForm.vue'
 import UpdateForm from './UpdateForm.vue'
+import Filter from './Filter.vue'
+
+import { API_ROUTES } from '@/constants/apiRoutes'
 import { customFunctions } from '../custom_functions/customFunctions'
 import tableMixin from '@/mixins/table'
-import { API_ROUTES } from '@/constants/apiRoutes'
-import ToggleSwitch from 'primevue/toggleswitch'
-import Select from 'primevue/select'
 
 export default {
   name: 'Table',
@@ -225,10 +112,10 @@ export default {
     Column,
     Toast,
     ConfirmDialog,
+    ToggleSwitch,
     CreateForm,
     UpdateForm,
-    ToggleSwitch,
-    Select,
+    Filter,
   },
 
   watch: {
@@ -265,8 +152,6 @@ export default {
       apiUrl: API_ROUTES.TRANSFER_MONEY.SEARCH,
       deleteUrl: API_ROUTES.TRANSFER_MONEY.BASE,
       company_id: '',
-      to: null,
-      from: null,
       filters: { query_string: '', branch_id: '', from_id: '', to_id: '' },
       selectedItem: {},
     }
@@ -276,57 +161,18 @@ export default {
     currentLanguage() {
       return localStorage.getItem('language') || 'en'
     },
-
-    branchLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    statusLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    /////////////////////////////////////
-
-    transferMoneyOptionLabel() {
-      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
-    },
-
-    fromOptions() {
-      if (this.from === 1) return this.cashBoxes
-      if (this.from === 2) return this.bankAccounts
-      if (this.from === 3) return this.wallets
-      return []
-    },
-
-    fromPlaceholderLabel() {
-      if (this.from === 1) return this.$t('transferMoneys.selectCashBox')
-      if (this.from === 2) return this.$t('transferMoneys.selectBankAccount')
-      if (this.from === 3) return this.$t('transferMoneys.selectWallet')
-      return ''
-    },
-
-    toOptions() {
-      if (this.to === 1) return this.cashBoxes
-      if (this.to === 2) return this.bankAccounts
-      if (this.to === 3) return this.wallets
-      return []
-    },
-
-    toPlaceholderLabel() {
-      if (this.to === 1) return this.$t('transferMoneys.selectCashBox')
-      if (this.to === 2) return this.$t('transferMoneys.selectBankAccount')
-      if (this.to === 3) return this.$t('transferMoneys.selectWallet')
-      return ''
-    },
   },
 
   mounted() {
     this.fetchData()
-    this.loadBranches(this.company_id)
-    this.loadStatusList()
   },
 
   methods: {
+    emitFetchData(emitedData) {
+      this.filters = emitedData
+      this.fetchData()
+    },
+
     openCreateModal() {
       this.$refs.createModal.openModal()
     },
@@ -340,34 +186,6 @@ export default {
 
     deleteRow(item) {
       this.deleteItem(this.deleteUrl, item.id, item.name)
-    },
-
-    determineTransferFrom() {
-      if (this.from === 1) {
-        this.loadCashBoxes(this.company_id)
-      }
-
-      if (this.from === 2) {
-        this.loadBankAccounts(this.company_id)
-      }
-
-      if (this.from === 3) {
-        this.loadWallets(this.company_id)
-      }
-    },
-
-    determineTransferTo() {
-      if (this.to === 1) {
-        this.loadCashBoxes(this.company_id)
-      }
-
-      if (this.to === 2) {
-        this.loadBankAccounts(this.company_id)
-      }
-
-      if (this.to === 3) {
-        this.loadWallets(this.company_id)
-      }
     },
   },
 }

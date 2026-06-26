@@ -7,48 +7,58 @@
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label class="form-label required">{{ $t('wallets.name') }}</label>
-        <input
-          v-model="formData.name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name }"
-        />
-        <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name" v-model="formData.name" autocomplete="on" class="w-full" />
+              <label for="name">{{ $t('wallets.name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText id="name_ar" v-model="formData.name_ar" autocomplete="on" class="w-full" />
+              <label for="name_ar">{{ $t('wallets.name_ar') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('wallets.name_ar') }}</label>
-        <input
-          v-model="formData.name_ar"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.name_ar }"
-        />
-        <small v-if="errors.name_ar" class="error-message">{{ errors.name_ar }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('wallets.owner_name') }}</label>
-        <input
-          v-model="formData.owner_name"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.owner_name }"
-        />
-        <small v-if="errors.owner_name" class="error-message">{{ errors.owner_name }}</small>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label required">{{ $t('wallets.mobile_number') }}</label>
-        <input
-          v-model="formData.mobile_number"
-          type="text"
-          class="input"
-          :class="{ 'input-error': errors.mobile_number }"
-        />
-        <small v-if="errors.mobile_number" class="error-message">{{ errors.mobile_number }}</small>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText
+                id="owner_name"
+                v-model="formData.owner_name"
+                autocomplete="on"
+                class="w-full"
+              />
+              <label for="owner_name">{{ $t('wallets.owner_name') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.owner_name" class="error-message">{{ errors.owner_name }}</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputText
+                id="mobile_number"
+                v-model="formData.mobile_number"
+                autocomplete="on"
+                class="w-full"
+              />
+              <label for="mobile_number">{{ $t('wallets.mobile_number') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.mobile_number" class="error-message">{{
+            errors.mobile_number
+          }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">

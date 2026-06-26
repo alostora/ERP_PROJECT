@@ -7,28 +7,28 @@
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label class="form-label required">{{ $t('payments.payment_methods') }}</label>
-        <Select
-          v-model="selectedPaymentMethod"
-          :options="paymentMethods"
-          :optionLabel="paymentMethodLabel"
-          :placeholder="$t('common.select') + ' ' + $t('payments.payment_method')"
-          :filter="true"
-          :showClear="true"
-          :filterPlaceholder="$t('common.search')"
-          class="w-full"
-          @change="determinePaymentModule"
-        />
-        <small v-if="errors.payment_method_id" class="error-message">{{
-          errors.payment_method_id
-        }}</small>
-      </div>
-
       <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <Select
+              v-model="selectedPaymentMethod"
+              :options="paymentMethods"
+              :optionLabel="paymentMethodLabel"
+              :placeholder="$t('common.select') + ' ' + $t('payments.payment_method')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+              @change="determinePaymentModule"
+            />
+            <small v-if="errors.payment_method_id" class="error-message">
+              {{ errors.payment_method_id }}
+            </small>
+          </div>
+        </div>
+
         <div class="col-12 col-md-6" v-if="selectedPaymentMethod">
           <div class="form-group">
-            <label class="form-label required">{{ modulePlaceholderLabel }}</label>
             <Select
               v-model="module_id"
               :options="moduleOptions"
@@ -44,40 +44,18 @@
             <small v-if="errors.module_id" class="error-message">{{ errors.module_id }}</small>
           </div>
         </div>
-
-        <div
-          class="col-12 col-md-6"
-          v-if="selectedPaymentMethod && selectedPaymentMethod?.prefix === 'CASH'"
-        >
-          <div class="form-group">
-            <label class="form-label required">{{ $t('payments.cash_box_shifts') }}</label>
-            <Select
-              v-model="formData.cash_box_shift_id"
-              :options="cashBoxShifts"
-              :optionLabel="cashBoxShiftLabel"
-              optionValue="id"
-              :placeholder="$t('common.select') + ' ' + $t('payments.cash_box_shift')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-            />
-            <small v-if="errors.cash_box_shift_id" class="error-message">{{
-              errors.cash_box_shift_id
-            }}</small>
-          </div>
-        </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label required">{{ $t('payments.amount') }}</label>
-        <input
-          v-model="formData.amount"
-          type="number"
-          class="input"
-          :class="{ 'input-error': errors.amount }"
-        />
-        <small v-if="errors.amount" class="error-message">{{ errors.amount }}</small>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <FloatLabel variant="on">
+              <InputNumber id="amount" v-model="formData.amount" autocomplete="on" class="w-full" />
+              <label for="amount">{{ $t('payments.amount') }}</label>
+            </FloatLabel>
+          </div>
+          <small v-if="errors.amount" class="error-message">{{ errors.amount }}</small>
+        </div>
       </div>
 
       <div class="flex justify-end gap-2 mt-4">
@@ -142,7 +120,6 @@ export default {
       formData: {
         payment_method_id: '',
         cash_box_id: '',
-        cash_box_shift_id: '',
         bank_account_id: '',
         wallet_id: '',
         amount: '',
@@ -269,7 +246,6 @@ export default {
 
     determinePaymentModule() {
       this.formData.cash_box_id = ''
-      this.formData.cash_box_shift_id = ''
       this.formData.bank_account_id = ''
       this.formData.wallet_id = ''
       this.formData.payment_method_id = this.selectedPaymentMethod?.id
