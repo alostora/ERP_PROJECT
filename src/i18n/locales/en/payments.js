@@ -13,6 +13,9 @@ export default {
 
   account_guides: 'Chart of Accounts',
   account_guide: 'Account Guide',
+  direction_code: 'Action type',
+  in: 'In',
+  out: 'Out',
 
   cash_boxes: 'Cash Boxes',
   cash_box: 'Cash Box',

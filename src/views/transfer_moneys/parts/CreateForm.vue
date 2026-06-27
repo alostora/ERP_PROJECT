@@ -275,6 +275,15 @@ export default {
 
       await this.submitCreateForm(this.apiUrl, this.formData, this.$t('common.createdSuccessfully'))
     },
+
+    closeFormModal() {
+      this.formVisible = false
+      this.formLoading = false
+      this.formErrors = {}
+      this.formData = {}
+      this.from = ''
+      this.to = ''
+    },
   },
 }
 </script>

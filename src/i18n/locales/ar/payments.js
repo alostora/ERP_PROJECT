@@ -13,6 +13,9 @@ export default {
 
   account_guides: 'ادلة الحسابات',
   account_guide: 'دليل الحساب',
+  direction_code: 'نوع الحركة',
+  in: 'وارد',
+  out: 'صادر',
 
   cash_boxes: 'صناديق النقدية',
   cash_box: 'صندوق النقدية',

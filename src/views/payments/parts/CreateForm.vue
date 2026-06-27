@@ -45,6 +45,27 @@
         <div class="col-12 col-md-6">
           <div class="form-group">
             <Select
+              v-model="formData.direction_code"
+              :options="directionCodes"
+              optionLabel="name"
+              optionValue="value"
+              :placeholder="$t('common.select') + ' ' + $t('payments.direction_code')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
+          <small v-if="errors.direction_code" class="error-message">
+            {{ errors.direction_code }}
+          </small>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <Select
               v-model="formData.account_guide_id"
               :options="accountGuides"
               :optionLabel="accountGuideLabel"
@@ -60,9 +81,6 @@
             {{ errors.account_guide_id }}
           </small>
         </div>
-      </div>
-
-      <div class="row">
         <div class="col-12 col-md-6">
           <div class="form-group">
             <Select
@@ -177,11 +195,16 @@ export default {
       apiUrl: API_ROUTES.PAYMENT.BASE,
       selectedPaymentMethod: null,
       module_id: '',
+      directionCodes: [
+        { name: this.$t('payments.in'), value: 1 },
+        { name: this.$t('payments.out'), value: 2 },
+      ],
       formData: {
         company_id: '',
         branch_id: '',
         is_opening_balance: '',
         payment_method_id: '',
+        account_guide_id: '',
         cash_box_id: '',
         cash_box_shift_id: '',
         bank_account_id: '',

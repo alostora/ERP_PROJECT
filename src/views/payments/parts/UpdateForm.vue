@@ -27,6 +27,27 @@
           </div>
         </div>
 
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <Select
+              v-model="formData.direction_code"
+              :options="directionCodes"
+              optionLabel="name"
+              optionValue="value"
+              :placeholder="$t('common.select') + ' ' + $t('payments.direction_code')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
+          <small v-if="errors.direction_code" class="error-message">
+            {{ errors.direction_code }}
+          </small>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-12 col-md-6" v-if="selectedPaymentMethod">
           <div class="form-group">
             <Select
@@ -116,8 +137,13 @@ export default {
       selectedPaymentMethod: null,
       company_id: '',
       module_id: '',
+      directionCodes: [
+        { name: this.$t('payments.in'), value: 1 },
+        { name: this.$t('payments.out'), value: 2 },
+      ],
       formData: {
         payment_method_id: '',
+        direction_code: '',
         cash_box_id: '',
         bank_account_id: '',
         wallet_id: '',
@@ -198,6 +224,7 @@ export default {
       this.formData = {
         id: selectedItem.id || '',
         payment_method_id: selectedItem.payment_method?.id || '',
+        direction_code: selectedItem.direction_code?.code || '',
         cash_box_id: selectedItem.cash_box?.id || '',
         bank_account_id: selectedItem.bank_account?.id || '',
         wallet_id: selectedItem.wallet?.id || '',
