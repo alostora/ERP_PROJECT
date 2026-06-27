@@ -170,7 +170,7 @@
           <Select
             id="wallet_id"
             v-model="payment.wallet_id"
-            :options="bankAccounts"
+            :options="wallets"
             :optionLabel="bankAccountLabel"
             optionValue="id"
             :placeholder="$t('invoicePayments.wallets')"

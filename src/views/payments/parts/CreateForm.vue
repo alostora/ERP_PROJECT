@@ -25,7 +25,7 @@
       </div>
 
       <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-12">
           <div class="form-group">
             <Select
               v-model="formData.branch_id"
@@ -41,46 +41,9 @@
           </div>
           <small v-if="errors.branch_id" class="error-message">{{ errors.branch_id }}</small>
         </div>
-
-        <div class="col-12 col-md-6">
-          <div class="form-group">
-            <Select
-              v-model="formData.direction_code"
-              :options="directionCodes"
-              optionLabel="name"
-              optionValue="value"
-              :placeholder="$t('common.select') + ' ' + $t('payments.direction_code')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-            />
-          </div>
-          <small v-if="errors.direction_code" class="error-message">
-            {{ errors.direction_code }}
-          </small>
-        </div>
       </div>
 
       <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="form-group">
-            <Select
-              v-model="formData.account_guide_id"
-              :options="accountGuides"
-              :optionLabel="accountGuideLabel"
-              optionValue="id"
-              :placeholder="$t('common.select') + ' ' + $t('payments.account_guide')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-            />
-          </div>
-          <small v-if="errors.account_guide_id" class="error-message">
-            {{ errors.account_guide_id }}
-          </small>
-        </div>
         <div class="col-12 col-md-6">
           <div class="form-group">
             <Select
@@ -137,6 +100,45 @@
           </div>
           <small v-if="errors.cash_box_shift_id" class="error-message">
             {{ errors.cash_box_shift_id }}
+          </small>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <Select
+              v-model="formData.direction_code"
+              :options="directionCodes"
+              optionLabel="name"
+              optionValue="value"
+              :placeholder="$t('common.select') + ' ' + $t('payments.direction_code')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
+          <small v-if="errors.direction_code" class="error-message">
+            {{ errors.direction_code }}
+          </small>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <Select
+              v-model="formData.account_guide_id"
+              :options="accountGuides"
+              :optionLabel="accountGuideLabel"
+              optionValue="id"
+              :placeholder="$t('common.select') + ' ' + $t('payments.account_guide')"
+              :filter="true"
+              :showClear="true"
+              :filterPlaceholder="$t('common.search')"
+              class="w-full"
+            />
+          </div>
+          <small v-if="errors.account_guide_id" class="error-message">
+            {{ errors.account_guide_id }}
           </small>
         </div>
       </div>
