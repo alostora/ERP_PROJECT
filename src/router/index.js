@@ -40,6 +40,11 @@ import salesInvoicesReturns from '@/views/sales_invoices_returns/routes/routes'
 import stockingRequests from '@/views/stocking_requests/routes/routes'
 import adjustmentStockingRequests from '@/views/adjustment_stocking_requests/routes/routes'
 import transportRequests from '@/views/transport_requests/routes/routes'
+import paymentAssetItems from '@/views/payment_asset_items/routes/routes'
+import paymentEquityItems from '@/views/payment_equity_items/routes/routes'
+import paymentExpenseItems from '@/views/payment_expense_items/routes/routes'
+import paymentIncomeItems from '@/views/payment_income_items/routes/routes'
+import paymentLiabilityItems from '@/views/payment_liability_items/routes/routes'
 
 const routes = [
   {
@@ -90,6 +95,11 @@ const routes = [
       ...stockingRequests,
       ...adjustmentStockingRequests,
       ...transportRequests,
+      ...paymentAssetItems,
+      ...paymentEquityItems,
+      ...paymentExpenseItems,
+      ...paymentIncomeItems,
+      ...paymentLiabilityItems,
     ],
   },
 ]

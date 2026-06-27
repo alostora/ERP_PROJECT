@@ -142,6 +142,14 @@ export default {
     payments: 'Journal Vouchers / Payments',
 
     //////
+    paymentItems: 'Payment Items',
+    paymentAssetItems: 'Asset Items',
+    paymentEquityItems: 'Equity Items',
+    paymentExpenseItems: 'Expenses Items',
+    paymentIncomeItems: 'Income Items',
+    paymentLiabilityItems: 'Liability Items',
+
+    //////
     branchManagement: 'Branch Management',
     branchesGroup: 'Branches',
     branches: 'Branches',

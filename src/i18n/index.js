@@ -39,6 +39,11 @@ import enInvoicePayments from './locales/en/invoicePayments'
 import enStockingRequests from './locales/en/stockingRequests'
 import enAdjustmentStockingRequests from './locales/en/adjustmentStockingRequests'
 import enTransportRequests from './locales/en/transportRequests'
+import enPaymentAssetItems from './locales/en/paymentAssetItems'
+import enPaymentEquityItems from './locales/en/paymentEquityItems'
+import enPaymentExpenseItems from './locales/en/paymentExpenseItems'
+import enPaymentIncomeItems from './locales/en/paymentIncomeItems'
+import enPaymentLiabilityItems from './locales/en/paymentLiabilityItems'
 
 // Import Arabic translations
 import arCommon from './locales/ar/common'
@@ -79,6 +84,11 @@ import arInvoicePayments from './locales/ar/invoicePayments'
 import arStockingRequests from './locales/ar/stockingRequests'
 import arAdjustmentStockingRequests from './locales/ar/adjustmentStockingRequests'
 import arTransportRequests from './locales/ar/transportRequests'
+import arPaymentAssetItems from './locales/ar/paymentAssetItems'
+import arPaymentEquityItems from './locales/ar/paymentEquityItems'
+import arPaymentExpenseItems from './locales/ar/paymentExpenseItems'
+import arPaymentIncomeItems from './locales/ar/paymentIncomeItems'
+import arPaymentLiabilityItems from './locales/ar/paymentLiabilityItems'
 
 const messages = {
   en: {
@@ -120,6 +130,12 @@ const messages = {
     stockingRequests: enStockingRequests,
     adjustmentStockingRequests: enAdjustmentStockingRequests,
     transportRequests: enTransportRequests,
+
+    paymentAssetItems: enPaymentAssetItems,
+    paymentEquityItems: enPaymentEquityItems,
+    paymentExpenseItems: enPaymentExpenseItems,
+    paymentIncomeItems: enPaymentIncomeItems,
+    paymentLiabilityItems: enPaymentLiabilityItems,
   },
 
   ar: {
@@ -161,6 +177,12 @@ const messages = {
     stockingRequests: arStockingRequests,
     adjustmentStockingRequests: arAdjustmentStockingRequests,
     transportRequests: arTransportRequests,
+
+    paymentAssetItems: arPaymentAssetItems,
+    paymentEquityItems: arPaymentEquityItems,
+    paymentExpenseItems: arPaymentExpenseItems,
+    paymentIncomeItems: arPaymentIncomeItems,
+    paymentLiabilityItems: arPaymentLiabilityItems,
   },
 }
 

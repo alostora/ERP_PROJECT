@@ -248,4 +248,24 @@ export const API_ROUTES = {
     SEARCH: `${BASE_URL}/admin/company/stock-management/transport-request-final-products/search`,
     BASE: `${BASE_URL}/admin/company/stock-management/transport-request-final-product`,
   },
+  PAYMENT_ASSET_ITEM: {
+    SEARCH: `${BASE_URL}/admin/company/payment-asset-items/search`,
+    BASE: `${BASE_URL}/admin/company/payment-asset-item`,
+  },
+  PAYMENT_EQUITY_ITEM: {
+    SEARCH: `${BASE_URL}/admin/company/payment-equity-items/search`,
+    BASE: `${BASE_URL}/admin/company/payment-equity-item`,
+  },
+  PAYMENT_EXPENSE_ITEM: {
+    SEARCH: `${BASE_URL}/admin/company/payment-expense-items/search`,
+    BASE: `${BASE_URL}/admin/company/payment-expense-item`,
+  },
+  PAYMENT_INCOME_ITEM: {
+    SEARCH: `${BASE_URL}/admin/company/payment-income-items/search`,
+    BASE: `${BASE_URL}/admin/company/payment-income-item`,
+  },
+  PAYMENT_LIABILITY_ITEM: {
+    SEARCH: `${BASE_URL}/admin/company/payment-liability-items/search`,
+    BASE: `${BASE_URL}/admin/company/payment-liability-item`,
+  },
 }

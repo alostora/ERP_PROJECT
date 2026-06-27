@@ -223,6 +223,37 @@ export const sidebarItems = {
                   icon: 'pi pi-circle-fill',
                   path: `/company/payments/${this.company_id}`,
                 },
+                {
+                  label: 'common.menu.paymentItems',
+                  icon: 'pi pi-circle-fill',
+                  items: [
+                    {
+                      label: 'common.menu.paymentIncomeItems',
+                      icon: 'pi pi-circle-fill',
+                      path: `/company/payment-income-items/${this.company_id}`,
+                    },
+                    {
+                      label: 'common.menu.paymentExpenseItems',
+                      icon: 'pi pi-circle-fill',
+                      path: `/company/payment-expense-items/${this.company_id}`,
+                    },
+                    {
+                      label: 'common.menu.paymentLiabilityItems',
+                      icon: 'pi pi-circle-fill',
+                      path: `/company/payment-liability-items/${this.company_id}`,
+                    },
+                    {
+                      label: 'common.menu.paymentAssetItems',
+                      icon: 'pi pi-circle-fill',
+                      path: `/company/payment-asset-items/${this.company_id}`,
+                    },
+                    {
+                      label: 'common.menu.paymentEquityItems',
+                      icon: 'pi pi-circle-fill',
+                      path: `/company/payment-equity-items/${this.company_id}`,
+                    },
+                  ],
+                },
               ],
             },
 

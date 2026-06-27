@@ -144,6 +144,14 @@ export default {
     payments: 'قيود اليومية / المدفوعات',
 
     //////
+    paymentItems: 'بنود العمليات',
+    paymentAssetItems: 'بنود الاصول',
+    paymentEquityItems: 'بنود حقوق الملكية',
+    paymentExpenseItems: 'بنود المصروفات',
+    paymentIncomeItems: 'بنود الايرادات',
+    paymentLiabilityItems: 'بنود الخصوم / الالتزامات',
+
+    //////
     branchManagement: 'إدارة الفرع',
     branchesGroup: 'الفروع',
     branches: 'الفروع',
