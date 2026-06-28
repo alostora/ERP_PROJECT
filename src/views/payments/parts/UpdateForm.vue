@@ -110,6 +110,8 @@
                     optionLabel="name"
                     optionValue="id"
                     :placeholder="$t('payments.paymentItems')"
+                    :filter="true"
+                    :showClear="true"
                     class="w-full"
                     @change="onPaymentItemChange(index)"
                   />

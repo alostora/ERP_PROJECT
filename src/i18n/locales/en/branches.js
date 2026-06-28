@@ -16,6 +16,7 @@ export default {
   city: 'City',
   basicInfo: 'Basic Information',
   location: 'Location',
+  createdAt: 'Created At',
   validation: {
     companyIdRequired: 'Company is required',
     nameRequired: 'Name is required',

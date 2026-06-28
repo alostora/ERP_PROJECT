@@ -58,6 +58,12 @@
           </template>
         </Column>
 
+        <Column field="created_at" :header="$t('branches.createdAt')" class="col-2">
+          <template #body="{ data }">
+            {{ formatDate(data.created_at) }}
+          </template>
+        </Column>
+
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
             <div class="actions-cell">

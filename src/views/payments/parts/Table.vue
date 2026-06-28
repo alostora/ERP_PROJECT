@@ -47,7 +47,10 @@
 
         <Column :header="$t('payments.status')" class="col-1">
           <template #body="{ data }">
-            <div class="badge badge-info">
+            <div class="badge badge-info" v-if="data.status.prefix == 'COMPLETED'">
+              {{ currentLanguage == 'ar' ? data.status.name_ar : data.status.name }}
+            </div>
+            <div class="badge badge-warning" v-else>
               {{ currentLanguage == 'ar' ? data.status.name_ar : data.status.name }}
             </div>
           </template>
@@ -98,7 +101,11 @@
 
         <Column field="amount" :header="$t('payments.amount')" class="col-1" />
 
-        <Column field="payment_date" :header="$t('payments.payment_date')" class="col-2" />
+        <Column field="payment_date" :header="$t('payments.payment_date')" class="col-2">
+          <template #body="{ data }">
+            {{ formatDate(data.payment_date) }}
+          </template>
+        </Column>
 
         <Column :header="$t('common.actions')">
           <template #body="{ data }">

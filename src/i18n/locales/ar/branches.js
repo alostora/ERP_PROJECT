@@ -16,6 +16,7 @@ export default {
   city: 'المدينة',
   basicInfo: 'المعلومات الأساسية',
   location: 'الموقع',
+  createdAt: 'تاريخ الإنشاء',
   validation: {
     companyIdRequired: 'الشركة مطلوبة',
     nameRequired: 'الاسم مطلوب',
