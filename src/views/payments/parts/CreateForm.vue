@@ -3,7 +3,7 @@
     v-model:visible="formVisible"
     :header="$t('common.createTitle', { module: $t('payments.title') })"
     :modal="true"
-    :style="{ width: '500px' }"
+    :style="{ width: '600px' }"
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
@@ -83,7 +83,11 @@
 
         <div
           class="col-12 col-md-12"
-          v-if="selectedPaymentMethod && selectedPaymentMethod?.prefix === 'CASH'"
+          v-if="
+            selectedPaymentMethod &&
+            selectedPaymentMethod?.prefix === 'CASH' &&
+            cashBoxShifts.length
+          "
         >
           <div class="form-group">
             <Select
@@ -97,33 +101,15 @@
               :filterPlaceholder="$t('common.search')"
               class="w-full"
             />
+            <small v-if="errors.cash_box_shift_id" class="error-message">
+              {{ errors.cash_box_shift_id }}
+            </small>
           </div>
-          <small v-if="errors.cash_box_shift_id" class="error-message">
-            {{ errors.cash_box_shift_id }}
-          </small>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="form-group">
-            <Select
-              v-model="formData.direction_code"
-              :options="directionCodes"
-              optionLabel="name"
-              optionValue="value"
-              :placeholder="$t('common.select') + ' ' + $t('payments.direction_code')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-            />
-          </div>
-          <small v-if="errors.direction_code" class="error-message">
-            {{ errors.direction_code }}
-          </small>
-        </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-12">
           <div class="form-group">
             <Select
               v-model="formData.account_guide_id"
@@ -135,11 +121,12 @@
               :showClear="true"
               :filterPlaceholder="$t('common.search')"
               class="w-full"
+              @change="determinePaymentItemsModule(true)"
             />
+            <small v-if="errors.account_guide_id" class="error-message">
+              {{ errors.account_guide_id }}
+            </small>
           </div>
-          <small v-if="errors.account_guide_id" class="error-message">
-            {{ errors.account_guide_id }}
-          </small>
         </div>
       </div>
 
@@ -147,13 +134,139 @@
         <div class="col-12">
           <div class="form-group">
             <FloatLabel variant="on">
-              <InputNumber id="amount" v-model="formData.amount" autocomplete="on" class="w-full" />
+              <InputNumber
+                id="amount"
+                v-model="formData.amount"
+                autocomplete="on"
+                class="w-full"
+                :defaultValue="sumAmount()"
+              />
               <label for="amount">{{ $t('payments.amount') }}</label>
             </FloatLabel>
+            <small v-if="errors.amount" class="error-message">{{ errors.amount }}</small>
           </div>
-          <small v-if="errors.amount" class="error-message">{{ errors.amount }}</small>
         </div>
       </div>
+
+      <!-- /////////////////////////////////////////////////////////////////////////////// -->
+      <!-- Payment Items Section -->
+
+      <Panel :toggleable="true" :collapsed="true" v-if="formData.account_guide_id">
+        <template #header>
+          <div class="flex items-center gap-2">
+            <i class="pi pi-search text-warning p-1"></i>
+            <span class="font-medium text-warning">
+              {{ $t('payments.paymentItems') }}
+            </span>
+          </div>
+        </template>
+        <div class="field mb-3">
+          <div class="flex justify-between align-center mb-3">
+            <button type="button" class="btn btn-sm mt-2" @click="addPaymentItemRow">
+              <i class="pi pi-plus text-success"></i>
+            </button>
+          </div>
+
+          <!-- Payment Item Rows -->
+          <div v-for="(paymentIemRow, index) in paymentIemRows" :key="index" class="card mb-3">
+            <!-- Remove Button -->
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <button
+                    type="button"
+                    class="btn btn-outline btn-icon btn btn-success btn-s ml-1 mr-1"
+                    @click="addPaymentItemRow"
+                  >
+                    <i class="pi pi-plus text-success"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline btn-icon btn text-danger btn-sm"
+                    @click="removePaymentItemRow(index)"
+                  >
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- Payment Item Selection -->
+              <div class="col-12">
+                <div class="form-group">
+                  <Select
+                    v-model="paymentIemRow.id"
+                    :options="availablePaymentItemsForRow(index)"
+                    optionLabel="name"
+                    optionValue="id"
+                    :placeholder="$t('payments.paymentItems')"
+                    class="w-full"
+                    @change="onPaymentItemChange(index)"
+                  />
+                  <small v-if="errors[`paymentIemRows.${index}.id`]" class="error-message">
+                    {{ errors[`paymentIemRows.${index}.id`] }}
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- Payment Item Unit Price -->
+              <div class="col-6">
+                <div class="form-group">
+                  <FloatLabel variant="on">
+                    <InputNumber
+                      id="item_unit_price"
+                      v-model="paymentIemRow.unit_price"
+                      autocomplete="on"
+                      class="w-full"
+                      @update:modelValue="onUnitPriceChange(index)"
+                    />
+                    <label for="item_unit_price">{{ $t('payments.unit_price') }}</label>
+                  </FloatLabel>
+                  <small v-if="errors[`paymentIemRows.${index}.unit_price`]" class="error-message">
+                    {{ errors[`paymentIemRows.${index}.unit_price`] }}
+                  </small>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <FloatLabel variant="on">
+                    <InputNumber
+                      id="item_quantity"
+                      v-model="paymentIemRow.quantity"
+                      autocomplete="on"
+                      class="w-full"
+                      @update:modelValue="onQuantityChange(index)"
+                    />
+                    <label for="item_quantity">{{ $t('payments.quantity') }}</label>
+                  </FloatLabel>
+                  <small v-if="errors[`paymentIemRows.${index}.quantity`]" class="error-message">
+                    {{ errors[`paymentIemRows.${index}.quantity`] }}
+                  </small>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <FloatLabel variant="on">
+                    <InputNumber
+                      id="item_amount"
+                      v-model="paymentIemRow.amount"
+                      autocomplete="on"
+                      class="w-full"
+                      @update:modelValue="sumAmount"
+                      readonly
+                    />
+                    <label for="item_amount">{{ $t('payments.amount') }}</label>
+                  </FloatLabel>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Panel>
+
+      <!-- Payment Items Section -->
+      <!-- /////////////////////////////////////////////////////////////////////////////// -->
 
       <div class="flex justify-end gap-2 mt-4">
         <button type="button" class="btn btn-outline ml-2 mr-2" @click="closeFormModal">
@@ -174,6 +287,7 @@ import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
 import ToggleSwitch from 'primevue/toggleswitch'
+import { getDefaultCompilerOptions } from 'typescript'
 
 export default {
   name: 'CreateForm',
@@ -197,10 +311,6 @@ export default {
       apiUrl: API_ROUTES.PAYMENT.BASE,
       selectedPaymentMethod: null,
       module_id: '',
-      directionCodes: [
-        { name: this.$t('payments.in'), value: 1 },
-        { name: this.$t('payments.out'), value: 2 },
-      ],
       formData: {
         company_id: '',
         branch_id: '',
@@ -211,7 +321,7 @@ export default {
         cash_box_shift_id: '',
         bank_account_id: '',
         wallet_id: '',
-        amount: '',
+        amount: 100,
       },
     }
   },
@@ -299,6 +409,14 @@ export default {
       this.selectedPaymentMethod = null
       this.module_id = ''
       this.formData = {}
+      this.paymentIemRows = [
+        {
+          id: null,
+          unit_price: 0,
+          quantity: 0,
+          amount: 0,
+        },
+      ]
     },
 
     determinePaymentModule() {
@@ -345,6 +463,10 @@ export default {
     },
 
     async handleSubmit() {
+      this.determinePaymentItemsModule(false)
+
+      console.log('this.formDatathis.formDatathis.formData', this.formData)
+
       if (!this.validateCreateForm(this.formData)) {
         return
       }

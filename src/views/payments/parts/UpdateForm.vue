@@ -3,7 +3,7 @@
     v-model:visible="formVisible"
     :header="$t('common.updateTitle', { module: $t('payments.title') })"
     :modal="true"
-    :style="{ width: '500px' }"
+    :style="{ width: '600px' }"
     @hide="closeFormModal"
   >
     <form @submit.prevent="handleSubmit">
@@ -27,27 +27,6 @@
           </div>
         </div>
 
-        <div class="col-12 col-md-6">
-          <div class="form-group">
-            <Select
-              v-model="formData.direction_code"
-              :options="directionCodes"
-              optionLabel="name"
-              optionValue="value"
-              :placeholder="$t('common.select') + ' ' + $t('payments.direction_code')"
-              :filter="true"
-              :showClear="true"
-              :filterPlaceholder="$t('common.search')"
-              class="w-full"
-            />
-          </div>
-          <small v-if="errors.direction_code" class="error-message">
-            {{ errors.direction_code }}
-          </small>
-        </div>
-      </div>
-
-      <div class="row">
         <div class="col-12 col-md-6" v-if="selectedPaymentMethod">
           <div class="form-group">
             <Select
@@ -74,10 +53,130 @@
               <InputNumber id="amount" v-model="formData.amount" autocomplete="on" class="w-full" />
               <label for="amount">{{ $t('payments.amount') }}</label>
             </FloatLabel>
+            <small v-if="errors.amount" class="error-message">{{ errors.amount }}</small>
           </div>
-          <small v-if="errors.amount" class="error-message">{{ errors.amount }}</small>
         </div>
       </div>
+
+      <!-- /////////////////////////////////////////////////////////////////////////////// -->
+      <!-- Payment Items Section -->
+
+      <Panel :toggleable="true" :collapsed="true" v-if="formData.account_guide_id">
+        <template #header>
+          <div class="flex items-center gap-2">
+            <i class="pi pi-search text-warning p-1"></i>
+            <span class="font-medium text-warning">
+              {{ $t('payments.paymentItems') }}
+            </span>
+          </div>
+        </template>
+        <div class="field mb-3">
+          <div class="flex justify-between align-center mb-3">
+            <button type="button" class="btn btn-sm mt-2" @click="addPaymentItemRow">
+              <i class="pi pi-plus text-success"></i>
+            </button>
+          </div>
+
+          <!-- Payment Item Rows -->
+          <div v-for="(paymentIemRow, index) in paymentIemRows" :key="index" class="card mb-3">
+            <!-- Remove Button -->
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <button
+                    type="button"
+                    class="btn btn-outline btn-icon btn btn-success btn-s ml-1 mr-1"
+                    @click="addPaymentItemRow"
+                  >
+                    <i class="pi pi-plus text-success"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline btn-icon btn text-danger btn-sm"
+                    @click="removePaymentItemRow(index)"
+                  >
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- Payment Item Selection -->
+              <div class="col-12">
+                <div class="form-group">
+                  <Select
+                    v-model="paymentIemRow.id"
+                    :options="availablePaymentItemsForRow(index)"
+                    optionLabel="name"
+                    optionValue="id"
+                    :placeholder="$t('payments.paymentItems')"
+                    class="w-full"
+                    @change="onPaymentItemChange(index)"
+                  />
+                  <small v-if="errors[`paymentIemRows.${index}.id`]" class="error-message">
+                    {{ errors[`paymentIemRows.${index}.id`] }}
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- Payment Item Unit Price -->
+              <div class="col-6">
+                <div class="form-group">
+                  <FloatLabel variant="on">
+                    <InputNumber
+                      id="item_unit_price"
+                      v-model="paymentIemRow.unit_price"
+                      autocomplete="on"
+                      class="w-full"
+                      @update:modelValue="onUnitPriceChange(index)"
+                    />
+                    <label for="item_unit_price">{{ $t('payments.unit_price') }}</label>
+                  </FloatLabel>
+                  <small v-if="errors[`paymentIemRows.${index}.unit_price`]" class="error-message">
+                    {{ errors[`paymentIemRows.${index}.unit_price`] }}
+                  </small>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <FloatLabel variant="on">
+                    <InputNumber
+                      id="item_quantity"
+                      v-model="paymentIemRow.quantity"
+                      autocomplete="on"
+                      class="w-full"
+                      @update:modelValue="onQuantityChange(index)"
+                    />
+                    <label for="item_quantity">{{ $t('payments.quantity') }}</label>
+                  </FloatLabel>
+                  <small v-if="errors[`paymentIemRows.${index}.quantity`]" class="error-message">
+                    {{ errors[`paymentIemRows.${index}.quantity`] }}
+                  </small>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <FloatLabel variant="on">
+                    <InputNumber
+                      id="item_amount"
+                      v-model="paymentIemRow.amount"
+                      autocomplete="on"
+                      class="w-full"
+                      @update:modelValue="sumAmount"
+                      readonly
+                    />
+                    <label for="item_amount">{{ $t('payments.amount') }}</label>
+                  </FloatLabel>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Panel>
+
+      <!-- Payment Items Section -->
+      <!-- /////////////////////////////////////////////////////////////////////////////// -->
 
       <div class="flex justify-end gap-2 mt-4">
         <button type="button" class="btn btn-outline ml-2 mr-2" @click="closeFormModal">
@@ -92,7 +191,7 @@
 </template>
 
 <script>
-import Dialog from 'primevue/dialog'
+import tableMixin from '@/mixins/table'
 import formMixin from '@/mixins/form'
 import { API_ROUTES } from '@/constants/apiRoutes'
 import validationRequest from '../validation/validationRequest'
@@ -100,8 +199,8 @@ import customFunctions from '../custom_functions/customFunctions'
 
 export default {
   name: 'UpdateForm',
-  mixins: [formMixin, customFunctions, validationRequest],
-  components: { Dialog },
+  mixins: [formMixin, tableMixin, customFunctions, validationRequest],
+  components: {},
 
   props: {
     selected_item: {
@@ -112,15 +211,11 @@ export default {
 
   watch: {
     selected_item: {
+      handler(newVal) {},
       immediate: true,
       deep: true,
-      handler(selectedItem) {
-        this.loadPaymentMethods()
-        if (selectedItem && selectedItem.id) {
-          this.populateForm(selectedItem)
-        }
-      },
     },
+
     '$route.params.company_id': {
       handler(newVal) {
         if (newVal && newVal !== 'undefined') {
@@ -137,13 +232,8 @@ export default {
       selectedPaymentMethod: null,
       company_id: '',
       module_id: '',
-      directionCodes: [
-        { name: this.$t('payments.in'), value: 1 },
-        { name: this.$t('payments.out'), value: 2 },
-      ],
       formData: {
         payment_method_id: '',
-        direction_code: '',
         cash_box_id: '',
         bank_account_id: '',
         wallet_id: '',
@@ -220,16 +310,18 @@ export default {
   },
 
   methods: {
-    populateForm(selectedItem) {
+    async populateForm() {
       this.formData = {
-        id: selectedItem.id || '',
-        payment_method_id: selectedItem.payment_method?.id || '',
-        direction_code: selectedItem.direction_code?.code || '',
-        cash_box_id: selectedItem.cash_box?.id || '',
-        bank_account_id: selectedItem.bank_account?.id || '',
-        wallet_id: selectedItem.wallet?.id || '',
-        amount: selectedItem.amount || '',
+        id: this.itemData.id || '',
+        payment_method_id: this.itemData.payment_method?.id || '',
+        cash_box_id: this.itemData.cash_box?.id || '',
+        bank_account_id: this.itemData.bank_account?.id || '',
+        wallet_id: this.itemData.wallet?.id || '',
+        amount: this.itemData.amount || '',
+        account_guide_id: this.itemData.account_guide?.id || '',
       }
+
+      await this.populatePaymentItemRow(this.itemData)
 
       // Set module_id (only one value)
       this.module_id =
@@ -257,8 +349,55 @@ export default {
       })
     },
 
-    openModal() {
+    async populatePaymentItemRow(payment) {
+      let items = []
+      let key = ''
+
+      if (payment.payment_payment_asset_items.length) {
+        items = payment.payment_payment_asset_items
+        key = 'payment_income_item'
+      }
+
+      if (payment.payment_payment_equity_items.length) {
+        items = payment.payment_payment_equity_items
+        key = 'payment_equity_item'
+      }
+
+      if (payment.payment_payment_expense_items.length) {
+        items = payment.payment_payment_expense_items
+        key = 'payment_expense_item'
+      }
+
+      if (payment.payment_payment_income_items.length) {
+        items = payment.payment_payment_income_items
+        key = 'payment_income_item'
+      }
+
+      if (payment.payment_payment_liability_items.length) {
+        items = payment.payment_payment_liability_items
+        key = 'payment_liability_item'
+      }
+
+      if (items.length && key) {
+        this.paymentIemRows = items.map((item) => ({
+          id: item[key]?.id || null,
+          unit_price: item.unit_price || 0,
+          quantity: item.quantity || 1,
+          amount: item.amount || 0,
+        }))
+        console.log(this.paymentIemRows)
+        this.sumAmount() // ← Recalculate total
+      }
+
+      await this.determinePaymentItemsModule(true)
+    },
+
+    async openModal() {
       this.formVisible = true
+      await this.loadAccountGuides(this.company_id)
+      await this.loadPaymentMethods()
+      await this.showItem(this.apiUrl, this.selected_item.id)
+      this.populateForm()
     },
 
     closeFormModal() {
@@ -268,6 +407,14 @@ export default {
       this.selectedPaymentMethod = null
       this.module_id = ''
       this.formData = {}
+      this.paymentIemRows = [
+        {
+          id: null,
+          unit_price: 0,
+          quantity: 0,
+          amount: 0,
+        },
+      ]
     },
 
     determinePaymentModule() {
@@ -313,6 +460,8 @@ export default {
     },
 
     async handleSubmit() {
+      this.determinePaymentItemsModule(false)
+
       if (!this.validateUpdateForm(this.formData)) {
         return
       }

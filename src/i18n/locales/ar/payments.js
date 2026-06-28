@@ -41,6 +41,9 @@ export default {
   updateStatus: 'تغيير الحالة',
 
   notes: 'التفاصيل',
+  paymentItems: 'بنود العملية',
+  quantity: 'الكمية / العدد',
+  unit_price: 'سعر الوحدة',
 
   payment_date: 'تاريخ الدفع',
 
@@ -54,5 +57,9 @@ export default {
     bankAccountIdRequired: 'حساب البنك مطلوب',
     walletIdRequired: 'المحفظة مطلوب',
     amountRequired: 'المبلغ مطلوب',
+
+    paymentIemIdRequired: 'بند العملية مطلوب',
+    paymentIemUnitPriceRequired: 'سعر الوحدة مطلوب',
+    paymentIemQuantityRequired: 'الكمية مطلوبة',
   },
 }

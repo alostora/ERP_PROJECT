@@ -41,6 +41,10 @@ export default {
   updateStatus: 'Update Status',
 
   notes: 'Details',
+  paymentItems: 'Payment Items',
+  quantity: 'Quantity',
+  unit_price: 'Unit Price',
+
   payment_date: 'Payment date',
   createdAt: 'Created At',
   validation: {
@@ -52,5 +56,9 @@ export default {
     bankAccountIdRequired: 'Bank account is required',
     walletIdRequired: 'Wallet is required',
     amountRequired: 'Amount is required',
+
+    paymentIemIdRequired: 'Item is required',
+    paymentIemUnitPriceRequired: 'Unit price is required',
+    paymentIemQuantityRequired: 'Quantity is required',
   },
 }
