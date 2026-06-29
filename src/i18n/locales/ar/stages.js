@@ -13,6 +13,7 @@ export default {
   company: 'الشركة',
   type: 'نوع المرحلة',
   orderUpdated: 'تم اعادة الترتيب',
+  employees: 'موظفون المرحلة',
   createdAt: 'تاريخ الإنشاء',
   validation: {
     companyIdRequired: 'الشركة مطلوبة',

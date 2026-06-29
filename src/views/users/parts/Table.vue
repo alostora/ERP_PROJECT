@@ -34,7 +34,7 @@
           </template>
         </Column>
 
-        <Column field="logo" :header="$t('users.avatar')">
+        <Column field="logo" :header="$t('users.avatar')" class="col-1">
           <template #body="slotProps">
             <div class="flex-center">
               <img

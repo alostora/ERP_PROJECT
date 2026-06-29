@@ -14,6 +14,7 @@ export default {
   type: 'Stage Type',
   orderUpdated: 'Order updated',
   createdAt: 'Created At',
+  employees: 'Stage Employees',
   validation: {
     companyIdRequired: 'Company is required',
     typeIdRequired: 'Stage type is required',

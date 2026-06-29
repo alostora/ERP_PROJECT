@@ -26,12 +26,27 @@
 
         <div class="col-12 col-md-6 col-lg-4">
           <Select
-            v-model="filters.type_id"
-            :options="stageTypes"
-            :optionLabel="stageTypeLabel"
+            v-model="filters.branch_id"
+            :options="branches"
+            :optionLabel="branchLabel"
             optionValue="id"
-            :placeholder="$t('stages.type')"
+            :placeholder="$t('stage_employees.branch')"
             :filter="true"
+            :showClear="true"
+            :filterPlaceholder="$t('common.search')"
+            class="w-full"
+            @change="onBranchChange"
+          />
+        </div>
+        <div class="col-12 col-md-6 col-lg-4" v-if="filters.branch_id && warehouses.length">
+          <Select
+            v-model="filters.warehouse_id"
+            :options="warehouses"
+            :optionLabel="warehouseLabel"
+            optionValue="id"
+            :placeholder="$t('stage_employees.warehouse')"
+            :filter="true"
+            :showClear="true"
             :filterPlaceholder="$t('common.search')"
             class="w-full"
             @change="emitFetchData"
@@ -66,6 +81,13 @@ export default {
 
   emits: ['emitFetchData'],
 
+  props: {
+    company_id: {
+      type: String,
+      required: false,
+    },
+  },
+
   data() {
     return {
       perPageValues: [
@@ -86,18 +108,30 @@ export default {
       return localStorage.getItem('language') || 'en'
     },
 
-    stageTypeLabel() {
+    branchLabel() {
+      return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
+    },
+
+    warehouseLabel() {
       return this.currentLanguage === 'ar' ? 'name_ar' : 'name'
     },
   },
 
   mounted() {
-    this.loadStageTypes()
+    this.loadBranches(this.company_id)
   },
 
   methods: {
     emitFetchData() {
       this.$emit('emitFetchData', this.filters)
+    },
+
+    async onBranchChange() {
+      await this.loadWarehouses(this.company_id, this.filters.branch_id)
+
+      this.filters.warehouse_id = ''
+
+      this.emitFetchData()
     },
   },
 }

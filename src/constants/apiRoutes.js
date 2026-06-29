@@ -94,6 +94,11 @@ export const API_ROUTES = {
     SET_AFFECTS_STOCK: `${BASE_URL}/admin/company/stage-set-affects-stock`,
     SET_SORT: `${BASE_URL}/admin/company/stage-set-sort`,
   },
+  STAGE_EMPLOYEE: {
+    SEARCH: `${BASE_URL}/admin/company/stage-employees/search`,
+    BASE: `${BASE_URL}/admin/company/stage-employee`,
+    CREATE_STAGE_EMPLOYEES: `${BASE_URL}/admin/company/stage-employees`,
+  },
   TAX: {
     SEARCH: `${BASE_URL}/admin/company/taxes/search`,
     LIST: `${BASE_URL}/admin/company/taxes/list`,
@@ -123,6 +128,7 @@ export const API_ROUTES = {
   EMPLOYEE: {
     SEARCH: `${BASE_URL}/admin/company/employees/search`,
     BASE: `${BASE_URL}/admin/company/employee`,
+    NONE_STAGE_EMPLOYEE_LIST: `${BASE_URL}/admin/company/none-stage-employees-list`,
   },
   CONTACT: {
     SEARCH: `${BASE_URL}/admin/company/contacts/search`,

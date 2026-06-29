@@ -81,6 +81,23 @@
           </template>
         </Column>
 
+        <Column :header="$t('stages.employees')">
+          <template #body="{ data }">
+            <button
+              class="btn-sm btn-outline"
+              @click="
+                $router.push({
+                  name: 'stage-related-models',
+                  params: { company_id: this.company_id, stage_id: data.id },
+                })
+              "
+            >
+              <i class="pi pi-link text-primary"></i>
+              {{ $t('contacts.relatedModels') }}
+            </button>
+          </template>
+        </Column>
+
         <Column :header="$t('common.actions')">
           <template #body="{ data }">
             <div class="actions-cell">

@@ -44,6 +44,7 @@ import enPaymentEquityItems from './locales/en/paymentEquityItems'
 import enPaymentExpenseItems from './locales/en/paymentExpenseItems'
 import enPaymentIncomeItems from './locales/en/paymentIncomeItems'
 import enPaymentLiabilityItems from './locales/en/paymentLiabilityItems'
+import enStageEmployees from './locales/en/stageEmployees'
 
 // Import Arabic translations
 import arCommon from './locales/ar/common'
@@ -89,6 +90,7 @@ import arPaymentEquityItems from './locales/ar/paymentEquityItems'
 import arPaymentExpenseItems from './locales/ar/paymentExpenseItems'
 import arPaymentIncomeItems from './locales/ar/paymentIncomeItems'
 import arPaymentLiabilityItems from './locales/ar/paymentLiabilityItems'
+import arStageEmployees from './locales/ar/stageEmployees'
 
 const messages = {
   en: {
@@ -136,6 +138,7 @@ const messages = {
     paymentExpenseItems: enPaymentExpenseItems,
     paymentIncomeItems: enPaymentIncomeItems,
     paymentLiabilityItems: enPaymentLiabilityItems,
+    stage_employees: enStageEmployees,
   },
 
   ar: {
@@ -183,6 +186,7 @@ const messages = {
     paymentExpenseItems: arPaymentExpenseItems,
     paymentIncomeItems: arPaymentIncomeItems,
     paymentLiabilityItems: arPaymentLiabilityItems,
+    stage_employees: arStageEmployees,
   },
 }
 
