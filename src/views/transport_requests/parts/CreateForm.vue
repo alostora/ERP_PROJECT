@@ -141,8 +141,6 @@ export default {
       if (!this.validateCreateForm(this.formData)) {
         return
       }
-      
-      console.log(this.errors)
 
       await this.submitCreateForm(this.apiUrl, this.formData, this.$t('common.createdSuccessfully'))
     },

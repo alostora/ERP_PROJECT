@@ -30,8 +30,8 @@
                           </label>
                         </FloatLabel>
                       </Fluid>
+                      <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
                     </div>
-                    <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
                   </div>
                 </div>
 

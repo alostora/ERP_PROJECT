@@ -107,11 +107,11 @@ export const customFunctions = {
       this.formLoading = false
     },
 
-    onFromBranchChange() {
+    async onFromBranchChange() {
       const branchId =
         this.formData?.from_branch_id ||
         this.localFormData?.from_branch_id ||
-        this.filters?.from_branch_id
+        this.formData?.from_branch_id
 
       const companyId =
         this.company_id || this.formData?.company_id || this.localFormData?.company_id
@@ -119,15 +119,15 @@ export const customFunctions = {
       this.fromWarehouses = []
 
       if (branchId) {
-        this.loadWarehouses(companyId, branchId, 'from')
+        await this.loadWarehouses(companyId, branchId, 'from')
       }
     },
 
-    onToBranchChange() {
+    async onToBranchChange() {
       const branchId =
         this.formData?.to_branch_id ||
         this.localFormData?.to_branch_id ||
-        this.filters?.to_branch_id
+        this.formData?.to_branch_id
 
       const companyId =
         this.company_id || this.formData?.company_id || this.localFormData?.company_id
@@ -135,7 +135,7 @@ export const customFunctions = {
       this.toWarehouses = []
 
       if (branchId) {
-        this.loadWarehouses(companyId, branchId, 'to')
+        await this.loadWarehouses(companyId, branchId, 'to')
       }
     },
 
@@ -144,11 +144,12 @@ export const customFunctions = {
         this.formLoading = true
         const params = { branch_id: branchId }
         const response = await API.get(`${this.warehouseUrl}/${companyId}`, { params })
+
         if (type == 'from') {
-          this.filters.from_warehouse_id = ''
+          this.formData.from_warehouse_id = ''
           this.fromWarehouses = response.data.data || []
         } else {
-          this.filters.to_warehouse_id = ''
+          this.formData.to_warehouse_id = ''
           this.toWarehouses = response.data.data || []
         }
       } catch (error) {
