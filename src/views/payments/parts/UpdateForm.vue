@@ -107,7 +107,7 @@
                   <Select
                     v-model="paymentIemRow.id"
                     :options="availablePaymentItemsForRow(index)"
-                    optionLabel="name"
+                    :optionLabel="moduleOptionLabel"
                     optionValue="id"
                     :placeholder="$t('payments.paymentItems')"
                     :filter="true"
@@ -353,36 +353,30 @@ export default {
 
     async populatePaymentItemRow(payment) {
       let items = []
-      let key = ''
 
-      if (payment.payment_payment_asset_items.length) {
-        items = payment.payment_payment_asset_items
-        key = 'payment_income_item'
+      if (payment.payment_asset_invoice && payment.payment_asset_invoice.items.length) {
+        items = payment.payment_asset_invoice.items
       }
 
-      if (payment.payment_payment_equity_items.length) {
-        items = payment.payment_payment_equity_items
-        key = 'payment_equity_item'
+      if (payment.payment_equity_invoice && payment.payment_equity_invoice.items.length) {
+        items = payment.payment_equity_invoice.items
       }
 
-      if (payment.payment_payment_expense_items.length) {
-        items = payment.payment_payment_expense_items
-        key = 'payment_expense_item'
+      if (payment.payment_expense_invoice && payment.payment_expense_invoice.items.length) {
+        items = payment.payment_expense_invoice.items
       }
 
-      if (payment.payment_payment_income_items.length) {
-        items = payment.payment_payment_income_items
-        key = 'payment_income_item'
+      if (payment.payment_income_invoice && payment.payment_income_invoice.items.length) {
+        items = payment.payment_income_invoice.items
       }
 
-      if (payment.payment_payment_liability_items.length) {
-        items = payment.payment_payment_liability_items
-        key = 'payment_liability_item'
+      if (payment.payment_liability_invoice && payment.payment_liability_invoice.items.length) {
+        items = payment.payment_liability_invoice.items
       }
 
-      if (items.length && key) {
+      if (items.length) {
         this.paymentIemRows = items.map((item) => ({
-          id: item[key]?.id || null,
+          id: item?.payment_item.id || null,
           unit_price: item.unit_price || 0,
           quantity: item.quantity || 1,
           amount: item.amount || 0,
@@ -463,6 +457,8 @@ export default {
 
     async handleSubmit() {
       this.determinePaymentItemsModule(false)
+
+      this.formData.paymentIemRows = this.paymentIemRows
 
       if (!this.validateUpdateForm(this.formData)) {
         return

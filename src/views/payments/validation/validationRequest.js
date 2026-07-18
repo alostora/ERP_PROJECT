@@ -32,20 +32,14 @@ export default {
               'payments.validation.paymentIemIdRequired'
             )
           }
-          if (
-            !paymentIem.unit_price === null ||
-            form.unit_price === undefined ||
-            form.unit_price === ''
-          ) {
+
+          if (!paymentIem.unit_price || paymentIem.unit_price <= 0) {
             this.errors[`paymentIemRows.${index}.unit_price`] = this.$t(
               'payments.validation.paymentIemUnitPriceRequired'
             )
           }
-          if (
-            !paymentIem.quantity === null ||
-            form.quantity === undefined ||
-            form.quantity === ''
-          ) {
+
+          if (!paymentIem.quantity || paymentIem.quantity <= 0) {
             this.errors[`paymentIemRows.${index}.quantity`] = this.$t(
               'payments.validation.paymentIemQuantityRequired'
             )
@@ -75,20 +69,14 @@ export default {
               'payments.validation.paymentIemIdRequired'
             )
           }
-          if (
-            !paymentIem.unit_price === null ||
-            form.unit_price === undefined ||
-            form.unit_price === ''
-          ) {
+
+          if (!paymentIem.unit_price || paymentIem.unit_price <= 0) {
             this.errors[`paymentIemRows.${index}.unit_price`] = this.$t(
               'payments.validation.paymentIemUnitPriceRequired'
             )
           }
-          if (
-            !paymentIem.quantity === null ||
-            form.quantity === undefined ||
-            form.quantity === ''
-          ) {
+
+          if (!paymentIem.quantity || paymentIem.quantity <= 0) {
             this.errors[`paymentIemRows.${index}.quantity`] = this.$t(
               'payments.validation.paymentIemQuantityRequired'
             )

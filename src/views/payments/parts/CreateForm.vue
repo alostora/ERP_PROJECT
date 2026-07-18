@@ -197,7 +197,7 @@
                   <Select
                     v-model="paymentIemRow.id"
                     :options="availablePaymentItemsForRow(index)"
-                    optionLabel="name"
+                    :optionLabel="moduleOptionLabel"
                     optionValue="id"
                     :placeholder="$t('payments.paymentItems')"
                     :filter="true"
@@ -466,8 +466,6 @@ export default {
 
     async handleSubmit() {
       this.determinePaymentItemsModule(false)
-
-      console.log('this.formDatathis.formDatathis.formData', this.formData)
 
       if (!this.validateCreateForm(this.formData)) {
         return
